@@ -12,9 +12,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Modifiers")]
     public float movementSpeed;
+    public float collisionOffset = 0.05f;
+    public ContactFilter2D movementFilter;
+    List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
-    float vertical;
-    float horizontal;
+    Vector2 movementVector = new Vector2();
 
     // Start is called before the first frame update
     void Start()
@@ -25,13 +27,30 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerTrans.position += new Vector3(horizontal, vertical, 0f).normalized * movementSpeed;
+        
+    }
+    private void FixedUpdate()
+    {
+        if(movementVector != Vector2.zero)
+        {
+            print("got 1");
+            int count = rb.Cast(
+                movementVector,
+                movementFilter,
+                castCollisions,
+                movementSpeed * Time.deltaTime + collisionOffset);
+
+            if(count == 0)
+            {
+                print("Got 2");
+                rb.MovePosition(rb.position + movementVector.normalized * movementSpeed * Time.fixedDeltaTime);
+            }
+        }
     }
 
-    public void Move(InputAction.CallbackContext context)
+    public void OnWASD(InputValue inputValue)
     {
-        horizontal = context.ReadValue<Vector2>().x;
-        vertical = context.ReadValue<Vector2>().y;
+        movementVector = inputValue.Get<Vector2>();
         print("hi");
     }
 }

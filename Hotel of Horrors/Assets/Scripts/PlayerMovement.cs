@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header ("Object References")]
     [SerializeField] GameObject player;
+    [SerializeField] Rigidbody2D rb;
     private Transform playerTrans;
 
     [Header("Movement Modifiers")]

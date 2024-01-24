@@ -17,11 +17,13 @@ public class PlayerMovement : MonoBehaviour
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     Vector2 movementVector = new Vector2();
+    RoomManager roomManager;
 
     // Start is called before the first frame update
     void Start()
     {
         playerTrans = player.transform;
+        roomManager = GameObject.Find("Room Manager").GetComponent<RoomManager>();
     }
 
     // Update is called once per frame
@@ -33,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if(movementVector != Vector2.zero)
         {
-            print("got 1");
             int count = rb.Cast(
                 movementVector,
                 movementFilter,
@@ -42,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
 
             if(count == 0)
             {
-                print("Got 2");
                 rb.MovePosition(rb.position + movementVector.normalized * movementSpeed * Time.fixedDeltaTime);
             }
         }
@@ -51,6 +51,43 @@ public class PlayerMovement : MonoBehaviour
     public void OnWASD(InputValue inputValue)
     {
         movementVector = inputValue.Get<Vector2>();
-        print("hi");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GameObject obj = collision.gameObject;
+        if (obj.tag.Equals("Door"))
+        {
+
+            Door door = obj.GetComponent<Door>();
+
+            
+
+            if (door.assignedRoom == null)
+            {
+                door.assignedRoom = roomManager.GetNextRoom();
+                roomManager.availableRooms.RemoveAt(roomManager.availableRooms.IndexOf(door.assignedRoom));
+            }
+
+
+            switch (door.doorLocation)
+            {
+                case Door.DoorLocations.North:
+                    print("North");
+                    break;
+                case Door.DoorLocations.South:
+                    print("South");
+                    break;
+                case Door.DoorLocations.East:
+                    print("East");
+                    this.transform.position = door.assignedRoom.GetComponent<Room>().WestDoor.position - new Vector3(-0.1f,0,0);
+                    break;
+                case Door.DoorLocations.West:
+                    print("West");
+                    this.transform.position = door.assignedRoom.GetComponent<Room>().EastDoor.position - new Vector3(1f, 0, 0);
+                    break;
+            }
+        }
+        
     }
 }

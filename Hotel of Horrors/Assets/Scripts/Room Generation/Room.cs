@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public List<Door> doors;
+    public Transform NorthDoor;
+    public Transform EastDoor;
+    public Transform SouthDoor;
+    public Transform WestDoor;
+
 }

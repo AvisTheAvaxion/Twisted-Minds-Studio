@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<GameObject> availableRooms;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
+        GameObject[] rooms = GameObject.FindGameObjectsWithTag("Room");
         
+        foreach(GameObject room in rooms)
+        {
+            print(room.name);
+            availableRooms.Add(room);
+        }
+        availableRooms.Remove(GameObject.Find("Test Room 1"));
+
+    }
+    /// <summary>
+    /// Returns an available room to assign to a door
+    /// </summary>
+
+    public GameObject GetNextRoom()
+    {
+        return availableRooms[Random.Range(0, availableRooms.Count)];
+
     }
 }

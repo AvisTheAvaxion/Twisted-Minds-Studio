@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum DoorLocations
     {
-        
+        North, East, South, West
     }
 
-    // Update is called once per frame
-    void Update()
+    public DoorLocations doorLocation;
+    private RoomManager roomManager;
+    [HideInInspector]public GameObject assignedRoom;
+
+    private void Start()
     {
-        
+        roomManager = GameObject.Find("Room Manager").GetComponent<RoomManager>();
     }
+
+    
 }

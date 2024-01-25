@@ -16,7 +16,13 @@ public class PlayerMovement : MonoBehaviour
     public ContactFilter2D movementFilter;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
+    [Header("Dashing Modifiers")]
+    public int dashDistance;
+    public float dashSpeed;
+    bool isDashing = false;
+
     Vector2 movementVector = new Vector2();
+    Vector2 dashStartVector = new Vector2();
     RoomManager roomManager;
 
     // Start is called before the first frame update
@@ -43,14 +49,41 @@ public class PlayerMovement : MonoBehaviour
 
             if(count == 0)
             {
-                rb.MovePosition(rb.position + movementVector.normalized * movementSpeed * Time.fixedDeltaTime);
+                if (isDashing)
+                {
+                    if (Vector2.Distance(dashStartVector, rb.position) <= dashDistance)
+                    {
+                        rb.MovePosition(rb.position + movementVector.normalized * dashSpeed * Time.fixedDeltaTime);
+                    }
+                    else
+                    {
+                        isDashing = false;
+                    }
+                }
+                else
+                {
+                    rb.MovePosition(rb.position + movementVector.normalized * movementSpeed * Time.fixedDeltaTime);
+                }
             }
+        }
+        else
+        {
+            isDashing = false;
         }
     }
 
     public void OnWASD(InputValue inputValue)
     {
         movementVector = inputValue.Get<Vector2>();
+    }
+
+    public void OnShift(InputValue inputValue)
+    {
+        if (inputValue.isPressed)
+        {
+            dashStartVector = rb.position;
+            isDashing = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

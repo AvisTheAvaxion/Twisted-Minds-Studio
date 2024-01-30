@@ -37,9 +37,10 @@ public class PlayerMovement : MonoBehaviour
     {
         
     }
+
     private void FixedUpdate()
     {
-        if(movementVector != Vector2.zero)
+        if (movementVector != Vector2.zero)
         {
             int count = rb.Cast(
                 movementVector,
@@ -121,6 +122,5 @@ public class PlayerMovement : MonoBehaviour
                     break;
             }
         }
-        
     }
 }

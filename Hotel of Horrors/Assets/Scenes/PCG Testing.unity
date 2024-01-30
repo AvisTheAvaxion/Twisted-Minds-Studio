@@ -919,7 +919,6 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  isDashing: 0
   dashDistance: 5
   dashSpeed: 20
 --- !u!114 &397069379
@@ -1021,7 +1020,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397069375}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -1038,7 +1037,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!1 &416009001
 GameObject:

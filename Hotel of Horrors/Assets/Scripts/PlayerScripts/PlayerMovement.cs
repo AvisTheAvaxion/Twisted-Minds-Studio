@@ -114,11 +114,11 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Door.DoorLocations.East:
                     print("East");
-                    this.transform.position = door.assignedRoom.GetComponent<Room>().WestDoor.position - new Vector3(-0.1f,0,0);
+                    this.transform.position = door.assignedRoom.GetComponent<Room>().WestDoor.position - new Vector3(-0.1f,0,0.2f);
                     break;
                 case Door.DoorLocations.West:
                     print("West");
-                    this.transform.position = door.assignedRoom.GetComponent<Room>().EastDoor.position - new Vector3(1f, 0, 0);
+                    this.transform.position = door.assignedRoom.GetComponent<Room>().EastDoor.position - new Vector3(1f, 0, 0.2f);
                     break;
             }
         }

@@ -12,7 +12,6 @@ public class RoomManager : MonoBehaviour
         
         foreach(GameObject room in rooms)
         {
-            print(room.name);
             availableRooms.Add(room);
         }
         availableRooms.Remove(GameObject.Find("Test Room 1"));

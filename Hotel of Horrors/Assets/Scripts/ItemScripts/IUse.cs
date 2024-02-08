@@ -11,3 +11,8 @@ public interface IWeaponSkill
 {
     void WeaponSkill();
 }
+
+public interface IAttack
+{
+    void Attack();
+}

@@ -2,24 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestItem : MonoBehaviour, IUse
+public class TestItem : Item
 {
-    [SerializeField] string weaponName;
-    [SerializeField] string description;
-    [SerializeField] int effectValue;
-
-    public void Use()
+    public override void Use()
     {
-        Debug.Log("Item Used");
-    }
-
-    public string GetName()
-    {
-        return weaponName;
-    }
-
-    public string GetDescription()
-    {
-        return description;
+        Debug.Log($"Item {GetName()} Used");
     }
 }

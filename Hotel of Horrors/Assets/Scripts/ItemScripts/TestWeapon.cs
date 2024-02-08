@@ -1,46 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class TestWeapon : MonoBehaviour, IUse, IWeaponSkill
+public class TestWeapon : Weapon
 {
-    [SerializeField] string weaponName;
-    [SerializeField] string description;
-    [SerializeField] WeaponMode type;
-    [SerializeField] int damage;
-    [SerializeField] int attackSpeed;
-
-
-    public void Use()
+    public override void Attack()
     {
-        Debug.Log("Weapon Used");
+        Debug.Log($"Weapon {GetName()} Used");
     }
 
-    public void WeaponSkill()
+    public override void WeaponSkill()
     {
-        Debug.Log("WEAPON SKILL USED");
-    }
-
-    public string GetName()
-    {
-        return weaponName;
-    }
-
-    public string GetDescription()
-    {
-        return description;
-    }
-
-    public string GetWeaponMode()
-    {
-        return $"{type}";
-    }
-
-    protected enum WeaponMode
-    {
-        Melee,
-        Ranged,
-        None
+        Debug.Log($"WEAPON SKILL {GetName()} USED");
     }
 }

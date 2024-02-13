@@ -6,7 +6,7 @@ public class DeleteBullet : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.tag.Equals("Player"))
+        if ((this.tag.Equals("PlayerBullet") && !collision.gameObject.tag.Equals("Player")) || (this.tag.Equals("EnemyBullet") && !collision.gameObject.tag.Equals("Enemy")))
         {
             Destroy(gameObject);
         }

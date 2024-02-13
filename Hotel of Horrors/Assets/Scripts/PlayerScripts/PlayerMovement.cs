@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region VariableDeclarations
     [Header ("Object References")]
     [SerializeField] GameObject player;
     [SerializeField] Rigidbody2D rb;
@@ -25,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     Vector2 dashStartVector = new Vector2();
     RoomManager roomManager;
 
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    #region MovementLogic
     private void FixedUpdate()
     {
         if (movementVector != Vector2.zero)
@@ -86,7 +90,9 @@ public class PlayerMovement : MonoBehaviour
             isDashing = true;
         }
     }
+    #endregion
 
+    #region RoomTraversal
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject obj = collision.gameObject;
@@ -122,4 +128,5 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    #endregion
 }

@@ -4,26 +4,47 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    public List<GameObject> availableRooms;
+    public List<GameObject> westDoors;
+    public List<GameObject> eastDoors;
 
     private void Start()
     {
-        GameObject[] rooms = GameObject.FindGameObjectsWithTag("Room");
+        GameObject[] doors = GameObject.FindGameObjectsWithTag("WestDoor");
         
-        foreach(GameObject room in rooms)
+        foreach(GameObject theDoor in doors)
         {
-            availableRooms.Add(room);
+            westDoors.Add(theDoor);
         }
-        availableRooms.Remove(GameObject.Find("Test Room 1"));
 
+        doors = GameObject.FindGameObjectsWithTag("EastDoor");
+
+        foreach (GameObject theDoor in doors)
+        {
+            eastDoors.Add(theDoor);
+        }
     }
+
     /// <summary>
     /// Returns an available room to assign to a door
     /// </summary>
-
-    public GameObject GetNextRoom()
+    public GameObject GetNextRoom(Door.DoorLocations orientation)
     {
-        return availableRooms[Random.Range(0, availableRooms.Count)];
-
+        GameObject door;
+        switch (orientation)
+        {
+            case Door.DoorLocations.North:
+                break;
+            case Door.DoorLocations.South:
+                break;
+            case Door.DoorLocations.East:
+                door = westDoors[Random.Range(0, westDoors.Count)];
+                westDoors.Remove(door);
+                return door;
+            case Door.DoorLocations.West:
+                door = eastDoors[Random.Range(0, eastDoors.Count)];
+                eastDoors.Remove(door);
+                return door;
+        }
+        return eastDoors[0];
     }
 }

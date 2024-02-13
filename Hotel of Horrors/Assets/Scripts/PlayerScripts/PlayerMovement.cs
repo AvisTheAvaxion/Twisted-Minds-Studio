@@ -90,17 +90,16 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject obj = collision.gameObject;
-        if (obj.tag.Equals("Door"))
+        if (obj.tag.Equals("Door") || obj.tag.Equals("WestDoor")|| obj.tag.Equals("EastDoor") || obj.tag.Equals("NorthDoor")|| obj.tag.Equals("SouthDoor"))
         {
 
             Door door = obj.GetComponent<Door>();
 
             
 
-            if (door.assignedRoom == null)
+            if (door.assignedDoor == null)
             {
-                door.assignedRoom = roomManager.GetNextRoom();
-                roomManager.availableRooms.RemoveAt(roomManager.availableRooms.IndexOf(door.assignedRoom));
+                door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
             }
 
 
@@ -114,11 +113,11 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Door.DoorLocations.East:
                     print("East");
-                    this.transform.position = door.assignedRoom.GetComponent<Room>().WestDoor.position - new Vector3(-0.1f,0,0.2f);
+                    this.transform.position = door.assignedDoor.transform.position - new Vector3(-0.1f,0,0.2f);
                     break;
                 case Door.DoorLocations.West:
                     print("West");
-                    this.transform.position = door.assignedRoom.GetComponent<Room>().EastDoor.position - new Vector3(1f, 0, 0.2f);
+                    this.transform.position = door.assignedDoor.transform.position - new Vector3(1f, 0, 0.2f);
                     break;
             }
         }

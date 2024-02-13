@@ -11,7 +11,7 @@ public class Door : MonoBehaviour
 
     public DoorLocations doorLocation;
     private RoomManager roomManager;
-    [HideInInspector]public GameObject assignedRoom;
+    [HideInInspector]public GameObject assignedDoor;
 
     private void Start()
     {

@@ -2,20 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour, IUse
+public abstract class Useables : MonoBehaviour
 {
-    [SerializeField] string weaponName;
+    [SerializeField] string useableName;
     [SerializeField] string description;
-    [SerializeField] int effectValue;
 
-    public virtual void Use()
-    {
-        Debug.Log("Item Used");
-    }
+    public abstract void Use();
 
     public string GetName()
     {
-        return weaponName;
+        return useableName;
     }
 
     public string GetDescription()

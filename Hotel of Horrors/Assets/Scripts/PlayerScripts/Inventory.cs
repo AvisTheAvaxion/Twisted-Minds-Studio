@@ -4,23 +4,52 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] Weapon currentWeapon;
-    [SerializeField] Item currentItem;
+    [Header("Items")]
+    [SerializeField] List<Useables> inventoryItems;
+    [SerializeField] public Weapon currentWeapon;
+    [SerializeField] public Useables itemOne;
+    [SerializeField] public Useables itemTwo;
+
+    [Space]
+    [SerializeField] GameObject inventoryUI;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("TouchyTouchy");
-        if(collision.TryGetComponent<Weapon>(out Weapon weapon))
+        if (collision.GetComponent<Useables>())
         {
-            currentWeapon = weapon;
-            Debug.Log(weapon.GetDescription());
+            Useables useable = collision.GetComponent<Useables>();
+            Debug.Log(useable.GetDescription());
             collision.gameObject.SetActive(false);
-        }
-        else if(collision.TryGetComponent<Item>(out Item item))
-        {
-            currentItem = item;
-            Debug.Log(item.GetDescription());
-            collision.gameObject.SetActive(false);
+            inventoryItems.Add(useable);
+            if(currentWeapon == null && useable is Weapon)
+            {
+                currentWeapon = (Weapon)useable;
+            }
         }
     }
+
+    public void AssignAsCurrentWeapon(GameObject gameobjectWeapon)
+    {
+        Weapon weapon = gameobjectWeapon.GetComponent<Weapon>();
+        if(weapon != null)
+        {
+            currentWeapon = weapon;
+            //Insert code that is done on equip like moving gameobject beside the player
+        }
+    }
+
+    void OnToggleInventory()
+    {
+        if(inventoryUI.activeSelf == true)
+        {
+            inventoryUI.SetActive(false);
+        }
+        else
+        {
+            inventoryUI.SetActive(true);
+        }
+    }
+    
 }

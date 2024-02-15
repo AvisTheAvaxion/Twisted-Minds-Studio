@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestWeapon : Weapon
 {
-    public override void Attack()
+    public override void Use()
     {
         Debug.Log($"Weapon {GetName()} Used");
     }

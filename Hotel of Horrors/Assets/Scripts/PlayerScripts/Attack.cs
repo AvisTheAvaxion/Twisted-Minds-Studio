@@ -16,6 +16,8 @@ public class Attack : MonoBehaviour
     [SerializeField] GameObject meleeCrosshair;
     [SerializeField] GameObject meleeTrail;
     Animator animator;
+
+    Inventory inventory;
     protected enum AttackModes
     {
         Melee,
@@ -26,6 +28,7 @@ public class Attack : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        inventory = GetComponent<Inventory>();
     }
 
     private void FixedUpdate()
@@ -57,6 +60,10 @@ public class Attack : MonoBehaviour
                 meleeTrail.SetActive(true);
                 animator.SetTrigger("isAttacking");
             }
+        }
+        if (inventory.currentWeapon != null)
+        {
+            inventory.currentWeapon.Use();
         }
     }
 

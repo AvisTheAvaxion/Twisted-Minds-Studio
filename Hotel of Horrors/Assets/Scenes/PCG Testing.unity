@@ -12264,6 +12264,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7788025929742992308, guid: ea46ee4f1e34d8f479d67431eda83ea2, type: 3}
+      propertyPath: stagger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788025929742992308, guid: ea46ee4f1e34d8f479d67431eda83ea2, type: 3}
+      propertyPath: oscillate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788025929742992308, guid: ea46ee4f1e34d8f479d67431eda83ea2, type: 3}
+      propertyPath: angleSpread
+      value: 89
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788025929742992308, guid: ea46ee4f1e34d8f479d67431eda83ea2, type: 3}
+      propertyPath: projectilesPerBurst
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7926034793545773373, guid: ea46ee4f1e34d8f479d67431eda83ea2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.598
@@ -12310,7 +12326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8196738049676010136, guid: ea46ee4f1e34d8f479d67431eda83ea2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

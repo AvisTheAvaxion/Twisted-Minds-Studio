@@ -7,10 +7,15 @@ using UnityEngine;
 public class BasicShooter : MonoBehaviour
 {
     [SerializeField] GameObject bulletPrefab;
+    [SerializeField] float startingDistance = 0.1f;
     [SerializeField] float bulletForce = 20f;
     [SerializeField] int burstCount = 3;
+    [SerializeField] int projectilesPerBurst;
+    [SerializeField] [Range(0, 359)] float angleSpread;
     [SerializeField] float timeBetweenBursts = 1f;
     [SerializeField] float timeBetweenShots = .3f;
+    [SerializeField] bool stagger;
+    [SerializeField] bool oscillate;
 
     bool isShooting = false;
 
@@ -31,16 +36,47 @@ public class BasicShooter : MonoBehaviour
     {
         isShooting = true;
 
-        for(int i = 0; i < burstCount; i++)
+        float startAngle, currentAngle, angleStep, endAngle;
+        float timeTimeBetweenProjectiles = 0f;
+
+        TargetConeOfInfluence(out startAngle, out currentAngle, out angleStep, out endAngle);
+
+        if (stagger)
+            timeTimeBetweenProjectiles = timeBetweenBursts / projectilesPerBurst;
+
+        for (int i = 0; i < burstCount; i++)
         {
-            GameObject newBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            if(!oscillate)
+            {
+                TargetConeOfInfluence(out startAngle, out currentAngle, out angleStep, out endAngle);
+            }
+            else
+            {
+                currentAngle = endAngle;
+                endAngle = startAngle;
+                startAngle = currentAngle;
+                angleStep *= -1;
+            }
+
+            for (int j = 0; j < projectilesPerBurst; j++)
+            {
+                Vector2 pos = FindBulletSpawnPos(currentAngle);
+                GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
 
 
-            var dir = newBullet.transform.position - GameObject.Find("Player").transform.position;
-            var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
-            newBullet.transform.rotation = Quaternion.AngleAxis(angle, -Vector3.forward);
+                //var dir = newBullet.transform.position - GameObject.Find("Player").transform.position;
+                //var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+                newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);
 
-            newBullet.GetComponent<Rigidbody2D>().AddForce(-newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
+                newBullet.GetComponent<Rigidbody2D>().AddForce(-newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
+
+                currentAngle += angleStep;
+
+                if (stagger)
+                    yield return new WaitForSeconds(timeTimeBetweenProjectiles);
+            }
+
+            currentAngle = startAngle;
 
             yield return new WaitForSeconds(timeBetweenShots);
         }
@@ -50,5 +86,35 @@ public class BasicShooter : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenBursts);
 
         isShooting = false;
+    }
+
+    Vector2 FindBulletSpawnPos(float currentAngle)
+    {
+        float x = transform.position.x + startingDistance * Mathf.Cos(currentAngle * Mathf.Deg2Rad);
+        float y = transform.position.y + startingDistance * Mathf.Sin(currentAngle * Mathf.Deg2Rad);
+
+        Vector2 pos = new Vector2(x, y);
+
+        return pos;
+    }
+
+    private void TargetConeOfInfluence(out float startAngle, out float currentAngle, out float angleStep, out float endAngle)
+    {
+        var dir = this.transform.position - GameObject.Find("Player").transform.position;
+        var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+
+        startAngle = angle;
+        endAngle = angle;
+        currentAngle = angle;
+        float halfAngleSpread = 0f;
+        angleStep = 0;
+        if (angleSpread != 0)
+        {
+            angleStep = angleSpread / (projectilesPerBurst - 1);
+            halfAngleSpread = angleSpread / 2f;
+            startAngle = angle - halfAngleSpread;
+            endAngle = angle + halfAngleSpread;
+            currentAngle = startAngle;
+        }
     }
 }

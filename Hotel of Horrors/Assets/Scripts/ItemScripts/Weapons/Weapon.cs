@@ -2,28 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using Attacks;
 
-public abstract class Weapon : Useables
+[CreateAssetMenu(fileName = "Weapon", menuName = "Useables/Weapon", order = 0)]
+public class Weapon : Useables
 {
     
-    [SerializeField] WeaponMode type;
+    [SerializeField] AttackModes type;
+    [SerializeField] AnimationClip attackAnim;
+    [SerializeField] Sprite weaponSprite;
     [SerializeField] int damage;
     [SerializeField] int attackSpeed;
 
-    public virtual void WeaponSkill()
+    public override void Use()
+    {
+        Debug.Log("WEAPON USED");
+    }
+    public void WeaponSkill()
     {
         Debug.Log("WEAPON SKILL USED");
     }
 
-    public string GetWeaponMode()
+    public AttackModes GetWeaponMode()
     {
-        return $"{type}";
+        return type;
     }
 
-    protected enum WeaponMode
+    public Sprite GetWeaponSprite()
     {
-        Melee,
-        Ranged,
-        None
+        return weaponSprite;
+    }
+
+    public AnimationClip GetWeaponAnimation()
+    {
+        return attackAnim;
     }
 }
+

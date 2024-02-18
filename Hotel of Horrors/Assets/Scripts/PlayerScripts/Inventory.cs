@@ -10,34 +10,43 @@ public class Inventory : MonoBehaviour
     [SerializeField] public Useables itemOne;
     [SerializeField] public Useables itemTwo;
 
-    [Space]
+    [Space(10)]
     [SerializeField] GameObject inventoryUI;
+    [SerializeField] SpriteRenderer weaponPlacement;
+    [SerializeField] Animator animator;
+    AnimatorOverrideController overrideController;
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+
+        overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        animator.runtimeAnimatorController = overrideController;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("TouchyTouchy");
-        if (collision.GetComponent<Useables>())
+        if (collision.GetComponent<ItemData>())
         {
-            Useables useable = collision.GetComponent<Useables>();
+            Debug.Log("PickUp Get");
+            Useables useable = collision.GetComponent<ItemData>().GetItemData();
             Debug.Log(useable.GetDescription());
             collision.gameObject.SetActive(false);
             inventoryItems.Add(useable);
             if(currentWeapon == null && useable is Weapon)
             {
                 currentWeapon = (Weapon)useable;
+                EquipWeapon(currentWeapon);
             }
         }
     }
 
-    public void AssignAsCurrentWeapon(GameObject gameobjectWeapon)
+    public void EquipWeapon(Weapon weapon)
     {
-        Weapon weapon = gameobjectWeapon.GetComponent<Weapon>();
-        if(weapon != null)
-        {
-            currentWeapon = weapon;
-            //Insert code that is done on equip like moving gameobject beside the player
-        }
+        weaponPlacement.sprite = currentWeapon.GetWeaponSprite();
+        overrideController["WeaponAttack"] = currentWeapon.GetWeaponAnimation();
+        Debug.Log(overrideController["TestAttackAnim"] = currentWeapon.GetWeaponAnimation());
+        //Insert code that is done on equip like moving gameobject beside the player / Swaping Sprites
     }
 
     void OnToggleInventory()

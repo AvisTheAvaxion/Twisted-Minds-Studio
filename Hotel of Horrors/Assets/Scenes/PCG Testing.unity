@@ -1164,6 +1164,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!212 &152915881 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3399343850646711739, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
+  m_PrefabInstance: {fileID: 897906649339115200}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &156929158
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,7 +1535,7 @@ GameObject:
   - component: {fileID: 205322155}
   - component: {fileID: 205322154}
   - component: {fileID: 205322157}
-  - component: {fileID: 205322156}
+  - component: {fileID: 205322158}
   m_Layer: 0
   m_Name: TestWeapon
   m_TagString: Untagged
@@ -1605,23 +1610,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1828116748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &205322156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 205322152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbc43bf91670a3942b14d0ad27dbaa72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useableName: balls
-  description: You know who else is the honored one?
-  type: 0
-  damage: 999
-  attackSpeed: 999
 --- !u!61 &205322157
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1667,6 +1655,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &205322158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205322152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b158131fa1c684e49bcddccfd64b6148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisItemData: {fileID: 11400000, guid: 4d6c791063494ee43bb3e49368530d56, type: 2}
 --- !u!1 &217120597
 GameObject:
   m_ObjectHideFlags: 0
@@ -3964,11 +3965,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 96262897}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &594897733 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4703578398724970413, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
-  m_PrefabInstance: {fileID: 897906649339115200}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &603725529
 GameObject:
   m_ObjectHideFlags: 0
@@ -4313,7 +4309,7 @@ GameObject:
   - component: {fileID: 618343303}
   - component: {fileID: 618343302}
   - component: {fileID: 618343304}
-  - component: {fileID: 618343301}
+  - component: {fileID: 618343305}
   m_Layer: 0
   m_Name: TestItem
   m_TagString: Untagged
@@ -4321,21 +4317,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &618343301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618343300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d1d394c154f81545895ffba5b92a645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useableName: ligma
-  description: Yellow Gatorade
-  effectValue: 2
 --- !u!212 &618343302
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4448,6 +4429,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &618343305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618343300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b158131fa1c684e49bcddccfd64b6148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisItemData: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
 --- !u!1 &679189811
 GameObject:
   m_ObjectHideFlags: 0
@@ -9754,7 +9748,7 @@ GameObject:
   - component: {fileID: 1819321606}
   - component: {fileID: 1819321605}
   - component: {fileID: 1819321607}
-  - component: {fileID: 1819321604}
+  - component: {fileID: 1819321608}
   m_Layer: 0
   m_Name: TestMemento
   m_TagString: Untagged
@@ -9762,20 +9756,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1819321604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819321603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2cacbe6bd242564ea7f8379b5a5247f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useableName: Memento Poggers
-  description: KAMEHAMEHAAAAAAAAAAAA
 --- !u!212 &1819321605
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9878,6 +9858,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &1819321608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819321603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b158131fa1c684e49bcddccfd64b6148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisItemData: {fileID: 11400000, guid: 866273d950dfe9a4290791e45d363b3d, type: 2}
 --- !u!1 &1822136772
 GameObject:
   m_ObjectHideFlags: 0
@@ -10347,7 +10340,7 @@ GameObject:
   - component: {fileID: 1900578479}
   - component: {fileID: 1900578482}
   - component: {fileID: 1900578481}
-  - component: {fileID: 1900578480}
+  - component: {fileID: 1900578483}
   m_Layer: 0
   m_Name: TestAbility
   m_TagString: Untagged
@@ -10370,20 +10363,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1828116748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1900578480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900578478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3548a2ca4ad232a4d912f8740db3d950, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useableName: Fuck
-  description: FUCKFUCKFUCK
 --- !u!61 &1900578481
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10481,6 +10460,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1900578483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900578478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b158131fa1c684e49bcddccfd64b6148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisItemData: {fileID: 11400000, guid: a98a851f20b9e2e45a3070820834a653, type: 2}
 --- !u!1 &1901598958
 GameObject:
   m_ObjectHideFlags: 0
@@ -12160,41 +12152,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 185288013532037267, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
-      propertyPath: attackAnim
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 185288013532037267, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
-      propertyPath: meleeTrail
-      value: 
-      objectReference: {fileID: 594897733}
-    - target: {fileID: 185288013532037267, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
       propertyPath: rangedCrosshair
       value: 
       objectReference: {fileID: 4191549174051145663}
-    - target: {fileID: 185288013532037267, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
-      propertyPath: currentAttackMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1105292500563175251, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1131000605156753510, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1131000605156753510, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1200676454965734283, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 908372697}
-    - target: {fileID: 4703578398724970413, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
-      propertyPath: m_Name
-      value: Melee Hit-Trail
-      objectReference: {fileID: 0}
+    - target: {fileID: 1200676454965734283, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
+      propertyPath: weaponPlacement
+      value: 
+      objectReference: {fileID: 152915881}
     - target: {fileID: 4703578398724970413, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -12202,14 +12170,6 @@ PrefabInstance:
     - target: {fileID: 4734998692742947471, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5058930755451402306, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: e40b709dd9de14040beaba820d90de43, type: 2}
-    - target: {fileID: 6083553962724772790, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7503329020945129871, guid: 3140ea62fed06534faaf363d27bd1c9c, type: 3}
       propertyPath: m_LocalPosition.x

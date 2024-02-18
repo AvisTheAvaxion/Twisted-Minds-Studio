@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Useables : MonoBehaviour
+public abstract class Useables : ScriptableObject
 {
     [SerializeField] string useableName;
-    [SerializeField] string description;
+    [SerializeField, TextArea] string description;
 
     public abstract void Use();
 

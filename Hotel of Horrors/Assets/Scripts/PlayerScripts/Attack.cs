@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Attacks;
 
 public class Attack : MonoBehaviour
 {
@@ -18,12 +19,7 @@ public class Attack : MonoBehaviour
     Animator animator;
 
     Inventory inventory;
-    protected enum AttackModes
-    {
-        Melee,
-        Ranged,
-        None
-    }
+    
 
     private void Awake()
     {
@@ -33,6 +29,15 @@ public class Attack : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(inventory.currentWeapon != null && inventory.currentWeapon.GetWeaponMode() == AttackModes.Melee)
+        {
+            currentAttackMode = AttackModes.Melee;
+        }
+        else if(inventory.currentWeapon != null)
+        {
+            currentAttackMode = AttackModes.Ranged;
+        }
+
         if (currentAttackMode.Equals(AttackModes.Melee))
         {
             rangedCrosshair.SetActive(false);
@@ -70,5 +75,15 @@ public class Attack : MonoBehaviour
     public void DisableTrail()
     {
         meleeTrail.SetActive(false);
+    }
+}
+
+namespace Attacks
+{
+    public enum AttackModes
+    {
+        Melee,
+        Ranged,
+        None
     }
 }

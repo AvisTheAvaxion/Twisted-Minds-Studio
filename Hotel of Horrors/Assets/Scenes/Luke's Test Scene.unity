@@ -123,6 +123,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &104528423
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.12573089
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.576
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.006482818
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6865958303660939511, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: m_Name
+      value: ScalpelPatient
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
 --- !u!1 &158729689
 GameObject:
   m_ObjectHideFlags: 0
@@ -5065,71 +5122,6 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!1001 &1620595989416223595
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.459
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6865958303660939511, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_Name
-      value: ScalpelPatient
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004313259983520654, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 486003572, guid: 0b8c4bf864db529439815cf82586ea7b, type: 3}
-    - target: {fileID: 9004313259983520654, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
 --- !u!1001 &7624087247077245771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5210,5 +5202,5 @@ SceneRoots:
   - {fileID: 1095017932}
   - {fileID: 290714501}
   - {fileID: 7624087247077245771}
-  - {fileID: 1620595989416223595}
   - {fileID: 2119181386}
+  - {fileID: 104528423}

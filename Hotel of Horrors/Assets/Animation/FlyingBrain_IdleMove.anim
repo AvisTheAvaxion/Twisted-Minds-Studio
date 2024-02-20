@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FlyingBrain_Idle
+  m_Name: FlyingBrain_IdleMove
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -28,7 +28,7 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.16666667
+        time: 0.25
         value: {x: 0, y: -0.01, z: 0}
         inSlope: {x: Infinity, y: Infinity, z: Infinity}
         outSlope: {x: Infinity, y: Infinity, z: Infinity}
@@ -37,8 +37,8 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.33333334
-        value: {x: 0, y: -0.0202, z: 0}
+        time: 0.5
+        value: {x: 0, y: -0.02, z: 0}
         inSlope: {x: Infinity, y: Infinity, z: Infinity}
         outSlope: {x: Infinity, y: Infinity, z: Infinity}
         tangentMode: 0
@@ -46,7 +46,7 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.53333336
+        time: 0.8333333
         value: {x: 0, y: -0.01, z: 0}
         inSlope: {x: Infinity, y: Infinity, z: Infinity}
         outSlope: {x: Infinity, y: Infinity, z: Infinity}
@@ -55,7 +55,7 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.75
+        time: 1
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: Infinity, y: Infinity, z: Infinity}
         outSlope: {x: Infinity, y: Infinity, z: Infinity}
@@ -66,41 +66,41 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: ArmTendrils
+    path: FlyingBrainSprite/ArmTendrils
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -802200813, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - time: 0.16666667
-      value: {fileID: -629443991, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - time: 0.33333334
-      value: {fileID: -565436961, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - time: 0.53333336
-      value: {fileID: 1446120476, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - time: 0.75
-      value: {fileID: -802200813, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+      value: {fileID: -708768367, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - time: 0.25
+      value: {fileID: -1368792199, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - time: 0.5
+      value: {fileID: 1754689700, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - time: 0.8333333
+      value: {fileID: 741431811, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - time: 1
+      value: {fileID: -708768367, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
     attribute: m_Sprite
-    path: 
+    path: FlyingBrainSprite
     classID: 212
     script: {fileID: 0}
     flags: 2
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 790220188, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - time: 0.16666667
-      value: {fileID: -881565909, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - time: 0.33333334
-      value: {fileID: 790220188, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - time: 0.53333336
-      value: {fileID: -881565909, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - time: 0.75
-      value: {fileID: 790220188, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+      value: {fileID: -750934471, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - time: 0.25
+      value: {fileID: -481236595, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - time: 0.5
+      value: {fileID: 2083658352, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - time: 0.8333333
+      value: {fileID: -349042409, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - time: 1
+      value: {fileID: -750934471, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
     attribute: m_Sprite
-    path: ArmTendrils
+    path: FlyingBrainSprite/ArmTendrils
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -112,7 +112,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 4077648345
+      path: 2445684184
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -121,7 +121,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 0
+      path: 4149892226
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -130,7 +130,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 4077648345
+      path: 2445684184
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -139,22 +139,22 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -802200813, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - {fileID: -629443991, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - {fileID: -565436961, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - {fileID: 1446120476, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - {fileID: -802200813, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - {fileID: 790220188, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - {fileID: -881565909, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - {fileID: 790220188, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - {fileID: -881565909, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
-    - {fileID: 790220188, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: -708768367, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: -1368792199, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: 1754689700, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: 741431811, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: -708768367, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: -750934471, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: -481236595, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: 2083658352, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: -349042409, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: -750934471, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.76666665
+    m_StopTime: 1.0166667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -184,7 +184,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.16666667
+        time: 0.25
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -193,7 +193,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.33333334
+        time: 0.5
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -202,7 +202,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.53333336
+        time: 0.8333333
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -211,7 +211,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.75
+        time: 1
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -223,7 +223,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: ArmTendrils
+    path: FlyingBrainSprite/ArmTendrils
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -241,7 +241,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.16666667
+        time: 0.25
         value: -0.01
         inSlope: Infinity
         outSlope: Infinity
@@ -250,8 +250,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.33333334
-        value: -0.0202
+        time: 0.5
+        value: -0.02
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -259,7 +259,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.53333336
+        time: 0.8333333
         value: -0.01
         inSlope: Infinity
         outSlope: Infinity
@@ -268,7 +268,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.75
+        time: 1
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -280,7 +280,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: ArmTendrils
+    path: FlyingBrainSprite/ArmTendrils
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -298,7 +298,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.16666667
+        time: 0.25
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -307,7 +307,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.33333334
+        time: 0.5
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -316,7 +316,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.53333336
+        time: 0.8333333
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -325,7 +325,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.75
+        time: 1
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -337,7 +337,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: ArmTendrils
+    path: FlyingBrainSprite/ArmTendrils
     classID: 4
     script: {fileID: 0}
     flags: 0

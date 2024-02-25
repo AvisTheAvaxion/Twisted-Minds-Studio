@@ -21,7 +21,7 @@ public class BasicShooter : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Attack();
+        //Attack();
     }
 
     public void Attack()

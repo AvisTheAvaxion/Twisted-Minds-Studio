@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -15,13 +16,23 @@ public class Inventory : MonoBehaviour
     [SerializeField] SpriteRenderer weaponPlacement;
     [SerializeField] Animator animator;
     AnimatorOverrideController overrideController;
+    [SerializeField] List<ItemSlot> slots;
 
     private void Awake()
     {
+        inventoryUI.SetActive(true);
+        inventoryUI.SetActive(false);
         animator = GetComponent<Animator>();
 
         overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
         animator.runtimeAnimatorController = overrideController;
+        slots = inventoryUI.GetComponentsInChildren<ItemSlot>().ToList();
+        foreach (ItemSlot slot in slots)
+        {
+            int order = 1;
+            slot.gameObject.transform.GetChild(0).GetComponent<Canvas>().sortingOrder = order;
+            order++;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -33,6 +44,7 @@ public class Inventory : MonoBehaviour
             Debug.Log(useable.GetDescription());
             collision.gameObject.SetActive(false);
             inventoryItems.Add(useable);
+            SlotInItem(useable);
             if(currentWeapon == null && useable is Weapon)
             {
                 currentWeapon = (Weapon)useable;
@@ -43,10 +55,26 @@ public class Inventory : MonoBehaviour
 
     public void EquipWeapon(Weapon weapon)
     {
-        weaponPlacement.sprite = currentWeapon.GetWeaponSprite();
+        weaponPlacement.sprite = currentWeapon.GetSprite();
         overrideController["WeaponAttack"] = currentWeapon.GetWeaponAnimation();
         Debug.Log(overrideController["TestAttackAnim"] = currentWeapon.GetWeaponAnimation());
         //Insert code that is done on equip like moving gameobject beside the player / Swaping Sprites
+    }
+
+    public void SlotInItem(Useables item)
+    {
+        foreach(ItemSlot slot in slots)
+        {
+            if(slot.itemHeld != null)
+            {
+                continue;
+            }
+            else
+            {
+                slot.itemHeld = item;
+                break;
+            }
+        }
     }
 
     void OnToggleInventory()
@@ -54,10 +82,12 @@ public class Inventory : MonoBehaviour
         if(inventoryUI.activeSelf == true)
         {
             inventoryUI.SetActive(false);
+            Cursor.visible = false;
         }
         else
         {
             inventoryUI.SetActive(true);
+            Cursor.visible = true;
         }
     }
     

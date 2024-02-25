@@ -10,7 +10,6 @@ public class Weapon : Useables
     
     [SerializeField] AttackModes type;
     [SerializeField] AnimationClip attackAnim;
-    [SerializeField] Sprite weaponSprite;
     [SerializeField] int damage;
     [SerializeField] int attackSpeed;
 
@@ -23,14 +22,19 @@ public class Weapon : Useables
         Debug.Log("WEAPON SKILL USED");
     }
 
+    public int GetDamage()
+    {
+        return damage;
+    }
+
+    public int GetAttackSpeed()
+    {
+        return attackSpeed;
+    }
+
     public AttackModes GetWeaponMode()
     {
         return type;
-    }
-
-    public Sprite GetWeaponSprite()
-    {
-        return weaponSprite;
     }
 
     public AnimationClip GetWeaponAnimation()

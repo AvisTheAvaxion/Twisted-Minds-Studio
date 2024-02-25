@@ -6,6 +6,7 @@ public abstract class Useables : ScriptableObject
 {
     [SerializeField] string useableName;
     [SerializeField, TextArea] string description;
+    [SerializeField] Sprite sprite;
 
     public abstract void Use();
 
@@ -17,5 +18,9 @@ public abstract class Useables : ScriptableObject
     public string GetDescription()
     {
         return description;
+    }
+    public Sprite GetSprite()
+    {
+        return sprite;
     }
 }

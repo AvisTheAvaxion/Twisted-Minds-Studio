@@ -7,6 +7,11 @@ public class Item : Useables
 {
     [SerializeField] int potency;
 
+    public int GetPotency()
+    {
+        return potency;
+    }
+
     public override void Use()
     {
         Debug.Log($"Item {GetName()} Used");

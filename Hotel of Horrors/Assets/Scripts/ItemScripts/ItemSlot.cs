@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] public Useables itemHeld;
     Image itemImage;
@@ -20,16 +21,31 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     TextMeshProUGUI itemstat1;
     TextMeshProUGUI itemstat2;
     TextMeshProUGUI itemstat3;
+    [SerializeField] bool IsImportantSlots;
+    [SerializeField] ItemSlot weaponSlot;
+    [SerializeField] ItemSlot freeSlot1;
+    [SerializeField] ItemSlot freeSlot2;
+    [SerializeField] GameObject importantSlotParent;
     // Start is called before the first frame update
     void Start()
     {
         itemImage = GetComponent<Image>();
+        if (!IsImportantSlots)
+        {
+            importantSlotParent = this.transform.parent
+                .transform.parent
+                .transform.parent
+                .transform.parent
+                .transform.GetChild(0).gameObject;
+            weaponSlot = importantSlotParent.transform.GetChild(0).GetComponentInChildren<ItemSlot>();
+            freeSlot1 = importantSlotParent.transform.GetChild(1).GetComponentInChildren<ItemSlot>();
+            freeSlot2 = importantSlotParent.transform.GetChild(2).GetComponentInChildren<ItemSlot>();
+        }
         slotEmptyColor = new Color(1, 1, 1, 0);
         slotFilledColor = new Color(1, 1, 1, 1);
         if (itemHeld != null)
         {
-            itemImage.color = slotFilledColor;
-            itemImage.sprite = itemHeld.GetSprite();
+            UpdateImage();
         }
         else
         {
@@ -41,6 +57,12 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         itemstat1 = transform.GetChild(0).transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         itemstat2 = transform.GetChild(0).transform.GetChild(3).GetComponent<TextMeshProUGUI>();
         itemstat3 = transform.GetChild(0).transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+    }
+
+    public void UpdateImage()
+    {
+        itemImage.color = slotFilledColor;
+        itemImage.sprite = itemHeld.GetSprite();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -75,6 +97,28 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
 
             expandedMenu.SetActive(true);
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left && itemHeld != null)
+        {
+            if (itemHeld.GetType() == typeof(Weapon))
+            {
+                weaponSlot.itemHeld = this.itemHeld;
+                weaponSlot.UpdateImage();
+            }
+            if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.Q))
+            {
+                freeSlot1.itemHeld = this.itemHeld;
+                freeSlot1.UpdateImage();
+            }
+            if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.E))
+            {
+                freeSlot2.itemHeld = this.itemHeld;
+                freeSlot2.UpdateImage();
+            }
         }
     }
 

@@ -17,6 +17,9 @@ public class Inventory : MonoBehaviour
     [SerializeField] Animator animator;
     AnimatorOverrideController overrideController;
     [SerializeField] List<ItemSlot> slots;
+    [SerializeField] ItemSlot weaponSlot;
+    [SerializeField] ItemSlot freeSlot1;
+    [SerializeField] ItemSlot freeSlot2;
 
     private void Awake()
     {
@@ -63,10 +66,12 @@ public class Inventory : MonoBehaviour
 
     public void SlotInItem(Useables item)
     {
+        int skipThree = 0;
         foreach(ItemSlot slot in slots)
         {
-            if(slot.itemHeld != null)
+            if(slot.itemHeld != null || skipThree < 3)
             {
+                skipThree++;
                 continue;
             }
             else
@@ -74,6 +79,7 @@ public class Inventory : MonoBehaviour
                 slot.itemHeld = item;
                 break;
             }
+            
         }
     }
 

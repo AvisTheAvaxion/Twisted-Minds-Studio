@@ -34615,6 +34615,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1484788740}
   m_CullTransparentMesh: 1
+--- !u!1 &1485638544 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8196738049676010136, guid: ea46ee4f1e34d8f479d67431eda83ea2, type: 3}
+  m_PrefabInstance: {fileID: 2947144084395748673}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1485638545 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7788025929742992308, guid: ea46ee4f1e34d8f479d67431eda83ea2, type: 3}
+  m_PrefabInstance: {fileID: 2947144084395748673}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485638544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c15647212fe424db2439547f5944fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1485638548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485638544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d765850a736094abac0d1264694126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shooterClass: {fileID: 1485638545}
+  currentState: 0
+  moveSpeed: 2
+  currentRoom: {fileID: 1443615033}
+  roomRadius: 10
+  aggroRadius: 9
+  targetDistFromPlayer: 7
 --- !u!1 &1514321150
 GameObject:
   m_ObjectHideFlags: 0
@@ -49111,7 +49146,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8196738049676010136, guid: ea46ee4f1e34d8f479d67431eda83ea2, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1485638548}
   m_SourcePrefab: {fileID: 100100000, guid: ea46ee4f1e34d8f479d67431eda83ea2, type: 3}
 --- !u!1001 &4191549174051145662
 PrefabInstance:

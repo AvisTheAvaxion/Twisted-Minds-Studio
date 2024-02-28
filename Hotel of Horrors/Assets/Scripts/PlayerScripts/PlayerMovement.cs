@@ -6,6 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     #region VariableDeclarations
+    [Header("Animators/Controllers")]
+    [SerializeField] Animator animator;
+    [SerializeField] RuntimeAnimatorController frontController;
+    [SerializeField] AnimatorOverrideController backController;
+    [SerializeField] AnimatorOverrideController leftController;
+    [SerializeField] AnimatorOverrideController rightController;
+
     [Header ("Object References")]
     [SerializeField] GameObject player;
     [SerializeField] Rigidbody2D rb;
@@ -33,6 +40,13 @@ public class PlayerMovement : MonoBehaviour
     {
         playerTrans = player.transform;
         roomManager = GameObject.Find("Room Manager").GetComponent<RoomManager>();
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
+
+        animator.SetBool("isRunning", false);
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isHolding", false);
     }
 
     // Update is called once per frame
@@ -80,6 +94,28 @@ public class PlayerMovement : MonoBehaviour
     public void OnWASD(InputValue inputValue)
     {
         movementVector = inputValue.Get<Vector2>();
+
+        if(Mathf.Abs(movementVector.x) >= 0.1f || Mathf.Abs(movementVector.y) >= 0.1f)
+        {
+            animator.SetBool("isWalking", true);
+        } else
+        {
+            animator.SetBool("isWalking", false);
+        }
+
+        if(movementVector.y >= 0.1f)
+        {
+            animator.runtimeAnimatorController = backController;
+        } else if (movementVector.y <= -0.1f)
+        {
+            animator.runtimeAnimatorController = frontController;
+        } else if (movementVector.x <= -0.1f)
+        {
+            animator.runtimeAnimatorController = leftController;
+        } else if (movementVector.x >= 0.1f)
+        {
+            animator.runtimeAnimatorController = rightController;
+        }
     }
 
     public void OnShift(InputValue inputValue)
@@ -88,6 +124,8 @@ public class PlayerMovement : MonoBehaviour
         {
             dashStartVector = rb.position;
             isDashing = true;
+
+            animator.SetTrigger("Dash");
         }
     }
     #endregion

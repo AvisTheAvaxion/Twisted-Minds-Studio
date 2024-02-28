@@ -103,7 +103,7 @@ public class EnemyStates : MonoBehaviour
             {
                 GetPosBetweenPlayer();
                 transform.position = targetPos;
-                print("moving in attack " + targetPos);
+                //print("moving in attack " + targetPos);
             }
             else
             {

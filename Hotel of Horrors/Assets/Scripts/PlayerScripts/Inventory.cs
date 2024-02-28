@@ -17,9 +17,6 @@ public class Inventory : MonoBehaviour
     [SerializeField] Animator animator;
     AnimatorOverrideController overrideController;
     [SerializeField] List<ItemSlot> slots;
-    [SerializeField] ItemSlot weaponSlot;
-    [SerializeField] ItemSlot freeSlot1;
-    [SerializeField] ItemSlot freeSlot2;
 
     private void Awake()
     {

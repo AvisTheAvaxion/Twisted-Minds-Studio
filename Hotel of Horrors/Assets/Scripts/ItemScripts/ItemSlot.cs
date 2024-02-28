@@ -22,13 +22,15 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     TextMeshProUGUI itemstat2;
     TextMeshProUGUI itemstat3;
     [SerializeField] bool IsImportantSlots;
-    [SerializeField] ItemSlot weaponSlot;
-    [SerializeField] ItemSlot freeSlot1;
-    [SerializeField] ItemSlot freeSlot2;
+    ItemSlot weaponSlot;
+    ItemSlot freeSlot1;
+    ItemSlot freeSlot2;
     [SerializeField] GameObject importantSlotParent;
+    Inventory inventory;
     // Start is called before the first frame update
     void Start()
     {
+        inventory = FindObjectOfType<Inventory>();
         itemImage = GetComponent<Image>();
         if (!IsImportantSlots)
         {
@@ -108,16 +110,19 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             {
                 weaponSlot.itemHeld = this.itemHeld;
                 weaponSlot.UpdateImage();
+                inventory.currentWeapon = (Weapon)this.itemHeld;
             }
             if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.Q))
             {
                 freeSlot1.itemHeld = this.itemHeld;
                 freeSlot1.UpdateImage();
+                inventory.itemOne = this.itemHeld;
             }
             if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.E))
             {
                 freeSlot2.itemHeld = this.itemHeld;
                 freeSlot2.UpdateImage();
+                inventory.itemTwo = this.itemHeld;
             }
         }
     }

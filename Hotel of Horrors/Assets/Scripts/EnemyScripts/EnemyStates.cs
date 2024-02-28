@@ -62,9 +62,9 @@ public class EnemyStates : MonoBehaviour
     void Idle()
     {
         //starts patrolling when the player is in the room
-        if(GetDistanceToPlayer() < 20)
+        if(GetDistanceToPlayer() < 5)
         {
-            currentState = States.patrolling;
+            currentState = States.fighting;
         }
     }
 
@@ -76,7 +76,7 @@ public class EnemyStates : MonoBehaviour
         dir *= roomRadius; //Multiply by the radius to determine how far.
         dir += transform.position; //This makes the new position relative to the enemy that is moving.
 
-        if (Vector3.Distance(this.transform.position, dir) > 1)
+        if (Vector3.Distance(this.transform.position, dir) > .5)
         {
             print("moving");
             var step = moveSpeed * Time.deltaTime; // calculate distance to move

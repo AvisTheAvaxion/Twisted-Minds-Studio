@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7926034793545773373}
   - component: {fileID: 7950011724894432250}
+  - component: {fileID: 1747087493391859930}
   - component: {fileID: 7788025929742992308}
   m_Layer: 0
   m_Name: ShooterEnemy
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.90188676, g: 0.37668988, b: 0.08678531, a: 1}
   m_FlipX: 0
@@ -85,6 +86,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1747087493391859930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8196738049676010136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d765850a736094abac0d1264694126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shooterClass: {fileID: 7788025929742992308}
+  currentState: 0
+  moveSpeed: 2
+  currentRoom: {fileID: 0}
+  roomRadius: 10
+  aggroRadius: 9
+  targetDistFromPlayer: 7
 --- !u!114 &7788025929742992308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +118,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
+  startingDistance: 0.1
   bulletForce: 10
   burstCount: 3
+  projectilesPerBurst: 8
+  angleSpread: 89
   timeBetweenBursts: 1
   timeBetweenShots: 0.3
+  stagger: 1
+  oscillate: 1

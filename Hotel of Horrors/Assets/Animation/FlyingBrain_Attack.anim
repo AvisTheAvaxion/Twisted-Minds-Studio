@@ -26,8 +26,10 @@ AnimationClip:
       value: {fileID: 1724204341, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
     - time: 0.31666666
       value: {fileID: -346854945, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - time: 0.5
+      value: {fileID: -346854945, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
     attribute: m_Sprite
-    path: FlyingBrainSprite
+    path: FlyingBrainSprite/ArmTendrils
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -39,7 +41,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 4149892226
+      path: 2445684184
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -51,12 +53,13 @@ AnimationClip:
     - {fileID: -1533836399, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
     - {fileID: 1724204341, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
     - {fileID: -346854945, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
+    - {fileID: -346854945, guid: a7a6802a2ac40a54d8400c3ba949b288, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.33333334
+    m_StopTime: 0.51666665
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

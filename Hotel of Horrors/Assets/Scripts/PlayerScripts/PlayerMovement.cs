@@ -95,26 +95,29 @@ public class PlayerMovement : MonoBehaviour
     {
         movementVector = inputValue.Get<Vector2>();
 
-        if(Mathf.Abs(movementVector.x) >= 0.1f || Mathf.Abs(movementVector.y) >= 0.1f)
+        if (movementVector.y >= 0.1f)
+        {
+            animator.runtimeAnimatorController = backController;
+        }
+        else if (movementVector.y <= -0.1f)
+        {
+            animator.runtimeAnimatorController = frontController;
+        }
+        else if (movementVector.x <= -0.1f)
+        {
+            animator.runtimeAnimatorController = leftController;
+        }
+        else if (movementVector.x >= 0.1f)
+        {
+            animator.runtimeAnimatorController = rightController;
+        }
+
+        if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
         {
             animator.SetBool("isWalking", true);
         } else
         {
             animator.SetBool("isWalking", false);
-        }
-
-        if(movementVector.y >= 0.1f)
-        {
-            animator.runtimeAnimatorController = backController;
-        } else if (movementVector.y <= -0.1f)
-        {
-            animator.runtimeAnimatorController = frontController;
-        } else if (movementVector.x <= -0.1f)
-        {
-            animator.runtimeAnimatorController = leftController;
-        } else if (movementVector.x >= 0.1f)
-        {
-            animator.runtimeAnimatorController = rightController;
         }
     }
 

@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8490620325508692427}
-  frontController: {fileID: 9100000, guid: 13499059f41c9714b92670e2af4ed617, type: 2}
+  forwardController: {fileID: 9100000, guid: 13499059f41c9714b92670e2af4ed617, type: 2}
   backController: {fileID: 22100000, guid: fedf8c41bf4814346ba75df154cc180d, type: 2}
   leftController: {fileID: 22100000, guid: 6db841b6193a4584e9963f412b78d6ec, type: 2}
   rightController: {fileID: 22100000, guid: 6265696c0b67f8049a2e33a39ae0c149, type: 2}
@@ -229,9 +229,6 @@ MonoBehaviour:
   weaponPlacement: {fileID: 0}
   animator: {fileID: 0}
   slots: []
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
 --- !u!50 &6971638880832592741
 Rigidbody2D:
   serializedVersion: 4

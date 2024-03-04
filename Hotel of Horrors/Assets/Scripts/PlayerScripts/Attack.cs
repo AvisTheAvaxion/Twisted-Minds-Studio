@@ -52,6 +52,8 @@ public class Attack : MonoBehaviour
     }
     void OnAttack()
     {
+        transform.SendMessage("Attacked");
+
         if (currentAttackMode == AttackModes.Ranged)
         {
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawnLocation.position, bulletSpawnLocation.rotation);

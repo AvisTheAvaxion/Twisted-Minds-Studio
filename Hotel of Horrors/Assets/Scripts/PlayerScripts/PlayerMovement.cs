@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     #region VariableDeclarations
     [Header("Animators/Controllers")]
     [SerializeField] Animator animator;
-    [SerializeField] RuntimeAnimatorController frontController;
+    [SerializeField] RuntimeAnimatorController forwardController;
     [SerializeField] AnimatorOverrideController backController;
     [SerializeField] AnimatorOverrideController leftController;
     [SerializeField] AnimatorOverrideController rightController;
@@ -28,6 +28,11 @@ public class PlayerMovement : MonoBehaviour
     public int dashDistance;
     public float dashSpeed;
     bool isDashing = false;
+
+    string direction = "South";
+
+    bool isAttackMode = false;
+    float attackModeTimer;
 
     Vector2 movementVector = new Vector2();
     Vector2 dashStartVector = new Vector2();
@@ -52,7 +57,48 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!isDashing && isAttackMode)
+        {
+            Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+            float angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+
+            if(angle > -45 && angle <= 45 && !direction.Equals("North"))
+            {
+                //back
+                direction = "North";
+                animator.runtimeAnimatorController = backController;
+            } else if (angle <=-45 && angle > -135 && !direction.Equals("West"))
+            {
+                //left
+                direction = "West";
+                animator.runtimeAnimatorController = leftController;
+            } else if (angle <= -135 || angle > 135 && !direction.Equals("South"))
+            {
+                //forward
+                direction = "South";
+                animator.runtimeAnimatorController = forwardController;
+            } else if (angle <= 135 && angle > 45 && !direction.Equals("East"))
+            {
+                //right
+                direction = "East";
+                animator.runtimeAnimatorController = rightController;
+            }
+
+
+            if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
+            {
+                animator.SetBool("isWalking", true);
+            }
+            else
+            {
+                animator.SetBool("isWalking", false);
+            }
+
+            attackModeTimer -= Time.deltaTime;
+
+            if (attackModeTimer <= 0)
+                isAttackMode = false;
+        }
     }
 
     #region MovementLogic
@@ -95,29 +141,37 @@ public class PlayerMovement : MonoBehaviour
     {
         movementVector = inputValue.Get<Vector2>();
 
-        if (movementVector.y >= 0.1f)
+        if (!isAttackMode)
         {
-            animator.runtimeAnimatorController = backController;
-        }
-        else if (movementVector.y <= -0.1f)
-        {
-            animator.runtimeAnimatorController = frontController;
-        }
-        else if (movementVector.x <= -0.1f)
-        {
-            animator.runtimeAnimatorController = leftController;
-        }
-        else if (movementVector.x >= 0.1f)
-        {
-            animator.runtimeAnimatorController = rightController;
-        }
+            if (movementVector.y >= 0.1f)
+            {
+                direction = "North";
+                animator.runtimeAnimatorController = backController;
+            }
+            else if (movementVector.y <= -0.1f)
+            {
+                direction = "South";
+                animator.runtimeAnimatorController = forwardController;
+            }
+            else if (movementVector.x <= -0.1f)
+            {
+                direction = "West";
+                animator.runtimeAnimatorController = leftController;
+            }
+            else if (movementVector.x >= 0.1f)
+            {
+                direction = "East";
+                animator.runtimeAnimatorController = rightController;
+            }
 
-        if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
-        {
-            animator.SetBool("isWalking", true);
-        } else
-        {
-            animator.SetBool("isWalking", false);
+            if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
+            {
+                animator.SetBool("isWalking", true);
+            }
+            else
+            {
+                animator.SetBool("isWalking", false);
+            }
         }
     }
 
@@ -128,10 +182,38 @@ public class PlayerMovement : MonoBehaviour
             dashStartVector = rb.position;
             isDashing = true;
 
+            if (movementVector.y >= 0.1f)
+            {
+                direction = "North";
+                animator.runtimeAnimatorController = backController;
+            }
+            else if (movementVector.y <= -0.1f)
+            {
+                direction = "South";
+                animator.runtimeAnimatorController = forwardController;
+            }
+            else if (movementVector.x <= -0.1f)
+            {
+                direction = "West";
+                animator.runtimeAnimatorController = leftController;
+            }
+            else if (movementVector.x >= 0.1f)
+            {
+                direction = "East";
+                animator.runtimeAnimatorController = rightController;
+            }
+
             animator.SetTrigger("Dash");
         }
     }
     #endregion
+
+    //Player attacked so switch to attack mode
+    public void Attacked()
+    {
+        isAttackMode = true;
+        attackModeTimer = 5;
+    }
 
     #region RoomTraversal
     private void OnTriggerEnter2D(Collider2D collision)

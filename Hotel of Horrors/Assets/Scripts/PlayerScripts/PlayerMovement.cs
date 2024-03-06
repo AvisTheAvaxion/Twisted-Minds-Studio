@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [Header ("Object References")]
     [SerializeField] GameObject player;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] AfterImage afterImage;
     private Transform playerTrans;
 
     [Header("Movement Modifiers")]
@@ -204,6 +205,9 @@ public class PlayerMovement : MonoBehaviour
             }
 
             animator.SetTrigger("Dash");
+
+            if(afterImage != null)
+                afterImage.StartEffect(dashDistance / dashSpeed);
         }
     }
     #endregion

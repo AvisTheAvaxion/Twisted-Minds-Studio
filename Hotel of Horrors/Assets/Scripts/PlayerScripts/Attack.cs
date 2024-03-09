@@ -15,15 +15,14 @@ public class Attack : MonoBehaviour
 
     [Header("Melee")]
     [SerializeField] GameObject meleeCrosshair;
-    [SerializeField] GameObject meleeTrail;
-    Animator animator;
+    [SerializeField] GameObject weapon;
+    [SerializeField] Animator animator;
 
     Inventory inventory;
     
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
     }
 
@@ -64,7 +63,7 @@ public class Attack : MonoBehaviour
         {
             if(animator != null)
             {
-                meleeTrail.SetActive(true);
+                weapon.SetActive(true);
                 animator.SetTrigger("isAttacking");
             }
         }
@@ -76,7 +75,12 @@ public class Attack : MonoBehaviour
 
     public void DisableTrail()
     {
-        meleeTrail.SetActive(false);
+        weapon.SetActive(false);
+    }
+
+    public void ChangeAttackMode()
+    {
+
     }
 }
 

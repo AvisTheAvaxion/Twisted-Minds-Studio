@@ -1019,7 +1019,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -3173,9 +3173,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &136488177
 MonoBehaviour:
@@ -4277,9 +4274,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &163203900
 MonoBehaviour:
@@ -7505,9 +7499,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &283391651
 MonoBehaviour:
@@ -8414,9 +8405,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &323595414
 MonoBehaviour:
@@ -9769,9 +9757,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &388663710
 MonoBehaviour:
@@ -10821,9 +10806,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &435471729
 MonoBehaviour:
@@ -16301,9 +16283,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &687898550
 MonoBehaviour:
@@ -16882,7 +16861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 728966206}
   - component: {fileID: 728966205}
-  - component: {fileID: 728966204}
+  - component: {fileID: 728966207}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -16890,26 +16869,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &728966204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728966203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &728966205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16940,6 +16899,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &728966207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728966203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!1 &735383927
 GameObject:
   m_ObjectHideFlags: 0
@@ -17623,9 +17612,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &776360876
 MonoBehaviour:
@@ -17718,9 +17704,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &780659440
 MonoBehaviour:
@@ -20871,9 +20854,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &968862668
 MonoBehaviour:
@@ -24343,9 +24323,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1115174901
 MonoBehaviour:
@@ -27462,9 +27439,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1229821215
 MonoBehaviour:
@@ -28034,9 +28008,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 1
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1262641115
 MonoBehaviour:
@@ -28555,9 +28526,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1283099520
 MonoBehaviour:
@@ -29344,9 +29312,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1308282551
 MonoBehaviour:
@@ -29951,9 +29916,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1337090211
 MonoBehaviour:
@@ -30113,9 +30075,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1338664675
 MonoBehaviour:
@@ -33154,9 +33113,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1433194899
 MonoBehaviour:
@@ -33760,9 +33716,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1452713078
 MonoBehaviour:
@@ -36842,9 +36795,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1602634314
 MonoBehaviour:
@@ -37414,9 +37364,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1625183988
 MonoBehaviour:
@@ -37643,9 +37590,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1633753845
 MonoBehaviour:
@@ -38582,9 +38526,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1663978406
 MonoBehaviour:
@@ -38811,9 +38752,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1699263779
 MonoBehaviour:
@@ -39040,9 +38978,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1701875743
 MonoBehaviour:
@@ -39893,9 +39828,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 1
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1736146455
 MonoBehaviour:
@@ -39988,9 +39920,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1747310031
 MonoBehaviour:
@@ -40840,9 +40769,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 1
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1764751133
 MonoBehaviour:
@@ -40935,9 +40861,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1766107979
 MonoBehaviour:
@@ -41531,9 +41454,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1806757214
 MonoBehaviour:
@@ -43009,9 +42929,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1843507365
 MonoBehaviour:
@@ -43506,9 +43423,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1897426094
 MonoBehaviour:
@@ -44465,9 +44379,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1970904800
 MonoBehaviour:
@@ -44694,9 +44605,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &1981678833
 MonoBehaviour:
@@ -45651,9 +45559,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &2013880375
 MonoBehaviour:
@@ -45860,9 +45765,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!1 &2033088560
 GameObject:
@@ -45917,9 +45819,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &2033088563
 MonoBehaviour:
@@ -47183,9 +47082,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHeld: {fileID: 0}
   IsImportantSlots: 0
-  weaponSlot: {fileID: 0}
-  freeSlot1: {fileID: 0}
-  freeSlot2: {fileID: 0}
   importantSlotParent: {fileID: 0}
 --- !u!114 &2082904203
 MonoBehaviour:

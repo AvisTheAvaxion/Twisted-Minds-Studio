@@ -6,7 +6,5 @@ public class NPCBehavior : MonoBehaviour
 {
     [Header("State Fields")]
     [SerializeField] public bool isInteractable;
-
-    [Header("Dialoge")]
-    [TextArea] public string dialoge;
+    [SerializeField] public int flag;
 }

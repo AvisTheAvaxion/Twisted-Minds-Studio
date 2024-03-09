@@ -1734,6 +1734,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49540986}
   m_CullTransparentMesh: 1
+--- !u!1 &53174455
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 53174456}
+  - component: {fileID: 53174457}
+  m_Layer: 0
+  m_Name: Dialogue System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &53174456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53174455}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &53174457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53174455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8936da7ed9e678a43a7ab41b60c65e01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DialogeBG: {fileID: 0}
+  dialogueLines: []
 --- !u!1 &55496723
 GameObject:
   m_ObjectHideFlags: 0
@@ -77147,6 +77193,7 @@ GameObject:
   - component: {fileID: 1406643083}
   - component: {fileID: 1406643085}
   - component: {fileID: 1406643084}
+  - component: {fileID: 1406643086}
   m_Layer: 5
   m_Name: DialogeBG
   m_TagString: Untagged
@@ -77212,6 +77259,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406643082}
   m_CullTransparentMesh: 1
+--- !u!114 &1406643086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406643082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b267049e684990429c7ad1f061d9742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1416471466
 GameObject:
   m_ObjectHideFlags: 0
@@ -96008,7 +96067,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInRange: 0
-  DialogeBG: {fileID: 0}
 --- !u!1 &1754046345
 GameObject:
   m_ObjectHideFlags: 0
@@ -96710,7 +96768,7 @@ GameObject:
   - component: {fileID: 1788508751}
   - component: {fileID: 1788508753}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: TestNPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96780,12 +96838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInteractable: 1
-  dialoge: 'Wubba Lubba Dub Dub
-
-    Get The Fuck In The Tub
-
-    Before I Stub A
-    Blub'
+  flag: 0
 --- !u!1 &1788778059
 GameObject:
   m_ObjectHideFlags: 0
@@ -117122,6 +117175,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 53174456}
   - {fileID: 1227830392}
   - {fileID: 359473658}
   - {fileID: 1068029076}
@@ -117133,7 +117187,7 @@ SceneRoots:
   - {fileID: 882307905}
   - {fileID: 39450734}
   - {fileID: 1264668233}
+  - {fileID: 1788508752}
   - {fileID: 194487813}
   - {fileID: 491670936}
   - {fileID: 2070726319}
-  - {fileID: 1788508752}

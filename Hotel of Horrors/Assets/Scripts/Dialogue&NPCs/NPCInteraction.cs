@@ -7,12 +7,12 @@ public class NPCInteraction : MonoBehaviour
     [Header("State Fields")]
     [SerializeField] bool playerInRange;
     bool isNPCInteractable;
-
-    [SerializeField] GameObject DialogeBG;
+    int npcFlag;
+    DialogueManager dialogueManager;
 
     private void Awake()
     {
-        DialogeBG = GameObject.Find("CanvasDialoge").transform.GetChild(0).gameObject;
+        dialogueManager = FindAnyObjectByType<DialogueManager>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -20,6 +20,7 @@ public class NPCInteraction : MonoBehaviour
         if (collision.gameObject.CompareTag("NPC"))
         {
             isNPCInteractable = collision.GetComponent<NPCBehavior>().isInteractable;
+            npcFlag = collision.GetComponent<NPCBehavior>().flag;
             playerInRange = true;
         }
     }
@@ -36,7 +37,8 @@ public class NPCInteraction : MonoBehaviour
     {
         if (playerInRange && isNPCInteractable)
         {
-            DialogeBG.SetActive(true);
+            dialogueManager.SendMessage("ToggleDialogueBox");
+            dialogueManager.SendMessage("RetrieveDialogue", npcFlag);
         }
     }
 }

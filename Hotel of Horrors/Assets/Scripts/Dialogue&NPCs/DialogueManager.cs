@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
+    //Things to disable
+
+
     [SerializeField] GameObject DialogeBG;
     [SerializeField] List<string> dialogueLines;
     private void Awake()
@@ -17,7 +20,7 @@ public class DialogueManager : MonoBehaviour
     void ToggleDialogueBox()
     {
         DialogeBG.SetActive(!DialogeBG.activeSelf);
-        Cursor.visible = !DialogeBG.activeSelf;
+        Cursor.visible = DialogeBG.activeSelf;
     }
 
 
@@ -52,11 +55,18 @@ public class DialogueManager : MonoBehaviour
                 }
             }
         }
+
+        ChangeDialogue(0);
     }
 
     void ChangeDialogue(int index)
     {
         TextMeshProUGUI dialogueText = DialogeBG.GetComponentInChildren<TextMeshProUGUI>();
+        if(index >= dialogueLines.Count)
+        {
+            ToggleDialogueBox();
+            return;
+        }
         dialogueText.text = dialogueLines[index];
     }
 }

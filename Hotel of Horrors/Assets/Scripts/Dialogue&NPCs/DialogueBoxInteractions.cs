@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DialogueBoxInteractions : MonoBehaviour
+public class DialogueBoxInteractions : MonoBehaviour, IPointerClickHandler
 {
     int dialogueIncrement;
     [SerializeField] DialogueManager manager;
 
     private void Awake()
     {
-        dialogueIncrement = 0;
+        dialogueIncrement = 1;
         manager = FindAnyObjectByType<DialogueManager>();
     }
 
@@ -18,7 +18,6 @@ public class DialogueBoxInteractions : MonoBehaviour
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            Debug.Log("Click");
             manager.SendMessage("ChangeDialogue", dialogueIncrement);
             dialogueIncrement++;
         }

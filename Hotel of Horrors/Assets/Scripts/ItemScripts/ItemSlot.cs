@@ -43,6 +43,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             freeSlot1 = importantSlotParent.transform.GetChild(1).GetComponentInChildren<ItemSlot>();
             freeSlot2 = importantSlotParent.transform.GetChild(2).GetComponentInChildren<ItemSlot>();
         }
+
         slotEmptyColor = new Color(1, 1, 1, 0);
         slotFilledColor = new Color(1, 1, 1, 1);
         if (itemHeld != null)
@@ -104,13 +105,15 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left && itemHeld != null)
+        if (eventData.button == PointerEventData.InputButton.Left && itemHeld != null && !IsImportantSlots)
         {
             if (itemHeld.GetType() == typeof(Weapon))
             {
                 weaponSlot.itemHeld = this.itemHeld;
                 weaponSlot.UpdateImage();
                 inventory.currentWeapon = (Weapon)this.itemHeld;
+                inventory.EquipWeapon((Weapon)itemHeld);
+                inventory.UpdatePlayerMode();
             }
             if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.Q))
             {

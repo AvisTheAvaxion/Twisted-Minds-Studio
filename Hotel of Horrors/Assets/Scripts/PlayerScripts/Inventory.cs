@@ -1,3 +1,4 @@
+using Attacks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,17 +16,17 @@ public class Inventory : MonoBehaviour
     [SerializeField] GameObject inventoryUI;
     [SerializeField] SpriteRenderer weaponPlacement;
     [SerializeField] Animator animator;
-    AnimatorOverrideController overrideController;
     [SerializeField] List<ItemSlot> slots;
+
+    [SerializeField] AnimatorOverrideController overrideController;
+    Attack playerAttack;
 
     private void Awake()
     {
         inventoryUI.SetActive(true);
         inventoryUI.SetActive(false);
-        animator = GetComponent<Animator>();
+        playerAttack = GetComponent<Attack>();
 
-        overrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
-        animator.runtimeAnimatorController = overrideController;
         slots = inventoryUI.GetComponentsInChildren<ItemSlot>().ToList();
         foreach (ItemSlot slot in slots)
         {
@@ -41,23 +42,20 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log("PickUp Get");
             Useables useable = collision.GetComponent<ItemData>().GetItemData();
-            Debug.Log(useable.GetDescription());
+            //Debug.Log(useable.GetDescription());
             collision.gameObject.SetActive(false);
             inventoryItems.Add(useable);
             SlotInItem(useable);
-            if(currentWeapon == null && useable is Weapon)
-            {
-                currentWeapon = (Weapon)useable;
-                EquipWeapon(currentWeapon);
-            }
         }
     }
 
     public void EquipWeapon(Weapon weapon)
     {
+        currentWeapon = weapon;
         weaponPlacement.sprite = currentWeapon.GetSprite();
-        overrideController["WeaponAttack"] = currentWeapon.GetWeaponAnimation();
-        Debug.Log(overrideController["TestAttackAnim"] = currentWeapon.GetWeaponAnimation());
+        animator.runtimeAnimatorController = overrideController;
+        overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation();
+        Debug.Log(overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation());
         //Insert code that is done on equip like moving gameobject beside the player / Swaping Sprites
     }
 
@@ -92,6 +90,11 @@ public class Inventory : MonoBehaviour
             inventoryUI.SetActive(true);
             Cursor.visible = true;
         }
+    }
+
+    public void UpdatePlayerMode()
+    {
+        playerAttack.ChangeAttackMode(currentWeapon.GetWeaponMode());
     }
     
 }

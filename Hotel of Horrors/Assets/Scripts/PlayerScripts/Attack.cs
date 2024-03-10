@@ -78,9 +78,9 @@ public class Attack : MonoBehaviour
         weapon.SetActive(false);
     }
 
-    public void ChangeAttackMode()
+    public void ChangeAttackMode(AttackModes currentMode)
     {
-
+        currentAttackMode = currentMode;
     }
 }
 

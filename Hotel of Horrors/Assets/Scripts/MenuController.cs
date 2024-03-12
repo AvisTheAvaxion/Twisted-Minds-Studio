@@ -17,6 +17,11 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void ToggleSettings()
     {
         mainMenuObj.SetActive(!mainMenuObj.activeSelf);

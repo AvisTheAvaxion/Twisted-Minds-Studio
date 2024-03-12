@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public float collisionOffset = 0.05f;
     public ContactFilter2D movementFilter;
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+    [HideInInspector] public bool canMove;
 
     [Header("Dashing Modifiers")]
     public int dashDistance;
@@ -142,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
     {
         movementVector = inputValue.Get<Vector2>();
 
-        if (!isAttackMode)
+        if (!isAttackMode && canMove)
         {
             if (movementVector.y >= 0.1f)
             {

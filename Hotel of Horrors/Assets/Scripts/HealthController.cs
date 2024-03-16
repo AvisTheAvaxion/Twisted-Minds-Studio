@@ -15,14 +15,14 @@ public class HealthController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            TakeDamage(20f);
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Heal(20f);
-        }
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    TakeDamage(20f);
+        //}
+        //if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    Heal(20f);
+        //}
     }
 
     private void Start()
@@ -32,6 +32,7 @@ public class HealthController : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        //first checking if they have iframes
         if (canGetHit)
         {
             currentHealth -= Mathf.Abs(amount);
@@ -41,6 +42,7 @@ public class HealthController : MonoBehaviour
             {
                 if (gameObject.tag.Equals("Player"))
                 {
+                    //loads death scene
                     SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
                 }
                 else
@@ -52,6 +54,24 @@ public class HealthController : MonoBehaviour
 
             StartCoroutine(GiveIFrames());
             StartCoroutine(Stun());
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if an enemy tocuhes the player, the player takes the damage
+        if(this.gameObject.tag.Equals("Player") && collision.gameObject.tag.Equals("Enemy"))
+        {
+            TakeDamage(1f);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //handles bullet collision
+        if(collision.gameObject.tag.Equals("PlayerBullet") || collision.gameObject.tag.Equals("EnemyBullet"))
+        {
+            TakeDamage(2f);
         }
     }
 

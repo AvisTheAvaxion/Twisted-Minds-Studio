@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class EnemyStates : MonoBehaviour
 {
-    [SerializeField] BasicShooter shooterClass;
-    [SerializeField] States currentState = States.idle;
-    [SerializeField] float moveSpeed;
-    [SerializeField] Transform currentRoom;
-    [SerializeField] float roomRadius = 5;
-    [SerializeField] float aggroRadius = 9;
-    [SerializeField] float targetDistFromPlayer = 7;
+    [SerializeField] protected BasicShooter shooterClass;
+    [SerializeField] protected States currentState = States.idle;
+    [SerializeField] protected float moveSpeed;
+    [SerializeField] protected Transform currentRoom;
+    [SerializeField] protected float roomRadius = 5;
+    [SerializeField] protected float aggroRadius = 9;
+    [SerializeField] protected float targetDistFromPlayer = 7;
 
-    bool canMove;
-    GameObject playerObject;
-    Vector2 randomDir;
-    Vector3 targetPos;
+    protected bool canMove;
+    protected GameObject playerObject;
+    protected Vector2 randomDir;
+    protected Vector3 targetPos;
 
     public enum States
     {
-        idle, patrolling, fighting
+        idle, dialogue , patrolling, fighting
     }
 
     private void Start()
@@ -29,10 +29,17 @@ public class EnemyStates : MonoBehaviour
 
     private void Update()
     {
-        print(currentState.ToString());
+        ChooseState();
+    }
+
+    protected void ChooseState()
+    {
         switch (currentState)
         {
             case States.idle:
+                Idle();
+                break;
+            case States.dialogue:
                 Idle();
                 break;
             case States.patrolling:
@@ -44,22 +51,22 @@ public class EnemyStates : MonoBehaviour
         }
     }
 
-    float GetDistanceToPlayer()
+    protected float GetDistanceToPlayer()
     {
         return Vector3.Distance(this.transform.position, playerObject.transform.position);
     }
 
-    void GetPosBetweenPlayer()
+    protected void GetPosBetweenPlayer()
     {
         targetPos = Vector3.MoveTowards(transform.position, playerObject.transform.position, moveSpeed * Time.deltaTime); // calculate distance to move).normalized;
     }
 
-    void SetRandomDir()
+    protected void SetRandomDir()
     {
         randomDir =  Random.insideUnitCircle; //Get a random position around a unit circle.
     }
 
-    void Idle()
+    protected void Idle()
     {
         //starts patrolling when the player is in the room
         if(GetDistanceToPlayer() < 5)
@@ -68,7 +75,7 @@ public class EnemyStates : MonoBehaviour
         }
     }
 
-    void Patrol()
+    protected void Patrol()
     {
         //wander aimlessly around the room
         var dir = new Vector3(randomDir.x, 1, randomDir.y);
@@ -93,7 +100,7 @@ public class EnemyStates : MonoBehaviour
         }
     }
 
-    void Fight()
+    protected virtual void Fight()
     {
         if (GetDistanceToPlayer() > targetDistFromPlayer)
         {
@@ -116,7 +123,7 @@ public class EnemyStates : MonoBehaviour
     }
 
 
-    IEnumerator WaitBeforeMoving()
+    protected IEnumerator WaitBeforeMoving()
     {
         canMove = false;
         yield return new WaitForSeconds(Random.Range(.5f, 2f));

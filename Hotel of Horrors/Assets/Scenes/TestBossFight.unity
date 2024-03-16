@@ -358,6 +358,52 @@ Transform:
   - {fileID: 767600283}
   m_Father: {fileID: 64214096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &226850424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 226850426}
+  - component: {fileID: 226850425}
+  m_Layer: 0
+  m_Name: Room Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &226850425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226850424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f8dd8f1265e62b419a5ab62cc155fad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  westDoors: []
+  eastDoors: []
+--- !u!4 &226850426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226850424}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.397571, y: 2.5833302, z: -0.040423743}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &760432893 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8702290029874283670, guid: e438e5f65f57f51409d06788cccd6408, type: 3}
@@ -12070,13 +12116,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooterClass: {fileID: 1051383793}
-  currentState: 0
+  currentState: 3
   moveSpeed: 2
   currentRoom: {fileID: 64214096}
   roomRadius: 5
   aggroRadius: 9
   targetDistFromPlayer: 2
   dashSpeed: 4
+  minAttackCooldown: 1
+  maxAttackCooldown: 4
 --- !u!114 &1051383793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12391,3 +12439,4 @@ SceneRoots:
   - {fileID: 1019129006}
   - {fileID: 1005316146}
   - {fileID: 1370671826}
+  - {fileID: 226850426}

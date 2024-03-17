@@ -11,8 +11,8 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] public Useables itemHeld;
     Image itemImage;
-    Color slotEmptyColor;
-    Color slotFilledColor;
+    Color slotEmptyColor = new Color(1, 1, 1, 0);
+    Color slotFilledColor = new Color(1, 1, 1, 1);
 
     [Space(10), Header("ExpandedMenuVariables")]
     GameObject expandedMenu;
@@ -44,8 +44,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             freeSlot2 = importantSlotParent.transform.GetChild(2).GetComponentInChildren<ItemSlot>();
         }
 
-        slotEmptyColor = new Color(1, 1, 1, 0);
-        slotFilledColor = new Color(1, 1, 1, 1);
+        
         if (itemHeld != null)
         {
             UpdateImage();
@@ -60,6 +59,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         itemstat1 = transform.GetChild(0).transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         itemstat2 = transform.GetChild(0).transform.GetChild(3).GetComponent<TextMeshProUGUI>();
         itemstat3 = transform.GetChild(0).transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+    }
+
+    private void OnEnable()
+    {
+        if (itemHeld != null)
+        {
+            UpdateImage();
+        }
     }
 
     public void UpdateImage()

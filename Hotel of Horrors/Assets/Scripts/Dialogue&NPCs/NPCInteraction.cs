@@ -38,7 +38,6 @@ public class NPCInteraction : MonoBehaviour
         if (playerInRange && isNPCInteractable)
         {
             dialogueManager.SendMessage("RetrieveDialogue", npcFlag);
-            dialogueManager.SendMessage("ToggleDialogueBox");
         }
     }
 }

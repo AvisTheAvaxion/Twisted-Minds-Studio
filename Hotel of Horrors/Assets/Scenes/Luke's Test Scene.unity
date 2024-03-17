@@ -14605,6 +14605,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
+--- !u!1001 &4316790060608093276
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501205401208500334, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -763901495, guid: b4129d2b6dcbac241aa3c98de93f426d, type: 3}
+    - target: {fileID: 4163444773169181561, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_Name
+      value: KarenWerewolf
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
 --- !u!1001 &5065220747004177967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14754,3 +14815,4 @@ SceneRoots:
   - {fileID: 1786816319}
   - {fileID: 5065220747004177967}
   - {fileID: 1260792199}
+  - {fileID: 4316790060608093276}

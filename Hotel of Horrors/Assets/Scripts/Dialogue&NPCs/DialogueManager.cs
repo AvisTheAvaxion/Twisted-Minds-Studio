@@ -15,7 +15,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] List<string> dialogueLines;
     [SerializeField] List<string> choices = new List<string>();
     [SerializeField] Choice playerChoice;
-    int choiceIndex;
+    int choiceIndex = -1;
     int flag;
     private void Awake()
     {
@@ -27,6 +27,7 @@ public class DialogueManager : MonoBehaviour
     void RetrieveDialogue(int DFlag)
     {
         choices = new List<string>();
+        dialogueLines = new List<string>();
         string textFileName = "";
         flag = DFlag;
         
@@ -74,7 +75,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        ToggleDialogueBox(DialogueBG);
+        ToggleDialogueBox();
         ChangeDialogue(0);
     }
 
@@ -145,9 +146,12 @@ public class DialogueManager : MonoBehaviour
 
         ChangeDialogue(increment);
     }
-    void ToggleDialogueBox(GameObject box)
+    void ToggleDialogueBox()
     {
-        box.SetActive(!box.activeSelf);
+        DialogueBG.SetActive(!DialogueBG.activeSelf);
+        DialogueBG.GetComponent<DialogueBoxInteractions>().ResetIncrement();
+        DialogueBG.transform.GetChild(1).GetComponent<DialogueBoxInteractions>().ResetIncrement();
+        DialogueBG.transform.GetChild(2).GetComponent<DialogueBoxInteractions>().ResetIncrement();
         Cursor.visible = DialogueBG.activeSelf;
     }
 
@@ -173,7 +177,7 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("index: "+index+" |count: "+dialogueLines.Count);
         if(index >= dialogueLines.Count)
         {
-            ToggleDialogueBox(DialogueBG);
+            ToggleDialogueBox();
             playerChoice = Choice.None;
             return;
         }

@@ -47,6 +47,10 @@ public class DialogueBoxInteractions : MonoBehaviour, IPointerClickHandler
         isInteractable = input;
     }
 
+    public void ResetIncrement()
+    {
+        dialogueIncrement = 1;
+    }
 }
 public enum Choice
 {

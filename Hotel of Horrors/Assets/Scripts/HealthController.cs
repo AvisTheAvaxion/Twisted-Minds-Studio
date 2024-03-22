@@ -43,7 +43,7 @@ public class HealthController : MonoBehaviour
                 if (gameObject.tag.Equals("Player"))
                 {
                     //loads death scene
-                    SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
+                    SceneManager.LoadScene("Death Screen");
                 }
                 else
                 {
@@ -69,7 +69,7 @@ public class HealthController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //handles bullet collision
-        if(collision.gameObject.tag.Equals("PlayerBullet") || collision.gameObject.tag.Equals("EnemyBullet"))
+        if((collision.gameObject.tag.Equals("PlayerBullet") && this.gameObject.tag.Equals("Enemy")) ||( collision.gameObject.tag.Equals("EnemyBullet") && this.gameObject.tag.Equals("Player")))
         {
             TakeDamage(2f);
         }

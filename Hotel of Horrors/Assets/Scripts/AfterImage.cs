@@ -8,9 +8,12 @@ public class AfterImage : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] ParticleSystem afterImageEffect;
 
+    public ParticleSystem AfterImagePS { get => afterImageEffect; }
+
     [Header("Settings")]
     [SerializeField] float trailLength = 0.4f;
     [SerializeField] int density = 10;
+    [SerializeField] bool debug;
     bool emitOverVelocity = false;
 
     bool playEffect;
@@ -72,6 +75,8 @@ public class AfterImage : MonoBehaviour
             t += Time.deltaTime;
         }
 
+        if (debug) print("After Image Effect Stopped after " + length + " seconds");
+
         afterImageEffect.Stop();
     }
 
@@ -105,6 +110,8 @@ public class AfterImage : MonoBehaviour
             ts.SetSprite(0, spriteRenderer.sprite);
             yield return null;
         }
+
+        if (debug) print("After Image Effect Stopped");
 
         afterImageEffect.Stop();
     }

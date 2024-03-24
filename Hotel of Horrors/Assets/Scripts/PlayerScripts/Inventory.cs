@@ -17,12 +17,14 @@ public class Inventory : MonoBehaviour
     [SerializeField] SpriteRenderer weaponPlacement;
     [SerializeField] Animator animator;
     [SerializeField] List<ItemSlot> slots;
+    WeaponAttack weaponAttack;
 
     [SerializeField] AnimatorOverrideController overrideController;
     Attack playerAttack;
 
     private void Awake()
     {
+        weaponAttack = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<WeaponAttack>();
         inventoryUI.SetActive(true);
         inventoryUI.SetActive(false);
         playerAttack = GetComponent<Attack>();
@@ -55,6 +57,7 @@ public class Inventory : MonoBehaviour
         weaponPlacement.sprite = currentWeapon.GetSprite();
         animator.runtimeAnimatorController = overrideController;
         overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation();
+        weaponAttack.SetDamage(weapon.GetDamage());
         //Debug.Log(overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation());
         //Insert code that is done on equip like moving gameobject beside the player / Swaping Sprites
     }

@@ -27,9 +27,11 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     ItemSlot freeSlot2;
     [SerializeField] GameObject importantSlotParent;
     Inventory inventory;
+    bool firstStart = true;
     // Start is called before the first frame update
     void Start()
     {
+        firstStart = false;
         inventory = FindObjectOfType<Inventory>();
         itemImage = GetComponent<Image>();
         if (!IsImportantSlots)
@@ -63,7 +65,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void OnEnable()
     {
-        if (itemHeld != null)
+        if (itemHeld != null && firstStart == false)
         {
             UpdateImage();
         }

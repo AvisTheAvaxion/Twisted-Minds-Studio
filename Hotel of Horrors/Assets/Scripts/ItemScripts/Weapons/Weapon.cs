@@ -15,7 +15,7 @@ public class Weapon : Useables
 
     public override void Use()
     {
-        Debug.Log($"WEAPON {this.GetName()} USED");
+        //Debug.Log($"WEAPON {this.GetName()} USED");
     }
     public void WeaponSkill()
     {

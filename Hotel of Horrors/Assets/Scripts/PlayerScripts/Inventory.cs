@@ -40,7 +40,7 @@ public class Inventory : MonoBehaviour
     {
         if (collision.GetComponent<ItemData>())
         {
-            Debug.Log("PickUp Get");
+            //Debug.Log("PickUp Get");
             Useables useable = collision.GetComponent<ItemData>().GetItemData();
             //Debug.Log(useable.GetDescription());
             collision.gameObject.SetActive(false);
@@ -55,7 +55,7 @@ public class Inventory : MonoBehaviour
         weaponPlacement.sprite = currentWeapon.GetSprite();
         animator.runtimeAnimatorController = overrideController;
         overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation();
-        Debug.Log(overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation());
+        //Debug.Log(overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation());
         //Insert code that is done on equip like moving gameobject beside the player / Swaping Sprites
     }
 

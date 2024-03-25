@@ -146,6 +146,7 @@ public class DialogueManager : MonoBehaviour
 
         ChangeDialogue(increment);
     }
+
     void ToggleDialogueBox()
     {
         DialogueBG.SetActive(!DialogueBG.activeSelf);

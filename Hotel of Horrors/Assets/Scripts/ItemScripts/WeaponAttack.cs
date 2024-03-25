@@ -8,8 +8,10 @@ public class WeaponAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Damage Attempt");
         if (collision.CompareTag("Enemy"))
         {
+            Debug.Log("Damageing");
             IHealth health = collision.GetComponent<IHealth>();
             if (health != null)
                 health.TakeDamage(damage);

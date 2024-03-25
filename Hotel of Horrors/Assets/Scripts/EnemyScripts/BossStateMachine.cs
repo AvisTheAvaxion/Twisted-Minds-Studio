@@ -31,8 +31,8 @@ public abstract class BossStateMachine : MonoBehaviour
     }
 
     [SerializeField] protected bool debug;
-    [SerializeField] protected bool setScaleToRotate;
-    [SerializeField] Transform transformToScale;
+    [SerializeField] protected bool flipToRotate;
+    [SerializeField] Transform transformToFlip;
     [Header("Boss Stages")]
     [SerializeField] protected Stage[] stages;
 
@@ -94,22 +94,22 @@ public abstract class BossStateMachine : MonoBehaviour
     /// <param name="dir"></param>
     protected void CheckToRotate(Vector2 dir)
     {
-        if(setScaleToRotate)
+        if(flipToRotate)
         {
             float angle = Vector2.SignedAngle(dir, Vector2.up);
             if(angle <= 0 && currentFaceDir == FaceDirection.Right)
             {
-                Vector2 newScale = transformToScale.localScale;
+                Vector2 newScale = transformToFlip.localScale;
                 newScale.x *= -1;
-                transformToScale.localScale = newScale;
+                transformToFlip.localScale = newScale;
 
                 currentFaceDir = FaceDirection.Left;
             } 
             else if (angle > 0 && currentFaceDir == FaceDirection.Left)
             {
-                Vector2 newScale = transformToScale.localScale;
+                Vector2 newScale = transformToFlip.localScale;
                 newScale.x *= -1;
-                transformToScale.localScale = newScale;
+                transformToFlip.localScale = newScale;
 
                 currentFaceDir = FaceDirection.Right;
             }
@@ -123,14 +123,14 @@ public abstract class BossStateMachine : MonoBehaviour
     /// <param name="afterImage"></param>
     protected void CheckToRotate(Vector2 dir, AfterImage afterImage)
     {
-        if (setScaleToRotate)
+        if (flipToRotate)
         {
             float angle = Vector2.SignedAngle(dir, Vector2.up);
             if (angle <= 0 && currentFaceDir == FaceDirection.Right)
             {
-                Vector2 newScale = transformToScale.localScale;
+                Vector2 newScale = transformToFlip.localScale;
                 newScale.x *= -1;
-                transformToScale.localScale = newScale;
+                transformToFlip.localScale = newScale;
 
                 if (afterImage != null)
                 {
@@ -142,9 +142,9 @@ public abstract class BossStateMachine : MonoBehaviour
             }
             else if (angle > 0 && currentFaceDir == FaceDirection.Left)
             {
-                Vector2 newScale = transformToScale.localScale;
+                Vector2 newScale = transformToFlip.localScale;
                 newScale.x *= -1;
-                transformToScale.localScale = newScale;
+                transformToFlip.localScale = newScale;
 
                 if (afterImage != null)
                 {

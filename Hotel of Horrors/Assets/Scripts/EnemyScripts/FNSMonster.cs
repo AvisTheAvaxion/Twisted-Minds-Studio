@@ -224,28 +224,4 @@ public class FNSMonster : BossStateMachine
         enraged = false;
         currentSettings = normalAttackSettings;
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //Do damage and knockback to player for touching the monster
-        //If charging, do even more damage and knockback
-
-        if (collision.gameObject.tag.Equals("Player"))
-        {
-            PlayerMovement playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
-            IHealth health = collision.gameObject.GetComponent<IHealth>();
-            Vector2 dir = (collision.transform.position - transform.position).normalized;
-
-            if (isCharging)
-            {
-                health.TakeDamage(currentSettings.chargeDamage, currentSettings.chargeStun);
-                playerMovement.Knockback(dir, currentSettings.chargeKnockback);
-            }
-            else
-            {
-                health.TakeDamage(currentSettings.normalContactDamage);
-                playerMovement.Knockback(dir, currentSettings.normalKnockback);
-            }
-        }
-    }
 }

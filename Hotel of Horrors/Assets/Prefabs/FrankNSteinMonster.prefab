@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7280812617262320566}
   - component: {fileID: 3622643437465758043}
-  - component: {fileID: 8645920383469271427}
   - component: {fileID: 2170412016194764509}
   - component: {fileID: 3258707720381061101}
+  - component: {fileID: 8722076942917336173}
   - component: {fileID: 7819676505427196098}
   - component: {fileID: 838116091748070659}
   m_Layer: 0
@@ -60,22 +60,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8645920383469271427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7780868464515115505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f1f0160f1cd4b54fbae800daadac24b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementScript: {fileID: 0}
-  maxHealth: 50
-  iFramesTime: 0.5
-  stunTime: 2
 --- !u!114 &2170412016194764509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,13 +73,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
-  startingDistance: 0.1
-  bulletForce: 20
-  burstCount: 3
-  projectilesPerBurst: 32
+  startingDistance: 0.01
+  bulletForce: 5
+  burstCount: 1
+  projectilesPerBurst: 16
   angleSpread: 359
   timeBetweenBursts: 1
-  timeBetweenShots: 0.3
+  timeBetweenShots: 0.01
   stagger: 0
   oscillate: 0
 --- !u!114 &3258707720381061101
@@ -114,34 +98,41 @@ MonoBehaviour:
   setScaleToRotate: 1
   transformToScale: {fileID: 2881490729553979416}
   stages:
-  - stage: 2
-    healthThreshold: 0
   - stage: 1
-    healthThreshold: 0
+    healthThreshold: 100
+  - stage: 2
+    healthThreshold: 50
   animator: {fileID: 3622643437465758043}
   afterImage: {fileID: 7322350937174340592}
+  shooter: {fileID: 2170412016194764509}
   normalAttackSettings:
-    walkSpeed: 30
+    walkSpeed: 40
+    normalKnockback: 3
+    normalContactDamage: 1
     chargeSpeed: 150
     chargeLength: 3
     chargeDamage: 0
-    chargeKnockback: 0
-    chargeSensitivity: 0.265
+    chargeKnockback: 8
+    chargeStun: 1
+    chargeSensitivity: 0.205
     chargeMaxAttackRange: 2
     chargeCooldownMin: 5
     chargeCooldownMax: 8
-    slamMinAttackRange: 1
+    slamMinAttackRange: 3
     slamDamage: 0
-    slamRadius: 0
-    slamKnockback: 0
+    slamRadius: 1.25
+    slamKnockback: 5
     slamCooldownMin: 2
     slamCooldownMax: 3
   enragedAttackSettings:
     walkSpeed: 60
+    normalKnockback: 0
+    normalContactDamage: 0
     chargeSpeed: 300
     chargeLength: 0
     chargeDamage: 0
     chargeKnockback: 0
+    chargeStun: 0
     chargeSensitivity: 0.518
     chargeMaxAttackRange: 0
     chargeCooldownMin: 0
@@ -152,6 +143,23 @@ MonoBehaviour:
     slamKnockback: 0
     slamCooldownMin: 0
     slamCooldownMax: 0
+--- !u!114 &8722076942917336173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780868464515115505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252b3b42aadea444081d9be1df084471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  maxHealth: 100
+  healOverTime: 0
+  timeBtwHeals: 5
+  rateOfHealing: 5
 --- !u!61 &7819676505427196098
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -184,7 +192,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0017800331, y: -0.042717576}
+  m_Offset: {x: 0.0017800331, y: -0.21421601}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -195,7 +203,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5621443, y: 0.91456485}
+  m_Size: {x: 0.5621443, y: 0.571568}
   m_EdgeRadius: 0
 --- !u!50 &838116091748070659
 Rigidbody2D:

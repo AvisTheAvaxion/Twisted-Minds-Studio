@@ -8,12 +8,15 @@ public class FNSMonster : BossStateMachine
     public struct AttackSettings
     {
         public float walkSpeed;
+        public float normalKnockback;
+        public float normalContactDamage;
 
         [Header("Charge Settings")]
         public float chargeSpeed;
         public float chargeLength;
         public float chargeDamage;
         public float chargeKnockback;
+        public float chargeStun;
         [Range(0,1)] public float chargeSensitivity;
         public float chargeMaxAttackRange;
         public float chargeCooldownMin;
@@ -31,6 +34,7 @@ public class FNSMonster : BossStateMachine
     [Header("References")]
     [SerializeField] Animator animator;
     [SerializeField] AfterImage afterImage;
+    [SerializeField] BasicShooter shooter;
 
     [Header("Attack Settings")]
     [SerializeField] AttackSettings normalAttackSettings;
@@ -184,6 +188,24 @@ public class FNSMonster : BossStateMachine
         //Detect things around monster at given radius
         //Deal damage and knockback
         //Possibly spawn ring of projectiles
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, currentSettings.slamRadius);
+        for(int i = 0; i < colliders.Length; i++)
+        {
+            if(colliders[i].tag.Equals("Player"))
+            {
+                PlayerMovement playerMovement = colliders[i].gameObject.GetComponent<PlayerMovement>();
+                IHealth health = colliders[i].gameObject.GetComponent<IHealth>();
+                Vector2 dir = (colliders[i].transform.position - transform.position).normalized;
+
+                health.TakeDamage(currentSettings.slamDamage);
+                playerMovement.Knockback(dir, currentSettings.slamKnockback);
+
+                break;
+            }
+        }
+
+        shooter.Attack();
     }
     public void SlamEnd()
     {
@@ -203,9 +225,27 @@ public class FNSMonster : BossStateMachine
         currentSettings = normalAttackSettings;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         //Do damage and knockback to player for touching the monster
         //If charging, do even more damage and knockback
+
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+            PlayerMovement playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
+            IHealth health = collision.gameObject.GetComponent<IHealth>();
+            Vector2 dir = (collision.transform.position - transform.position).normalized;
+
+            if (isCharging)
+            {
+                health.TakeDamage(currentSettings.chargeDamage, currentSettings.chargeStun);
+                playerMovement.Knockback(dir, currentSettings.chargeKnockback);
+            }
+            else
+            {
+                health.TakeDamage(currentSettings.normalContactDamage);
+                playerMovement.Knockback(dir, currentSettings.normalKnockback);
+            }
+        }
     }
 }

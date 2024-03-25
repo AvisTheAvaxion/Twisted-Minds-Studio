@@ -81,8 +81,6 @@ public class BasicShooter : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenShots);
         }
 
-
-
         yield return new WaitForSeconds(timeBetweenBursts);
 
         isShooting = false;
@@ -100,7 +98,7 @@ public class BasicShooter : MonoBehaviour
 
     private void TargetConeOfInfluence(out float startAngle, out float currentAngle, out float angleStep, out float endAngle)
     {
-        var dir = this.transform.position - GameObject.Find("Player").transform.position;
+        var dir = (transform.position - GameObject.Find("Player").transform.position).normalized;
         var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
 
         startAngle = angle;

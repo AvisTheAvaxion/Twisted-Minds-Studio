@@ -10,7 +10,9 @@ public class WeaponAttack : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<HealthController>().TakeDamage(damage);
+            IHealth health = collision.GetComponent<IHealth>();
+            if (health != null)
+                health.TakeDamage(damage);
         }
     }
 

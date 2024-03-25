@@ -16,19 +16,22 @@ public class PlayerMovement : MonoBehaviour
     [Header ("Object References")]
     [SerializeField] GameObject player;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] PlayerHealth playerHealth;
     [SerializeField] AfterImage afterImage;
     private Transform playerTrans;
 
     [Header("Movement Modifiers")]
     public float movementSpeed;
-    public float collisionOffset = 0.05f;
-    public ContactFilter2D movementFilter;
-    List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+    [SerializeField] [Range(0,1)] float drag;
+    //public float collisionOffset = 0.05f;
+    //public ContactFilter2D movementFilter;
+    //List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
     [HideInInspector] public bool canMove;
 
     [Header("Dashing Modifiers")]
-    public int dashDistance;
+    public float dashDistance;
     public float dashSpeed;
+    [SerializeField] float iFrameDistForDash;
     bool isDashing = false;
 
     string direction = "South";
@@ -54,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("isRunning", false);
         animator.SetBool("isWalking", false);
         animator.SetBool("isHolding", false);
+
+        canMove = true;
     }
 
     // Update is called once per frame
@@ -106,16 +111,13 @@ public class PlayerMovement : MonoBehaviour
     #region MovementLogic
     private void FixedUpdate()
     {
-        if (movementVector != Vector2.zero)
+        if (canMove)
         {
-            int count = rb.Cast(
-                movementVector,
-                movementFilter,
-                castCollisions,
-                movementSpeed * Time.deltaTime + collisionOffset);
-
-            if(count == 0)
+            if (movementVector != Vector2.zero)
             {
+                float velMag = rb.velocity.magnitude;
+                movementVector.Normalize();
+
                 if (isDashing)
                 {
                     if (Vector2.Distance(dashStartVector, rb.position) <= dashDistance)
@@ -129,13 +131,26 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
-                    rb.MovePosition(rb.position + movementVector.normalized * movementSpeed * Time.fixedDeltaTime);
+                    rb.velocity = movementVector * movementSpeed;
                 }
             }
-        }
-        else
-        {
-            isDashing = false;
+            else
+            {
+                isDashing = false;
+            }
+
+            if (Mathf.Approximately(movementVector.x, 0))
+            {
+                Vector2 newVelocity = rb.velocity;
+                newVelocity.x *= (1 - drag) * Time.fixedDeltaTime * 10;
+                rb.velocity = newVelocity;
+            }
+            if (Mathf.Approximately(movementVector.y, 0))
+            {
+                Vector2 newVelocity = rb.velocity;
+                newVelocity.y *= (1 - drag) * Time.fixedDeltaTime * 10;
+                rb.velocity = newVelocity;
+            }
         }
     }
 
@@ -209,6 +224,8 @@ public class PlayerMovement : MonoBehaviour
 
             if(afterImage != null)
                 afterImage.StartEffect(dashDistance / dashSpeed);
+
+            playerHealth.GiveIFrames(iFrameDistForDash / dashSpeed);
         }
     }
     #endregion
@@ -218,6 +235,33 @@ public class PlayerMovement : MonoBehaviour
     {
         isAttackMode = true;
         attackModeTimer = 5;
+    }
+
+    public void Knockback(Vector2 dir, float strength, float stunLength)
+    {
+        rb.AddForce(dir * strength, ForceMode2D.Impulse);
+        Stun(stunLength);
+    }
+    public void Knockback(Vector2 dir, float strength)
+    {
+        rb.AddForce(dir * strength, ForceMode2D.Impulse);
+    }
+
+    Coroutine stunCoroutine;
+    public void Stun(float length)
+    {
+        if (stunCoroutine != null)
+            StopCoroutine(stunCoroutine);
+
+        stunCoroutine = StartCoroutine(StunSequence(length));
+    }
+    IEnumerator StunSequence(float length)
+    {
+        canMove = false;
+
+        yield return new WaitForSeconds(length);
+
+        canMove = true;
     }
 
     #region RoomTraversal

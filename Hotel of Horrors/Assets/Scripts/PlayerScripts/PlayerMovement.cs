@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         playerTrans = player.transform;
-        roomManager = GameObject.Find("Room Manager").GetComponent<RoomManager>();
+        roomManager = GameObject.Find("Room Manager")?.GetComponent<RoomManager>();
 
         if (animator == null)
             animator = GetComponent<Animator>();

@@ -4,17 +4,65 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    public List<GameObject> northDoors;
-    public List<GameObject> eastDoors;
-    public List<GameObject> southDoors;
-    public List<GameObject> westDoors;
+    [SerializeField] int doorsToReset;
+
+    List<GameObject> northDoors;
+    List<GameObject> eastDoors;
+    List<GameObject> southDoors;
+    List<GameObject> westDoors;
+
+    int roomsTraversed = 0;
     
 
     private void Start()
     {
+        GetAllDoors();
+    }
+
+    /// <summary>
+    /// Returns an available room to assign to a door
+    /// </summary>
+    public GameObject GetNextRoom(Door.DoorLocations orientation)
+    {
+        if(roomsTraversed++ >= doorsToReset)
+        {
+            roomsTraversed = 0;
+            GetAllDoors();
+        }
+
+        GameObject door;
+        switch (orientation)
+        {
+            case Door.DoorLocations.North:
+                door = southDoors[Random.Range(0, southDoors.Count)];
+                southDoors.Remove(door);
+                return door;
+            case Door.DoorLocations.South:
+                door = northDoors[Random.Range(0, northDoors.Count)];
+                northDoors.Remove(door);
+                return door;
+            case Door.DoorLocations.East:
+                door = westDoors[Random.Range(0, westDoors.Count)];
+                westDoors.Remove(door);
+                return door;
+            case Door.DoorLocations.West:
+                door = eastDoors[Random.Range(0, eastDoors.Count)];
+                eastDoors.Remove(door);
+                return door;
+        }
+        return eastDoors[0];
+    }
+
+    void GetAllDoors()
+    {
+        northDoors.Clear();
+        eastDoors.Clear();
+        southDoors.Clear();
+        westDoors.Clear();
+
         GameObject[] doors = GameObject.FindGameObjectsWithTag("WestDoor");
-        
-        foreach(GameObject theDoor in doors)
+
+        foreach (GameObject theDoor in doors)
         {
             westDoors.Add(theDoor);
         }
@@ -39,33 +87,5 @@ public class RoomManager : MonoBehaviour
         {
             southDoors.Add(theDoor);
         }
-    }
-
-    /// <summary>
-    /// Returns an available room to assign to a door
-    /// </summary>
-    public GameObject GetNextRoom(Door.DoorLocations orientation)
-    {
-        GameObject door;
-        switch (orientation)
-        {
-            case Door.DoorLocations.North:
-                door = southDoors[Random.Range(0, southDoors.Count)];
-                southDoors.Remove(door);
-                return door;
-            case Door.DoorLocations.South:
-                door = northDoors[Random.Range(0, northDoors.Count)];
-                northDoors.Remove(door);
-                return door;
-            case Door.DoorLocations.East:
-                door = westDoors[Random.Range(0, westDoors.Count)];
-                westDoors.Remove(door);
-                return door;
-            case Door.DoorLocations.West:
-                door = eastDoors[Random.Range(0, eastDoors.Count)];
-                eastDoors.Remove(door);
-                return door;
-        }
-        return eastDoors[0];
     }
 }

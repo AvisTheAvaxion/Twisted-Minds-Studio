@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    public List<GameObject> westDoors;
+    public List<GameObject> northDoors;
     public List<GameObject> eastDoors;
+    public List<GameObject> southDoors;
+    public List<GameObject> westDoors;
+    
 
     private void Start()
     {
@@ -22,6 +25,20 @@ public class RoomManager : MonoBehaviour
         {
             eastDoors.Add(theDoor);
         }
+
+        doors = GameObject.FindGameObjectsWithTag("NorthDoor");
+
+        foreach (GameObject theDoor in doors)
+        {
+            northDoors.Add(theDoor);
+        }
+
+        doors = GameObject.FindGameObjectsWithTag("SouthDoor");
+
+        foreach (GameObject theDoor in doors)
+        {
+            southDoors.Add(theDoor);
+        }
     }
 
     /// <summary>
@@ -33,9 +50,13 @@ public class RoomManager : MonoBehaviour
         switch (orientation)
         {
             case Door.DoorLocations.North:
-                break;
+                door = southDoors[Random.Range(0, southDoors.Count)];
+                southDoors.Remove(door);
+                return door;
             case Door.DoorLocations.South:
-                break;
+                door = northDoors[Random.Range(0, northDoors.Count)];
+                northDoors.Remove(door);
+                return door;
             case Door.DoorLocations.East:
                 door = westDoors[Random.Range(0, westDoors.Count)];
                 westDoors.Remove(door);

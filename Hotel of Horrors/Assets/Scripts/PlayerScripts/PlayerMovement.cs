@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] AfterImage afterImage;
+    [SerializeField] Image fadeImage;
     private Transform playerTrans;
 
     [Header("Movement Modifiers")]
@@ -271,34 +273,59 @@ public class PlayerMovement : MonoBehaviour
         if (obj.tag.Equals("Door") || obj.tag.Equals("WestDoor")|| obj.tag.Equals("EastDoor") || obj.tag.Equals("NorthDoor")|| obj.tag.Equals("SouthDoor"))
         {
 
-            Door door = obj.GetComponent<Door>();
-
-            
-
-            if (door.assignedDoor == null)
-            {
-                door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
-            }
-
-
-            switch (door.doorLocation)
-            {
-                case Door.DoorLocations.North:
-                    print("North");
-                    break;
-                case Door.DoorLocations.South:
-                    print("South");
-                    break;
-                case Door.DoorLocations.East:
-                    print("East");
-                    this.transform.position = door.assignedDoor.transform.position - new Vector3(-0.1f,0,0.2f);
-                    break;
-                case Door.DoorLocations.West:
-                    print("West");
-                    this.transform.position = door.assignedDoor.transform.position - new Vector3(1f, 0, 0.2f);
-                    break;
-            }
+            StartCoroutine(FadeImageOut(obj));
         }
+    }
+
+    IEnumerator FadeImageOut(GameObject obj)
+    {
+        Door door = obj.GetComponent<Door>();
+
+        canMove = false;
+        print("fading black");
+        // loop over 1 second - fade to black
+        for (float i = 0; i <= 1; i += Time.deltaTime)
+        {
+            // set color with i as alpha
+            fadeImage.color = new Color(0, 0, 0, i);
+            yield return null;
+        }
+
+        if (door.assignedDoor == null)
+        {
+            door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
+        }
+
+
+        switch (door.doorLocation)
+        {
+            case Door.DoorLocations.North:
+                print("North");
+                this.transform.position = door.assignedDoor.transform.position - new Vector3(0.2f, 0, -0.1f);
+                break;
+            case Door.DoorLocations.South:
+                print("South");
+                this.transform.position = door.assignedDoor.transform.position - new Vector3(0.2f, 0, 0.1f);
+                break;
+            case Door.DoorLocations.East:
+                print("East");
+                this.transform.position = door.assignedDoor.transform.position - new Vector3(-0.1f, 0, 0.2f);
+                break;
+            case Door.DoorLocations.West:
+                print("West");
+                this.transform.position = door.assignedDoor.transform.position - new Vector3(1f, 0, 0.2f);
+                break;
+        }
+
+        print("fading clear");
+        // loop over 1 second backwards - fade to clear
+        for (float i = 1; i >= 0; i -= Time.deltaTime)
+        {
+            // set color with i as alpha
+            fadeImage.color = new Color(0, 0, 0, i);
+            yield return null;
+        }
+        canMove = true;
     }
     #endregion
 }

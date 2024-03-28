@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoomManager : MonoBehaviour
 {
     [SerializeField] int doorsToReset;
 
-    List<GameObject> northDoors;
-    List<GameObject> eastDoors;
-    List<GameObject> southDoors;
-    List<GameObject> westDoors;
+    List<GameObject> northDoors = new List<GameObject>();
+    List<GameObject> eastDoors = new List<GameObject>();
+    List<GameObject> southDoors = new List<GameObject>();
+    List<GameObject> westDoors = new List<GameObject>();
 
     int roomsTraversed = 0;
     
@@ -88,4 +89,5 @@ public class RoomManager : MonoBehaviour
             southDoors.Add(theDoor);
         }
     }
+
 }

@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Modifiers")]
     public float movementSpeed;
     [SerializeField] [Range(0,1)] float drag;
+    [SerializeField] float doorTransitionLength = 0.5f;
     //public float collisionOffset = 0.05f;
     //public ContactFilter2D movementFilter;
     //List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
@@ -281,51 +282,74 @@ public class PlayerMovement : MonoBehaviour
     {
         Door door = obj.GetComponent<Door>();
 
-        canMove = false;
-        print("fading black");
-        // loop over 1 second - fade to black
-        for (float i = 0; i <= 1; i += Time.deltaTime)
+        //Ensure player is facing the door
+        if ((door.doorLocation == Door.DoorLocations.North && direction.Equals("North")) ||
+            (door.doorLocation == Door.DoorLocations.South && direction.Equals("South")) ||
+            (door.doorLocation == Door.DoorLocations.East && direction.Equals("East")) ||
+            (door.doorLocation == Door.DoorLocations.West && direction.Equals("West")))
         {
-            // set color with i as alpha
-            fadeImage.color = new Color(0, 0, 0, i);
-            yield return null;
-        }
+            rb.velocity = Vector2.zero;
+            animator.SetBool("isWalking", false);
 
-        if (door.assignedDoor == null)
-        {
-            door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
-        }
+            canMove = false;
+            print("fading black");
+            // loop over 1 second - fade to black
+            for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
+            {
+                // set color with i as alpha
+                fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
+                yield return null;
+            }
+
+            if (door.assignedDoor == null)
+            {
+                door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
+            }
 
 
-        switch (door.doorLocation)
-        {
-            case Door.DoorLocations.North:
-                print("North");
-                this.transform.position = door.assignedDoor.transform.position - new Vector3(0.2f, 0, -0.1f);
-                break;
-            case Door.DoorLocations.South:
-                print("South");
-                this.transform.position = door.assignedDoor.transform.position - new Vector3(0.2f, 0, 0.1f);
-                break;
-            case Door.DoorLocations.East:
-                print("East");
-                this.transform.position = door.assignedDoor.transform.position - new Vector3(-0.1f, 0, 0.2f);
-                break;
-            case Door.DoorLocations.West:
-                print("West");
-                this.transform.position = door.assignedDoor.transform.position - new Vector3(1f, 0, 0.2f);
-                break;
-        }
+            switch (door.doorLocation)
+            {
+                case Door.DoorLocations.North:
+                    print("North");
+                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0f, -0.4f, 0);
+                    direction = "North";
+                    animator.runtimeAnimatorController = backController;
+                    break;
+                case Door.DoorLocations.South:
+                    print("South");
+                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0, 0.4f, 0);
+                    direction = "South";
+                    animator.runtimeAnimatorController = forwardController;
+                    break;
+                case Door.DoorLocations.East:
+                    print("East");
+                    this.transform.position = door.assignedDoor.transform.position - new Vector3(-0.4f, 0, 0);
+                    direction = "East";
+                    animator.runtimeAnimatorController = rightController;
+                    break;
+                case Door.DoorLocations.West:
+                    print("West");
+                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0.4f, 0, 0);
+                    direction = "West";
+                    animator.runtimeAnimatorController = leftController;
+                    break;
+            }
 
-        print("fading clear");
-        // loop over 1 second backwards - fade to clear
-        for (float i = 1; i >= 0; i -= Time.deltaTime)
-        {
-            // set color with i as alpha
-            fadeImage.color = new Color(0, 0, 0, i);
-            yield return null;
+            print("fading clear");
+            // loop over 1 second backwards - fade to clear
+            for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)
+            {
+                // set color with i as alpha
+                fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
+                yield return null;
+            }
+            canMove = true;
+
+            if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
+                animator.SetBool("isWalking", true);
+            else
+                animator.SetBool("isWalking", false);
         }
-        canMove = true;
     }
     #endregion
 }

@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField, Description("Monsters will spawn until the queue is depleted")] List<GameObject> enemyQueue;
     [SerializeField, Description("The amount of monsters that will spawn every wave.")] int spawnPerWave;
+    [SerializeField] List<GameObject> activeMonsters;
     PolygonCollider2D spawnArea;
     Queue<GameObject> queue;
     // Start is called before the first frame update
@@ -14,7 +15,27 @@ public class EnemySpawner : MonoBehaviour
     {
         queue = new Queue<GameObject>(enemyQueue);
         spawnArea = GetComponent<PolygonCollider2D>();
-        SpawnWave();
+    }
+
+    void Update()
+    {
+        //If there are no enemies to spawn
+        if (queue.Count <= 0)
+        {
+            
+        }
+        //If there are still enemies to spawn
+        else
+        {
+            foreach (GameObject monster in activeMonsters)
+            {
+                if (monster == null) activeMonsters.Remove(monster);
+            }
+            if (activeMonsters.Count <= 0)
+            {
+                SpawnWave();
+            }
+        }
     }
 
     void SpawnWave()
@@ -23,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
         //Find a random position for every enemy spawn in the wave
         for (int i = 0; i < spawnPerWave; i++)
         {
-            Instantiate(queue.Dequeue(), GetRandomPosition(spawnBound), Quaternion.identity);
+            activeMonsters.Add(Instantiate(queue.Dequeue(), GetRandomPosition(spawnBound), Quaternion.identity));
         }
     }
 
@@ -43,7 +64,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 continue;
             }
-
         }
     }
 }

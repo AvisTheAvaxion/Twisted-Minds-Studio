@@ -8324,7 +8324,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1789480479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8344,7 +8344,8 @@ MonoBehaviour:
   - {fileID: 6865958303660939511, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
   - {fileID: 1381499431061357504, guid: 48854a7a2f47c6c44b1b373ac5936be0, type: 3}
   - {fileID: 8739289154397693608, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
-  spawnPerWave: 7
+  spawnPerWave: 2
+  activeMonsters: []
 --- !u!4 &1789480480
 Transform:
   m_ObjectHideFlags: 0

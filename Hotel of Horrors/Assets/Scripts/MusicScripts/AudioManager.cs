@@ -58,10 +58,10 @@ public class AudioManager : MonoBehaviour
 
     private static void createDict()
     {
-        audioDict.Add("track 0", 0);
-        audioDict.Add("track 1", 1);
-        audioDict.Add("track 2", 2);
-
+        audioDict.Add("StienTheme", 0);
+        audioDict.Add("KarrenTheme", 1);
+        audioDict.Add("Elavator", 2);
+        audioDict.Add("Door", 3);
     }
 
     public static void Play(string audioName)
@@ -78,9 +78,13 @@ public class AudioManager : MonoBehaviour
 
     public static void Play(int id)
     {
-        if (id <= 0) { songQueue.Add(id); }
+        if (id > audioDict.Count)
+        {
+            throw new AudioError("The track with id '" + id + "' could not be found. Please call AudioManager.Sounds() to view all available tracks");
+        }
+        if (id <= 2) { songQueue.Add(id); }
 
-        else if (id >= 2) { ambientQueue.Add(id); }
+        //else if (id >= 2) { ambientQueue.Add(id); }
 
         else { soundQueue.Add(id); }
     }

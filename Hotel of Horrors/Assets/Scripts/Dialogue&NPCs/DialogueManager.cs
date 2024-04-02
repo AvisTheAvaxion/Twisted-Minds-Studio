@@ -34,10 +34,10 @@ public class DialogueManager : MonoBehaviour
         switch (flag)
         {
             case int i when i < 099:
-                textFileName = "F1D";
+                textFileName = "F0D";
                 break;
             case int i when i > 099 && i < 199:
-                textFileName = "F2D";
+                textFileName = "F1D";
                 flag -= 100;
                 break;
         }
@@ -102,7 +102,7 @@ public class DialogueManager : MonoBehaviour
             while ((line = reader.ReadLine()) != null)
             {
                 //if line is a choice line
-                if (line.Contains(flag + "#|"))
+                if (line.Contains(":"+flag + "#|"))
                 {
                     string removeString = flag + "#|";
                     choices.Add(ExtractChoices(line, @"\[1(.*?)1\]"));
@@ -118,25 +118,25 @@ public class DialogueManager : MonoBehaviour
                     choiceIndex = dialogueLines.IndexOf(cleanLine);
                 }
                 //if line is a regular line
-                else if (line.Contains(flag + "|"))
+                else if (line.Contains(":" + flag + "|"))
                 {
-                    string removeString = flag + "|";
+                    string removeString = ":" + flag + "|";
 
                     string cleanLine = line.Remove(0, removeString.Length);
                     dialogueLines.Add(cleanLine);
                 }
                 //read choice one specific dialogue
-                else if (playerChoice == Choice.One && line.Contains(flag + "a|"))
+                else if (playerChoice == Choice.One && line.Contains(":" + flag + "a|"))
                 {
-                    string removeString = flag + "a|";
+                    string removeString = ":" + flag + "a|";
 
                     string cleanLine = line.Remove(0, removeString.Length);
                     dialogueLines.Add(cleanLine);
                 }
                 //read choice two specific dialogue
-                else if (playerChoice == Choice.Two && line.Contains(flag + "b|"))
+                else if (playerChoice == Choice.Two && line.Contains(":" + flag + "b|"))
                 {
-                    string removeString = flag + "b|";
+                    string removeString = ":" + flag + "b|";
 
                     string cleanLine = line.Remove(0, removeString.Length);
                     dialogueLines.Add(cleanLine);

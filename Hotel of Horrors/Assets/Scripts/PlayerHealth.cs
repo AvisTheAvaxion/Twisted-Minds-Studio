@@ -73,19 +73,20 @@ public class PlayerHealth : MonoBehaviour, IHealth
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //if an enemy tocuhes the player, the player takes the damage
-       /* if(this.gameObject.tag.Equals("Player") && collision.gameObject.tag.Equals("Enemy"))
+        if (this.gameObject.tag.Equals("Player") && collision.gameObject.tag.Equals("Enemy"))
         {
             TakeDamage(1f);
-        }*/
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //handles bullet collision
-        /*if((collision.gameObject.tag.Equals("PlayerBullet") && this.gameObject.tag.Equals("Enemy")) ||( collision.gameObject.tag.Equals("EnemyBullet") && this.gameObject.tag.Equals("Player")))
+        if (collision.gameObject.tag.Equals("EnemyBullet"))
         {
             TakeDamage(2f);
-        }*/
+            Destroy(collision.gameObject);
+        }
     }
 
     public void Heal(float amount)

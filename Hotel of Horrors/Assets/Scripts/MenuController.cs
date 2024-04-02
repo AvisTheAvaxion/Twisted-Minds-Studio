@@ -9,6 +9,11 @@ public class MenuController : MonoBehaviour
     [SerializeField] GameObject mainMenuObj;
     [SerializeField] GameObject settingsObj;
 
+    private void Awake()
+    {
+        Cursor.visible = true;
+    }
+
     public void PlayGame()
     {
         //Update when we have save/load features

@@ -130,11 +130,11 @@ public class DialogueManager : MonoBehaviour
                         string[] songName = line.Split('(', ')');
                         if (songName[0] == "StopAll")
                         {
-                            musicManager.StopSong();
+                            AudioManager.Stop("all");
                         }
                         else
                         {
-                            musicManager.PlaySong(songName[1]);
+                            AudioManager.Play(songName[1]);
                         }
                     }
                     else

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -25,10 +26,16 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H)) { bgmSource.Stop(); soundEffectSource.Stop(); ambientSource.Stop(); }
+        //if (Input.GetKeyDown(KeyCode.H)) { bgmSource.Stop(); soundEffectSource.Stop(); ambientSource.Stop(); }
         
         if (songQueue.Count != 0)
         {
+            if (songQueue[0] == 5) { 
+                bgmSource.Stop();
+                songQueue.RemoveAt(0);
+                return;
+            }
+
             bgmSource.clip = audioClips[songQueue[0]];
             bgmSource.Play();
             songQueue.RemoveAt(0);
@@ -40,6 +47,13 @@ public class AudioManager : MonoBehaviour
         {
             if (!soundEffectSource.isPlaying)
             {
+                if (soundQueue[0] == 5)
+                {
+                    soundEffectSource.Stop();
+                    soundQueue.RemoveAt(0);
+                    return;
+                }
+
                 soundEffectSource.clip = audioClips[soundQueue[0]];
                 soundEffectSource.Play();
                 soundQueue.RemoveAt(0);
@@ -49,6 +63,13 @@ public class AudioManager : MonoBehaviour
 
         if (ambientQueue.Count != 0)
         {
+            if (ambientQueue[0] == 5)
+            {
+                ambientSource.Stop();
+                ambientQueue.RemoveAt(0);
+                return;
+            }
+
             ambientSource.clip = audioClips[ambientQueue[0]];
             ambientSource.Play();
             ambientQueue.RemoveAt(0);
@@ -60,7 +81,7 @@ public class AudioManager : MonoBehaviour
     {
         audioDict.Add("StienTheme", 0);
         audioDict.Add("KarrenTheme", 1);
-        audioDict.Add("Elavator", 2);
+        audioDict.Add("Elevator", 2);
         audioDict.Add("Door", 3);
     }
 
@@ -126,5 +147,33 @@ public class AudioManager : MonoBehaviour
             }
         }
         return s;
+    }
+
+    public static void Stop(string source)
+    {
+        if (source == "bgm")
+        {
+            songQueue.Clear();
+            songQueue.Add(5);
+        }
+        else if (source == "se")
+        {
+            soundQueue.Clear();
+            soundQueue.Add(5);
+        }
+        else if (source == "ambient")
+        {
+            ambientQueue.Clear();
+            ambientQueue.Add(5);
+        }
+        else if (source == "all")
+        {
+            songQueue.Clear();
+            songQueue.Add(5);
+            soundQueue.Clear();
+            soundQueue.Add(5);
+            ambientQueue.Clear();
+            ambientQueue.Add(5);
+        }
     }
 }

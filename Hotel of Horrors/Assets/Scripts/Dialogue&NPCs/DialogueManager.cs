@@ -128,7 +128,10 @@ public class DialogueManager : MonoBehaviour
                     if (line.Contains("$Play"))
                     {
                         string[] songName = line.Split('(', ')');
-                        if (songName[0] == "StopAll")
+                        Debug.Log(songName[0]);
+                        Debug.Log(songName[1]);
+
+                        if (songName[1] == "StopAll")
                         {
                             AudioManager.Stop("all");
                         }

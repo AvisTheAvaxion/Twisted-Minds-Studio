@@ -293,6 +293,7 @@ public class PlayerMovement : MonoBehaviour
 
             canMove = false;
             print("fading black");
+            AudioManager.Play("Door");
             // loop over 1 second - fade to black
             for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
             {

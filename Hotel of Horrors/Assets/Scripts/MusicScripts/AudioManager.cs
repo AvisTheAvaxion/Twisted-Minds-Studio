@@ -45,20 +45,17 @@ public class AudioManager : MonoBehaviour
 
         if (soundQueue.Count != 0)
         {
-            if (!soundEffectSource.isPlaying)
+            if (soundQueue[0] == 5)
             {
-                if (soundQueue[0] == 5)
-                {
-                    soundEffectSource.Stop();
-                    soundQueue.RemoveAt(0);
-                    return;
-                }
-
-                soundEffectSource.clip = audioClips[soundQueue[0]];
-                soundEffectSource.Play();
+                soundEffectSource.Stop();
                 soundQueue.RemoveAt(0);
-                //Debug.Log("Played a sound effect");
+                return;
             }
+
+            soundEffectSource.clip = audioClips[soundQueue[0]];
+            soundEffectSource.Play();
+            soundQueue.RemoveAt(0);
+            //Debug.Log("Played a sound effect");
         }
 
         if (ambientQueue.Count != 0)

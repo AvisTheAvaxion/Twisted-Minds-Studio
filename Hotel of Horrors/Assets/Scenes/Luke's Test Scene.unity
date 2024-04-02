@@ -131,22 +131,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2469899209372252502, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: angleSpread
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2469899209372252502, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: bulletForce
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2469899209372252502, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
-    - target: {fileID: 2469899209372252502, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: startingDistance
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 6829358297167079800, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.401
@@ -4717,12 +4701,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4037469665766584045, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
-      propertyPath: knockback
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4037469665766584045, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
-      propertyPath: contactKnockback
-      value: 2
+      propertyPath: maxDistToTarget
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8739289154397693608, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
       propertyPath: m_Name
@@ -21973,30 +21953,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2002098108392760686, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
-      propertyPath: attackType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2002098108392760686, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
-      propertyPath: maxDistToTarget
-      value: 2.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 2002098108392760686, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
-      propertyPath: minDistToTarget
-      value: 1.16
-      objectReference: {fileID: 0}
-    - target: {fileID: 2002098108392760686, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
-      propertyPath: maintainDistToTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4321823940750882247, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
-    - target: {fileID: 5961270054190179935, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
-      propertyPath: enableRotation
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6606269600983598422, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.52

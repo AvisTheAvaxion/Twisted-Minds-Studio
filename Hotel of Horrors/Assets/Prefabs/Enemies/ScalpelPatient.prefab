@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &92013830915379592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8152782113685284496}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8152782113685284496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92013830915379592}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.202, y: -0.058, z: -0.006482818}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2922543608765051560}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1431259987297073418
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,7 +60,8 @@ Transform:
   m_LocalPosition: {x: 0.027, y: 0.026176304, z: 0.006482818}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8152782113685284496}
   m_Father: {fileID: 6829358297167079800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9004313259983520654
@@ -98,6 +130,7 @@ GameObject:
   - component: {fileID: 9011499664093526356}
   - component: {fileID: 629670137548873685}
   - component: {fileID: 7887064575843007890}
+  - component: {fileID: 8624140693439099872}
   - component: {fileID: 6566436765469326580}
   - component: {fileID: 1022842952698779654}
   - component: {fileID: 2892289427171861916}
@@ -240,7 +273,6 @@ MonoBehaviour:
   gizmos: 0
   flipToRotate: 1
   transformToFlip: {fileID: 2922543608765051560}
-  shooter: {fileID: 0}
   navigation: {fileID: 9011499664093526356}
   destSetter: {fileID: 0}
   animator: {fileID: 835126136890149486}
@@ -256,15 +288,41 @@ MonoBehaviour:
   attackCooldownMin: 2
   attackCooldownMax: 2.5
   minDistToTarget: 2
+  maxDistToTarget: 2.5
+  meleeAttackPoint: {fileID: 0}
   meleeRadius: 0
   meleeDamage: 0
   knockback: 0
+  shooter: {fileID: 8624140693439099872}
   maintainDistToTarget: 1
-  maxDistToTarget: 2.5
   canMoveAndShoot: 0
   wallsLayerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &8624140693439099872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6865958303660939511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c15647212fe424db2439547f5944fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 6622512885369241516, guid: 588c1e117abbeeb4f91abf5ddbb1181a, type: 3}
+  bulletSpawnPoint: {fileID: 8152782113685284496}
+  startingDistance: 0.1
+  bulletForce: 3
+  burstCount: 1
+  projectilesPerBurst: 1
+  angleSpread: 0
+  timeBetweenBursts: 1
+  timeBetweenShots: 0.3
+  stagger: 0
+  oscillate: 0
+  target: {fileID: 0}
 --- !u!114 &6566436765469326580
 MonoBehaviour:
   m_ObjectHideFlags: 0

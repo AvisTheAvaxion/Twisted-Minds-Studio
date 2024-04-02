@@ -7,6 +7,7 @@ using UnityEngine;
 public class BasicShooter : MonoBehaviour
 {
     [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Transform bulletSpawnPoint;
     [SerializeField] float startingDistance = 0.1f;
     [SerializeField] float bulletForce = 20f;
     [SerializeField] int burstCount = 3;
@@ -16,12 +17,20 @@ public class BasicShooter : MonoBehaviour
     [SerializeField] float timeBetweenShots = .3f;
     [SerializeField] bool stagger;
     [SerializeField] bool oscillate;
+    [Space(15f)]
+    [SerializeField] Transform target;
 
     bool isShooting = false;
 
-    private void FixedUpdate()
+    private void Start()
     {
-        //Attack();
+        if (bulletSpawnPoint == null)
+            bulletSpawnPoint = transform;
+
+        if(target == null)
+        {
+            target = GameObject.Find("Player").transform;
+        }
     }
 
     public void Attack()
@@ -30,6 +39,11 @@ public class BasicShooter : MonoBehaviour
         {
             StartCoroutine(ShootRoutine());
         }
+    }
+
+    public void SetTarget(Transform target)
+    {
+        this.target = target;
     }
 
     IEnumerator ShootRoutine()
@@ -88,8 +102,8 @@ public class BasicShooter : MonoBehaviour
 
     Vector2 FindBulletSpawnPos(float currentAngle)
     {
-        float x = transform.position.x + startingDistance * Mathf.Cos(currentAngle * Mathf.Deg2Rad);
-        float y = transform.position.y + startingDistance * Mathf.Sin(currentAngle * Mathf.Deg2Rad);
+        float x = bulletSpawnPoint.position.x + startingDistance * Mathf.Cos(currentAngle * Mathf.Deg2Rad);
+        float y = bulletSpawnPoint.position.y + startingDistance * Mathf.Sin(currentAngle * Mathf.Deg2Rad);
 
         Vector2 pos = new Vector2(x, y);
 
@@ -98,7 +112,7 @@ public class BasicShooter : MonoBehaviour
 
     private void TargetConeOfInfluence(out float startAngle, out float currentAngle, out float angleStep, out float endAngle)
     {
-        var dir = (transform.position - GameObject.Find("Player").transform.position).normalized;
+        var dir = (bulletSpawnPoint.position - target.position).normalized;
         var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
 
         startAngle = angle;

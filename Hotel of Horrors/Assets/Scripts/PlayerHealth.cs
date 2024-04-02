@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour, IHealth
 {
     [SerializeField] PlayerMovement movement;
+    [SerializeField] Slider healthBar;
     [SerializeField] float maxHealth;
     [SerializeField] float iFramesTime;
     [SerializeField] float stunTime;
@@ -15,6 +17,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
     private void Start()
     {
         currentHealth = maxHealth;
+
+        if (healthBar) healthBar.value = 1;
     }
 
     public void TakeDamage(float amount)
@@ -24,6 +28,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
         {
             currentHealth -= Mathf.Abs(amount);
             print("Health: " + currentHealth);
+
+            if(healthBar) healthBar.value = currentHealth / maxHealth;
 
             if (currentHealth <= 0)
             {
@@ -47,6 +53,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
         {
             currentHealth -= Mathf.Abs(amount);
             print("Health: " + currentHealth);
+
+            if (healthBar) healthBar.value = currentHealth / maxHealth;
 
             if (currentHealth <= 0)
             {
@@ -84,6 +92,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
     {
         currentHealth += Mathf.Abs(amount);
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (healthBar) healthBar.value = currentHealth / maxHealth;
     }
 
     public void GiveIFrames(float length)
@@ -103,4 +113,4 @@ public class PlayerHealth : MonoBehaviour, IHealth
     {
         movement.Stun(length);
     }
-}
+} 

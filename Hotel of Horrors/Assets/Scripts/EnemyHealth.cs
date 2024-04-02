@@ -56,4 +56,13 @@ public class EnemyHealth : MonoBehaviour, IHealth
     {
         throw new System.NotImplementedException();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag.Equals("PlayerBullet"))
+        {
+            TakeDamage(2);
+            Destroy(collision.gameObject);
+        }
+    }
 }

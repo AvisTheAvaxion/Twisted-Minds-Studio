@@ -6,14 +6,14 @@
 :0b|Charlotte: I hope it gets better
 
 :1#|Charlotte: Would you like to listen to Stein's theme? [1Sure1][2No thanks2]
-:1a|$Play("StienMain")
+:1a|$Play(StienTheme)
 
 :2#|Charlotte: Would you like to listen to Karren's Theme? [1Sure1][2No thanks2]
-:2a|$Play("KarrenMain")
+:2a|$Play(KarrenTheme)
 
 :3#|Charlotte: Would you like to listen to Elavator Music? [1Sure1][2No thanks2]
-:3a|$Play("Elavator")
+:3a|$Play(Elevator)
 
 :4#|Charlotte: Would you like to listen to stop the music? [1Sure1][2No thanks2]
-:4a|$Play("StopAll")
+:4a|$Play(StopAll)
 :4| Have a nice day.

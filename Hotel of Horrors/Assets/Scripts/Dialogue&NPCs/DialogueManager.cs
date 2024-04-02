@@ -15,11 +15,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] List<string> dialogueLines;
     [SerializeField] List<string> choices = new List<string>();
     [SerializeField] Choice playerChoice;
+    MusicManager musicManager;
     public List<int> choiceIndex;
     int flag;
     private void Awake()
     {
         DialogueBG = GameObject.Find("CanvasDialogue").transform.GetChild(0).gameObject;
+        musicManager = FindAnyObjectByType<MusicManager>();
         choiceIndex = new List<int>();
     }
 
@@ -123,7 +125,22 @@ public class DialogueManager : MonoBehaviour
                 //read choice one specific dialogue
                 else if (playerChoice == Choice.One && line.Contains(":" + flag + "a|"))
                 {
-                    dialogueLines.Add(line.Substring(line.IndexOf('|') + 1));
+                    if (line.Contains("$Play"))
+                    {
+                        string[] songName = line.Split('(', ')');
+                        if (songName[0] == "StopAll")
+                        {
+                            musicManager.StopSong();
+                        }
+                        else
+                        {
+                            musicManager.PlaySong(songName[1]);
+                        }
+                    }
+                    else
+                    {
+                        dialogueLines.Add(line.Substring(line.IndexOf('|') + 1));
+                    }
                 }
                 //read choice two specific dialogue
                 else if (playerChoice == Choice.Two && line.Contains(":" + flag + "b|"))

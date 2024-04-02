@@ -15,11 +15,12 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] List<string> dialogueLines;
     [SerializeField] List<string> choices = new List<string>();
     [SerializeField] Choice playerChoice;
-    int choiceIndex = -1;
+    public List<int> choiceIndex;
     int flag;
     private void Awake()
     {
         DialogueBG = GameObject.Find("CanvasDialogue").transform.GetChild(0).gameObject;
+        choiceIndex = new List<int>();
     }
 
     
@@ -51,10 +52,10 @@ public class DialogueManager : MonoBehaviour
                 //if line is a choice line
                 if(line.Contains(":" + flag + "#|"))
                 {
-                    string removeString = flag + "#|";
+                    string removeString = ":" + flag + "#|";
                     choices.Add(ExtractChoices(line, @"\[1(.*?)1\]"));
                     choices.Add(ExtractChoices(line, @"\[2(.*?)2\]"));
-                    
+
 
                     string cleanLine = line.Remove(0, removeString.Length);
                     cleanLine = cleanLine.Replace(choices[0], "");
@@ -62,15 +63,12 @@ public class DialogueManager : MonoBehaviour
                     cleanLine = cleanLine.Replace(choices[1], "");
                     cleanLine = cleanLine.Replace("[22]", "");
                     dialogueLines.Add(cleanLine);
-                    choiceIndex = dialogueLines.IndexOf(cleanLine);
+                    choiceIndex.Add(dialogueLines.IndexOf(cleanLine));
                 }
                 //if line is a regular line
                 else if(line.Contains(":" + flag + "|"))
                 {
-                    string removeString = ":" + flag + "|";
-
-                    string cleanLine = line.Remove(0, removeString.Length);
-                    dialogueLines.Add(cleanLine);
+                    dialogueLines.Add(line.Substring(line.IndexOf('|') + 1));
                 }
             }
         }
@@ -87,10 +85,10 @@ public class DialogueManager : MonoBehaviour
         switch (flag)
         {
             case int i when i < 099:
-                textFileName = "F1D";
+                textFileName = "F0D";
                 break;
             case int i when i > 099 && i < 199:
-                textFileName = "F2D";
+                textFileName = "F1D";
                 flag -= 100;
                 break;
         }
@@ -104,7 +102,7 @@ public class DialogueManager : MonoBehaviour
                 //if line is a choice line
                 if (line.Contains(":"+flag + "#|"))
                 {
-                    string removeString = flag + "#|";
+                    string removeString = ":"+flag + "#|";
                     choices.Add(ExtractChoices(line, @"\[1(.*?)1\]"));
                     choices.Add(ExtractChoices(line, @"\[2(.*?)2\]"));
 
@@ -115,31 +113,22 @@ public class DialogueManager : MonoBehaviour
                     cleanLine = cleanLine.Replace(choices[1], "");
                     cleanLine = cleanLine.Replace("[22]", "");
                     dialogueLines.Add(cleanLine);
-                    choiceIndex = dialogueLines.IndexOf(cleanLine);
+                    choiceIndex.Add(dialogueLines.IndexOf(cleanLine));
                 }
                 //if line is a regular line
                 else if (line.Contains(":" + flag + "|"))
                 {
-                    string removeString = ":" + flag + "|";
-
-                    string cleanLine = line.Remove(0, removeString.Length);
-                    dialogueLines.Add(cleanLine);
+                    dialogueLines.Add(line.Substring(line.IndexOf('|')+1));
                 }
                 //read choice one specific dialogue
                 else if (playerChoice == Choice.One && line.Contains(":" + flag + "a|"))
                 {
-                    string removeString = ":" + flag + "a|";
-
-                    string cleanLine = line.Remove(0, removeString.Length);
-                    dialogueLines.Add(cleanLine);
+                    dialogueLines.Add(line.Substring(line.IndexOf('|') + 1));
                 }
                 //read choice two specific dialogue
                 else if (playerChoice == Choice.Two && line.Contains(":" + flag + "b|"))
                 {
-                    string removeString = ":" + flag + "b|";
-
-                    string cleanLine = line.Remove(0, removeString.Length);
-                    dialogueLines.Add(cleanLine);
+                    dialogueLines.Add(line.Substring(line.IndexOf('|') + 1));
                 }
             }
         }
@@ -159,7 +148,7 @@ public class DialogueManager : MonoBehaviour
     void ChangeDialogue(int index)
     {
         TextMeshProUGUI dialogueText = DialogueBG.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        if(index == choiceIndex)
+        if(index == choiceIndex[0])
         {
             TextMeshProUGUI choiceOneText = DialogueBG.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI choiceTwoText = DialogueBG.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -168,6 +157,7 @@ public class DialogueManager : MonoBehaviour
             choiceTwoText.transform.parent.gameObject.SetActive(true);
             choiceOneText.text = choices[0];
             choiceTwoText.text = choices[1];
+            choiceIndex.Remove(choiceIndex[0]);
         }
         else
         {

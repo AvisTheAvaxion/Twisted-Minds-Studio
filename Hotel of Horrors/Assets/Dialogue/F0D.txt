@@ -1,12 +1,19 @@
 :0|Charlotte: Hello
 :0|Protag: Hi
-:0#|How is your day going?[1Not bad1][2Terrible2]
+:0#|How is your day going? [1Not bad1][2Terrible2]
 :0a|Charlotte: I'm happy to hear that
 :0b|Charlotte: I'm sorry to hear that
 :0b|Charlotte: I hope it gets better
-:0#|Charlotte: Would you like to listen to any music?[1Stein's theme1][2Karren's Theme2][3Elavator Music3][4No thanks4]
-:0a|$Play("StienMain")
-:0b|$Play("KarrenMain")
-:0c|$Play("Elavator")
-:0d|$Play("StopAll")
-:0| Have a nice day.
+
+:1#|Charlotte: Would you like to listen to Stein's theme? [1Sure1][2No thanks2]
+:1a|$Play("StienMain")
+
+:2#|Charlotte: Would you like to listen to Karren's Theme? [1Sure1][2No thanks2]
+:2a|$Play("KarrenMain")
+
+:3#|Charlotte: Would you like to listen to Elavator Music? [1Sure1][2No thanks2]
+:3a|$Play("Elavator")
+
+:4#|Charlotte: Would you like to listen to stop the music? [1Sure1][2No thanks2]
+:4a|$Play("StopAll")
+:4| Have a nice day.

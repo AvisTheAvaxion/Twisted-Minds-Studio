@@ -49,7 +49,7 @@ public class DialogueManager : MonoBehaviour
             while ((line = reader.ReadLine()) != null)
             {
                 //if line is a choice line
-                if(line.Contains(flag + "#|"))
+                if(line.Contains(":" + flag + "#|"))
                 {
                     string removeString = flag + "#|";
                     choices.Add(ExtractChoices(line, @"\[1(.*?)1\]"));
@@ -65,9 +65,9 @@ public class DialogueManager : MonoBehaviour
                     choiceIndex = dialogueLines.IndexOf(cleanLine);
                 }
                 //if line is a regular line
-                else if(line.Contains(flag + "|"))
+                else if(line.Contains(":" + flag + "|"))
                 {
-                    string removeString = flag + "|";
+                    string removeString = ":" + flag + "|";
 
                     string cleanLine = line.Remove(0, removeString.Length);
                     dialogueLines.Add(cleanLine);

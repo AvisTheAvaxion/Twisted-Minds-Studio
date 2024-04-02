@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 9011499664093526356}
   - component: {fileID: 629670137548873685}
   - component: {fileID: 7887064575843007890}
+  - component: {fileID: 2469899209372252502}
   - component: {fileID: 6566436765469326580}
   - component: {fileID: 1022842952698779654}
   - component: {fileID: 2892289427171861916}
@@ -240,7 +241,6 @@ MonoBehaviour:
   gizmos: 0
   flipToRotate: 1
   transformToFlip: {fileID: 2922543608765051560}
-  shooter: {fileID: 0}
   navigation: {fileID: 9011499664093526356}
   destSetter: {fileID: 0}
   animator: {fileID: 835126136890149486}
@@ -252,19 +252,43 @@ MonoBehaviour:
   pauseMax: 2
   aggroRadius: 3
   contactDamage: 1
-  contactKnockback: 3
+  contactKnockback: 2
   attackCooldownMin: 2
   attackCooldownMax: 2.5
   minDistToTarget: 2
+  maxDistToTarget: 2.5
+  meleeAttackPoint: {fileID: 0}
   meleeRadius: 0
   meleeDamage: 0
   knockback: 0
+  shooter: {fileID: 2469899209372252502}
   maintainDistToTarget: 1
-  maxDistToTarget: 2.5
   canMoveAndShoot: 0
   wallsLayerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &2469899209372252502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6865958303660939511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c15647212fe424db2439547f5944fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
+  startingDistance: 0.1
+  bulletForce: 5
+  burstCount: 1
+  projectilesPerBurst: 1
+  angleSpread: 0
+  timeBetweenBursts: 1
+  timeBetweenShots: 0.01
+  stagger: 0
+  oscillate: 0
 --- !u!114 &6566436765469326580
 MonoBehaviour:
   m_ObjectHideFlags: 0

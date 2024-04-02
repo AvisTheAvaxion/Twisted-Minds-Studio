@@ -29,7 +29,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.101, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7527563547493696999}
   m_Father: {fileID: 417761132821364109}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2162674519699983020
@@ -84,6 +85,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &5860330890906831790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7527563547493696999}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7527563547493696999
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860330890906831790}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.322, y: -0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6658179999741774060}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8739289154397693608
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +272,6 @@ MonoBehaviour:
   gizmos: 0
   flipToRotate: 1
   transformToFlip: {fileID: 6658179999741774060}
-  shooter: {fileID: 0}
   navigation: {fileID: 8129201505883869866}
   destSetter: {fileID: 0}
   animator: {fileID: 5346251851841856883}
@@ -252,15 +283,17 @@ MonoBehaviour:
   pauseMax: 3
   aggroRadius: 3.22
   contactDamage: 3
-  contactKnockback: 1
+  contactKnockback: 2
   attackCooldownMin: 1
   attackCooldownMax: 2
   minDistToTarget: 0.75
+  maxDistToTarget: 0.5
+  meleeAttackPoint: {fileID: 7527563547493696999}
   meleeRadius: 1
-  meleeDamage: 0
-  knockback: 0
+  meleeDamage: 1
+  knockback: 2
+  shooter: {fileID: 0}
   maintainDistToTarget: 0
-  maxDistToTarget: 0
   canMoveAndShoot: 0
   wallsLayerMask:
     serializedVersion: 2

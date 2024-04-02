@@ -24,7 +24,6 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] Transform transformToFlip;
 
     [Header("References")]
-    [SerializeField] protected BasicShooter shooter;
     [SerializeField] protected AILerp navigation;
     [SerializeField] protected AIDestinationSetter destSetter;
 
@@ -49,15 +48,17 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected float attackCooldownMin;
     [SerializeField] protected float attackCooldownMax;
     [SerializeField] protected float minDistToTarget;
+    [SerializeField] protected float maxDistToTarget;
 
     [Header("Melee Fight Settings")]
+    [SerializeField] protected Transform meleeAttackPoint;
     [SerializeField] protected float meleeRadius;
     [SerializeField] protected float meleeDamage;
     [SerializeField] protected float knockback;
 
     [Header("Ranged Fight Settings")]
+    [SerializeField] protected BasicShooter shooter;
     [SerializeField] protected bool maintainDistToTarget = true;
-    [SerializeField] protected float maxDistToTarget;
     [SerializeField] protected bool canMoveAndShoot = true;
     [SerializeField] LayerMask wallsLayerMask;
     
@@ -186,8 +187,9 @@ public class EnemyStateMachine : MonoBehaviour
             if (attackType == Attacks.AttackModes.Melee)
             {
                 if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
+                if(navigation.reachedEndOfPath) animator.SetBool("isWalking", false);
 
-                navigation.destination = target.transform.position;
+                navigation.destination = (Vector2)target.transform.position - dirToPlayer * maxDistToTarget;
                 CheckToRotate(dirToPlayer);
 
                 if (canAttack && distToTarget < minDistToTarget)
@@ -253,6 +255,21 @@ public class EnemyStateMachine : MonoBehaviour
     public virtual void MeleeAttack()
     {
         //Do melee attack
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(meleeAttackPoint.position, meleeRadius);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].tag.Equals("Player"))
+            {
+                PlayerMovement playerMovement = colliders[i].gameObject.GetComponent<PlayerMovement>();
+                IHealth health = colliders[i].gameObject.GetComponent<IHealth>();
+                Vector2 dir = (colliders[i].transform.position - transform.position).normalized;
+
+                health.TakeDamage(meleeDamage);
+                playerMovement.Knockback(dir, knockback);
+
+                break;
+            }
+        }
     }
     public virtual void MeleeAttackEnd()
     {
@@ -281,6 +298,10 @@ public class EnemyStateMachine : MonoBehaviour
     public virtual void RangedAttack()
     {
         //Do ranged attack
+        if(shooter != null)
+        {
+            shooter.Attack();
+        }
     }
     public virtual void RangedAttackEnd()
     {

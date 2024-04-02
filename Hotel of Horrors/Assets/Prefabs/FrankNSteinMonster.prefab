@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  setScaleToRotate: 1
-  transformToScale: {fileID: 2881490729553979416}
+  flipToRotate: 0
+  transformToFlip: {fileID: 0}
   stages:
   - stage: 1
     healthThreshold: 100
@@ -111,7 +111,7 @@ MonoBehaviour:
     normalContactDamage: 1
     chargeSpeed: 150
     chargeLength: 3
-    chargeDamage: 0
+    chargeDamage: 4
     chargeKnockback: 8
     chargeStun: 1
     chargeSensitivity: 0.205
@@ -119,7 +119,7 @@ MonoBehaviour:
     chargeCooldownMin: 5
     chargeCooldownMax: 8
     slamMinAttackRange: 3
-    slamDamage: 0
+    slamDamage: 5
     slamRadius: 1.25
     slamKnockback: 5
     slamCooldownMin: 2

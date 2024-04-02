@@ -15,13 +15,11 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] List<string> dialogueLines;
     [SerializeField] List<string> choices = new List<string>();
     [SerializeField] Choice playerChoice;
-    MusicManager musicManager;
     public List<int> choiceIndex;
     int flag;
     private void Awake()
     {
         DialogueBG = GameObject.Find("CanvasDialogue").transform.GetChild(0).gameObject;
-        musicManager = FindAnyObjectByType<MusicManager>();
         choiceIndex = new List<int>();
     }
 

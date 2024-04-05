@@ -17,10 +17,10 @@ public class Inventory : MonoBehaviour
     [SerializeField] SpriteRenderer weaponPlacement;
     [SerializeField] Animator animator;
     [SerializeField] List<ItemSlot> slots;
-    WeaponAttack weaponAttack;
+    //WeaponAttack weaponAttack;
 
     [SerializeField] AnimatorOverrideController overrideController;
-    AttackController playerAttack;
+    AttackController attackController;
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class Inventory : MonoBehaviour
 
         inventoryUI.SetActive(true);
         inventoryUI.SetActive(false);
-        playerAttack = GetComponent<AttackController>();
+        attackController = GetComponent<AttackController>();
 
         slots = inventoryUI.GetComponentsInChildren<ItemSlot>().ToList();
         foreach (ItemSlot slot in slots)
@@ -55,11 +55,13 @@ public class Inventory : MonoBehaviour
 
     public void EquipWeapon(Weapon weapon)
     {
-        currentWeapon = weapon;
-        weaponPlacement.sprite = currentWeapon.GetSprite();
-        animator.runtimeAnimatorController = overrideController;
-        overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation();
-        weaponAttack.SetDamage(weapon.GetDamage());
+        attackController.Equip(weapon);
+
+        //currentWeapon = weapon;
+        //weaponPlacement.sprite = currentWeapon.GetSprite();
+        //animator.runtimeAnimatorController = overrideController;
+        //overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation();
+        //weaponAttack.SetDamage(weapon.GetDamage());
         //Debug.Log(overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation());
         //Insert code that is done on equip like moving gameobject beside the player / Swaping Sprites
     }
@@ -99,7 +101,7 @@ public class Inventory : MonoBehaviour
 
     public void UpdatePlayerMode()
     {
-        playerAttack.ChangeAttackMode(currentWeapon.GetWeaponMode());
+        attackController.ChangeAttackMode(currentWeapon.GetWeaponMode());
     }
     
 }

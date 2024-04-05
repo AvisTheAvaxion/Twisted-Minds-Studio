@@ -70,7 +70,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+/*    private void OnCollisionEnter2D(Collision2D collision)
     {
         //if an enemy tocuhes the player, the player takes the damage
         if (this.gameObject.tag.Equals("Player") && collision.gameObject.tag.Equals("Enemy"))
@@ -87,7 +87,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
             TakeDamage(2f);
             Destroy(collision.gameObject);
         }
-    }
+    }*/
 
     public void Heal(float amount)
     {

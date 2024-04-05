@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     //public float collisionOffset = 0.05f;
     //public ContactFilter2D movementFilter;
     //List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
-    [HideInInspector] public bool canMove;
+    bool canMove;
 
     [Header("Dashing Modifiers")]
     public float dashDistance;
@@ -46,7 +46,13 @@ public class PlayerMovement : MonoBehaviour
     Vector2 dashStartVector = new Vector2();
     RoomManager roomManager;
 
+    AttackController attackController;
+
     #endregion
+
+    public bool CanMove { get => canMove; }
+    public bool IsDashing { get => isDashing; }
+    public string Direction { get => direction; }
 
     // Start is called before the first frame update
     void Start()
@@ -54,12 +60,13 @@ public class PlayerMovement : MonoBehaviour
         playerTrans = player.transform;
         roomManager = GameObject.Find("Room Manager")?.GetComponent<RoomManager>();
 
+        attackController = GetComponent<AttackController>();
+
         if (animator == null)
             animator = GetComponent<Animator>();
 
-        animator.SetBool("isRunning", false);
         animator.SetBool("isWalking", false);
-        animator.SetBool("isHolding", false);
+        animator.SetBool("Dashing", false);
 
         canMove = true;
     }
@@ -69,31 +76,36 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDashing && isAttackMode)
         {
-            Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-            float angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+            if (!attackController.IsAttacking)
+            {
+                Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+                float angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
 
-            if(angle > -45 && angle <= 45 && !direction.Equals("North"))
-            {
-                //back
-                direction = "North";
-                animator.runtimeAnimatorController = backController;
-            } else if (angle <=-45 && angle > -135 && !direction.Equals("West"))
-            {
-                //left
-                direction = "West";
-                animator.runtimeAnimatorController = leftController;
-            } else if (angle <= -135 || angle > 135 && !direction.Equals("South"))
-            {
-                //forward
-                direction = "South";
-                animator.runtimeAnimatorController = forwardController;
-            } else if (angle <= 135 && angle > 45 && !direction.Equals("East"))
-            {
-                //right
-                direction = "East";
-                animator.runtimeAnimatorController = rightController;
+                if (angle > -45 && angle <= 45 && !direction.Equals("North"))
+                {
+                    //back
+                    direction = "North";
+                    animator.runtimeAnimatorController = backController;
+                }
+                else if (angle <= -45 && angle > -135 && !direction.Equals("West"))
+                {
+                    //left
+                    direction = "West";
+                    animator.runtimeAnimatorController = leftController;
+                }
+                else if (angle <= -135 || angle > 135 && !direction.Equals("South"))
+                {
+                    //forward
+                    direction = "South";
+                    animator.runtimeAnimatorController = forwardController;
+                }
+                else if (angle <= 135 && angle > 45 && !direction.Equals("East"))
+                {
+                    //right
+                    direction = "East";
+                    animator.runtimeAnimatorController = rightController;
+                }
             }
-
 
             if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
             {
@@ -129,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else
                     {
+                        animator.SetBool("Dashing", false);
                         isDashing = false;
                     }
                 }
@@ -139,6 +152,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                animator.SetBool("Dashing", false);
                 isDashing = false;
             }
 
@@ -163,35 +177,40 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isAttackMode && canMove)
         {
-            if (movementVector.y >= 0.1f)
-            {
-                direction = "North";
-                animator.runtimeAnimatorController = backController;
-            }
-            else if (movementVector.y <= -0.1f)
-            {
-                direction = "South";
-                animator.runtimeAnimatorController = forwardController;
-            }
-            else if (movementVector.x <= -0.1f)
-            {
-                direction = "West";
-                animator.runtimeAnimatorController = leftController;
-            }
-            else if (movementVector.x >= 0.1f)
-            {
-                direction = "East";
-                animator.runtimeAnimatorController = rightController;
-            }
+            AnimateMovement();
+        }
+    }
 
-            if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
-            {
-                animator.SetBool("isWalking", true);
-            }
-            else
-            {
-                animator.SetBool("isWalking", false);
-            }
+    private void AnimateMovement()
+    {
+        if (movementVector.y >= 0.1f)
+        {
+            direction = "North";
+            animator.runtimeAnimatorController = backController;
+        }
+        else if (movementVector.y <= -0.1f)
+        {
+            direction = "South";
+            animator.runtimeAnimatorController = forwardController;
+        }
+        else if (movementVector.x <= -0.1f)
+        {
+            direction = "West";
+            animator.runtimeAnimatorController = leftController;
+        }
+        else if (movementVector.x >= 0.1f)
+        {
+            direction = "East";
+            animator.runtimeAnimatorController = rightController;
+        }
+
+        if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
         }
     }
 
@@ -224,8 +243,9 @@ public class PlayerMovement : MonoBehaviour
             }
 
             animator.SetTrigger("Dash");
+            animator.SetBool("Dashing", true);
 
-            if(afterImage != null)
+            if (afterImage != null)
                 afterImage.StartEffect(dashDistance / dashSpeed);
 
             playerHealth.GiveIFrames(iFrameDistForDash / dashSpeed);
@@ -262,9 +282,15 @@ public class PlayerMovement : MonoBehaviour
     {
         canMove = false;
 
+        isDashing = false;
+        animator.SetBool("Dashing", false);
+
         yield return new WaitForSeconds(length);
 
         canMove = true;
+
+        if (!isAttackMode)
+            AnimateMovement();
     }
 
     #region RoomTraversal

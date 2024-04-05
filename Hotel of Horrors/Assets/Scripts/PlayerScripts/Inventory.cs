@@ -20,14 +20,16 @@ public class Inventory : MonoBehaviour
     WeaponAttack weaponAttack;
 
     [SerializeField] AnimatorOverrideController overrideController;
-    Attack playerAttack;
+    AttackController playerAttack;
 
     private void Awake()
     {
-        weaponAttack = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<WeaponAttack>();
+        //Zion what is this line?!
+        //weaponAttack = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<WeaponAttack>();
+
         inventoryUI.SetActive(true);
         inventoryUI.SetActive(false);
-        playerAttack = GetComponent<Attack>();
+        playerAttack = GetComponent<AttackController>();
 
         slots = inventoryUI.GetComponentsInChildren<ItemSlot>().ToList();
         foreach (ItemSlot slot in slots)

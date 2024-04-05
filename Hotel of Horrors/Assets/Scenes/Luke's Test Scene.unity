@@ -3368,25 +3368,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3194915936490214647, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
-      propertyPath: drag
-      value: 0.705
+    - target: {fileID: 3741994600360784188, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3194915936490214647, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
-      propertyPath: playerHealth
-      value: 
-      objectReference: {fileID: 1340211030}
-    - target: {fileID: 3194915936490214647, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
-      propertyPath: iFrameDistForDash
-      value: 1.5
+    - target: {fileID: 3741994600360784188, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: TrailModule.enabled
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6971638880832592741, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
-      propertyPath: m_LinearDrag
-      value: 0.9
+    - target: {fileID: 3741994600360784188, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 0.04
       objectReference: {fileID: 0}
-    - target: {fileID: 6971638880832592741, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
-      propertyPath: m_Constraints
-      value: 4
+    - target: {fileID: 3741994600360784188, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3741994600360784188, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 1.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3741994600360784188, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: ShapeModule.alignToDirection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3741994600360784188, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057014539838049829, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057014539838049829, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7498233101355432618, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3441,17 +3457,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
---- !u!114 &1340211030 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5367254218961287942, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
-  m_PrefabInstance: {fileID: 1340211018}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 660bd72752f382b4d9f066185f966aab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1384417855
 GameObject:
   m_ObjectHideFlags: 0

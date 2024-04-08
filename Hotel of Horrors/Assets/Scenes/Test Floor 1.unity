@@ -1658,7 +1658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -33681,7 +33681,6 @@ TilemapCollider2D:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 172240059}
   - {fileID: 158729691}
   - {fileID: 1313091926}
   - {fileID: 2049619096}
@@ -33698,6 +33697,7 @@ SceneRoots:
   - {fileID: 1216944989}
   - {fileID: 910745604}
   - {fileID: 365589117}
-  - {fileID: 354630517}
+  - {fileID: 172240059}
   - {fileID: 925019258}
   - {fileID: 9483777}
+  - {fileID: 354630517}

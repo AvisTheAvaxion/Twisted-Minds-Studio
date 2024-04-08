@@ -20,6 +20,9 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //This is just here for testing. Get Rid of it if you want.
+        //FindObjectOfType<DialogueSystem>().StartDialogue("F0D.txt", 0);
+
         if (audioDict.Count == 0) { createDict(); }
     }
 

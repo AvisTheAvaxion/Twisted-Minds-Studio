@@ -9,7 +9,7 @@ using UnityEngine;
 public class DialogueManager : MonoBehaviour
 {
     //Things to disable
-
+    /*
 
     [SerializeField] GameObject DialogueBG;
     [SerializeField] List<string> dialogueLines;
@@ -206,5 +206,5 @@ public class DialogueManager : MonoBehaviour
 
         result = matches[0].Groups[1].Value;
         return result;
-    }
+    }*/
 }

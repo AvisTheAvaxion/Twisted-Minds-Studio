@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DialogueBoxInteractions : MonoBehaviour, IPointerClickHandler
+public class DialogueBoxInteractions : MonoBehaviour//, IPointerClickHandler
 {
-    static int dialogueIncrement = 1;
+    /*static int dialogueIncrement = 1;
     [SerializeField] DialogueManager manager;
     [SerializeField] bool isChoiceBox;
     [SerializeField] Choice currentChoice;
@@ -50,11 +50,11 @@ public class DialogueBoxInteractions : MonoBehaviour, IPointerClickHandler
     public void ResetIncrement()
     {
         dialogueIncrement = 1;
-    }
+    }*/
 }
-public enum Choice
+/*public enum Choice
 {
     None,
     One,
     Two
-}
+}*/

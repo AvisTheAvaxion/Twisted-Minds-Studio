@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 772692234422615090}
-  - component: {fileID: 4710562398981508804}
+  - component: {fileID: 7219785546604758236}
   m_Layer: 0
   m_Name: Dialogue System
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4710562398981508804
+--- !u!114 &7219785546604758236
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7042842034925127218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8936da7ed9e678a43a7ab41b60c65e01, type: 3}
+  m_Script: {fileID: 11500000, guid: b9962beee30f8234fa8696836aa92657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogueBG: {fileID: 0}
-  dialogueLines: []
-  choices: []
-  playerChoice: 0

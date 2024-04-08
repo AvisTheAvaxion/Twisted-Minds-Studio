@@ -60,7 +60,7 @@ public class FNSMonster : BossStateMachine
 
     protected override void Dialogue()
     {
-        throw new System.NotImplementedException();
+        FindAnyObjectByType<DialogueManager>().SendMessage("RetrieveDialogue", 005);
     }
 
     protected override void Fight()

@@ -17,6 +17,9 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] AudioClip[] audioClips;
 
+    private static bool updateVolume = false;
+    private static float[] volumes;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,12 +27,23 @@ public class AudioManager : MonoBehaviour
         //FindObjectOfType<DialogueSystem>().StartDialogue("F0D.txt", 0);
 
         if (audioDict.Count == 0) { createDict(); }
+        if (PlayerPrefs.HasKey("SFXVolume")) { volumes = Load(); }
+        else { volumes = new float[3] { 1f, 1f, 1f}; }
     }
 
     // Update is called once per frame
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.H)) { bgmSource.Stop(); soundEffectSource.Stop(); ambientSource.Stop(); }
+
+        if (updateVolume)
+        {
+            bgmSource.volume = volumes[0];
+            soundEffectSource.volume = volumes[1];
+            ambientSource.volume = volumes[2];
+            Save();
+            updateVolume = false;
+        }
         
         if (songQueue.Count != 0)
         {
@@ -168,12 +182,56 @@ public class AudioManager : MonoBehaviour
         }
         else if (source == "all")
         {
-            songQueue.Clear();
-            songQueue.Add(5);
-            soundQueue.Clear();
-            soundQueue.Add(5);
-            ambientQueue.Clear();
-            ambientQueue.Add(5);
+            Stop("bgm");
+            Stop("se");
+            Stop("ambient");
         }
+    }
+
+    public static void BackgroundVolume(float volume)
+    {
+        volumes[0] = volume;
+        updateVolume = true;
+    }
+
+    public static void SFXVolume(float volume)
+    {
+        volumes[1] = volume;
+        updateVolume = true;
+    }
+
+    public static void AmbientVolume(float volume)
+    {
+        volumes[2] = volume;
+        updateVolume = true;
+
+    }
+
+    public static float BackgroundVolume()
+    {
+        return volumes[0];
+    }
+
+    public static float SFXVolume()
+    {
+        return volumes[1];
+    }
+
+    public static float AmbientVolume()
+    {
+        return volumes[2];
+    }
+
+    private static void Save()
+    {
+        PlayerPrefs.SetFloat("BGMVolume", volumes[0]);
+        PlayerPrefs.SetFloat("SFXVolume", volumes[1]);
+        PlayerPrefs.SetFloat("AmbientVolume", volumes[2]);
+    }
+
+    private static float[] Load()
+    {
+        return new float[3] {PlayerPrefs.GetFloat("BGMVolume"), PlayerPrefs.GetFloat("SFXVolume"),
+            PlayerPrefs.GetFloat("AmbientVolume") };
     }
 }

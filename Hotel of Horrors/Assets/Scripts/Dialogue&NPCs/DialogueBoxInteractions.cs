@@ -1,60 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DialogueBoxInteractions : MonoBehaviour//, IPointerClickHandler
+public class DialogueBoxInteractions : MonoBehaviour, IPointerClickHandler
 {
-    /*static int dialogueIncrement = 1;
-    [SerializeField] DialogueManager manager;
-    [SerializeField] bool isChoiceBox;
-    [SerializeField] Choice currentChoice;
     bool isInteractable;
-    
 
-    private void Awake()
-    {
-        manager = FindAnyObjectByType<DialogueManager>();
-    }
+    public event EventHandler OnDialogueAdvance;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Current Incr: " + dialogueIncrement);
-        if (eventData.button == PointerEventData.InputButton.Left && !isChoiceBox && isInteractable)
+        if (eventData.button == PointerEventData.InputButton.Left && isInteractable)
         {
-            manager.SendMessage("ChangeDialogue", dialogueIncrement);
-            dialogueIncrement++;
+            OnDialogueAdvance?.Invoke(this, EventArgs.Empty);
         }
-        else if(eventData.button == PointerEventData.InputButton.Left && isChoiceBox)
-        {
-            if(currentChoice == Choice.One)
-            {
-                manager.TakePlayerChoice(Choice.One);
-                manager.SendMessage("RetrieveChoiceDialogue", dialogueIncrement);
-            }
-            else if(currentChoice == Choice.Two)
-            {
-                manager.TakePlayerChoice(Choice.Two);
-                manager.SendMessage("RetrieveChoiceDialogue", dialogueIncrement);
-            }
-            dialogueIncrement++;
-        }
-        
     }
 
     public void ToggleInteraction(bool input)
     {
         isInteractable = input;
     }
-
-    public void ResetIncrement()
-    {
-        dialogueIncrement = 1;
-    }*/
 }
-/*public enum Choice
-{
-    None,
-    One,
-    Two
-}*/

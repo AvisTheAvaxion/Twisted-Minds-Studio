@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,6 +46,7 @@ public class FNSMonster : BossStateMachine
     Vector2 moveDir;
     bool isCharging;
 
+    public event EventHandler OnBossDialogue;
     protected override void Init()
     {
         Disenrage();
@@ -60,7 +62,8 @@ public class FNSMonster : BossStateMachine
 
     protected override void Dialogue()
     {
-        FindAnyObjectByType<DialogueManager>().SendMessage("RetrieveDialogue", 005);
+        NPCArgs bossArg = new NPCArgs(5, "F0D.txt");
+        OnBossDialogue?.Invoke(this, bossArg);
     }
 
     protected override void Fight()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -10,7 +11,13 @@ public class DialogueSystem : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] GameObject canvasPrefab;
+
+    //Event Variables
     NPCInteraction npcInteraction;
+    DialogueBoxInteractions dialogueBoxInteract;
+    List<ChoiceInteractions> choiceInteractions;
+    FNSMonster bossMonster;
+    
     GameObject mainBG;
     TextMeshProUGUI mainText;
     TextMeshProUGUI nameText;
@@ -21,14 +28,33 @@ public class DialogueSystem : MonoBehaviour
     //file should be blocked out into numbered sections
     int block;
     List<DialogueLine> dialogueLines;
-    int choiceNum;
+    int choiceAmount;
+    int dialogueIndex;
 
     private void Awake()
     {
         npcInteraction = FindObjectOfType<NPCInteraction>();
         npcInteraction.OnPlayerTalk += NpcInteraction_OnPlayerTalk;
+        TryGetComponent<FNSMonster>(out bossMonster);
+        if(bossMonster != null)
+        {
+            bossMonster.OnBossDialogue += BossMonster_OnBossDialogue;
+        }
+        
+        
         //This is just here for testing. Get Rid of it if you want.
         //FindObjectOfType<DialogueSystem>().StartDialogue("F0D.txt", 0);
+    }
+
+    private void BossMonster_OnBossDialogue(object sender, System.EventArgs e)
+    {
+        NPCArgs args = (NPCArgs)e;
+        StartDialogue(args.GetFile(), args.GetBlock());
+    }
+
+    private void DialogueBoxInteract_OnDialogueAdvance(object sender, System.EventArgs e)
+    {
+        AdvanceDialogue();
     }
 
     private void NpcInteraction_OnPlayerTalk(object sender, System.EventArgs e)
@@ -36,49 +62,92 @@ public class DialogueSystem : MonoBehaviour
         NPCArgs args = (NPCArgs)e;
         StartDialogue(args.GetFile(), args.GetBlock());
     }
+    private void DialogueSystem_OnChoiceInteract(object sender, System.EventArgs e)
+    {
+        ChoiceLine cLine = (ChoiceLine)dialogueLines[dialogueIndex];
+        IntArgs args = (IntArgs)e;
+        cLine.SetChoiceResults(args.GetHeldInteger(), ref dialogueLines);
+        AdvanceDialogue();
+    }
 
     //Every time the Dialogue System is needed call this method
     //This method is broken down into bite sized methods
     //Im probs gonna have to do events for this...FUUUUUUUUUUUUUUUUUUUUUUUUU
     public void StartDialogue(string fileName, int blockNum)
     {
+        //Set Variables
         choices = new List<GameObject>();
         dialogueLines = new List<DialogueLine>();
+        choiceInteractions = new List<ChoiceInteractions>();
+        dialogueIndex = 0;
         fileToRead = fileName;
         block = blockNum;
-        Debug.Log(fileName + " | " +  blockNum);
+
+        Cursor.visible = true;
+
+        //Methods
         ParseBlock();
         CreateBaseVisuals();
-        PauseGame();
-        UpdateVisuals(dialogueLines[0]);
+        PauseGame(true);
+        AdvanceDialogue();
 
-        //THIS IS DEBUG STUFF. DONT WORRY ABOUT IT!!!11!!
-        for(int i = 0; i < dialogueLines.Count; i++)
+    }
+
+    public void AdvanceDialogue()
+    {
+        dialogueIndex++;
+        if (dialogueIndex < dialogueLines.Count)
         {
-            DialogueLine line = dialogueLines[i];
-            Debug.Log(line.speaker + ": " + line.pureText);
-            if (line.GetType() == typeof(ChoiceLine))
-            {
-                ChoiceLine cLine = (ChoiceLine)line;
-                cLine.SetChoiceResults(1, ref dialogueLines);
-            }
+            UpdateVisuals(dialogueLines[dialogueIndex]);
         }
+        else
+        {
+            EndDialogue();
+        }
+    }
+
+    void EndDialogue()
+    {
+        dialogueBoxInteract.OnDialogueAdvance -= DialogueBoxInteract_OnDialogueAdvance;
+        for (int i = 0; i < choiceAmount; i++)
+        {
+            choiceInteractions[i].OnChoiceInteract -= DialogueSystem_OnChoiceInteract;
+        }
+        GameObject dialogueCanvas = GameObject.Find("CanvasDialogue(Clone)");
+        Destroy(dialogueCanvas);
+        Cursor.visible = false;
+        PauseGame(false);
     }
 
     //This method deals with displaying the visuals and storing for future use.
     //If you want to add more visual bs put it here
     void CreateBaseVisuals()
     {
+        //Create Canvas and Gameobjects within. Also assign need TMPros to variables
         GameObject canvas = Instantiate(canvasPrefab);
         mainBG = canvas.transform.GetChild(0).gameObject;
         mainText = mainBG.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         nameText = mainBG.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
+
         GameObject choiceObj = canvas.transform.GetChild(1).GetChild(0).gameObject;
+        choiceInteractions.Add(choiceObj.GetComponent<ChoiceInteractions>());
+        choiceInteractions[0].SetChoiceIndex(0);
         choices.Add(choiceObj);
-        for(int i = 1; i < choiceNum; i++)
+
+        dialogueBoxInteract = FindObjectOfType<DialogueBoxInteractions>();
+        dialogueBoxInteract.OnDialogueAdvance += DialogueBoxInteract_OnDialogueAdvance;
+        
+        for (int i = 1; i < choiceAmount; i++)
         {
-            choices.Add(Instantiate(choiceObj, choiceObj.transform.parent));
+            GameObject choice = Instantiate(choiceObj, choiceObj.transform.parent);
+            choiceInteractions.Add(choice.GetComponent<ChoiceInteractions>());
+            choiceInteractions[i].SetChoiceIndex(i);
+            choiceInteractions[i].OnChoiceInteract += DialogueSystem_OnChoiceInteract;
+            choices.Add(choice);
         }
+
+        
+        choiceInteractions[0].OnChoiceInteract += DialogueSystem_OnChoiceInteract;
     }
 
     //This method deals with the actual text being displayed on top of the dialogue GUI
@@ -88,12 +157,14 @@ public class DialogueSystem : MonoBehaviour
     {
         if(line.GetType() != typeof(ChoiceLine))
         {
+            dialogueBoxInteract.ToggleInteraction(true);
             foreach(GameObject choiceBox in choices){
                 choiceBox.SetActive(false);
             }
         }
         else
         {
+            dialogueBoxInteract.ToggleInteraction(false);
             ChoiceLine choiceLine = (ChoiceLine)line;
             for(int i = 0;  i < choices.Count; i++)
             {
@@ -109,9 +180,16 @@ public class DialogueSystem : MonoBehaviour
 
     //The game gets paused here
     //If you want to add a sound or smth do so here
-    void PauseGame()
+    void PauseGame(bool value)
     {
-        Time.timeScale = 0;
+        if (value)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
     }
 
     //The block holding the desired text in the desired file will be located and shoved into a list of strings
@@ -141,7 +219,7 @@ public class DialogueSystem : MonoBehaviour
                     Debug.Log($"Standard line  {lineNumber}: " + line);
                     ChoiceLine choiceLine = new ChoiceLine();
                     choiceLine.ParseAndStore(line);
-                    choiceNum = choiceLine.ChoiceAmount();
+                    choiceAmount = choiceLine.ChoiceAmount();
                     dialogueLines.Add(choiceLine);
 
                     aNum = lineNumber;
@@ -199,10 +277,6 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    void OnPlayerTalk()
-    {
-
-    }
 }
 
 //Base class that all dialogue is based on

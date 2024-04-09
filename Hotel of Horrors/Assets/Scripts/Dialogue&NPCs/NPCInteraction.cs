@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,20 +8,19 @@ public class NPCInteraction : MonoBehaviour
     [Header("State Fields")]
     [SerializeField] bool playerInRange;
     bool isNPCInteractable;
-    int npcFlag;
-    DialogueManager dialogueManager;
+    int npcBlock;
+    string npcFile;
 
-    private void Awake()
-    {
-        dialogueManager = FindAnyObjectByType<DialogueManager>();
-    }
+    public event EventHandler OnPlayerTalk;
+    
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("NPC"))
         {
             isNPCInteractable = collision.GetComponent<NPCBehavior>().isInteractable;
-            npcFlag = collision.GetComponent<NPCBehavior>().flag;
+            npcBlock = collision.GetComponent<NPCBehavior>().flag;
+            npcFile = collision.GetComponent<NPCBehavior>().fileName;
             playerInRange = true;
         }
     }
@@ -37,7 +37,40 @@ public class NPCInteraction : MonoBehaviour
     {
         if (playerInRange && isNPCInteractable)
         {
-            dialogueManager.SendMessage("RetrieveDialogue", npcFlag);
+            NPCArgs args = new NPCArgs(npcBlock, npcFile);
+            OnPlayerTalk?.Invoke(this, args);
         }
+    }
+}
+
+class NPCArgs : EventArgs
+{
+    int npcBlock;
+    string npcFile;
+
+    public NPCArgs(int npcBlock, string npcFile)
+    {
+        this.npcBlock = npcBlock;
+        this.npcFile = npcFile;
+    }
+
+    public void SetBlock(int block)
+    {
+        npcBlock = block;
+    }
+
+    public int GetBlock()
+    {
+        return npcBlock;
+    }
+
+    public void SetFile(string file)
+    {
+        npcFile = file;
+    }
+
+    public string GetFile()
+    {
+        return npcFile;
     }
 }

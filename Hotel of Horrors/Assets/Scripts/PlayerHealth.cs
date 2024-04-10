@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
         if (canGetHit)
         {
             currentHealth -= Mathf.Abs(amount);
-            print("Health: " + currentHealth);
+            //print("Health: " + currentHealth);
 
             if(healthBar) healthBar.value = currentHealth / maxHealth;
 

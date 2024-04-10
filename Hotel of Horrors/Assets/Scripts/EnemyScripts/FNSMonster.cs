@@ -62,7 +62,7 @@ public class FNSMonster : BossStateMachine
 
     protected override void Dialogue()
     {
-        NPCArgs bossArg = new NPCArgs(5, "F0D.txt");
+        NPCArgs bossArg = new NPCArgs(2, "F0D.txt");
         OnBossDialogue?.Invoke(this, bossArg);
     }
 

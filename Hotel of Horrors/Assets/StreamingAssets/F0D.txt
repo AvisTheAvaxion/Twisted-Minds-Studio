@@ -5,20 +5,14 @@
 :0b|Charlotte: I'm sorry to hear that
 :0b|Charlotte: I hope it gets better
 
-:1#|Charlotte: Would you like to listen to Stein's theme? [1Sure1][2No thanks2]
-:1a|$Play(StienTheme)
+:1#|Charlotte: What theme would you like to listen to? [1Stien's Theme1][2Karren's Theme2][3Elavator Theme3][4Stop the music4][5Exit5]
+:1a|System: $Play(StienTheme)
+:1b|System: $Play(KarrenTheme)
+:1c|System: $Play(Elevator)
+:1d|System: $Play(StopAll)
+:1e|Charlotte: Alright
 
-:2#|Charlotte: Would you like to listen to Karren's Theme? [1Sure1][2No thanks2]
-:2a|$Play(KarrenTheme)
-
-:3#|Charlotte: Would you like to listen to Elavator Music? [1Sure1][2No thanks2]
-:3a|$Play(Elevator)
-
-:4#|Charlotte: Would you like to listen to stop the music? [1Sure1][2No thanks2]
-:4a|$Play(StopAll)
-:4| Have a nice day.
-
-:5|Frank: I am confused?
-:5#|Frank: What is a man? [1Man am I bad at math1][2A miserable little pile of secrets2]
-:5a|Frank: WRONG!!!!
-:5b|Frank: But enough talk... Have at you!
+:2|Frank: I am confused?
+:2#|Frank: What is a man? [1Man am I bad at math1][2A miserable little pile of secrets2]
+:2a|Frank: WRONG!!!!
+:2b|Frank: But enough talk... Have at you!

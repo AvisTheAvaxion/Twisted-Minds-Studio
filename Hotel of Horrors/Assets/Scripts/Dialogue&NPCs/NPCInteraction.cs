@@ -12,7 +12,19 @@ public class NPCInteraction : MonoBehaviour
     string npcFile;
 
     public event EventHandler OnPlayerTalk;
-    
+
+    DialogueSystem dialogueSystem;
+
+    private void Awake()
+    {
+        dialogueSystem = FindObjectOfType<DialogueSystem>();
+        dialogueSystem.OnDialogueFinish += DialogueSystem_OnDialogueFinish;
+    }
+
+    private void DialogueSystem_OnDialogueFinish(object sender, EventArgs e)
+    {
+        ToggleInteraction(true);
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -40,6 +52,11 @@ public class NPCInteraction : MonoBehaviour
             NPCArgs args = new NPCArgs(npcBlock, npcFile);
             OnPlayerTalk?.Invoke(this, args);
         }
+    }
+
+    public void ToggleInteraction(bool value)
+    {
+        isNPCInteractable = value;
     }
 }
 

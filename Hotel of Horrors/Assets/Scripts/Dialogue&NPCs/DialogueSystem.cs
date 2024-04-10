@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -31,6 +32,8 @@ public class DialogueSystem : MonoBehaviour
     int choiceAmount;
     int dialogueIndex;
 
+    public event EventHandler OnDialogueFinish;
+
     private void Awake()
     {
         npcInteraction = FindObjectOfType<NPCInteraction>();
@@ -40,10 +43,6 @@ public class DialogueSystem : MonoBehaviour
         {
             bossMonster.OnBossDialogue += BossMonster_OnBossDialogue;
         }
-        
-        
-        //This is just here for testing. Get Rid of it if you want.
-        //FindObjectOfType<DialogueSystem>().StartDialogue("F0D.txt", 0);
     }
 
     private void BossMonster_OnBossDialogue(object sender, System.EventArgs e)
@@ -60,6 +59,8 @@ public class DialogueSystem : MonoBehaviour
     private void NpcInteraction_OnPlayerTalk(object sender, System.EventArgs e)
     {
         NPCArgs args = (NPCArgs)e;
+        NPCInteraction interaction = (NPCInteraction)sender;
+        interaction.ToggleInteraction(false);
         StartDialogue(args.GetFile(), args.GetBlock());
     }
     private void DialogueSystem_OnChoiceInteract(object sender, System.EventArgs e)
@@ -87,9 +88,13 @@ public class DialogueSystem : MonoBehaviour
 
         //Methods
         ParseBlock();
+        Debug.Log("Parseing Complete");
         CreateBaseVisuals();
+        Debug.Log("Creation Complete");
         PauseGame(true);
-        AdvanceDialogue();
+        Debug.Log("Pausing Complete");
+        UpdateVisuals(dialogueLines[dialogueIndex]);
+        Debug.Log("Advancing Complete");
 
     }
 
@@ -115,6 +120,7 @@ public class DialogueSystem : MonoBehaviour
         }
         GameObject dialogueCanvas = GameObject.Find("CanvasDialogue(Clone)");
         Destroy(dialogueCanvas);
+        OnDialogueFinish?.Invoke(this, EventArgs.Empty);
         Cursor.visible = false;
         PauseGame(false);
     }
@@ -204,10 +210,12 @@ public class DialogueSystem : MonoBehaviour
             int aNum, bNum, cNum, dNum, eNum;
             while ((line = reader.ReadLine()) != null)
             {
+
+                Debug.Log($"Read Check line {lineNumber} {line}");
                 //If the line is a standard line 
                 if (line.Contains($":{block}|"))
                 {
-                    Debug.Log($"Standard line {lineNumber}: "+line);
+                    //Debug.Log($"Standard line {lineNumber}: "+line);
                     StandardLine standardLine = new StandardLine();
                     standardLine.ParseAndStore(line);
                     dialogueLines.Add(standardLine);
@@ -216,7 +224,7 @@ public class DialogueSystem : MonoBehaviour
                 //If the line contains a choice
                 else if (line.Contains($":{block}#|"))
                 {
-                    Debug.Log($"Standard line  {lineNumber}: " + line);
+                    //Debug.Log($"Choice line  {lineNumber}: " + line);
                     ChoiceLine choiceLine = new ChoiceLine();
                     choiceLine.ParseAndStore(line);
                     choiceAmount = choiceLine.ChoiceAmount();
@@ -227,7 +235,7 @@ public class DialogueSystem : MonoBehaviour
                     cNum = lineNumber;
                     dNum = lineNumber;
                     eNum = lineNumber;
-                    
+                    //Debug.Log($"line {lineNumber}: {line} : Choice Check");
                     //If lines after the choice line contain divergent lines. Can hold up to 5 choices.
                     while ((line = reader.ReadLine()) != null && !line.Contains($":{block}#|"))
                     {
@@ -237,40 +245,44 @@ public class DialogueSystem : MonoBehaviour
                         {
                             case string a when a.Contains($":{block}a|"):
                                 aNum++;
-                                Debug.Log($"Divergent A line {aNum}: " + line);
+                                //Debug.Log($"Divergent A line {aNum}: " + line);
                                 divergent.ParseAndStore(line);
                                 divergent.SetLineNumber(aNum);
                                 choiceLine.AssignDivergentToChoice(divergent, 0);
                                break;
                             case string b when b.Contains($":{block}b|"):
                                 bNum++;
-                                Debug.Log($"Standard line {bNum}: " + line);
+                                //Debug.Log($"Divergent line {bNum}: " + line);
                                 divergent.ParseAndStore(line);
                                 divergent.SetLineNumber(bNum);
                                 choiceLine.AssignDivergentToChoice(divergent, 1);
                                 break;
                             case string c when c.Contains($":{block}c|"):
                                 cNum++;
-                                Debug.Log($"Standard line {cNum} : " + line);
+                                //Debug.Log($"Divergent line {cNum} : " + line);
                                 divergent.ParseAndStore(line);
                                 divergent.SetLineNumber(cNum);
                                 choiceLine.AssignDivergentToChoice(divergent, 2);
                                 break;
                             case string d when d.Contains($":{block}d|"):
                                 dNum++;
-                                Debug.Log($"Standard line {dNum} : " + line);
+                                //Debug.Log($"Divergent line {dNum} : " + line);
                                 divergent.ParseAndStore(line);
                                 divergent.SetLineNumber(dNum);
                                 choiceLine.AssignDivergentToChoice(divergent, 3);
                                 break;
                             case string e when e.Contains($":{block}e|"):
                                 eNum++;
-                                Debug.Log($"Divergent E line {eNum}: " + line);
+                                //Debug.Log($"Divergent E line {eNum}: " + line);
                                 divergent.ParseAndStore(line);
                                 divergent.SetLineNumber(eNum);
                                 choiceLine.AssignDivergentToChoice(divergent, 4);
                                 break;
+                            default:
+                                //Debug.Log($"line {lineNumber}: {line} : defaulting");
+                                break;
                         }
+                        //Debug.Log($"line {lineNumber}: {line} : Diverge Check");
                     }
                 }
             }
@@ -335,6 +347,7 @@ class ChoiceLine : DialogueLine
         for(int i=1; i <= numberOfChoices; i++)
         {
             Choice choice = new Choice();
+            Debug.Log(i);
             Debug.Log("Extracted Choice: " + ExtractChoices(line, @$"\[{i}(.*?){i}\]"));
             choice.ParseAndStore(ExtractChoices(line, @$"\[{i}(.*?){i}\]"));
             AssignToChoice(choice);

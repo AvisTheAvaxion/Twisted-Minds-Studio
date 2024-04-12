@@ -33,6 +33,7 @@ public class DialogueSystem : MonoBehaviour
     int dialogueIndex;
 
     public event EventHandler OnDialogueFinish;
+    public int playerChoice = -1;
 
     private void Awake()
     {
@@ -68,6 +69,7 @@ public class DialogueSystem : MonoBehaviour
         ChoiceLine cLine = (ChoiceLine)dialogueLines[dialogueIndex];
         IntArgs args = (IntArgs)e;
         cLine.SetChoiceResults(args.GetHeldInteger(), ref dialogueLines);
+        playerChoice = args.GetHeldInteger();
         AdvanceDialogue();
     }
 
@@ -95,7 +97,6 @@ public class DialogueSystem : MonoBehaviour
         Debug.Log("Pausing Complete");
         UpdateVisuals(dialogueLines[dialogueIndex]);
         Debug.Log("Advancing Complete");
-
     }
 
     public void AdvanceDialogue()

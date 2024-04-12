@@ -30,7 +30,7 @@ public class DialogueSystem : MonoBehaviour
     int block;
     List<DialogueLine> dialogueLines;
     int choiceAmount;
-    int dialogueIndex;
+    public int dialogueIndex;
 
     public event EventHandler OnDialogueFinish;
     public int playerChoice = -1;

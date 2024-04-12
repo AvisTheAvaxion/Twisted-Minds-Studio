@@ -6,14 +6,16 @@ using UnityEngine.EventSystems;
 
 public class DialogueBoxInteractions : MonoBehaviour, IPointerClickHandler
 {
-    bool isInteractable;
+    [SerializeField]bool isInteractable;
 
     public event EventHandler OnDialogueAdvance;
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("Click Attempt");
         if (eventData.button == PointerEventData.InputButton.Left && isInteractable)
         {
+            Debug.Log("Click Success");
             OnDialogueAdvance?.Invoke(this, EventArgs.Empty);
         }
     }

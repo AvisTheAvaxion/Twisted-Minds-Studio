@@ -15,7 +15,9 @@ public class MeleeStrike : MonoBehaviour
     float knockback;
     float deflectionStrength;
 
-    public void Init(int damage, float deflectionStrength, float knockback)
+    Effect[] effects;
+
+    public void Init(int damage, float deflectionStrength, float knockback, Effect[] effects = null)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -24,10 +26,12 @@ public class MeleeStrike : MonoBehaviour
         this.deflectionStrength = deflectionStrength;
         this.targetTag = defaultTag;
 
+        this.effects = effects;
+
         StartCoroutine(Animate());
     }
 
-    public void Init(int damage, float knockback, float deflectionStrength, string targetTag)
+    public void Init(int damage, float knockback, float deflectionStrength, string targetTag, Effect[] effects = null)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -35,6 +39,8 @@ public class MeleeStrike : MonoBehaviour
         this.knockback = knockback;
         this.deflectionStrength = deflectionStrength;
         this.targetTag = targetTag;
+
+        this.effects = effects;
 
         StartCoroutine(Animate());
     }
@@ -44,7 +50,17 @@ public class MeleeStrike : MonoBehaviour
         if (collision.CompareTag(targetTag))
         {
             IHealth health = collision.GetComponent<IHealth>();
-            if (health != null) health.TakeDamage(damage);
+            if (health != null) { 
+                health.TakeDamage(damage);
+
+                if (effects != null)
+                {
+                    foreach (Effect effect in effects)
+                    {
+                        health.InflictEffect(effect);
+                    }
+                }
+            }
 
             if (knockback > 0)
             {

@@ -2,30 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(StatsController))]
 public class EnemyHealth : MonoBehaviour, IHealth
 {
+    StatsController stats;
     [SerializeField] bool debug;
     [SerializeField] float maxHealth;
     public float currentHealth { get; private set; }
 
     [SerializeField] bool healOverTime = false;
     [SerializeField] float timeBtwHeals = 5f;
-    [SerializeField] float rateOfHealing = 5f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        currentHealth = maxHealth;
-    }
 
     float timer = 0;
+    private void Start()
+    {
+        stats = GetComponent<StatsController>();
+    }
     private void Update()
     {
         if (healOverTime)
         {
             if (timer <= 0)
             {
-                Heal(rateOfHealing);
+                Heal(stats.GetCurrentValue(Stat.StatType.regeneration));
 
                 timer += timeBtwHeals;
             }
@@ -36,33 +35,28 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
     public void Heal(float amount)
     {
-        currentHealth += Mathf.Abs(amount);
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        stats.Heal(amount);
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, Effect effect = null)
     {
-        currentHealth -= Mathf.Abs(amount);
+        stats.TakeDamage(amount, effect);
 
-        if(debug) print("Health: " + currentHealth);
+        if(debug) print("Health: " + stats.GetHealthValue());
 
-        if (currentHealth <= 0)
+        if (stats.GetHealthValue() <= 0)
         {
             Destroy(gameObject);
         }
     }
 
-    public void TakeDamage(float amount, float stunLength)
+    public void TakeDamage(float amount, float stunLength, Effect effect = null)
     {
         throw new System.NotImplementedException();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public StatsController.Effector InflictEffect(Effect effect)
     {
-        if (collision.tag.Equals("PlayerBullet"))
-        {
-            TakeDamage(2);
-            Destroy(collision.gameObject);
-        }
+        return stats.AddEffect(effect);
     }
 }

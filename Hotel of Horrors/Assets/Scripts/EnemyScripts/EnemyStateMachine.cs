@@ -55,6 +55,8 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected float meleeRadius;
     [SerializeField] protected float meleeDamage;
     [SerializeField] protected float knockback;
+    [SerializeField] [Range(0,1)] protected float chanceToInflictEffect;
+    [SerializeField] protected EffectInfo[] effectsToInflict;
 
     [Header("Ranged Fight Settings")]
     [SerializeField] protected BasicShooter shooter;
@@ -264,7 +266,15 @@ public class EnemyStateMachine : MonoBehaviour
                 IHealth health = colliders[i].gameObject.GetComponent<IHealth>();
                 Vector2 dir = (colliders[i].transform.position - transform.position).normalized;
 
+
                 health.TakeDamage(meleeDamage);
+                if (effectsToInflict != null)
+                {
+                    foreach (EffectInfo effectInfo in effectsToInflict)
+                    {
+                        health.InflictEffect(new Effect(effectInfo, chanceToInflictEffect));
+                    }
+                }
                 playerMovement.Knockback(dir, knockback);
 
                 break;

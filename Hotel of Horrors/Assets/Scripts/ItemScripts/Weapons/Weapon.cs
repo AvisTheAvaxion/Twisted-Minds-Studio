@@ -19,6 +19,8 @@ public class Weapon : Useables
     [SerializeField] float deflectionStrength;
     [SerializeField] float knockback;
     [SerializeField] GameObject weaponStrike;
+    [SerializeField] [Range(0,1)] float chanceToInflictEffect;
+    [SerializeField] EffectInfo[] effectsToInflict;
 
     [Header("Ranged Settings")]
     [SerializeField] GameObject projectile;
@@ -72,5 +74,13 @@ public class Weapon : Useables
     {
         return weaponStrike;
     }
+    public float GetChanceToInflictEffect()
+    {
+        return chanceToInflictEffect;
+    }
+    public EffectInfo[] GetEffectsToInflict()
+    {
+        return effectsToInflict;
+    } 
 }
 

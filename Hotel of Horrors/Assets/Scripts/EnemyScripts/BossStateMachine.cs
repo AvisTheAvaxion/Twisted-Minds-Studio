@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,10 @@ public abstract class BossStateMachine : MonoBehaviour
     [SerializeField] protected bool debug;
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
+    [Header("Dialogue Settings")]
+    [SerializeField] protected int npcBlock = 2;
+    [SerializeField] protected string npcFile = "F0D.txt";
+
     [Header("Boss Stages")]
     [SerializeField] protected Stage[] stages;
 
@@ -42,6 +47,9 @@ public abstract class BossStateMachine : MonoBehaviour
     protected bool isAttacking = false;
 
     protected bool bossFightStarted = true;
+
+    protected bool dialogueSegementStarted = false;
+    public event EventHandler OnBossDialogue;
 
     private void Start()
     {
@@ -82,7 +90,14 @@ public abstract class BossStateMachine : MonoBehaviour
 
     protected abstract void Fight();
     protected abstract void Idle();
-    protected abstract void Dialogue();
+    protected virtual void Dialogue()
+    {
+        if (!dialogueSegementStarted)
+        {
+            NPCArgs bossArg = new NPCArgs(npcBlock, npcFile);
+            OnBossDialogue?.Invoke(this, bossArg);
+        }
+    }
     protected abstract void Death();
 
     protected abstract void Enrage();
@@ -180,7 +195,7 @@ public abstract class BossStateMachine : MonoBehaviour
     }
     protected Vector2 GetRandomDir()
     {
-        return Random.insideUnitCircle; //Get a random position around a unit circle.
+        return UnityEngine.Random.insideUnitCircle; //Get a random position around a unit circle.
     }
     #endregion
 
@@ -190,7 +205,7 @@ public abstract class BossStateMachine : MonoBehaviour
             print("Started cooldown");
 
         onCooldown = true;
-        yield return new WaitForSeconds(Random.Range(minAttackCooldown, maxAttackCooldown));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(minAttackCooldown, maxAttackCooldown));
 
         if(debug)
             print("Served Cooldown");

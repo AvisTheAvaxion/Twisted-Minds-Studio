@@ -46,7 +46,7 @@ public class FNSMonster : BossStateMachine
     Vector2 moveDir;
     bool isCharging;
 
-    public event EventHandler OnBossDialogue;
+    
     protected override void Init()
     {
         Disenrage();
@@ -62,8 +62,15 @@ public class FNSMonster : BossStateMachine
 
     protected override void Dialogue()
     {
-        NPCArgs bossArg = new NPCArgs(2, "F0D.txt");
-        OnBossDialogue?.Invoke(this, bossArg);
+        if(!dialogueSegementStarted)
+        {
+            dialogueSegementStarted = true;
+            base.Dialogue();
+        } 
+        else
+        {
+
+        }
     }
 
     protected override void Fight()

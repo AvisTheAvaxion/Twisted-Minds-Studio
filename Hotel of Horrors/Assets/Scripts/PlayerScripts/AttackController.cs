@@ -148,7 +148,16 @@ public class AttackController : MonoBehaviour
         {
             GameObject go = Instantiate(currentWeapon.GetWeaponStrike(), weaponStrikeSpawnPoint.position, weaponStrikeSpawnPoint.rotation, weaponStrikeParent);
             MeleeStrike meleeStrike = go.GetComponent<MeleeStrike>();
-            if (meleeStrike) meleeStrike.Init(currentWeapon.GetDamage(), currentWeapon.GetKnockback(), currentWeapon.GetDeflectionStrength(), "Enemy");
+            if (meleeStrike) 
+            {
+                EffectInfo[] effectInfos = currentWeapon.GetEffectsToInflict();
+                Effect[] effects = new Effect[effectInfos.Length];
+                for (int i = 0; i < effects.Length; i++)
+                {
+                    effects[i] = new Effect(effectInfos[i], currentWeapon.GetChanceToInflictEffect());
+                }
+                meleeStrike.Init(currentWeapon.GetDamage(), currentWeapon.GetKnockback(), currentWeapon.GetDeflectionStrength(), "Enemy"); 
+            }
         } 
         else
         {

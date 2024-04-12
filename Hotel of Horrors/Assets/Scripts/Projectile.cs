@@ -5,6 +5,9 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] int damage = 1;
+    [SerializeField] [Range(0,1)] float chanceToInflictEffect;
+    [SerializeField] EffectInfo[] effectsToInflict;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag.Equals("Wall"))
@@ -35,6 +38,14 @@ public class Projectile : MonoBehaviour
                 if (health != null)
                 {
                     health.TakeDamage(damage);
+                    if(effectsToInflict != null)
+                    {
+                        foreach(EffectInfo effectInfo in effectsToInflict)
+                        {
+                            health.InflictEffect(new Effect(effectInfo, chanceToInflictEffect));
+                        }
+                    }
+
                     Debug.Log(collision.name + " Destroyed " + gameObject.name);
                     Destroy(gameObject);
                 }
@@ -52,6 +63,13 @@ public class Projectile : MonoBehaviour
                 if (health != null)
                 {
                     health.TakeDamage(damage);
+                    if (effectsToInflict != null)
+                    {
+                        foreach (EffectInfo effectInfo in effectsToInflict)
+                        {
+                            health.InflictEffect(new Effect(effectInfo, chanceToInflictEffect));
+                        }
+                    }
                     Debug.Log(collision.name + " Destroyed " + gameObject.name);
                     Destroy(gameObject);
                 }

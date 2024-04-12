@@ -4,34 +4,37 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(StatsController))]
 public class PlayerHealth : MonoBehaviour, IHealth
 {
+    StatsController stats;
+
     [SerializeField] PlayerMovement movement;
     [SerializeField] Slider healthBar;
-    [SerializeField] float maxHealth;
     [SerializeField] float iFramesTime;
     [SerializeField] float stunTime;
-    float currentHealth;
     bool canGetHit = true;
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        stats = GetComponent<StatsController>();
 
         if (healthBar) healthBar.value = 1;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, Effect effect = null)
     {
         //first checking if they have iframes
         if (canGetHit)
         {
-            currentHealth -= Mathf.Abs(amount);
+            stats.TakeDamage(amount);
             //print("Health: " + currentHealth);
 
-            if(healthBar) healthBar.value = currentHealth / maxHealth;
+            if (effect != null && Random.Range(0, 1f) <= effect.chanceToInflictEffect) stats.AddEffect(effect);
 
-            if (currentHealth <= 0)
+            if (healthBar) healthBar.value = stats.GetHealthValue01();
+
+            if (stats.GetHealthValue() <= 0)
             {
                 if (gameObject.tag.Equals("Player"))
                 {
@@ -39,24 +42,25 @@ public class PlayerHealth : MonoBehaviour, IHealth
                     SceneManager.LoadScene("Death Screen");
                 }
             }
-                
 
             GiveIFrames(iFramesTime);
             Stun(stunTime);
         }
     }
 
-    public void TakeDamage(float amount, float stunLength)
+    public void TakeDamage(float amount, float stunLength, Effect effect = null)
     {
         //first checking if they have iframes
         if (canGetHit)
         {
-            currentHealth -= Mathf.Abs(amount);
-            print("Health: " + currentHealth);
+            stats.TakeDamage(amount);
+            print("Health: " + stats.GetHealthValue());
 
-            if (healthBar) healthBar.value = currentHealth / maxHealth;
+            if (effect != null) stats.AddEffect(effect);
 
-            if (currentHealth <= 0)
+            if (healthBar) healthBar.value = stats.GetHealthValue01();
+
+            if (stats.GetHealthValue() <= 0)
             {
                 if (gameObject.tag.Equals("Player"))
                 {
@@ -70,31 +74,16 @@ public class PlayerHealth : MonoBehaviour, IHealth
         }
     }
 
-/*    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //if an enemy tocuhes the player, the player takes the damage
-        if (this.gameObject.tag.Equals("Player") && collision.gameObject.tag.Equals("Enemy"))
-        {
-            TakeDamage(1f);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //handles bullet collision
-        if (collision.gameObject.tag.Equals("EnemyBullet"))
-        {
-            TakeDamage(2f);
-            Destroy(collision.gameObject);
-        }
-    }*/
-
     public void Heal(float amount)
     {
-        currentHealth += Mathf.Abs(amount);
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        stats.Heal(amount);
 
-        if (healthBar) healthBar.value = currentHealth / maxHealth;
+        if (healthBar) healthBar.value = stats.GetHealthValue01();
+    }
+
+    public StatsController.Effector InflictEffect(Effect effect)
+    {
+        return stats.AddEffect(effect);
     }
 
     public void GiveIFrames(float length)

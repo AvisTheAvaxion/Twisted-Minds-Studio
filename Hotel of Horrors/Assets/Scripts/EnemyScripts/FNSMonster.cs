@@ -51,7 +51,7 @@ public class FNSMonster : BossStateMachine
     {
         Disenrage();
 
-        currentStage = stages[0];
+        currentStageIndex = 0;
     }
 
 
@@ -62,11 +62,11 @@ public class FNSMonster : BossStateMachine
 
     protected override void Dialogue()
     {
-        if(!dialogueSegementStarted)
+        if(!dialogueSegmentStarted)
         {
-            dialogueSegementStarted = true;
             base.Dialogue();
-        } 
+            dialogueSegmentStarted = true;
+        }
         else
         {
 
@@ -78,7 +78,7 @@ public class FNSMonster : BossStateMachine
         if(!isAttacking)
             Move();
 
-        switch(currentStage.stage)
+        switch(stages[currentStageIndex].stage)
         {
             case 1:
                 Fight_Stage1();
@@ -86,6 +86,12 @@ public class FNSMonster : BossStateMachine
             case 2:
                 Fight_Stage2();
                 break;
+        }
+
+        if(enemyHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThreshold)
+        {
+            currentState = States.Dialogue;
+            Disenrage();
         }
     }
 
@@ -257,5 +263,24 @@ public class FNSMonster : BossStateMachine
                 playerMovement.Knockback(dir, currentSettings.normalKnockback);
             }
         }
+    }
+
+    protected override void DialogueEnd(object sender, EventArgs args)
+    {
+        IntArgs intArgs = (IntArgs)args;
+        int choiceMade = intArgs.GetHeldInteger();
+
+        if(stages[currentStageIndex].correctChoice == choiceMade)
+        {
+            Enrage();
+        }
+
+        currentStageIndex++;
+        currentState = States.Fighting;
+
+        dialogueSegmentStarted = false;
+
+        dialogueSystem.OnDialogueFinish -= DialogueEnd;
+        dialogueSystem.UnsubscribeToBoss(this);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(EnemyHealth))]
 public abstract class BossStateMachine : MonoBehaviour
 {
     public enum FaceDirection
@@ -29,32 +29,43 @@ public abstract class BossStateMachine : MonoBehaviour
     {
         public int stage;
         public int healthThreshold;
+        public int correctChoice;
     }
+
+    protected EnemyHealth enemyHealth;
 
     [SerializeField] protected bool debug;
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
     [Header("Dialogue Settings")]
+    [SerializeField] protected DialogueSystem dialogueSystem;
     [SerializeField] protected int npcBlock = 2;
     [SerializeField] protected string npcFile = "F0D.txt";
 
     [Header("Boss Stages")]
     [SerializeField] protected Stage[] stages;
 
-    protected Stage currentStage;
+    protected int currentStageIndex;
 
     protected bool onCooldown = false;
     protected bool isAttacking = false;
 
     protected bool bossFightStarted = true;
 
-    protected bool dialogueSegementStarted = false;
+    protected bool dialogueSegmentStarted = false;
     public event EventHandler OnBossDialogue;
 
     private void Start()
     {
         player = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
+        enemyHealth = GetComponent<EnemyHealth>();
+
+        if (dialogueSystem == null)
+            dialogueSystem = FindObjectOfType<DialogueSystem>();
+
+        if (dialogueSystem != null)
+            dialogueSystem.SubscribeToBoss(this);
 
         if (player == null)
             Debug.LogError("Player not found in scene");
@@ -92,12 +103,15 @@ public abstract class BossStateMachine : MonoBehaviour
     protected abstract void Idle();
     protected virtual void Dialogue()
     {
-        if (!dialogueSegementStarted)
+        if (!dialogueSegmentStarted)
         {
             NPCArgs bossArg = new NPCArgs(npcBlock, npcFile);
             OnBossDialogue?.Invoke(this, bossArg);
+
+            dialogueSystem.OnDialogueFinish += DialogueEnd;
         }
     }
+    protected abstract void DialogueEnd(object sender, System.EventArgs args);
     protected abstract void Death();
 
     protected abstract void Enrage();

@@ -157,8 +157,6 @@ public class StatsController : MonoBehaviour
             if (effect.info.Mode == EffectInfo.EffectMode.OverTime) newEffector.activeCoroutine = StartCoroutine(EffectOverTime(newEffector));
             else newEffector.activeCoroutine = StartCoroutine(EffectNormal(newEffector));
 
-            print(newEffector.activeCoroutine);
-
             return newEffector;
         } 
         else

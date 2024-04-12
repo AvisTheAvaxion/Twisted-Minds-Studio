@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2170412016194764509}
   - component: {fileID: 3258707720381061101}
   - component: {fileID: 8722076942917336173}
+  - component: {fileID: 3269821355269556102}
   - component: {fileID: 7819676505427196098}
   - component: {fileID: 838116091748070659}
   m_Layer: 0
@@ -73,6 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
+  bulletSpawnPoint: {fileID: 0}
   startingDistance: 0.01
   bulletForce: 5
   burstCount: 1
@@ -82,6 +84,7 @@ MonoBehaviour:
   timeBetweenShots: 0.01
   stagger: 0
   oscillate: 0
+  target: {fileID: 0}
 --- !u!114 &3258707720381061101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,13 +98,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  setScaleToRotate: 1
-  transformToScale: {fileID: 2881490729553979416}
+  flipToRotate: 1
+  transformToFlip: {fileID: 2881490729553979416}
+  dialogueSystem: {fileID: 0}
+  npcBlock: 2
+  npcFile: F0D.txt
   stages:
   - stage: 1
     healthThreshold: 100
+    correctChoice: 0
   - stage: 2
     healthThreshold: 50
+    correctChoice: 0
   animator: {fileID: 3622643437465758043}
   afterImage: {fileID: 7322350937174340592}
   shooter: {fileID: 2170412016194764509}
@@ -156,10 +164,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  maxHealth: 100
   healOverTime: 0
   timeBtwHeals: 5
-  rateOfHealing: 5
+--- !u!114 &3269821355269556102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780868464515115505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  health:
+    type: 0
+    defaultValue: 150
+    hasMax: 1
+    maxValue: 150
+  stats: []
 --- !u!61 &7819676505427196098
 BoxCollider2D:
   m_ObjectHideFlags: 0

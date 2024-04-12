@@ -5,11 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(StatsController))]
 public class EnemyHealth : MonoBehaviour, IHealth
 {
-    StatsController stats;
+    public StatsController stats { get; private set; }
     [SerializeField] bool debug;
-    [SerializeField] float maxHealth;
-    public float currentHealth { get; private set; }
-
     [SerializeField] bool healOverTime = false;
     [SerializeField] float timeBtwHeals = 5f;
 

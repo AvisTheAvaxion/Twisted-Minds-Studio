@@ -38,6 +38,7 @@ public class DialogueSystem : MonoBehaviour
 
     private void BossMonster_OnBossDialogue(object sender, System.EventArgs e)
     {
+        print("Boss Dialogue started");
         NPCArgs args = (NPCArgs)e;
         StartDialogue(args.GetFile(), args.GetBlock());
     }
@@ -70,10 +71,20 @@ public class DialogueSystem : MonoBehaviour
             boss.OnBossDialogue += BossMonster_OnBossDialogue;
         }
     }
-
     public void SubscribeToNPC(NPCInteraction npc)
     {
         npc.OnPlayerTalk += NpcInteraction_OnPlayerTalk;
+    }
+    public void UnsubscribeToBoss(BossStateMachine boss)
+    {
+        if (boss != null)
+        {
+            boss.OnBossDialogue -= BossMonster_OnBossDialogue;
+        }
+    }
+    public void UnsubscribeToNPC(NPCInteraction npc)
+    {
+        npc.OnPlayerTalk -= NpcInteraction_OnPlayerTalk;
     }
 
     //Every time the Dialogue System is needed call this method

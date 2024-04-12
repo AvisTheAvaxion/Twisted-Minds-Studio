@@ -99,10 +99,10 @@ public class AttackController : MonoBehaviour
             {
                 Attack();
             }
-            else if (!attackButtonPressed && currentAttackMode == AttackModes.Ranged)
-            {
-                AttackEnd();
-            }
+        }
+        if (isAttacking && !attackButtonPressed && currentAttackMode == AttackModes.Ranged)
+        {
+            AttackEnd();
         }
     }
 

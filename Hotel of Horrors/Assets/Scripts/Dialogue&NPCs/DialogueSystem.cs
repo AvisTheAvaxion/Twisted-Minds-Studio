@@ -35,16 +35,6 @@ public class DialogueSystem : MonoBehaviour
     public event EventHandler OnDialogueFinish;
     public int playerChoice = -1;
 
-    private void Awake()
-    {
-        npcInteraction = FindObjectOfType<NPCInteraction>();
-        npcInteraction.OnPlayerTalk += NpcInteraction_OnPlayerTalk;
-        TryGetComponent<FNSMonster>(out bossMonster);
-        if(bossMonster != null)
-        {
-            bossMonster.OnBossDialogue += BossMonster_OnBossDialogue;
-        }
-    }
 
     private void BossMonster_OnBossDialogue(object sender, System.EventArgs e)
     {
@@ -71,6 +61,19 @@ public class DialogueSystem : MonoBehaviour
         cLine.SetChoiceResults(args.GetHeldInteger(), ref dialogueLines);
         playerChoice = args.GetHeldInteger();
         AdvanceDialogue();
+    }
+
+    public void SubscribeToBoss(BossStateMachine boss)
+    {
+        if (boss != null)
+        {
+            boss.OnBossDialogue += BossMonster_OnBossDialogue;
+        }
+    }
+
+    public void SubscribeToNPC(NPCInteraction npc)
+    {
+        npc.OnPlayerTalk += NpcInteraction_OnPlayerTalk;
     }
 
     //Every time the Dialogue System is needed call this method
@@ -121,7 +124,8 @@ public class DialogueSystem : MonoBehaviour
         }
         GameObject dialogueCanvas = GameObject.Find("CanvasDialogue(Clone)");
         Destroy(dialogueCanvas);
-        OnDialogueFinish?.Invoke(this, EventArgs.Empty);
+        IntArgs args = new IntArgs(playerChoice);
+        OnDialogueFinish?.Invoke(this, args);
         Cursor.visible = false;
         PauseGame(false);
     }
@@ -291,6 +295,7 @@ public class DialogueSystem : MonoBehaviour
     }
 
 }
+
 
 //Base class that all dialogue is based on
 abstract class DialogueLine

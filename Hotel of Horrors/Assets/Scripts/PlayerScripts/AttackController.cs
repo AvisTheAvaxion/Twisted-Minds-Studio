@@ -78,10 +78,11 @@ public class AttackController : MonoBehaviour
         else
         {
             weaponAnimator.runtimeAnimatorController = defaultWeaponController;
-            currentAttackMode = AttackModes.Melee;
+            weaponVisual.sprite = null;
+            currentAttackMode = AttackModes.None;
         }
 
-        if (currentAttackMode.Equals(AttackModes.Melee))
+        if (currentAttackMode.Equals(AttackModes.Melee) || currentAttackMode.Equals(AttackModes.None))
         {
             rangedCrosshair.SetActive(false);
             meleeCrosshair.SetActive(true);

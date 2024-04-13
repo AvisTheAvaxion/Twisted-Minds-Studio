@@ -13,19 +13,16 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     Color slotEmptyColor = new Color(1, 1, 1, 0);
     Color slotFilledColor = new Color(1, 1, 1, 1);
 
-    [Space(10), Header("ExpandedMenuVariables")]
-    GameObject expandedMenu;
-    TextMeshProUGUI itemName;
-    TextMeshProUGUI itemDesc;
-    TextMeshProUGUI itemstat1;
-    TextMeshProUGUI itemstat2;
-    TextMeshProUGUI itemstat3;
-    [SerializeField] bool IsImportantSlots;
-    ItemSlot weaponSlot;
-    ItemSlot freeSlot1;
-    ItemSlot freeSlot2;
-    [SerializeField] GameObject importantSlotParent;
+    [Header("Item Slot Settings")]
+    [SerializeField] bool isWeaponSlot;
+    [SerializeField] bool isFreeSlot;
+    public bool IsWeaponSlot { get => isWeaponSlot; }
+    public bool IsFreeSlot { get => isFreeSlot; }
+
+    [Header("Item Tool Tip Reference")]
+    [SerializeField] ItemToolTip itemToolTip;
     Inventory inventory;
+
     bool firstStart = true;
     // Start is called before the first frame update
     void Start()
@@ -33,33 +30,16 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         firstStart = false;
         inventory = FindObjectOfType<Inventory>();
         itemImage = GetComponent<Image>();
-        if (!IsImportantSlots)
-        {
-            importantSlotParent = this.transform.parent
-                .transform.parent
-                .transform.parent
-                .transform.parent
-                .transform.GetChild(0).gameObject;
-            weaponSlot = importantSlotParent.transform.GetChild(0).GetComponentInChildren<ItemSlot>();
-            freeSlot1 = importantSlotParent.transform.GetChild(1).GetComponentInChildren<ItemSlot>();
-            freeSlot2 = importantSlotParent.transform.GetChild(2).GetComponentInChildren<ItemSlot>();
-        }
-
         
         if (itemHeld != null)
-        {
             UpdateImage();
-        }
         else
-        {
             itemImage.color = slotEmptyColor;
+
+        if(itemToolTip == null)
+        {
+            itemToolTip = FindObjectOfType<ItemToolTip>();
         }
-        expandedMenu = transform.GetChild(0).gameObject;
-        itemName = transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        itemDesc = transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        itemstat1 = transform.GetChild(0).transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        itemstat2 = transform.GetChild(0).transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-        itemstat3 = transform.GetChild(0).transform.GetChild(4).GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -72,74 +52,64 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void UpdateImage()
     {
-        itemImage.color = slotFilledColor;
-        itemImage.sprite = itemHeld.GetSprite();
+        if (itemHeld == null)
+        {
+            itemImage.color = slotEmptyColor;
+            itemImage.sprite = null;
+        }
+        else
+        {
+            itemImage.color = slotFilledColor;
+            itemImage.sprite = itemHeld.GetSprite();
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (itemHeld != null)
         {
-            itemstat1.gameObject.SetActive(true);
-            itemstat2.gameObject.SetActive(true);
-            itemstat3.gameObject.SetActive(true);
+            itemToolTip.transform.position = (Vector2)transform.position + new Vector2(50f, 50f);
+            itemToolTip.AssignItem(itemHeld);
 
-            itemName.text = itemHeld.GetName();
-            itemDesc.text = itemHeld.GetDescription();
-            if (itemHeld.GetType() == typeof(Weapon))
-            {
-                Weapon heldWeapon = (Weapon)itemHeld;
-                itemstat1.text = $"Weapon Type: {heldWeapon.GetWeaponMode()}";
-                itemstat2.text = $"Damage: {heldWeapon.GetDamage()}";
-                itemstat3.text = $"Attack Speed: {heldWeapon.GetAttackSpeed()}";
-            }
-            else if (itemHeld.GetType() == typeof(Item))
-            {
-                Item heldItem = (Item)itemHeld;
-                itemstat1.text = $"Potency: {heldItem.GetPotency()}";
-                itemstat2.gameObject.SetActive(false);
-                itemstat3.gameObject.SetActive(false);
-            }
-            else
-            {
-                itemstat1.gameObject.SetActive(false);
-                itemstat2.gameObject.SetActive(false);
-                itemstat3.gameObject.SetActive(false);
-            }
-
-            expandedMenu.SetActive(true);
+            itemToolTip.gameObject.SetActive(true);
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left && itemHeld != null && !IsImportantSlots)
+        if (eventData.button == PointerEventData.InputButton.Left && itemHeld != null && !isWeaponSlot && !isFreeSlot)
         {
             if (itemHeld.GetType() == typeof(Weapon))
             {
-                weaponSlot.itemHeld = this.itemHeld;
-                weaponSlot.UpdateImage();
-                inventory.currentWeapon = (Weapon)this.itemHeld;
                 inventory.EquipWeapon((Weapon)itemHeld);
-                inventory.UpdatePlayerMode();
             }
             if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.Q))
             {
-                freeSlot1.itemHeld = this.itemHeld;
-                freeSlot1.UpdateImage();
-                inventory.itemOne = this.itemHeld;
+                inventory.EquipFreeItem(itemHeld, 0);
             }
             if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.E))
             {
-                freeSlot2.itemHeld = this.itemHeld;
-                freeSlot2.UpdateImage();
-                inventory.itemTwo = this.itemHeld;
+                inventory.EquipFreeItem(itemHeld, 1);
+            }
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right && itemHeld != null)
+        {
+            if (isWeaponSlot)
+            {
+                inventory.EquipWeapon(null);
+                itemToolTip.gameObject.SetActive(false);
+            } 
+            else if (isFreeSlot)
+            {
+                itemHeld = null;
+                UpdateImage();
+                itemToolTip.gameObject.SetActive(false);
             }
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        expandedMenu.SetActive(false);
+        itemToolTip.gameObject.SetActive(false);
     }
 }

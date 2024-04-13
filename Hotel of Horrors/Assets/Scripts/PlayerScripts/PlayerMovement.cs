@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(PlayerHealth))]
 public class PlayerMovement : MonoBehaviour
 {
     #region VariableDeclarations
@@ -61,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         roomManager = GameObject.Find("Room Manager")?.GetComponent<RoomManager>();
 
         attackController = GetComponent<AttackController>();
+        playerHealth = GetComponent<PlayerHealth>();
 
         if (animator == null)
             animator = GetComponent<Animator>();

@@ -12,21 +12,17 @@ public class Inventory : MonoBehaviour
     [SerializeField] public Useables itemOne;
     [SerializeField] public Useables itemTwo;
 
-    [Space(10)]
+    [Header("References")]
     [SerializeField] GameObject inventoryUI;
-    [SerializeField] SpriteRenderer weaponPlacement;
-    [SerializeField] Animator animator;
-    [SerializeField] List<ItemSlot> slots;
-    //WeaponAttack weaponAttack;
+    ItemSlot weaponSlot;
+    ItemSlot freeSlot1;
+    ItemSlot freeSlot2;
+    List<ItemSlot> slots;
 
-    [SerializeField] AnimatorOverrideController overrideController;
     AttackController attackController;
 
     private void Awake()
     {
-        //Zion what is this line?!
-        //weaponAttack = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<WeaponAttack>();
-
         inventoryUI.SetActive(true);
         inventoryUI.SetActive(false);
         attackController = GetComponent<AttackController>();
@@ -37,6 +33,13 @@ public class Inventory : MonoBehaviour
             int order = 1;
             slot.gameObject.transform.GetChild(0).GetComponent<Canvas>().sortingOrder = order;
             order++;
+
+            if (slot.IsWeaponSlot)
+                weaponSlot = slot;
+            else if (freeSlot1 == null && slot.IsFreeSlot)
+                freeSlot1 = slot;
+            else if (freeSlot1 != null && freeSlot2 == null && slot.IsFreeSlot)
+                freeSlot2 = slot;
         }
     }
 
@@ -56,14 +59,21 @@ public class Inventory : MonoBehaviour
     public void EquipWeapon(Weapon weapon)
     {
         attackController.Equip(weapon);
-
-        //currentWeapon = weapon;
-        //weaponPlacement.sprite = currentWeapon.GetSprite();
-        //animator.runtimeAnimatorController = overrideController;
-        //overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation();
-        //weaponAttack.SetDamage(weapon.GetDamage());
-        //Debug.Log(overrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation());
-        //Insert code that is done on equip like moving gameobject beside the player / Swaping Sprites
+        weaponSlot.itemHeld = currentWeapon = weapon;
+        weaponSlot.UpdateImage();
+    }
+    public void EquipFreeItem(Useables item, int slotNum)
+    {
+        if(slotNum == 0)
+        {
+            freeSlot1.itemHeld = itemOne = item;
+            freeSlot1.UpdateImage();
+        }
+        else
+        {
+            freeSlot2.itemHeld = itemTwo = item;
+            freeSlot2.UpdateImage();
+        }
     }
 
     public void SlotInItem(Useables item)
@@ -101,7 +111,10 @@ public class Inventory : MonoBehaviour
 
     public void UpdatePlayerMode()
     {
-        attackController.ChangeAttackMode(currentWeapon.GetWeaponMode());
+        if (currentWeapon == null)
+            attackController.ChangeAttackMode(AttackModes.None);
+        else
+            attackController.ChangeAttackMode(currentWeapon.GetWeaponMode());
     }
     
 }

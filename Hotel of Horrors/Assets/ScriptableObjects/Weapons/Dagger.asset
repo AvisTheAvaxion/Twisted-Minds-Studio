@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbb02fbfcc90b584c815e83d2b2f10e7, type: 3}
-  m_Name: Lance
+  m_Name: Dagger
   m_EditorClassIdentifier: 
-  useableName: Lance
-  description: A stick with a pointy end
-  sprite: {fileID: 21300000, guid: 61b320da1c932c94e858953e302f017a, type: 3}
+  useableName: Dagger
+  description: Poggers
+  sprite: {fileID: 21300000, guid: f229bd9bdc051724cae82f17a91914e1, type: 3}
   mode: 0
-  type: 1
+  type: 0
   extraAttackAnim: {fileID: 0}
-  attackSpeed: 10
-  autoAttack: 0
-  damage: 20
-  deflectionStrength: 3
-  knockback: 2
-  range: 5
+  attackSpeed: 25
+  autoAttack: 1
+  damage: 10
+  deflectionStrength: 0
+  knockback: 1
+  range: 0
   weaponStrike: {fileID: 8308924630415093721, guid: 60f2f395eb78e704e910b588dbaf7d2d, type: 3}
-  chanceToInflictEffect: 0
-  effectsToInflict: []
+  chanceToInflictEffect: 0.2
+  effectsToInflict:
+  - {fileID: 11400000, guid: 468c61e0eca26bd49b25067517367bd7, type: 2}
   projectile: {fileID: 0}

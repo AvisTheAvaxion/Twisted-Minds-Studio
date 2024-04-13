@@ -15,7 +15,16 @@ MonoBehaviour:
   useableName: Lance
   description: A stick with a pointy end
   sprite: {fileID: 21300000, guid: 61b320da1c932c94e858953e302f017a, type: 3}
+  mode: 0
   type: 0
-  attackAnim: {fileID: 7400000, guid: a5a7200bb90b72644b672e004266a7c7, type: 2}
-  damage: 20
+  extraAttackAnim: {fileID: 0}
   attackSpeed: 10
+  autoAttack: 0
+  damage: 20
+  deflectionStrength: 3
+  knockback: 2
+  range: 5
+  weaponStrike: {fileID: 8308924630415093721, guid: 60f2f395eb78e704e910b588dbaf7d2d, type: 3}
+  chanceToInflictEffect: 0
+  effectsToInflict: []
+  projectile: {fileID: 0}

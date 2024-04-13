@@ -43,7 +43,8 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
         if (stats.GetHealthValue() <= 0)
         {
-            Destroy(gameObject);
+            transform.SendMessage("OnDeath");
+            //Destroy(gameObject);
         }
     }
 

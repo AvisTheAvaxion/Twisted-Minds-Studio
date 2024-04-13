@@ -67,8 +67,11 @@ public class AttackController : MonoBehaviour
         {
             weaponVisual.sprite = currentWeapon.GetSprite();
 
-            weaponOverrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation();
-            weaponAnimator.runtimeAnimatorController = weaponOverrideController;
+            if (weaponOverrideController != null)
+            {
+                weaponOverrideController["DefaultMelee"] = currentWeapon.GetWeaponAnimation();
+                weaponAnimator.runtimeAnimatorController = weaponOverrideController;
+            }
 
             currentAttackMode = currentWeapon.GetWeaponMode();
         } 
@@ -146,7 +149,7 @@ public class AttackController : MonoBehaviour
     {
         if(currentWeapon != null)
         {
-            GameObject go = Instantiate(currentWeapon.GetWeaponStrike(), weaponStrikeSpawnPoint.position, weaponStrikeSpawnPoint.rotation, weaponStrikeParent);
+            GameObject go = Instantiate(currentWeapon.GetWeaponStrike(), weaponStrikeSpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetRange(), weaponStrikeSpawnPoint.rotation, weaponStrikeParent);
             MeleeStrike meleeStrike = go.GetComponent<MeleeStrike>();
             if (meleeStrike) 
             {

@@ -175,6 +175,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScalpelPatient
       objectReference: {fileID: 0}
+    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: itemHolder
+      value: 
+      objectReference: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
+    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: maxDropAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: minDropAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: itemDrops.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: itemDrops.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 31f7daa77a838a545bf97e2afc5375a3, type: 2}
+    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: itemDrops.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
+    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: itemDrops.Array.data[0].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
+      propertyPath: itemDrops.Array.data[1].weight
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3404,6 +3436,26 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5367254218961287942, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: stunTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6319227477234792708, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: m_Size.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 6319227477234792708, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: m_Size.y
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 6319227477234792708, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6319227477234792708, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7498233101355432618, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.98
@@ -3443,6 +3495,10 @@ PrefabInstance:
     - target: {fileID: 7498233101355432618, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8294943214975604175, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: defaultDamage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8294943214975604175, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: rangedCrosshair

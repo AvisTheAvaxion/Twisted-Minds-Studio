@@ -18,6 +18,7 @@ public class Weapon : Useables
     [SerializeField] int damage;
     [SerializeField] float deflectionStrength;
     [SerializeField] float knockback;
+    [SerializeField] float range;
     [SerializeField] GameObject weaponStrike;
     [SerializeField] [Range(0,1)] float chanceToInflictEffect;
     [SerializeField] EffectInfo[] effectsToInflict;
@@ -49,6 +50,10 @@ public class Weapon : Useables
     public int GetAttackSpeed()
     {
         return attackSpeed;
+    }
+    public float GetRange()
+    {
+        return range / 10f;
     }
     public bool IsAutoAttack()
     {

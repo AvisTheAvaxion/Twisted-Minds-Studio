@@ -63,6 +63,13 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected bool maintainDistToTarget = true;
     [SerializeField] protected bool canMoveAndShoot = true;
     [SerializeField] LayerMask wallsLayerMask;
+
+    [Header("Death Settings")]
+    [SerializeField] protected float dropRadius = 0.5f;
+    [SerializeField] protected int minDropAmount;
+    [SerializeField] protected int maxDropAmount;
+    [SerializeField] protected GameObject itemHolder;
+    [SerializeField] protected ItemDrop[] itemDrops;
     
     protected bool canMove;
     protected bool isAttacking;
@@ -128,9 +135,45 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
+    protected virtual void OnDeath()
+    {
+        currentState = States.Death;
+    }
     protected virtual void Death() 
-    { 
-        
+    {
+        SpawnItemDrops();
+        Destroy(gameObject);
+    }
+    protected virtual void SpawnItemDrops()
+    {
+        if (itemDrops == null || itemDrops.Length == 0) return;
+
+        int dropAmount = Random.Range(minDropAmount, maxDropAmount + 1);
+        float weightTotal = 0;
+        for (int i = 0; i < itemDrops.Length; i++)
+        {
+            weightTotal += itemDrops[i].weight;
+        }
+
+        for (int i = 0; i < dropAmount; i++)
+        {
+            float rand = Random.Range(0, weightTotal);
+            int e = 0;
+            for (; e < itemDrops.Length; e++)
+            {
+                if (rand < itemDrops[e].weight)
+                    break;
+                weightTotal -= itemDrops[e].weight;
+            }
+            if(e < itemDrops.Length)
+            {
+                GameObject go = Instantiate(itemHolder, transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.forward));
+                ItemData data = go.GetComponent<ItemData>();
+                if (data) data.SetItemData(itemDrops[e].item);
+                Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
+                if(rb) rb.AddForce(GetRandomDir() * dropRadius, ForceMode2D.Impulse);
+            }
+        }
     }
 
     protected virtual void Patrol()
@@ -436,7 +479,7 @@ public class EnemyStateMachine : MonoBehaviour
             Vector2 dir = (collision.transform.position - transform.position).normalized;
 
             health.TakeDamage(contactDamage);
-            playerMovement.Knockback(dir, contactKnockback);
+            playerMovement.Knockback(dir, contactKnockback*2);
         }
     }
 
@@ -451,4 +494,11 @@ public class EnemyStateMachine : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, aggroRadius);
         }
     }
+}
+
+[System.Serializable]
+public struct ItemDrop
+{
+    public Useables item;
+    public float weight;
 }

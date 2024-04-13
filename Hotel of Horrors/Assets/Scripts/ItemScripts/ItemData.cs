@@ -10,4 +10,10 @@ public class ItemData : MonoBehaviour
     {
         return thisItemData;
     }
+    public void SetItemData(Useables item)
+    {
+        thisItemData = item;
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer) spriteRenderer.sprite = item.GetSprite();
+    }
 }

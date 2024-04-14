@@ -97,16 +97,21 @@ public class AttackController : MonoBehaviour
     void OnAttack(InputValue inputValue)
     {
         attackButtonPressed = inputValue.isPressed;
+
+        if (isAttacking && !attackButtonPressed && currentAttackMode == AttackModes.Ranged)
+        {
+            AttackEnd();
+        }
+    }
+
+    private void Update()
+    {
         if (canAttack && !isAttacking)
         {
             if (attackButtonPressed && !playerMovement.IsDashing)
             {
                 Attack();
             }
-        }
-        if (isAttacking && !attackButtonPressed && currentAttackMode == AttackModes.Ranged)
-        {
-            AttackEnd();
         }
     }
 

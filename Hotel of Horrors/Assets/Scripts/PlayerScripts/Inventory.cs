@@ -13,33 +13,35 @@ public class Inventory : MonoBehaviour
     [SerializeField] public Useables itemTwo;
 
     [Header("References")]
-    [SerializeField] GameObject inventoryUI;
+    [SerializeField] UIDisplayHandler uiDisplay;
     ItemSlot weaponSlot;
-    ItemSlot freeSlot1;
-    ItemSlot freeSlot2;
+    ItemSlot freeSlot;
+    ItemSlot mementoSlot;
     List<ItemSlot> slots;
 
     AttackController attackController;
 
     private void Awake()
     {
-        inventoryUI.SetActive(true);
-        inventoryUI.SetActive(false);
+        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayHandler>();
+
+        uiDisplay.InventoryUI.SetActive(true);
+        uiDisplay.InventoryUI.SetActive(false);
         attackController = GetComponent<AttackController>();
 
-        slots = inventoryUI.GetComponentsInChildren<ItemSlot>().ToList();
+        slots = uiDisplay.InventoryUI.GetComponentsInChildren<ItemSlot>().ToList();
         foreach (ItemSlot slot in slots)
         {
-            int order = 1;
-            slot.gameObject.transform.GetChild(0).GetComponent<Canvas>().sortingOrder = order;
-            order++;
+            //int order = 1;
+            //slot.gameObject.transform.GetChild(0).GetComponent<Canvas>().sortingOrder = order;
+            //order++;
 
             if (slot.IsWeaponSlot)
                 weaponSlot = slot;
-            else if (freeSlot1 == null && slot.IsFreeSlot)
-                freeSlot1 = slot;
-            else if (freeSlot1 != null && freeSlot2 == null && slot.IsFreeSlot)
-                freeSlot2 = slot;
+            else if (freeSlot == null && slot.IsFreeSlot)
+                freeSlot = slot;
+            else if (mementoSlot == null && slot.IsMementoSlot)
+                mementoSlot = slot;
         }
     }
 
@@ -61,18 +63,28 @@ public class Inventory : MonoBehaviour
         attackController.Equip(weapon);
         weaponSlot.itemHeld = currentWeapon = weapon;
         weaponSlot.UpdateImage();
-    }
-    public void EquipFreeItem(Useables item, int slotNum)
-    {
-        if(slotNum == 0)
+
+        if(weapon == null)
         {
-            freeSlot1.itemHeld = itemOne = item;
-            freeSlot1.UpdateImage();
+            uiDisplay.WeaponHotbarImage.sprite = null;
         }
         else
         {
-            freeSlot2.itemHeld = itemTwo = item;
-            freeSlot2.UpdateImage();
+            uiDisplay.WeaponHotbarImage.sprite = weapon.GetSprite();
+        }
+    }
+    public void EquipFreeItem(Useables item)
+    {
+        freeSlot.itemHeld = itemOne = item;
+        freeSlot.UpdateImage();
+
+        if (item == null)
+        {
+            uiDisplay.FreeSlotHotbarImage.sprite = null;
+        }
+        else
+        {
+            uiDisplay.FreeSlotHotbarImage.sprite = item.GetSprite();
         }
     }
 
@@ -97,14 +109,14 @@ public class Inventory : MonoBehaviour
 
     void OnToggleInventory()
     {
-        if(inventoryUI.activeSelf == true)
+        if(uiDisplay.InventoryUI.activeSelf == true)
         {
-            inventoryUI.SetActive(false);
+            uiDisplay.InventoryUI.SetActive(false);
             Cursor.visible = false;
         }
         else
         {
-            inventoryUI.SetActive(true);
+            uiDisplay.InventoryUI.SetActive(true);
             Cursor.visible = true;
         }
     }

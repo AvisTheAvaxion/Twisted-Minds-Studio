@@ -218,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnShift(InputValue inputValue)
     {
-        if (inputValue.isPressed)
+        if (!attackController.IsAttacking && inputValue.isPressed)
         {
             dashStartVector = rb.position;
             isDashing = true;

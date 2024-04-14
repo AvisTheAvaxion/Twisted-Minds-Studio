@@ -16,8 +16,10 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [Header("Item Slot Settings")]
     [SerializeField] bool isWeaponSlot;
     [SerializeField] bool isFreeSlot;
+    [SerializeField] bool isMementoSlot;
     public bool IsWeaponSlot { get => isWeaponSlot; }
     public bool IsFreeSlot { get => isFreeSlot; }
+    public bool IsMementoSlot { get => isMementoSlot; }
 
     [Header("Item Tool Tip Reference")]
     [SerializeField] ItemToolTip itemToolTip;
@@ -77,7 +79,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left && itemHeld != null && !isWeaponSlot && !isFreeSlot)
+        if (eventData.button == PointerEventData.InputButton.Left && itemHeld != null && !isWeaponSlot && !isFreeSlot && !isMementoSlot)
         {
             if (itemHeld.GetType() == typeof(Weapon))
             {
@@ -85,11 +87,11 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
             if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.Q))
             {
-                inventory.EquipFreeItem(itemHeld, 0);
+                //inventory.EquipFreeItem(itemHeld, 0);
             }
-            if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.E))
+            if (itemHeld.GetType() != typeof(Weapon) && itemHeld.GetType() != typeof(Mementos) && Input.GetKey(KeyCode.E))
             {
-                inventory.EquipFreeItem(itemHeld, 1);
+                inventory.EquipFreeItem(itemHeld);
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right && itemHeld != null)

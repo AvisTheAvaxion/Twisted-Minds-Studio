@@ -12,6 +12,7 @@ public class DialogueSystem : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] GameObject canvasPrefab;
+    [SerializeField] GameObject choicePrefab;
 
     //Event Variables
     NPCInteraction npcInteraction;
@@ -151,25 +152,26 @@ public class DialogueSystem : MonoBehaviour
         mainText = mainBG.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         nameText = mainBG.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
 
-        GameObject choiceObj = canvas.transform.GetChild(1).GetChild(0).gameObject;
-        choiceInteractions.Add(choiceObj.GetComponent<ChoiceInteractions>());
-        choiceInteractions[0].SetChoiceIndex(0);
-        choices.Add(choiceObj);
+        Transform choiceHolder = canvas.transform.GetChild(1);
+        GameObject choiceObj = choicePrefab;
+        if (choiceObj == null) Debug.LogError("Dialogue Choice prefab not assigned on Dialogue System");
+        //choiceInteractions.Add(choiceObj.GetComponent<ChoiceInteractions>());
+        //choiceInteractions[0].SetChoiceIndex(0);
+        //choices.Add(choiceObj);
 
         dialogueBoxInteract = FindObjectOfType<DialogueBoxInteractions>();
         dialogueBoxInteract.OnDialogueAdvance += DialogueBoxInteract_OnDialogueAdvance;
         
-        for (int i = 1; i < choiceAmount; i++)
+        for (int i = 0; i < choiceAmount; i++)
         {
-            GameObject choice = Instantiate(choiceObj, choiceObj.transform.parent);
+            GameObject choice = Instantiate(choiceObj, choiceHolder);
             choiceInteractions.Add(choice.GetComponent<ChoiceInteractions>());
             choiceInteractions[i].SetChoiceIndex(i);
             choiceInteractions[i].OnChoiceInteract += DialogueSystem_OnChoiceInteract;
             choices.Add(choice);
         }
-
         
-        choiceInteractions[0].OnChoiceInteract += DialogueSystem_OnChoiceInteract;
+        //choiceInteractions[0].OnChoiceInteract += DialogueSystem_OnChoiceInteract;
     }
 
     //This method deals with the actual text being displayed on top of the dialogue GUI

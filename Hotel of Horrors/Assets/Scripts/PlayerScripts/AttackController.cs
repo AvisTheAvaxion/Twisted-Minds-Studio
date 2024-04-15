@@ -165,7 +165,7 @@ public class AttackController : MonoBehaviour
                 {
                     effects[i] = new Effect(effectInfos[i], currentWeapon.GetChanceToInflictEffect());
                 }
-                meleeStrike.Init(currentWeapon.GetDamage(), currentWeapon.GetKnockback(), currentWeapon.GetDeflectionStrength(), "Enemy"); 
+                meleeStrike.Init(currentWeapon.GetDamage(), currentWeapon.GetKnockback(), currentWeapon.GetDeflectionStrength(), "Enemy", effects); 
             }
         } 
         else

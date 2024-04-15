@@ -5,6 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] int damage = 1;
+    [SerializeField] float deflectionResistance;
     [SerializeField] [Range(0,1)] float chanceToInflictEffect;
     [SerializeField] EffectInfo[] effectsToInflict;
 
@@ -17,7 +18,7 @@ public class Projectile : MonoBehaviour
         else if(collision.tag.Equals("MeleeStrike"))
         {
             MeleeStrike meleeStrike = collision.GetComponent<MeleeStrike>();
-            if(meleeStrike && meleeStrike.GetDeflectionStrength() > 0)
+            if(meleeStrike && meleeStrike.GetDeflectionStrength() > deflectionResistance)
             {
                 Rigidbody2D rb = GetComponent<Rigidbody2D>();
                 rb.velocity = Vector2.zero;

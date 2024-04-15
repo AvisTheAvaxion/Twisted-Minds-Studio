@@ -358,6 +358,26 @@ PrefabInstance:
       propertyPath: rangedCrosshair
       value: 
       objectReference: {fileID: 28364654}
+    - target: {fileID: 9195956232266042739, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: health.maxValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 9195956232266042739, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: stats.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9195956232266042739, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: health.defaultValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 9195956232266042739, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: stats.Array.data[0].type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9195956232266042739, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: stats.Array.data[0].defaultValue
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5367254218961287942, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
     m_RemovedGameObjects: []
@@ -51167,7 +51187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 1262369509}
-  healthBar: {fileID: 0}
+  uiDisplay: {fileID: 1617698298}
   iFramesTime: 0
   stunTime: 0
 --- !u!4 &1262369523 stripped
@@ -63149,6 +63169,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 359473658}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1617698298 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6306504759181565946, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
+  m_PrefabInstance: {fileID: 8248767525799938327}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da447213c00992c458aac5ea064501fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1626145231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1961226553590281498, guid: 7c782a5b9f359a3498f71272e360425c, type: 3}

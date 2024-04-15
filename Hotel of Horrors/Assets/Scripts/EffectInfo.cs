@@ -7,7 +7,7 @@ public class EffectInfo : ScriptableObject
 {
     public enum EffectMode
     {
-        Buff, Debuff, OverTime
+        Buff, Debuff, OverTimeBuff, OverTimeDebuff, PermanentBuff, PermanentDebuff
     }
 
     [System.Serializable]

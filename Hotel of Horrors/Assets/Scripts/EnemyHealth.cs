@@ -57,4 +57,13 @@ public class EnemyHealth : MonoBehaviour, IHealth
     {
         return stats.AddEffect(effect);
     }
+
+    public void UpdateHealth()
+    {
+        if (stats.GetHealthValue() <= 0)
+        {
+            transform.SendMessage("OnDeath");
+            //Destroy(gameObject);
+        }
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class UIDisplayHandler : MonoBehaviour
+public class UIDisplayContainer : MonoBehaviour
 {
     [Header("Inventory UI")]
     [SerializeField] GameObject inventoryUI;
@@ -19,6 +19,7 @@ public class UIDisplayHandler : MonoBehaviour
     [SerializeField] TextMeshProUGUI roomNameText;
     [SerializeField] TextMeshProUGUI emotionalEnergyText;
     [SerializeField] Transform effectsIconHolder;
+    [SerializeField] HeartsController heartsController;
 
     //[Header("Dialogue UI")]
     //[SerializeField] GameObject dialogueUIParent;
@@ -36,4 +37,5 @@ public class UIDisplayHandler : MonoBehaviour
     public TextMeshProUGUI RoomNameText { get => roomNameText; }
     public TextMeshProUGUI EmotionalEnergyText { get => emotionalEnergyText; }
     public Transform EffectsIconHolder { get => effectsIconHolder; }
+    public HeartsController HeartsController { get => heartsController; }
 }

@@ -9,8 +9,10 @@ public class PlayerHealth : MonoBehaviour, IHealth
 {
     StatsController stats;
 
+    HeartsController heartsController;
+
     [SerializeField] PlayerMovement movement;
-    [SerializeField] Slider healthBar;
+    [SerializeField] UIDisplayContainer uiDisplay;
     [SerializeField] float iFramesTime;
     [SerializeField] float stunTime;
     bool canGetHit = true;
@@ -19,7 +21,10 @@ public class PlayerHealth : MonoBehaviour, IHealth
     {
         stats = GetComponent<StatsController>();
 
-        if (healthBar) healthBar.value = 1;
+        if (!uiDisplay) Debug.LogError("UI Display Container not assigned on Player Health");
+
+        if (uiDisplay) heartsController = uiDisplay.HeartsController;
+        if (heartsController) heartsController.Init(stats.GetHealth());
     }
 
     public void TakeDamage(float amount, Effect effect = null)
@@ -32,7 +37,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
             if (effect != null && Random.Range(0, 1f) <= effect.chanceToInflictEffect) stats.AddEffect(effect);
 
-            if (healthBar) healthBar.value = stats.GetHealthValue01();
+            if (heartsController) heartsController.AdjustHearts(stats.GetHealth());
 
             if (stats.GetHealthValue() <= 0)
             {
@@ -58,7 +63,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
             if (effect != null) stats.AddEffect(effect);
 
-            if (healthBar) healthBar.value = stats.GetHealthValue01();
+            if (heartsController) heartsController.AdjustHearts(stats.GetHealth());
 
             if (stats.GetHealthValue() <= 0)
             {
@@ -78,7 +83,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     {
         stats.Heal(amount);
 
-        if (healthBar) healthBar.value = stats.GetHealthValue01();
+        if (heartsController) heartsController.AdjustHearts(stats.GetHealth());
     }
 
     public StatsController.Effector InflictEffect(Effect effect)
@@ -102,5 +107,16 @@ public class PlayerHealth : MonoBehaviour, IHealth
     public void Stun(float length)
     {
         movement.Stun(length);
+    }
+
+    public void UpdateHealth()
+    {
+        if (heartsController) heartsController.AdjustHearts(stats.GetHealth());
+
+        if (stats.GetHealthValue() <= 0)
+        {
+            //loads death scene
+            SceneManager.LoadScene("Death Screen");
+        }
     }
 } 

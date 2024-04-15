@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] public Useables itemTwo;
 
     [Header("References")]
-    [SerializeField] UIDisplayHandler uiDisplay;
+    [SerializeField] UIDisplayContainer uiDisplay;
     ItemSlot weaponSlot;
     ItemSlot freeSlot;
     ItemSlot mementoSlot;
@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayHandler>();
+        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
 
         uiDisplay.InventoryUI.SetActive(true);
         uiDisplay.InventoryUI.SetActive(false);

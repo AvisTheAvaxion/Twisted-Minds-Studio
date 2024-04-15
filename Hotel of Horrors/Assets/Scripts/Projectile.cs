@@ -23,7 +23,7 @@ public class Projectile : MonoBehaviour
                 Rigidbody2D rb = GetComponent<Rigidbody2D>();
                 rb.velocity = Vector2.zero;
                 Vector2 dir = Vector2.Reflect(-transform.up, collision.transform.up);
-                rb.AddForce(dir * meleeStrike.GetDeflectionStrength() / 2f, ForceMode2D.Impulse);
+                rb.AddForce(dir * (meleeStrike.GetDeflectionStrength() - deflectionResistance) / 2f, ForceMode2D.Impulse);
 
                 transform.rotation = Quaternion.FromToRotation(-transform.up, dir) * transform.rotation;
 

@@ -66,10 +66,11 @@ public class Inventory : MonoBehaviour
 
         if(weapon == null)
         {
-            uiDisplay.WeaponHotbarImage.sprite = null;
+            uiDisplay.WeaponHotbarImage.enabled = false;
         }
         else
         {
+            uiDisplay.WeaponHotbarImage.enabled = true;
             uiDisplay.WeaponHotbarImage.sprite = weapon.GetSprite();
         }
     }
@@ -80,10 +81,11 @@ public class Inventory : MonoBehaviour
 
         if (item == null)
         {
-            uiDisplay.FreeSlotHotbarImage.sprite = null;
+            uiDisplay.FreeSlotHotbarImage.enabled = false;
         }
         else
         {
+            uiDisplay.FreeSlotHotbarImage.enabled = true;
             uiDisplay.FreeSlotHotbarImage.sprite = item.GetSprite();
         }
     }

@@ -36,6 +36,7 @@ public class AttackController : MonoBehaviour
     bool autoAttack = false;
 
     bool attackButtonPressed;
+    bool attackButtonReleased;
 
     bool isAttacking;
     public bool IsAttacking { get => isAttacking; }
@@ -56,6 +57,7 @@ public class AttackController : MonoBehaviour
 
         canAttack = true;
         isAttacking = false;
+        attackButtonReleased = true;
     }
 
     //Called by the inventory system to store reference to the current weapon
@@ -65,6 +67,7 @@ public class AttackController : MonoBehaviour
 
         if(currentWeapon != null)
         {
+            weaponVisual.enabled = true;
             weaponVisual.sprite = currentWeapon.GetSprite();
 
             if (weaponOverrideController != null)
@@ -78,7 +81,7 @@ public class AttackController : MonoBehaviour
         else
         {
             weaponAnimator.runtimeAnimatorController = defaultWeaponController;
-            weaponVisual.sprite = null;
+            weaponVisual.enabled = false;
             currentAttackMode = AttackModes.None;
         }
 
@@ -98,6 +101,8 @@ public class AttackController : MonoBehaviour
     {
         attackButtonPressed = inputValue.isPressed;
 
+        if(isAttacking || (!isAttacking && attackButtonReleased == false)) attackButtonReleased = !inputValue.isPressed;
+
         if (isAttacking && !attackButtonPressed && currentAttackMode == AttackModes.Ranged)
         {
             AttackEnd();
@@ -108,9 +113,13 @@ public class AttackController : MonoBehaviour
     {
         if (canAttack && !isAttacking)
         {
-            if (attackButtonPressed && !playerMovement.IsDashing)
+            if (attackButtonReleased && attackButtonPressed && !playerMovement.IsDashing)
             {
                 Attack();
+            }
+            if(playerMovement.IsDashing)
+            {
+                attackButtonReleased = true;
             }
         }
     }
@@ -121,6 +130,7 @@ public class AttackController : MonoBehaviour
         transform.SendMessage("Attacked"); //Set player to attack mode
 
         isAttacking = true;
+        attackButtonReleased = false;
 
         if (currentAttackMode == AttackModes.Ranged)
         {

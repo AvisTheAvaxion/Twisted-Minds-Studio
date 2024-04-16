@@ -19,6 +19,7 @@ public class NPCInteraction : MonoBehaviour
     {
         dialogueSystem = FindObjectOfType<DialogueSystem>();
         dialogueSystem.OnDialogueFinish += DialogueSystem_OnDialogueFinish;
+        dialogueSystem.SubscribeToNPC(this);
     }
 
     private void DialogueSystem_OnDialogueFinish(object sender, EventArgs e)

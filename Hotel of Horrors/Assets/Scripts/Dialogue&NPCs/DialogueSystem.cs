@@ -105,13 +105,13 @@ public class DialogueSystem : MonoBehaviour
 
         //Methods
         ParseBlock();
-        Debug.Log("Parseing Complete");
+        //Debug.Log("Parseing Complete");
         CreateBaseVisuals();
-        Debug.Log("Creation Complete");
+        //Debug.Log("Creation Complete");
         PauseGame(true);
-        Debug.Log("Pausing Complete");
+        //Debug.Log("Pausing Complete");
         UpdateVisuals(dialogueLines[dialogueIndex]);
-        Debug.Log("Advancing Complete");
+        //Debug.Log("Advancing Complete");
     }
 
     public void AdvanceDialogue()
@@ -186,6 +186,13 @@ public class DialogueSystem : MonoBehaviour
                 choiceBox.SetActive(false);
             }
         }
+        else if(line is AudioCueLine audioLine)
+        {
+            Debug.Log("MMMUUUUSSSSSIIIIICCCCC");
+            AudioManager.Play(audioLine.GetSongName());
+            Debug.Log(audioLine.GetSongName());
+            AdvanceDialogue();
+        }
         else
         {
             dialogueBoxInteract.ToggleInteraction(false);
@@ -259,42 +266,88 @@ public class DialogueSystem : MonoBehaviour
                     {
                         lineNumber++;
                         DivergentLine divergent = new DivergentLine();
+                        AudioCueLine audioCueLine = new AudioCueLine();
                         switch (line)
                         {
                             case string a when a.Contains($":{block}a|"):
                                 aNum++;
                                 //Debug.Log($"Divergent A line {aNum}: " + line);
-                                divergent.ParseAndStore(line);
-                                divergent.SetLineNumber(aNum);
-                                choiceLine.AssignDivergentToChoice(divergent, 0);
+                                if (a.Contains("$Play("))
+                                {
+                                    audioCueLine.ParseAndStore(line);
+                                    audioCueLine.SetLineNumber(aNum);
+                                    choiceLine.AssignDivergentToChoice(audioCueLine, 0);
+                                }
+                                else
+                                {
+                                    divergent.ParseAndStore(line);
+                                    divergent.SetLineNumber(aNum);
+                                    choiceLine.AssignDivergentToChoice(divergent, 0);
+                                }
                                break;
                             case string b when b.Contains($":{block}b|"):
                                 bNum++;
                                 //Debug.Log($"Divergent line {bNum}: " + line);
-                                divergent.ParseAndStore(line);
-                                divergent.SetLineNumber(bNum);
-                                choiceLine.AssignDivergentToChoice(divergent, 1);
+                                if (b.Contains("$Play("))
+                                {
+                                    audioCueLine.ParseAndStore(line);
+                                    audioCueLine.SetLineNumber(bNum);
+                                    choiceLine.AssignDivergentToChoice(audioCueLine, 1);
+                                }
+                                else
+                                {
+                                    divergent.ParseAndStore(line);
+                                    divergent.SetLineNumber(bNum);
+                                    choiceLine.AssignDivergentToChoice(divergent, 1);
+                                }
                                 break;
                             case string c when c.Contains($":{block}c|"):
                                 cNum++;
                                 //Debug.Log($"Divergent line {cNum} : " + line);
-                                divergent.ParseAndStore(line);
-                                divergent.SetLineNumber(cNum);
-                                choiceLine.AssignDivergentToChoice(divergent, 2);
+                                if (c.Contains("$Play("))
+                                {
+                                    audioCueLine.ParseAndStore(line);
+                                    audioCueLine.SetLineNumber(cNum);
+                                    choiceLine.AssignDivergentToChoice(audioCueLine, 2);
+                                }
+                                else
+                                {
+                                    divergent.ParseAndStore(line);
+                                    divergent.SetLineNumber(cNum);
+                                    choiceLine.AssignDivergentToChoice(divergent, 2);
+                                }
                                 break;
                             case string d when d.Contains($":{block}d|"):
                                 dNum++;
                                 //Debug.Log($"Divergent line {dNum} : " + line);
-                                divergent.ParseAndStore(line);
-                                divergent.SetLineNumber(dNum);
-                                choiceLine.AssignDivergentToChoice(divergent, 3);
+                                if (d.Contains("$Play("))
+                                {
+                                    audioCueLine.ParseAndStore(line);
+                                    audioCueLine.SetLineNumber(dNum);
+                                    choiceLine.AssignDivergentToChoice(audioCueLine, 3);
+                                }
+                                else
+                                {
+                                    divergent.ParseAndStore(line);
+                                    divergent.SetLineNumber(dNum);
+                                    choiceLine.AssignDivergentToChoice(divergent, 3);
+                                }
                                 break;
                             case string e when e.Contains($":{block}e|"):
                                 eNum++;
                                 //Debug.Log($"Divergent E line {eNum}: " + line);
-                                divergent.ParseAndStore(line);
-                                divergent.SetLineNumber(eNum);
-                                choiceLine.AssignDivergentToChoice(divergent, 4);
+                                if (e.Contains("$Play("))
+                                {
+                                    audioCueLine.ParseAndStore(line);
+                                    audioCueLine.SetLineNumber(eNum);
+                                    choiceLine.AssignDivergentToChoice(audioCueLine, 4);
+                                }
+                                else
+                                {
+                                    divergent.ParseAndStore(line);
+                                    divergent.SetLineNumber(eNum);
+                                    choiceLine.AssignDivergentToChoice(divergent, 4);
+                                }
                                 break;
                             default:
                                 //Debug.Log($"line {lineNumber}: {line} : defaulting");
@@ -437,6 +490,11 @@ class Choice : DialogueLine
         resultingLines.Add(divergentLine);
     }
 
+    public void AddToResulting(AudioCueLine audioLine)
+    {
+        resultingLines.Add(audioLine);
+    }
+
     //Retrieves the resultingLines List
     public List<DivergentLine> GetResultLines()
     {
@@ -468,5 +526,25 @@ class DivergentLine : DialogueLine
     public int GetLineNumber()
     {
         return lineNumber;
+    }
+}
+
+//Im still figuring this shit out.
+//When I do though animations will be scripted in a similar manner.
+class AudioCueLine : DivergentLine
+{
+    string songName;
+
+    public override void ParseAndStore(string line)
+    {
+        string cleanString;
+        cleanString = cleanString = line.Substring(line.IndexOf('(') + 1);
+        string[] split = cleanString.Split(')');
+        songName = split[0].Trim();
+    }
+
+    public string GetSongName()
+    {
+        return songName;
     }
 }

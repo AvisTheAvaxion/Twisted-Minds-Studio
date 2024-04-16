@@ -21,16 +21,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] AfterImage afterImage;
     [SerializeField] Image fadeImage;
+    [SerializeField] GameObject elevatorCanvas;
     private Transform playerTrans;
 
     [Header("Movement Modifiers")]
     public float movementSpeed;
     [SerializeField] [Range(0,1)] float drag;
-    [SerializeField] float doorTransitionLength = 0.5f;
+    
     //public float collisionOffset = 0.05f;
     //public ContactFilter2D movementFilter;
     //List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
-    bool canMove;
+    [HideInInspector]public bool canMove;
 
     [Header("Dashing Modifiers")]
     public float dashDistance;
@@ -45,6 +46,10 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 movementVector = new Vector2();
     Vector2 dashStartVector = new Vector2();
+
+    [Header("Room Traversal")]
+    [SerializeField] float chanceForElevator;
+    [SerializeField] float doorTransitionLength = 0.5f;
     RoomManager roomManager;
 
     AttackController attackController;
@@ -308,6 +313,32 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator FadeImageOut(GameObject obj)
     {
+        rb.velocity = Vector2.zero;
+        animator.SetBool("isWalking", false);
+
+        canMove = false;
+        print("fading black");
+        AudioManager.Play("Door");
+        // loop over 1 second - fade to black
+        for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
+        {
+            // set color with i as alpha
+            fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
+            yield return null;
+        }
+
+        //for now, random chance to enter elevator
+        if (Random.Range(0,1) < chanceForElevator)
+        {
+            print("Going to elevator");
+            transform.position = new Vector3(-1000, 0, -1000);
+            elevatorCanvas.SetActive(true);
+            Cursor.visible = true;
+
+
+
+        }
+
         Door door = obj.GetComponent<Door>();
 
         //Ensure player is facing the door
@@ -316,25 +347,11 @@ public class PlayerMovement : MonoBehaviour
             (door.doorLocation == Door.DoorLocations.East && direction.Equals("East")) ||
             (door.doorLocation == Door.DoorLocations.West && direction.Equals("West")))
         {
-            rb.velocity = Vector2.zero;
-            animator.SetBool("isWalking", false);
-
-            canMove = false;
-            print("fading black");
-            AudioManager.Play("Door");
-            // loop over 1 second - fade to black
-            for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
-            {
-                // set color with i as alpha
-                fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
-                yield return null;
-            }
 
             if (door.assignedDoor == null)
             {
                 door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
             }
-
 
             switch (door.doorLocation)
             {

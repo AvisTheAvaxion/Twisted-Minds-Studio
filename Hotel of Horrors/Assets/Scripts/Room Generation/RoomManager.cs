@@ -7,6 +7,7 @@ public class RoomManager : MonoBehaviour
 {
     [SerializeField] int doorsToReset;
 
+
     List<GameObject> northDoors = new List<GameObject>();
     List<GameObject> eastDoors = new List<GameObject>();
     List<GameObject> southDoors = new List<GameObject>();

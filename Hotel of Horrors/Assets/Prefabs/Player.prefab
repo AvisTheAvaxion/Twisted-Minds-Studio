@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 5196756706972270376}
   - component: {fileID: 6240079413853661452}
   - component: {fileID: 5367254218961287942}
+  - component: {fileID: 9195956232266042739}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -364,12 +365,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentAttackMode: 2
   playerAnimator: {fileID: 8490620325508692427}
-  weaponAnimator: {fileID: 4822902379016114617}
   weaponOverrideController: {fileID: 0}
   playerMovement: {fileID: 3194915936490214647}
   weaponStrikeParent: {fileID: 9158669448377762531}
   weaponStrikeSpawnPoint: {fileID: 3412874156805523533}
   weaponVisual: {fileID: 6319227477234792708}
+  hand: {fileID: 4887805925020368202}
   bulletPrefab: {fileID: 6622512885369241516, guid: c3b14293a59591741998fb8277221087, type: 3}
   bulletSpawnLocation: {fileID: 6170973806305089133}
   rangedCrosshair: {fileID: 0}
@@ -378,6 +379,7 @@ MonoBehaviour:
   defaultMeleeStrike: {fileID: 8308924630415093721, guid: 60f2f395eb78e704e910b588dbaf7d2d, type: 3}
   defaultDamage: 1
   defaultKnockback: 2
+  defaultAttackSpeed: 3
   defaultDeflectionStrength: 2
 --- !u!114 &5196756706972270376
 MonoBehaviour:
@@ -395,11 +397,7 @@ MonoBehaviour:
   currentWeapon: {fileID: 0}
   itemOne: {fileID: 0}
   itemTwo: {fileID: 0}
-  inventoryUI: {fileID: 0}
-  weaponPlacement: {fileID: 6319227477234792708}
-  animator: {fileID: 0}
-  slots: []
-  overrideController: {fileID: 22100000, guid: 60f932896133bed4681ffca51bc2d071, type: 2}
+  uiDisplay: {fileID: 0}
 --- !u!114 &6240079413853661452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,10 +424,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 3194915936490214647}
-  healthBar: {fileID: 0}
-  maxHealth: 25
+  uiDisplay: {fileID: 0}
   iFramesTime: 0.7
   stunTime: 0.4
+--- !u!114 &9195956232266042739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870587051542624426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  health:
+    type: 0
+    defaultValue: 25
+    hasMax: 1
+    maxValue: 25
+  stats: []
 --- !u!1 &2906325751302042129
 GameObject:
   m_ObjectHideFlags: 0

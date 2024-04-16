@@ -141,7 +141,7 @@ public class StatsController : MonoBehaviour
     /// <returns>(For over time effects)Returns the effector which contains the events to subscribe to. *Make sure to unsubscribe on onEndEffect*</returns>
     public Effector AddEffect(Effect effect)
     {
-        if(effect != null && (effect.info.Mode == EffectInfo.EffectMode.PermanentBuff || effect.info.Mode == EffectInfo.EffectMode.PermanentDebuff))
+        if(effect.info != null && (effect.info.Mode == EffectInfo.EffectMode.PermanentBuff || effect.info.Mode == EffectInfo.EffectMode.PermanentDebuff))
         {
             foreach (EffectInfo.StatEffect statEffect in effect.info.StatEffects)
             {
@@ -153,7 +153,7 @@ public class StatsController : MonoBehaviour
             }
             return null;
         }
-        else if (effect != null && UnityEngine.Random.Range(0f, 1f) <= effect.chanceToInflictEffect)
+        else if (effect.info != null && UnityEngine.Random.Range(0f, 1f) <= effect.chanceToInflictEffect)
         {
             if (debug) print("Add effect " + effect + " to " + name);
 

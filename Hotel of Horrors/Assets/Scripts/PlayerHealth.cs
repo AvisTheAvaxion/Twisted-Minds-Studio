@@ -21,7 +21,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
     {
         stats = GetComponent<StatsController>();
 
-        if (!uiDisplay) Debug.LogError("UI Display Container not assigned on Player Health");
+        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
+        if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
 
         if (uiDisplay) heartsController = uiDisplay.HeartsController;
         if (heartsController) heartsController.Init(stats.GetHealth());

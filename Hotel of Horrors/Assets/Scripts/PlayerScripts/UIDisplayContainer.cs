@@ -20,6 +20,10 @@ public class UIDisplayContainer : MonoBehaviour
     [SerializeField] TextMeshProUGUI emotionalEnergyText;
     [SerializeField] Transform effectsIconHolder;
     [SerializeField] HeartsController heartsController;
+    [SerializeField] GameObject ammoTextContainer;
+    [SerializeField] TextMeshProUGUI currentAmmoText;
+    [SerializeField] TextMeshProUGUI maxAmmoText;
+    [SerializeField] Image reloadCircle;
 
     //[Header("Dialogue UI")]
     //[SerializeField] GameObject dialogueUIParent;
@@ -38,4 +42,8 @@ public class UIDisplayContainer : MonoBehaviour
     public TextMeshProUGUI EmotionalEnergyText { get => emotionalEnergyText; }
     public Transform EffectsIconHolder { get => effectsIconHolder; }
     public HeartsController HeartsController { get => heartsController; }
+    public GameObject AmmoTextContainer { get => ammoTextContainer; }
+    public TextMeshProUGUI CurrentAmmoText { get => currentAmmoText; }
+    public TextMeshProUGUI MaxAmmoText { get => maxAmmoText; }
+    public Image ReloadCircle { get => reloadCircle; }
 }

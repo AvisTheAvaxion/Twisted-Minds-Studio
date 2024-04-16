@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDashing && isAttackMode)
         {
-            if (!attackController.IsAttacking)
+            if (!attackController.IsAttacking || attackController.CurrentAttackMode == Attacks.AttackModes.Ranged)
             {
                 Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
                 float angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;

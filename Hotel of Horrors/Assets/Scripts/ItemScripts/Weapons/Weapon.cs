@@ -11,7 +11,7 @@ public class Weapon : Useables
     [SerializeField] AttackType type;
     [SerializeField] AnimationClip extraAttackAnim;
     [Space(20)]
-    [SerializeField] int attackSpeed;
+    [SerializeField] float attackSpeed;
     [SerializeField] bool autoAttack;
 
     [Header("Melee Settings")]
@@ -25,6 +25,10 @@ public class Weapon : Useables
 
     [Header("Ranged Settings")]
     [SerializeField] GameObject projectile;
+    [SerializeField] float fireRate;
+    [SerializeField] int maxAmmoCount;
+    [SerializeField] float reloadTime;
+
 
     public override void Use()
     {
@@ -47,13 +51,25 @@ public class Weapon : Useables
     {
         return deflectionStrength;
     }
-    public int GetAttackSpeed()
+    public float GetAttackSpeed()
     {
-        return attackSpeed;
+        return attackSpeed / 10f;
     }
     public float GetRange()
     {
         return range / 10f;
+    }
+    public float GetFireRate()
+    {
+        return fireRate;
+    }
+    public int GetMaxAmmoCount()
+    {
+        return maxAmmoCount;
+    }
+    public float GetReloadTime()
+    {
+        return reloadTime;
     }
     public bool IsAutoAttack()
     {

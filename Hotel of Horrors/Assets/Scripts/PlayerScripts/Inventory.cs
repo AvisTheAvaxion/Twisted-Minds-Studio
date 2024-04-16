@@ -24,6 +24,7 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
+        if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
 
         uiDisplay.InventoryUI.SetActive(true);
         uiDisplay.InventoryUI.SetActive(false);

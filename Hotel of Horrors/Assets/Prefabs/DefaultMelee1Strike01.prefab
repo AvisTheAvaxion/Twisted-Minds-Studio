@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7997659925485497351}
   - component: {fileID: 8284666980901265937}
   m_Layer: 0
-  m_Name: DefaultMeleeStrike
+  m_Name: DefaultMelee1Strike01
   m_TagString: MeleeStrike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: -816344799, guid: 6c86fd9c696b9754f84b908563d05e64, type: 3}
+  m_Sprite: {fileID: -167765452, guid: 066ffba76843c9f4e8e4c120336fd362, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -98,11 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ebc5882183b644ea91ab508142d6b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 6143300023033336772}
   sprites:
-  - {fileID: -816344799, guid: 6c86fd9c696b9754f84b908563d05e64, type: 3}
-  - {fileID: 2055049930, guid: 6c86fd9c696b9754f84b908563d05e64, type: 3}
-  - {fileID: -1507479027, guid: 6c86fd9c696b9754f84b908563d05e64, type: 3}
+  - {fileID: -167765452, guid: 066ffba76843c9f4e8e4c120336fd362, type: 3}
+  - {fileID: 1722946968, guid: 066ffba76843c9f4e8e4c120336fd362, type: 3}
+  - {fileID: -1071137713, guid: 066ffba76843c9f4e8e4c120336fd362, type: 3}
   frameRate: 0.05
   defaultTag: Enemy
 --- !u!60 &8284666980901265937
@@ -149,13 +149,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.1132508, y: 0.19571944}
-      - {x: -0.12717572, y: 0.2099823}
-      - {x: -0.24261105, y: 0.122753695}
-      - {x: -0.23094144, y: 0.07442312}
-      - {x: -0.11785084, y: 0.092273995}
-      - {x: 0.03619888, y: 0.029058632}
-      - {x: 0.12527516, y: -0.21680325}
-      - {x: 0.22214918, y: -0.14110161}
-      - {x: 0.20808183, y: 0.049342588}
+    - - {x: 0.10945404, y: 0.03815575}
+      - {x: -0.087310165, y: 0.048621804}
+      - {x: -0.23217008, y: -0.058539554}
+      - {x: -0.21765293, y: -0.12680288}
+      - {x: -0.13398689, y: -0.0956635}
+      - {x: 0.09504804, y: -0.08958894}
+      - {x: 0.21165046, y: -0.16459829}
+      - {x: 0.22689508, y: -0.13730492}
+      - {x: 0.22231953, y: -0.07499997}
   m_UseDelaunayMesh: 0

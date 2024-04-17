@@ -115,6 +115,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5568318085731955952}
+  - {fileID: 7306821455979691524}
   m_Father: {fileID: 4237852321765699306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4822902379016114617
@@ -371,7 +372,8 @@ MonoBehaviour:
   playerMovement: {fileID: 3194915936490214647}
   uiDisplay: {fileID: 0}
   weaponStrikeParent: {fileID: 9158669448377762531}
-  weaponStrikeSpawnPoint: {fileID: 3412874156805523533}
+  weaponStrike1SpawnPoint: {fileID: 3412874156805523533}
+  weaponStrike2SpawnPoint: {fileID: 7306821455979691524}
   weaponVisual: {fileID: 6319227477234792708}
   hand: {fileID: 4887805925020368202}
   bulletPrefab: {fileID: 6622512885369241516, guid: c3b14293a59591741998fb8277221087, type: 3}
@@ -539,6 +541,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &3312525948413959775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7306821455979691524}
+  m_Layer: 0
+  m_Name: MeleeStrike2SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7306821455979691524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3312525948413959775}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.268, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 150972161100622927}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3418523687254036782
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,7 +645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3412874156805523533}
   m_Layer: 0
-  m_Name: MeleeStrikeSpawnPoint
+  m_Name: MeleeStrike1SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -626,13 +659,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5378206539799092616}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -0, y: 0.319, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.078, y: 0.319, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9158669448377762531}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5613375161932326911
 GameObject:
   m_ObjectHideFlags: 0

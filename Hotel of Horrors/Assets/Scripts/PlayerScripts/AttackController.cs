@@ -14,7 +14,8 @@ public class AttackController : MonoBehaviour
     [SerializeField] PlayerMovement playerMovement; //Player movement reference to check whether dashing or not
     [SerializeField] UIDisplayContainer uiDisplay;
     [SerializeField] Transform weaponStrikeParent; //The parent to spawn the weapon strike into
-    [SerializeField] Transform weaponStrikeSpawnPoint; //The point to spawn the weapon strike
+    [SerializeField] Transform weaponStrike1SpawnPoint; //The point to spawn the weapon strike
+    [SerializeField] Transform weaponStrike2SpawnPoint; //The point to spawn the weapon strike
     [SerializeField] SpriteRenderer weaponVisual; //The sprite renderer of the weapon visual located under Hand on the player
     [SerializeField] Transform hand;
 
@@ -246,9 +247,17 @@ public class AttackController : MonoBehaviour
     {
         if(currentWeapon != null)
         {
-            GameObject go = Instantiate(currentWeapon.GetWeaponStrike(), weaponStrikeSpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetRange(), weaponStrikeSpawnPoint.rotation, weaponStrikeParent);
-            MeleeStrike meleeStrike = go.GetComponent<MeleeStrike>();
-            if (meleeStrike) 
+            MeleeStrike meleeStrike = null;
+            if (currentWeapon.GetAttackType() == AttackType.Melee1)
+            {
+                GameObject go = Instantiate(currentWeapon.GetWeaponStrike(), weaponStrike1SpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetRange(), weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
+                meleeStrike = go.GetComponent<MeleeStrike>();
+            } else
+            {
+                GameObject go = Instantiate(currentWeapon.GetWeaponStrike(), weaponStrike2SpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetRange(), weaponStrike2SpawnPoint.rotation, weaponStrikeParent);
+                meleeStrike = go.GetComponent<MeleeStrike>();
+            }
+            if (meleeStrike)
             {
                 EffectInfo[] effectInfos = currentWeapon.GetEffectsToInflict();
                 Effect[] effects = new Effect[effectInfos.Length];
@@ -256,12 +265,12 @@ public class AttackController : MonoBehaviour
                 {
                     effects[i] = new Effect(effectInfos[i], currentWeapon.GetChanceToInflictEffect());
                 }
-                meleeStrike.Init(currentWeapon.GetDamage(), currentWeapon.GetKnockback(), currentWeapon.GetDeflectionStrength(), "Enemy", effects); 
+                meleeStrike.Init(currentWeapon.GetDamage(), currentWeapon.GetKnockback(), currentWeapon.GetDeflectionStrength(), "Enemy", effects);
             }
         } 
         else
         {
-            GameObject go = Instantiate(defaultMeleeStrike, weaponStrikeSpawnPoint.position, weaponStrikeSpawnPoint.rotation, weaponStrikeParent);
+            GameObject go = Instantiate(defaultMeleeStrike, weaponStrike1SpawnPoint.position, weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
             MeleeStrike meleeStrike = go.GetComponent<MeleeStrike>();
             if (meleeStrike) meleeStrike.Init(defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy");
         }

@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class Door : MonoBehaviour
 {
+       
+
     public enum DoorLocations
     {
-        North, East, South, West
+        North, East, South, West, Special
     }
 
     public DoorLocations doorLocation;

@@ -48,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
     Vector2 dashStartVector = new Vector2();
 
     [Header("Room Traversal")]
-    [SerializeField] float chanceForElevator;
     [SerializeField] float doorTransitionLength = 0.5f;
     RoomManager roomManager;
 
@@ -303,55 +302,45 @@ public class PlayerMovement : MonoBehaviour
     #region RoomTraversal
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         GameObject obj = collision.gameObject;
         if (obj.tag.Equals("Door") || obj.tag.Equals("WestDoor")|| obj.tag.Equals("EastDoor") || obj.tag.Equals("NorthDoor")|| obj.tag.Equals("SouthDoor"))
         {
-
+            
             StartCoroutine(FadeImageOut(obj));
         }
     }
 
     IEnumerator FadeImageOut(GameObject obj)
     {
-        rb.velocity = Vector2.zero;
-        animator.SetBool("isWalking", false);
-
-        canMove = false;
-        print("fading black");
-        AudioManager.Play("Door");
-        // loop over 1 second - fade to black
-        for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
-        {
-            // set color with i as alpha
-            fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
-            yield return null;
-        }
-
-        //for now, random chance to enter elevator
-        if (Random.Range(0,1) < chanceForElevator)
-        {
-            print("Going to elevator");
-            transform.position = new Vector3(-1000, 0, -1000);
-            elevatorCanvas.SetActive(true);
-            Cursor.visible = true;
-
-
-
-        }
-
         Door door = obj.GetComponent<Door>();
 
         //Ensure player is facing the door
         if ((door.doorLocation == Door.DoorLocations.North && direction.Equals("North")) ||
             (door.doorLocation == Door.DoorLocations.South && direction.Equals("South")) ||
             (door.doorLocation == Door.DoorLocations.East && direction.Equals("East")) ||
-            (door.doorLocation == Door.DoorLocations.West && direction.Equals("West")))
+            (door.doorLocation == Door.DoorLocations.West && direction.Equals("West")) ||
+            (door.doorLocation == Door.DoorLocations.Special && direction.Equals("North")))
         {
+            rb.velocity = Vector2.zero;
+            animator.SetBool("isWalking", false);
+
+            canMove = false;
+            print("fading black");
+            AudioManager.Play("Door");
+            // loop over 1 second - fade to black
+            for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
+            {
+                // set color with i as alpha
+                fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
+                yield return null;
+            }
 
             if (door.assignedDoor == null)
             {
                 door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
             }
+
 
             switch (door.doorLocation)
             {
@@ -379,6 +368,12 @@ public class PlayerMovement : MonoBehaviour
                     direction = "West";
                     animator.runtimeAnimatorController = leftController;
                     break;
+                case Door.DoorLocations.Special:
+                    print("special");
+                    this.transform.position = GetSpecialRoom(door);
+                    direction = "North";
+                    animator.runtimeAnimatorController = leftController;
+                    break;
             }
 
             print("fading clear");
@@ -396,6 +391,25 @@ public class PlayerMovement : MonoBehaviour
             else
                 animator.SetBool("isWalking", false);
         }
+    }
+
+    Vector3 GetSpecialRoom(Door door)
+    {
+        switch (door.gameObject.name)
+        {
+            case "Elevator Room Door":
+                print("Going to elevator");
+                elevatorCanvas.SetActive(true);
+                Cursor.visible = true;
+                return this.transform.position;
+            case "Boss Room Door":
+                return GameObject.Find("Boss Room Spawn").transform.position;
+            case "Mind Room Door":
+                return GameObject.Find("Mind Room Spawn").transform.position;
+        }
+
+        print("No Dice");
+        return this.transform.position;
     }
     #endregion
 }

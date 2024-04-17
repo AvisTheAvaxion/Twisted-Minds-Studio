@@ -67,6 +67,7 @@ public class ElevatorMenuManager : MonoBehaviour
             yield return null;
         }
 
+
         print("fading clear");
         // loop over 1 second backwards - fade to clear
         for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)

@@ -29,6 +29,7 @@ public class EffectInfo : ScriptableObject
     }
 
     [SerializeField] string name = "New Effect";
+    [SerializeField] bool hasEfficacyLevel = false;
     [SerializeField] string description = "New effect goes brrr";
     [SerializeField] GameObject particleEffect;
     [SerializeField] Sprite displaySprite;
@@ -46,4 +47,5 @@ public class EffectInfo : ScriptableObject
     public StatEffect[] StatEffects { get => statEffects; }
     public float Duration { get => duration; }
     public float Interval { get => interval; }
+    public bool HasEfficacyLevel { get => hasEfficacyLevel; }
 }

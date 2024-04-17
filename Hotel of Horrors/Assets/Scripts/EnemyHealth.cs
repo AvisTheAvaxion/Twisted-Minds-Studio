@@ -21,7 +21,7 @@ public class EnemyHealth : MonoBehaviour, IHealth
         {
             if (timer <= 0)
             {
-                Heal(stats.GetCurrentValue(Stat.StatType.regeneration));
+                Heal(stats.GetCurrentValue(Stat.StatType.Regeneration));
 
                 timer += timeBtwHeals;
             }

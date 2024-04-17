@@ -6,6 +6,10 @@ using UnityEngine;
 public class StatsController : MonoBehaviour
 {
     [SerializeField] bool debug;
+    [Header("Player Specific Settings")]
+    [SerializeField] UIDisplayContainer uiDisplay;
+    [SerializeField] bool isPlayer = false;
+    [Header("Settings")]
     [SerializeField] Stat health = new Stat();
     [SerializeField] Stat[] stats;
 
@@ -16,6 +20,9 @@ public class StatsController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
+        if (uiDisplay == null) Debug.LogError($"UI display container script not assigned to {name} and not found in scene (located on canvas UI prefab");
+
         statsDictionary = new Dictionary<Stat.StatType, Stat>();
         statsDictionary.Add(health.Type, health);
         health.Reset();
@@ -63,8 +70,8 @@ public class StatsController : MonoBehaviour
 
     public Stat GetHealth()
     {
-        if (!statsDictionary.ContainsKey(Stat.StatType.health)) Debug.LogError(name + " has no health stat. Why!?");
-        return statsDictionary[Stat.StatType.health];
+        if (!statsDictionary.ContainsKey(Stat.StatType.Health)) Debug.LogError(name + " has no health stat. Why!?");
+        return statsDictionary[Stat.StatType.Health];
     }
     public float GetHealthValue()
     {
@@ -149,7 +156,7 @@ public class StatsController : MonoBehaviour
                     ChangeStatValue(statEffect.StatType, statEffect.Strength, statEffect.IsPercentage);
                 else
                     ChangeStatValue(statEffect.StatType, statEffect.IsPercentage ? statEffect.Strength : -statEffect.Strength, statEffect.IsPercentage, statEffect.IsPercentage);
-                if (statEffect.StatType == Stat.StatType.health) transform.SendMessage("UpdateHealth");
+                if (statEffect.StatType == Stat.StatType.Health) transform.SendMessage("UpdateHealth");
             }
             return null;
         }
@@ -160,10 +167,22 @@ public class StatsController : MonoBehaviour
             for (int i = 0; i < currentEffectors.Count; i++)
             {
                 if (currentEffectors[i].Effect.info.Name == effect.info.Name)
+                {
+                    if(isPlayer) Destroy(currentEffectors[i].EffectIcon.gameObject);
                     RemoveEffector(currentEffectors[i]);
+                    break;
+                }
             }
 
-            Effector newEffector = new Effector(effect, this, debug);
+            Effector newEffector = null;
+            if (isPlayer)
+            {
+                GameObject go = Instantiate(uiDisplay.EffectsIconPrefab, uiDisplay.EffectsIconHolder);
+                EffectIcon effectIcon = go.GetComponent<EffectIcon>();
+                newEffector = new Effector(effect, effectIcon);
+            } else
+                newEffector = new Effector(effect);
+
             currentEffectors.Add(newEffector);
 
             if (effect.info.Mode == EffectInfo.EffectMode.Overtime) newEffector.activeCoroutine = StartCoroutine(EffectOverTime(newEffector));
@@ -183,12 +202,12 @@ public class StatsController : MonoBehaviour
     {
         if (effector.activeCoroutine != null)
             StopCoroutine(effector.activeCoroutine);
+        if(isPlayer) Destroy(effector.EffectIcon.gameObject);
         currentEffectors.Remove(effector);
     }
 
     public IEnumerator EffectNormal(Effector effector)
     {
-        WaitForSeconds wait = new WaitForSeconds(effector.Effect.info.Duration);
         if (debug) Debug.Log(effector.Effect.info.Name + " effect start");
         foreach (EffectInfo.StatEffect statEffect in effector.Effect.info.StatEffects)
         {
@@ -196,9 +215,18 @@ public class StatsController : MonoBehaviour
                 ChangeStatValue(statEffect.StatType, statEffect.Strength, statEffect.IsPercentage);
             else
                 ChangeStatValue(statEffect.StatType, statEffect.IsPercentage ? statEffect.Strength : -statEffect.Strength, statEffect.IsPercentage, statEffect.IsPercentage);
-            if (statEffect.StatType == Stat.StatType.health) transform.SendMessage("UpdateHealth");
+            if (statEffect.StatType == Stat.StatType.Health) transform.SendMessage("UpdateHealth");
         }
-        yield return wait;
+
+        WaitForSeconds wait = new WaitForSeconds(0.5f);
+        float timer = 0;
+        while(timer < effector.Effect.info.Duration)
+        {
+            timer += Time.deltaTime;
+            if(isPlayer) effector.EffectIcon.UpdateDuration(effector.Effect.info.Duration - timer);
+            yield return wait;
+        }
+
         if (debug) Debug.Log(effector.Effect.info.Name + " effect ended");
         foreach (EffectInfo.StatEffect statEffect in effector.Effect.info.StatEffects)
         {
@@ -207,7 +235,7 @@ public class StatsController : MonoBehaviour
             else
                 ChangeStatValue(statEffect.StatType, statEffect.IsPercentage ? statEffect.Strength : -statEffect.Strength, statEffect.IsPercentage, statEffect.IsPercentage);
 
-            if (statEffect.StatType == Stat.StatType.health) transform.SendMessage("UpdateHealth");
+            if (statEffect.StatType == Stat.StatType.Health) transform.SendMessage("UpdateHealth");
         }
 
         effector.onEffectEnd?.Invoke(this, null);
@@ -227,12 +255,12 @@ public class StatsController : MonoBehaviour
                 ChangeStatValue(statEffect.StatType, statEffect.Strength, statEffect.IsPercentage);
             else
                 ChangeStatValue(statEffect.StatType, statEffect.IsPercentage ? statEffect.Strength : -statEffect.Strength, statEffect.IsPercentage, statEffect.IsPercentage);
-            if (statEffect.StatType == Stat.StatType.health) transform.SendMessage("UpdateHealth");
+            if (statEffect.StatType == Stat.StatType.Health) transform.SendMessage("UpdateHealth");
         }
 
-        float time = 0;
+        float timer = 0;
         float intervalTime = effector.Effect.info.Interval;
-        while (time < effector.Effect.info.Duration)
+        while (timer < effector.Effect.info.Duration)
         {
             if (intervalTime <= 0)
             {
@@ -249,13 +277,14 @@ public class StatsController : MonoBehaviour
                             currentStatEffect.IsPercentage ? currentStatEffect.Strength : -currentStatEffect.Strength,
                             currentStatEffect.IsPercentage, currentStatEffect.IsPercentage);
 
-                    if (currentStatEffect.StatType == Stat.StatType.health) transform.SendMessage("UpdateHealth");
+                    if (currentStatEffect.StatType == Stat.StatType.Health) transform.SendMessage("UpdateHealth");
                 }
                 intervalTime = effector.Effect.info.Interval;
                 effector.onEffectInterval?.Invoke(this, new EffectEventArgs(affectedStats, beforeValues, afterValues, GetHealthValue()));
             }
 
-            time += Time.deltaTime;
+            if(isPlayer) effector.EffectIcon.UpdateDuration(effector.Effect.info.Duration - timer);
+            timer += Time.deltaTime;
             intervalTime -= Time.deltaTime;
 
             yield return null;
@@ -277,18 +306,25 @@ public class StatsController : MonoBehaviour
         public EventHandler onEffectInterval;
         public EventHandler onEffectEnd;
 
-        StatsController statsController;
+        EffectIcon effectIcon;
         Effect effect;
+
+        public EffectIcon EffectIcon { get => effectIcon; }
         public Effect Effect { get => effect; }
 
         public Coroutine activeCoroutine;
 
-        bool debug;
-
-        public Effector(Effect effect, StatsController statsController, bool debug = false)
+        public Effector(Effect effect, EffectIcon effectIcon)
         {
             this.effect = effect;
-            this.statsController = statsController;
+            this.effectIcon = effectIcon;
+
+            this.effectIcon.SetEffect(this.effect.info);
+        }
+        public Effector(Effect effect)
+        {
+            this.effect = effect;
+            this.effectIcon = null;
         }
     }
 }
@@ -298,7 +334,7 @@ public class Stat
 {
     public enum StatType
     {
-        health, regeneration, meleeDamage, attackSpeed, rangedDamage, defense, movementSpeed, stamina, staminaRegeneration
+        Health, Regeneration, MeleeDamage, AttackSpeed, RangedDamage, Defense, MovementSpeed, Stamina, StaminaRegeneration
     }
 
     [SerializeField] StatType type;
@@ -315,7 +351,7 @@ public class Stat
 
     public Stat()
     {
-        type = StatType.health;
+        type = StatType.Health;
         defaultValue = 25f;
         hasMax = true;
         maxValue = 25f;

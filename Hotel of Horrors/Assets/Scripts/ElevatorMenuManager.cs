@@ -11,6 +11,7 @@ public class ElevatorMenuManager : MonoBehaviour
     [SerializeField] GameObject storeMenu;
     [SerializeField] GameObject savedText;
     [SerializeField] GameObject elevatorBackground;
+    [SerializeField] GameObject mindRoomMenu;
     [SerializeField] Image fadeImage;
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] PlayerMovement player;
@@ -52,6 +53,12 @@ public class ElevatorMenuManager : MonoBehaviour
     public void ReturnToPrevRoom()
     {
         StartCoroutine(GetFreshRoom());
+    }
+
+    public void LeaveMindMenu()
+    {
+        Cursor.visible = false;
+        mindRoomMenu.SetActive(false);
     }
 
     IEnumerator GetFreshRoom()

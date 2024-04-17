@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AfterImage afterImage;
     [SerializeField] Image fadeImage;
     [SerializeField] GameObject elevatorCanvas;
+    [SerializeField] GameObject mindRoomCanvas;
     private Transform playerTrans;
 
     [Header("Movement Modifiers")]
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Room Traversal")]
     [SerializeField] float doorTransitionLength = 0.5f;
     RoomManager roomManager;
+    bool inRangeOfChair;
 
     AttackController attackController;
 
@@ -336,7 +338,7 @@ public class PlayerMovement : MonoBehaviour
             (door.doorLocation == Door.DoorLocations.South && direction.Equals("South")) ||
             (door.doorLocation == Door.DoorLocations.East && direction.Equals("East")) ||
             (door.doorLocation == Door.DoorLocations.West && direction.Equals("West")) ||
-            (door.doorLocation == Door.DoorLocations.Special && direction.Equals("North")))
+            (door.doorLocation == Door.DoorLocations.Special))
         {
             rb.velocity = Vector2.zero;
             animator.SetBool("isWalking", false);
@@ -422,10 +424,41 @@ public class PlayerMovement : MonoBehaviour
                 return GameObject.Find("Boss Room Spawn").transform.position;
             case "Mind Room Door":
                 return GameObject.Find("Mind Room Spawn").transform.position;
+            case "Return Mind Room Door":
+                return GameObject.Find("Mind Room Return").transform.position;
         }
 
         print("No Dice");
         return this.transform.position;
     }
+    #endregion
+
+    #region MindRoomInteraction
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("MindRoomChair"))
+        {
+            inRangeOfChair = true;
+            
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("MindRoomChair"))
+        {
+            inRangeOfChair = false;
+        }
+    }
+
+    void OnInteract()
+    {
+        print("interacting");
+        if (inRangeOfChair)
+        {
+            mindRoomCanvas.SetActive(true);
+            Cursor.visible = true;
+        }
+    }
+
     #endregion
 }

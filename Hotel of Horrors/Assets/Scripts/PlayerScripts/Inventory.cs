@@ -133,3 +133,34 @@ public class Inventory : MonoBehaviour
     }
     
 }
+
+public class ItemInstance
+{
+    Useables info;
+    int currentAmount;
+
+    bool isFull;
+
+    public int CurrentAmount { get => currentAmount; }
+    public Useables Info { get => info; }
+    public bool IsFull { get => isFull; }
+
+    public void SetItem(Item item, int amount)
+    {
+        this.info = item;
+        currentAmount = amount;
+    }
+
+    public void AddAmount(int amount)
+    {
+        currentAmount += amount;
+        currentAmount = (isFull = currentAmount > info.GetMaxStackAmount()) ? info.GetMaxStackAmount() : currentAmount;
+    }
+    public int RemoveAmount(int amount)
+    {
+        currentAmount -= amount;
+        isFull = false;
+        currentAmount = currentAmount < 0 ? 0 : currentAmount;
+        return currentAmount;
+    }
+}

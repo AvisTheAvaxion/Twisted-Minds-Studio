@@ -141,11 +141,11 @@ public class StatsController : MonoBehaviour
     /// <returns>(For over time effects)Returns the effector which contains the events to subscribe to. *Make sure to unsubscribe on onEndEffect*</returns>
     public Effector AddEffect(Effect effect)
     {
-        if(effect.info != null && (effect.info.Mode == EffectInfo.EffectMode.PermanentBuff || effect.info.Mode == EffectInfo.EffectMode.PermanentDebuff))
+        if(effect.info != null && (effect.info.Mode == EffectInfo.EffectMode.Permenant))
         {
             foreach (EffectInfo.StatEffect statEffect in effect.info.StatEffects)
             {
-                if (effect.info.Mode == EffectInfo.EffectMode.PermanentBuff)
+                if (statEffect.EffectType == EffectInfo.EffectType.Buff)
                     ChangeStatValue(statEffect.StatType, statEffect.Strength, statEffect.IsPercentage);
                 else
                     ChangeStatValue(statEffect.StatType, statEffect.IsPercentage ? statEffect.Strength : -statEffect.Strength, statEffect.IsPercentage, statEffect.IsPercentage);
@@ -166,7 +166,7 @@ public class StatsController : MonoBehaviour
             Effector newEffector = new Effector(effect, this, debug);
             currentEffectors.Add(newEffector);
 
-            if (effect.info.Mode == EffectInfo.EffectMode.OverTimeBuff || effect.info.Mode == EffectInfo.EffectMode.OverTimeDebuff) newEffector.activeCoroutine = StartCoroutine(EffectOverTime(newEffector));
+            if (effect.info.Mode == EffectInfo.EffectMode.Overtime) newEffector.activeCoroutine = StartCoroutine(EffectOverTime(newEffector));
             else newEffector.activeCoroutine = StartCoroutine(EffectNormal(newEffector));
 
             return newEffector;
@@ -192,7 +192,7 @@ public class StatsController : MonoBehaviour
         if (debug) Debug.Log(effector.Effect.info.Name + " effect start");
         foreach (EffectInfo.StatEffect statEffect in effector.Effect.info.StatEffects)
         {
-            if(effector.Effect.info.Mode == EffectInfo.EffectMode.Buff)
+            if(statEffect.EffectType == EffectInfo.EffectType.Buff)
                 ChangeStatValue(statEffect.StatType, statEffect.Strength, statEffect.IsPercentage);
             else
                 ChangeStatValue(statEffect.StatType, statEffect.IsPercentage ? statEffect.Strength : -statEffect.Strength, statEffect.IsPercentage, statEffect.IsPercentage);
@@ -202,8 +202,10 @@ public class StatsController : MonoBehaviour
         if (debug) Debug.Log(effector.Effect.info.Name + " effect ended");
         foreach (EffectInfo.StatEffect statEffect in effector.Effect.info.StatEffects)
         {
-            if (statEffect.IsPercentage) ChangeStatValue(statEffect.StatType, statEffect.Strength, statEffect.IsPercentage, true);
-            else ChangeStatValue(statEffect.StatType, -statEffect.Strength, statEffect.IsPercentage);
+            if (statEffect.EffectType == EffectInfo.EffectType.Debuff)
+                ChangeStatValue(statEffect.StatType, statEffect.Strength, statEffect.IsPercentage);
+            else
+                ChangeStatValue(statEffect.StatType, statEffect.IsPercentage ? statEffect.Strength : -statEffect.Strength, statEffect.IsPercentage, statEffect.IsPercentage);
 
             if (statEffect.StatType == Stat.StatType.health) transform.SendMessage("UpdateHealth");
         }
@@ -221,7 +223,7 @@ public class StatsController : MonoBehaviour
         if (debug) Debug.Log(effector.Effect.info.Name + " effect start");
         foreach (EffectInfo.StatEffect statEffect in effector.Effect.info.StatEffects)
         {
-            if (effector.Effect.info.Mode == EffectInfo.EffectMode.Buff)
+            if (statEffect.EffectType == EffectInfo.EffectType.Buff)
                 ChangeStatValue(statEffect.StatType, statEffect.Strength, statEffect.IsPercentage);
             else
                 ChangeStatValue(statEffect.StatType, statEffect.IsPercentage ? statEffect.Strength : -statEffect.Strength, statEffect.IsPercentage, statEffect.IsPercentage);
@@ -237,16 +239,17 @@ public class StatsController : MonoBehaviour
                 if (debug) Debug.Log(effector.Effect.info.Name + " effect inflicted");
                 for (int i = 0; i < effector.Effect.info.StatEffects.Length; i++)
                 {
-                    affectedStats[i] = GetStat(effector.Effect.info.StatEffects[i].StatType);
-                    beforeValues[i] = GetCurrentValue(effector.Effect.info.StatEffects[i].StatType);
-                    if (effector.Effect.info.Mode == EffectInfo.EffectMode.OverTimeBuff)
-                        afterValues[i] = ChangeStatValue(effector.Effect.info.StatEffects[i].StatType, effector.Effect.info.StatEffects[i].Strength, effector.Effect.info.StatEffects[i].IsPercentage);
+                    EffectInfo.StatEffect currentStatEffect = effector.Effect.info.StatEffects[i];
+                    affectedStats[i] = GetStat(currentStatEffect.StatType);
+                    beforeValues[i] = GetCurrentValue(currentStatEffect.StatType);
+                    if (currentStatEffect.EffectType == EffectInfo.EffectType.Buff)
+                        afterValues[i] = ChangeStatValue(currentStatEffect.StatType, currentStatEffect.Strength, currentStatEffect.IsPercentage);
                     else
-                        afterValues[i] = ChangeStatValue(effector.Effect.info.StatEffects[i].StatType, 
-                            effector.Effect.info.StatEffects[i].IsPercentage ? effector.Effect.info.StatEffects[i].Strength : -effector.Effect.info.StatEffects[i].Strength, 
-                            effector.Effect.info.StatEffects[i].IsPercentage, effector.Effect.info.StatEffects[i].IsPercentage);
+                        afterValues[i] = ChangeStatValue(currentStatEffect.StatType,
+                            currentStatEffect.IsPercentage ? currentStatEffect.Strength : -currentStatEffect.Strength,
+                            currentStatEffect.IsPercentage, currentStatEffect.IsPercentage);
 
-                    if (effector.Effect.info.StatEffects[i].StatType == Stat.StatType.health) transform.SendMessage("UpdateHealth");
+                    if (currentStatEffect.StatType == Stat.StatType.health) transform.SendMessage("UpdateHealth");
                 }
                 intervalTime = effector.Effect.info.Interval;
                 effector.onEffectInterval?.Invoke(this, new EffectEventArgs(affectedStats, beforeValues, afterValues, GetHealthValue()));

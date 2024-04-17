@@ -50,6 +50,15 @@ public class Projectile : MonoBehaviour
                     Debug.Log(collision.name + " Destroyed " + gameObject.name);
                     Destroy(gameObject);
                 }
+                else
+                {
+                    Lootable lootable = collision.gameObject.GetComponent<Lootable>();
+                    if (lootable != null)
+                    {
+                        lootable.TakeDamage(damage);
+                        Destroy(gameObject);
+                    }
+                }
             }
         }
     }

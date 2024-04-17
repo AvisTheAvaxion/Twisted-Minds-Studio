@@ -7,16 +7,22 @@ public class EffectInfo : ScriptableObject
 {
     public enum EffectMode
     {
-        Buff, Debuff, OverTimeBuff, OverTimeDebuff, PermanentBuff, PermanentDebuff
+        Duration, Overtime, Permenant
+    }
+    public enum EffectType
+    {
+        Buff, Debuff
     }
 
     [System.Serializable]
     public struct StatEffect
     {
         [SerializeField] Stat.StatType statType;
+        [SerializeField] EffectType effectType;
         [SerializeField] float strength;
         [SerializeField] bool isPercentage;
 
+        public EffectType EffectType { get => effectType; }
         public Stat.StatType StatType { get => statType; }
         public float Strength { get => strength; }
         public bool IsPercentage { get => isPercentage; }
@@ -27,7 +33,7 @@ public class EffectInfo : ScriptableObject
     [SerializeField] GameObject particleEffect;
     [SerializeField] Sprite displaySprite;
     [Header("Settings")]
-    [SerializeField] EffectMode mode = EffectMode.Buff;
+    [SerializeField] EffectMode mode = EffectMode.Duration;
     [SerializeField] StatEffect[] statEffects;
     [SerializeField] float duration = 5;
     [SerializeField] float interval = 1;

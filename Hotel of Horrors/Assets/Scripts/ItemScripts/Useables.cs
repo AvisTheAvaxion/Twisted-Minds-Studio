@@ -6,6 +6,7 @@ public abstract class Useables : ScriptableObject
 {
     [SerializeField] string useableName;
     [SerializeField, TextArea] string description;
+    [SerializeField] int maxStackAmount = 1;
     [SerializeField] Sprite sprite;
 
     public abstract void Use();
@@ -14,10 +15,13 @@ public abstract class Useables : ScriptableObject
     {
         return useableName;
     }
-
     public string GetDescription()
     {
         return description;
+    }
+    public int GetMaxStackAmount()
+    {
+        return maxStackAmount;
     }
     public Sprite GetSprite()
     {

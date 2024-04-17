@@ -67,6 +67,13 @@ public class MeleeStrike : MonoBehaviour
                 //Rigidbody2D otherRB = collision.attachedRigidbody;
                 //otherRB.AddForce((collision.transform.position - transform.position).normalized * knockback, ForceMode2D.Impulse);
             }
+        } else
+        {
+            Lootable lootable = collision.gameObject.GetComponent<Lootable>();
+            if (lootable != null)
+            {
+                lootable.TakeDamage(damage);
+            }
         }
     }
 

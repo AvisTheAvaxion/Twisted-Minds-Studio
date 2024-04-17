@@ -59,10 +59,69 @@ public class ItemToolTip : MonoBehaviour
         {
             Item heldItem = (Item)item;
             itemTypeTxt.text = "Consumable";
-            itemMainStatTxt.text = $"Potency: {heldItem.GetPotency()}";
+            EffectInfo[] heldItemEffects = heldItem.GetEffectInfos();
+            if (heldItemEffects.Length > 0)
+            {
+                //itemMainStatTxt = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
+
+                for (int i = 0; i < heldItemEffects.Length; i++)
+                {
+                    EffectInfo current = heldItemEffects[i];
+                    if(current.Mode == EffectInfo.EffectMode.Permenant)
+                    {
+                        string str = "";
+                        for (int e = 0; e < current.StatEffects.Length; e++)
+                        {
+                            EffectInfo.StatEffect currentSE = current.StatEffects[e];
+                            if(currentSE.StatType == Stat.StatType.health)
+                            {
+                                if(currentSE.EffectType == EffectInfo.EffectType.Buff)
+                                    str += $"Heals {currentSE.Strength}\n";
+                                else
+                                    str += $"Damages for {currentSE.Strength}\n";
+                            } else
+                            {
+                                if (currentSE.EffectType == EffectInfo.EffectType.Buff)
+                                    str += $"{(currentSE.IsPercentage ?  "%" + (currentSE.Strength * 100).ToString("#") : "+" + currentSE.Strength.ToString("#"))} {currentSE.StatType.ToString()}\n";
+                                else
+                                    str += $"{(currentSE.IsPercentage ? "-%" + (currentSE.Strength * 100).ToString("#") : "-" + currentSE.Strength.ToString("#"))} {currentSE.StatType.ToString()}\n";
+                            }
+                        }
+                        itemMainStatTxt.text = str;
+                    } 
+                    else if (current.Mode == EffectInfo.EffectMode.Overtime)
+                    {
+                        string str = "";
+                        for (int e = 0; e < current.StatEffects.Length; e++)
+                        {
+                            EffectInfo.StatEffect currentSE = current.StatEffects[e];
+                            float strength = Mathf.Round(currentSE.Strength * (current.Duration / current.Interval));
+                            if (currentSE.EffectType == EffectInfo.EffectType.Buff)
+                                str += $"{(currentSE.IsPercentage ? "+%" + (strength * 100).ToString("#") : "+" + strength.ToString("#"))} {currentSE.StatType.ToString()} over {current.Duration}\n";
+                            else
+                                str += $"{(currentSE.IsPercentage ? "-%" + (strength * 100).ToString("#") : "-" + strength.ToString("#"))} {currentSE.StatType.ToString()} over {current.Duration}\n";
+                        }
+                        itemMainStatTxt.text = str;
+                    }
+                    else
+                    {
+                        string str = "";
+                        for (int e = 0; e < current.StatEffects.Length; e++)
+                        {
+                            EffectInfo.StatEffect currentSE = current.StatEffects[e];
+                            if (currentSE.EffectType == EffectInfo.EffectType.Buff)
+                                str += $"{(currentSE.IsPercentage ? "+%" + (currentSE.Strength * 100).ToString("#") : "+" + currentSE.Strength.ToString("#"))} {currentSE.StatType.ToString()} for {current.Duration}\n";
+                            else
+                                str += $"{(currentSE.IsPercentage ? "-%" + (currentSE.Strength * 100).ToString("#") : "-" + currentSE.Strength.ToString("#"))} {currentSE.StatType.ToString()} for {current.Duration}";
+                        }
+                        itemMainStatTxt.text = str;
+                    }
+                }
+            }
         } else
         {
             itemTypeTxt.text = item.GetType().ToString();
+            itemMainStatTxt.text = "";
         }
     }
 

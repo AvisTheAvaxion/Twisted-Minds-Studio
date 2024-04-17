@@ -5,11 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Item", menuName = "Useables/Item", order = 2)]
 public class Item : Useables
 {
-    [SerializeField] int potency;
+    [SerializeField] EffectInfo[] effects;
 
-    public int GetPotency()
+    public EffectInfo[] GetEffectInfos()
     {
-        return potency;
+        return effects;
     }
 
     public override void Use()

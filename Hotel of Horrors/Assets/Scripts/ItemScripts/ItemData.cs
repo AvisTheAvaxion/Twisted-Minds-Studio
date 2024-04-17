@@ -5,14 +5,16 @@ using UnityEngine;
 public class ItemData : MonoBehaviour
 {
     [SerializeField] Useables thisItemData;
+    [SerializeField] int count = 1;
 
     public Useables GetItemData()
     {
         return thisItemData;
     }
-    public void SetItemData(Useables item)
+    public void SetItemData(Useables item, int count)
     {
         thisItemData = item;
+        this.count = count;
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer) spriteRenderer.sprite = item.GetSprite();
     }

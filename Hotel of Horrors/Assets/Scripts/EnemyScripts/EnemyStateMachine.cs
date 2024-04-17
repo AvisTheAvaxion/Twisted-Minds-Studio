@@ -169,7 +169,7 @@ public class EnemyStateMachine : MonoBehaviour
             {
                 GameObject go = Instantiate(itemHolder, transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.forward));
                 ItemData data = go.GetComponent<ItemData>();
-                if (data) data.SetItemData(itemDrops[e].item);
+                if (data) data.SetItemData(itemDrops[e].item, Random.Range(itemDrops[e].minCount, itemDrops[e].maxCount + 1));
                 Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
                 if(rb) rb.AddForce(GetRandomDir() * dropRadius, ForceMode2D.Impulse);
             }
@@ -500,5 +500,7 @@ public class EnemyStateMachine : MonoBehaviour
 public struct ItemDrop
 {
     public Useables item;
+    public int minCount;
+    public int maxCount;
     public float weight;
 }

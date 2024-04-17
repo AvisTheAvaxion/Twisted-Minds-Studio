@@ -19,6 +19,7 @@ public class UIDisplayContainer : MonoBehaviour
     [SerializeField] TextMeshProUGUI roomNameText;
     [SerializeField] TextMeshProUGUI emotionalEnergyText;
     [SerializeField] Transform effectsIconHolder;
+    [SerializeField] GameObject effectsIconPrefab;
     [SerializeField] HeartsController heartsController;
     [SerializeField] GameObject ammoTextContainer;
     [SerializeField] TextMeshProUGUI currentAmmoText;
@@ -46,4 +47,5 @@ public class UIDisplayContainer : MonoBehaviour
     public TextMeshProUGUI CurrentAmmoText { get => currentAmmoText; }
     public TextMeshProUGUI MaxAmmoText { get => maxAmmoText; }
     public Image ReloadCircle { get => reloadCircle; }
+    public GameObject EffectsIconPrefab { get => effectsIconPrefab; }
 }

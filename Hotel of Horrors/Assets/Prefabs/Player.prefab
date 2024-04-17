@@ -345,12 +345,15 @@ MonoBehaviour:
   playerHealth: {fileID: 5367254218961287942}
   afterImage: {fileID: 625345098585316788}
   fadeImage: {fileID: 0}
+  elevatorCanvas: {fileID: 0}
   movementSpeed: 1.5
   drag: 0.705
-  doorTransitionLength: 1
+  canMove: 0
   dashDistance: 2
   dashSpeed: 10
   iFrameDistForDash: 1.5
+  chanceForElevator: 0
+  doorTransitionLength: 1
 --- !u!114 &8294943214975604175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,8 +368,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentAttackMode: 2
   playerAnimator: {fileID: 8490620325508692427}
-  weaponOverrideController: {fileID: 0}
   playerMovement: {fileID: 3194915936490214647}
+  uiDisplay: {fileID: 0}
   weaponStrikeParent: {fileID: 9158669448377762531}
   weaponStrikeSpawnPoint: {fileID: 3412874156805523533}
   weaponVisual: {fileID: 6319227477234792708}
@@ -440,12 +443,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+  uiDisplay: {fileID: 0}
+  isPlayer: 1
   health:
     type: 0
     defaultValue: 25
     hasMax: 1
     maxValue: 25
-  stats: []
+  stats:
+  - type: 2
+    defaultValue: 0
+    hasMax: 0
+    maxValue: 0
 --- !u!1 &2906325751302042129
 GameObject:
   m_ObjectHideFlags: 0

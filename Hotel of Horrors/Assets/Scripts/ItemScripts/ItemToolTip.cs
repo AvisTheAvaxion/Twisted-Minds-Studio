@@ -73,7 +73,7 @@ public class ItemToolTip : MonoBehaviour
                         for (int e = 0; e < current.StatEffects.Length; e++)
                         {
                             EffectInfo.StatEffect currentSE = current.StatEffects[e];
-                            if(currentSE.StatType == Stat.StatType.health)
+                            if(currentSE.StatType == Stat.StatType.Health)
                             {
                                 if(currentSE.EffectType == EffectInfo.EffectType.Buff)
                                     str += $"Heals {currentSE.Strength}\n";

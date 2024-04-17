@@ -32,12 +32,15 @@ public class PlayerMovement : MonoBehaviour
     //public ContactFilter2D movementFilter;
     //List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
     [HideInInspector]public bool canMove;
+    [HideInInspector]public bool canDash;
 
     [Header("Dashing Modifiers")]
+    [SerializeField] float dashCooldown;
     public float dashDistance;
     public float dashSpeed;
     [SerializeField] float iFrameDistForDash;
     bool isDashing = false;
+    float currentDashLength;
 
     string direction = "South";
 
@@ -45,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     float attackModeTimer;
 
     Vector2 movementVector = new Vector2();
-    Vector2 dashStartVector = new Vector2();
+    Vector2 dashMovementVector = new Vector2();
 
     [Header("Room Traversal")]
     [SerializeField] float doorTransitionLength = 0.5f;
@@ -74,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("isWalking", false);
         animator.SetBool("Dashing", false);
 
-        canMove = true;
+        canMove = canDash = true;
     }
 
     // Update is called once per frame
@@ -134,32 +137,33 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
-            if (movementVector != Vector2.zero)
+            if (isDashing)
+            {
+                if (currentDashLength <= dashDistance / dashSpeed)
+                {
+                    rb.MovePosition(rb.position + dashMovementVector * dashSpeed * Time.fixedDeltaTime);
+                    currentDashLength += Time.fixedDeltaTime;
+                }
+                else
+                {
+                    if (afterImage != null) afterImage.StopEffect();
+                    animator.SetBool("Dashing", false);
+                    isDashing = false;
+                    StartCoroutine(DashCooldown());
+                }
+            }
+            else if (movementVector != Vector2.zero)
             {
                 float velMag = rb.velocity.magnitude;
                 movementVector.Normalize();
 
-                if (isDashing)
-                {
-                    if (Vector2.Distance(dashStartVector, rb.position) <= dashDistance)
-                    {
-                        rb.MovePosition(rb.position + movementVector.normalized * dashSpeed * Time.fixedDeltaTime);
-                    }
-                    else
-                    {
-                        animator.SetBool("Dashing", false);
-                        isDashing = false;
-                    }
-                }
-                else
-                {
-                    rb.velocity = movementVector * movementSpeed;
-                }
+                rb.velocity = movementVector * movementSpeed;
             }
             else
             {
+/*                if (afterImage != null) afterImage.StopEffect();
                 animator.SetBool("Dashing", false);
-                isDashing = false;
+                isDashing = false;*/
             }
 
             if (Mathf.Approximately(movementVector.x, 0))
@@ -181,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
     {
         movementVector = inputValue.Get<Vector2>();
 
-        if (!isAttackMode && canMove)
+        if (!isDashing && !isAttackMode && canMove)
         {
             AnimateMovement();
         }
@@ -222,11 +226,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnShift(InputValue inputValue)
     {
-        if (!attackController.IsAttacking && inputValue.isPressed)
+        if (!isDashing && canDash && !attackController.IsAttacking && inputValue.isPressed)
         {
-            dashStartVector = rb.position;
-            isDashing = true;
-
             if (movementVector.y >= 0.1f)
             {
                 direction = "North";
@@ -246,18 +247,33 @@ public class PlayerMovement : MonoBehaviour
             {
                 direction = "East";
                 animator.runtimeAnimatorController = rightController;
+            } else
+            {
+                return; 
             }
+
+            dashMovementVector = movementVector.normalized;
+
+            isDashing = true;
+            currentDashLength = 0;
 
             animator.SetTrigger("Dash");
             animator.SetBool("Dashing", true);
 
             if (afterImage != null)
-                afterImage.StartEffect(dashDistance / dashSpeed);
+                afterImage.StartEffect(dashDistance / dashSpeed / 1.25f);
 
             playerHealth.GiveIFrames(iFrameDistForDash / dashSpeed);
         }
     }
     #endregion
+
+    IEnumerator DashCooldown()
+    {
+        canDash = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }
 
     //Player attacked so switch to attack mode
     public void Attacked()

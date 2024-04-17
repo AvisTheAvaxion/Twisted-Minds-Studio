@@ -350,10 +350,11 @@ MonoBehaviour:
   movementSpeed: 1.5
   drag: 0.705
   canMove: 0
+  canDash: 0
+  dashCooldown: 2
   dashDistance: 2
   dashSpeed: 10
   iFrameDistForDash: 1.5
-  chanceForElevator: 0
   doorTransitionLength: 1
 --- !u!114 &8294943214975604175
 MonoBehaviour:

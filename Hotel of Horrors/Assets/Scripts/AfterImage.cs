@@ -25,6 +25,7 @@ public class AfterImage : MonoBehaviour
         if (effect != null)
             StopCoroutine(effect);
 
+        playEffect = true;
         effect = StartCoroutine(AfterImageEffect(length));
     }
 
@@ -68,7 +69,7 @@ public class AfterImage : MonoBehaviour
         afterImageEffect.Play();
 
         float t = 0;
-        while(t < length)
+        while(t < length && playEffect)
         {
             ts.SetSprite(0, spriteRenderer.sprite);
             yield return null;
@@ -77,6 +78,7 @@ public class AfterImage : MonoBehaviour
 
         if (debug) print("After Image Effect Stopped after " + length + " seconds");
 
+        playEffect = false;
         afterImageEffect.Stop();
     }
 

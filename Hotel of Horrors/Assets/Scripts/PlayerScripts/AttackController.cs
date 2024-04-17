@@ -279,13 +279,8 @@ public class AttackController : MonoBehaviour
     //End of an attack for melee (animation event) and ranged
     public void AttackEnd()
     {
-        //if (currentAttackMode == AttackModes.Ranged && attackButtonPressed && (autoAttack || (currentWeapon != null && currentWeapon.IsAutoAttack())))
-       // {
-        //} else
-        //{
-            playerAnimator.SetBool("Shooting1", false);
-            playerAnimator.SetLayerWeight(1, 0); //Disables the attack layer on the player animator
-        //}
+        playerAnimator.SetBool("Shooting1", false);
+        playerAnimator.SetLayerWeight(1, 0); //Disables the attack layer on the player animator
 
         isAttacking = false;
 

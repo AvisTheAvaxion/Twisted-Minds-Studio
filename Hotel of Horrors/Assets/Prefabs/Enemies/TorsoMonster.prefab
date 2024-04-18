@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 5557790185517936632}
   - component: {fileID: 7160162389670505612}
   - component: {fileID: 8998228072204108313}
+  - component: {fileID: 5095426524737206994}
   m_Layer: 0
   m_Name: TorsoMonster
   m_TagString: Enemy
@@ -292,12 +293,39 @@ MonoBehaviour:
   meleeRadius: 0.5
   meleeDamage: 2
   knockback: 2
+  chanceToInflictEffect: 0
+  effectsToInflict: []
   shooter: {fileID: 0}
   maintainDistToTarget: 0
   canMoveAndShoot: 0
   wallsLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  dropRadius: 0.5
+  minDropAmount: 1
+  maxDropAmount: 2
+  itemHolder: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
+  itemDrops:
+  - item: {fileID: 11400000, guid: e2383470b62dff64cabe2394330c307f, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 1
+  - item: {fileID: 11400000, guid: 478c776851dc9004ab6ab5cddae20f28, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 1
+  - item: {fileID: 11400000, guid: ac3ab661bcdfda444b86dd893de0156d, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 1
+  - item: {fileID: 11400000, guid: 31f7daa77a838a545bf97e2afc5375a3, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 1
+  - item: {fileID: 11400000, guid: 55df27ef2cf334c48a4c8e818b2e0bf7, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 1
 --- !u!114 &5557790185517936632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,10 +339,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  maxHealth: 10
   healOverTime: 0
   timeBtwHeals: 5
-  rateOfHealing: 5
+  isBoss: 0
+  uiDisplay: {fileID: 0}
 --- !u!50 &7160162389670505612
 Rigidbody2D:
   serializedVersion: 4
@@ -387,3 +415,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.24051261, y: 0.31235576}
   m_EdgeRadius: 0
+--- !u!114 &5095426524737206994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8739289154397693608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  uiDisplay: {fileID: 0}
+  isPlayer: 0
+  health:
+    type: 0
+    defaultValue: 25
+    hasMax: 1
+    maxValue: 25
+  stats: []

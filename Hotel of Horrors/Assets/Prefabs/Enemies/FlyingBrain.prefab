@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: -4455104578077453517}
   - component: {fileID: 2626282256757693886}
   - component: {fileID: 6071954231053187924}
+  - component: {fileID: 5834758641980206469}
   m_Layer: 0
   m_Name: FlyingBrain
   m_TagString: Enemy
@@ -294,12 +295,35 @@ MonoBehaviour:
   meleeRadius: 0
   meleeDamage: 0
   knockback: 0
+  chanceToInflictEffect: 0
+  effectsToInflict: []
   shooter: {fileID: 6513521994882905555}
   maintainDistToTarget: 0
   canMoveAndShoot: 1
   wallsLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  dropRadius: 0.5
+  minDropAmount: 1
+  maxDropAmount: 3
+  itemHolder: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
+  itemDrops:
+  - item: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 1
+  - item: {fileID: 11400000, guid: aa13f91874e46064bb5d7c8204290a89, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 0.1
+  - item: {fileID: 11400000, guid: ac3ab661bcdfda444b86dd893de0156d, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 0.5
+  - item: {fileID: 11400000, guid: 4d6c791063494ee43bb3e49368530d56, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 0.5
 --- !u!114 &6513521994882905555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,10 +361,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  maxHealth: 12
   healOverTime: 0
   timeBtwHeals: 5
-  rateOfHealing: 5
+  isBoss: 0
+  uiDisplay: {fileID: 0}
 --- !u!61 &2626282256757693886
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -413,6 +437,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5834758641980206469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7728880389295436849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  uiDisplay: {fileID: 0}
+  isPlayer: 0
+  health:
+    type: 0
+    defaultValue: 25
+    hasMax: 1
+    maxValue: 25
+  stats: []
 --- !u!1 &8278585616756773676
 GameObject:
   m_ObjectHideFlags: 0

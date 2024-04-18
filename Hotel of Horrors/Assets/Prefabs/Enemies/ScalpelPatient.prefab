@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 6566436765469326580}
   - component: {fileID: 1022842952698779654}
   - component: {fileID: 2892289427171861916}
+  - component: {fileID: 6802117315420560503}
   m_Layer: 0
   m_Name: ScalpelPatient
   m_TagString: Enemy
@@ -293,12 +294,35 @@ MonoBehaviour:
   meleeRadius: 0
   meleeDamage: 0
   knockback: 0
+  chanceToInflictEffect: 0
+  effectsToInflict: []
   shooter: {fileID: 8624140693439099872}
   maintainDistToTarget: 1
   canMoveAndShoot: 0
   wallsLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  dropRadius: 0.25
+  minDropAmount: 2
+  maxDropAmount: 3
+  itemHolder: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
+  itemDrops:
+  - item: {fileID: 11400000, guid: f9b67a3ac3470e04a8af490f8ee0f876, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 1
+  - item: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 1.5
+  - item: {fileID: 11400000, guid: 31f7daa77a838a545bf97e2afc5375a3, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 0.1
+  - item: {fileID: 11400000, guid: 55df27ef2cf334c48a4c8e818b2e0bf7, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 0.5
 --- !u!114 &8624140693439099872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,10 +360,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  maxHealth: 12
   healOverTime: 0
   timeBtwHeals: 5
-  rateOfHealing: 5
+  isBoss: 0
+  uiDisplay: {fileID: 0}
 --- !u!61 &1022842952698779654
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -412,3 +436,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &6802117315420560503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6865958303660939511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  uiDisplay: {fileID: 0}
+  isPlayer: 0
+  health:
+    type: 0
+    defaultValue: 25
+    hasMax: 1
+    maxValue: 25
+  stats: []

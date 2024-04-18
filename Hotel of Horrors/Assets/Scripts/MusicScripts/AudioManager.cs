@@ -9,6 +9,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource soundEffectSource;
     [SerializeField] AudioSource ambientSource;
 
+    [SerializeField] AudioSource DashSource;
+
     private static Dictionary<string, int> audioDict = new Dictionary<string, int>();
 
     private static List<int> soundQueue = new List<int>();
@@ -19,6 +21,8 @@ public class AudioManager : MonoBehaviour
 
     private static bool updateVolume = false;
     private static float[] volumes;
+
+    public static bool Dash = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -94,6 +98,7 @@ public class AudioManager : MonoBehaviour
         audioDict.Add("KarrenTheme", 1);
         audioDict.Add("Elevator", 2);
         audioDict.Add("Door", 3);
+        audioDict.Add("Dash", 4);
     }
 
     public static void Play(string audioName)
@@ -114,6 +119,13 @@ public class AudioManager : MonoBehaviour
         {
             throw new AudioError("The track with id '" + id + "' could not be found. Please call AudioManager.Sounds() to view all available tracks");
         }
+
+        if (id == 4)
+        {
+            Dash = true;
+            return;
+        }
+
         if (id <= 2) { songQueue.Add(id); }
 
         //else if (id >= 2) { ambientQueue.Add(id); }

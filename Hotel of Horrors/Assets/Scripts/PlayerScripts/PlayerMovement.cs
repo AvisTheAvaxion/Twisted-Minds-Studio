@@ -262,6 +262,8 @@ public class PlayerMovement : MonoBehaviour
             isDashing = true;
             currentDashLength = 0;
 
+            AudioManager.Play("Dash");
+
             animator.SetTrigger("Dash");
             animator.SetBool("Dashing", true);
 

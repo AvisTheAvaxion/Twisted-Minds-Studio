@@ -36,7 +36,7 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V)) { PlaySomething(); }
+        //if (Input.GetKeyDown(KeyCode.H)) { bgmSource.Stop(); soundEffectSource.Stop(); ambientSource.Stop(); }
 
         if (updateVolume)
         {
@@ -91,8 +91,6 @@ public class AudioManager : MonoBehaviour
             ambientQueue.RemoveAt(0);
             //Debug.Log("Played a ambient track");
         }
-
-        if (!bgmSource.isPlaying) { PlaySomething(); }
     }
 
     private static void createDict()
@@ -251,14 +249,5 @@ public class AudioManager : MonoBehaviour
     {
         return new float[3] {PlayerPrefs.GetFloat("BGMVolume"), PlayerPrefs.GetFloat("SFXVolume"),
             PlayerPrefs.GetFloat("AmbientVolume") };
-    }
-
-    int song = 0;
-    private void PlaySomething()
-    {
-        Play(song);
-        song++;
-        if (song == 3) { song = 0; }
-        Debug.Log("Played " + song);
     }
 }

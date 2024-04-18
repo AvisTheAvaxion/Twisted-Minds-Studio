@@ -15,6 +15,7 @@ public class PlayerAudio : MonoBehaviour
     void Start()
     {
 
+        AudioManager.Play("KarrenTheme");
     }
 
     // Update is called once per frame

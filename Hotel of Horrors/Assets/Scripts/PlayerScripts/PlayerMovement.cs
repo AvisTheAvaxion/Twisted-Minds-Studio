@@ -162,7 +162,6 @@ public class PlayerMovement : MonoBehaviour
                 float velMag = rb.velocity.magnitude;
                 movementVector.Normalize();
 
-                print(stats.GetCurrentValue(Stat.StatType.MovementSpeed));
                 rb.velocity = movementVector * (movementSpeed + stats.GetCurrentValue(Stat.StatType.MovementSpeed));
             }
             else

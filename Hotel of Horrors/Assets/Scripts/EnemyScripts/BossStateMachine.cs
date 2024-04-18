@@ -28,18 +28,21 @@ public abstract class BossStateMachine : MonoBehaviour
     public struct Stage
     {
         public int stage;
-        public int healthThreshold;
+        public int healthThresholdToNextStage;
+        public int dialogueBlock;
         public int correctChoice;
     }
 
     protected EnemyHealth enemyHealth;
 
     [SerializeField] protected bool debug;
+    [SerializeField] UIDisplayContainer uiDisplay;
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
     [Header("Dialogue Settings")]
     [SerializeField] protected DialogueSystem dialogueSystem;
-    [SerializeField] protected int npcBlock = 2;
+    //[SerializeField] protected int npcBlock = 2;
+    [SerializeField] protected int introBlock = 0;
     [SerializeField] protected string npcFile = "F0D.txt";
 
     [Header("Boss Stages")]
@@ -50,7 +53,8 @@ public abstract class BossStateMachine : MonoBehaviour
     protected bool onCooldown = false;
     protected bool isAttacking = false;
 
-    protected bool bossFightStarted = true;
+    protected bool bossFightStarted = false;
+    protected bool isDying = false;
 
     protected bool dialogueSegmentStarted = false;
     public event EventHandler OnBossDialogue;
@@ -66,6 +70,9 @@ public abstract class BossStateMachine : MonoBehaviour
 
         if (dialogueSystem != null)
             dialogueSystem.SubscribeToBoss(this);
+
+        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
+        if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
 
         if (player == null)
             Debug.LogError("Player not found in scene");
@@ -105,14 +112,29 @@ public abstract class BossStateMachine : MonoBehaviour
     {
         if (!dialogueSegmentStarted)
         {
-            NPCArgs bossArg = new NPCArgs(npcBlock, npcFile);
-            OnBossDialogue?.Invoke(this, bossArg);
+            if (bossFightStarted)
+            {
+                NPCArgs bossArg = new NPCArgs(stages[currentStageIndex].dialogueBlock, npcFile);
+                OnBossDialogue?.Invoke(this, bossArg);
 
-            dialogueSystem.OnDialogueFinish += DialogueEnd;
+                dialogueSystem.OnDialogueFinish += DialogueEnd;
+            } else
+            {
+                NPCArgs bossArg = new NPCArgs(introBlock, npcFile);
+                OnBossDialogue?.Invoke(this, bossArg);
+
+                dialogueSystem.OnDialogueFinish += DialogueEnd;
+            }
         }
     }
     protected abstract void DialogueEnd(object sender, System.EventArgs args);
     protected abstract void Death();
+    protected abstract IEnumerator DeathSequence();
+    protected virtual void OnDeath()
+    {
+        isDying = true;
+        StartCoroutine(DeathSequence());
+    }
 
     protected abstract void Enrage();
     protected abstract void Disenrage();

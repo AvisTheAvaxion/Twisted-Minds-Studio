@@ -25,6 +25,7 @@ public class UIDisplayContainer : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentAmmoText;
     [SerializeField] TextMeshProUGUI maxAmmoText;
     [SerializeField] Image reloadCircle;
+    [SerializeField] Slider boss_healthBar;
 
     //[Header("Dialogue UI")]
     //[SerializeField] GameObject dialogueUIParent;
@@ -48,4 +49,5 @@ public class UIDisplayContainer : MonoBehaviour
     public TextMeshProUGUI MaxAmmoText { get => maxAmmoText; }
     public Image ReloadCircle { get => reloadCircle; }
     public GameObject EffectsIconPrefab { get => effectsIconPrefab; }
+    public Slider Boss_healthBar { get => boss_healthBar;}
 }

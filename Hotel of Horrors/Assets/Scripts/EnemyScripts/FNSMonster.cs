@@ -57,12 +57,14 @@ public class FNSMonster : BossStateMachine
 
     protected override void Death()
     {
-        throw new System.NotImplementedException();
+        //dialogueSystem.UnsubscribeToBoss(this);
     }
 
     protected override void Dialogue()
     {
-        if(!dialogueSegmentStarted)
+        rb.velocity = Vector3.zero;
+
+        if (!dialogueSegmentStarted)
         {
             base.Dialogue();
             dialogueSegmentStarted = true;
@@ -88,7 +90,7 @@ public class FNSMonster : BossStateMachine
                 break;
         }
 
-        if(enemyHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThreshold)
+        if(enemyHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThresholdToNextStage)
         {
             currentState = States.Dialogue;
             Disenrage();
@@ -132,6 +134,12 @@ public class FNSMonster : BossStateMachine
 
     protected override void Idle()
     {
+        float distToPlayer = GetDistanceToPlayer();
+        if(distToPlayer <= 3.5f)
+        {
+            currentState = States.Dialogue;
+        }
+
         if (bossFightStarted)
             currentState = States.Fighting;
     }
@@ -267,20 +275,52 @@ public class FNSMonster : BossStateMachine
 
     protected override void DialogueEnd(object sender, EventArgs args)
     {
-        IntArgs intArgs = (IntArgs)args;
-        int choiceMade = intArgs.GetHeldInteger();
-
-        if(stages[currentStageIndex].correctChoice == choiceMade)
+        if (bossFightStarted)
         {
-            Enrage();
+            IntArgs intArgs = (IntArgs)args;
+            int choiceMade = intArgs.GetHeldInteger();
+
+            if (!isDying)
+            {
+                if (stages[currentStageIndex].correctChoice == choiceMade)
+                {
+                    Enrage();
+                }
+                currentStageIndex++;
+                currentState = States.Fighting;
+            } else
+            {
+                currentState = States.Death;
+                dialogueSystem.UnsubscribeToBoss(this);
+            }
+
+            dialogueSegmentStarted = false;
+
+            dialogueSystem.OnDialogueFinish -= DialogueEnd;
+
+        } else
+        {
+            currentState = States.Idle;
+            bossFightStarted = true;
+
+            enemyHealth.ShowHealthBar();
+
+            dialogueSegmentStarted = false;
+
+            dialogueSystem.OnDialogueFinish -= DialogueEnd;
         }
+    }
 
-        currentStageIndex++;
-        currentState = States.Fighting;
+    protected override IEnumerator DeathSequence()
+    {
+        rb.velocity = Vector2.zero;
 
-        dialogueSegmentStarted = false;
+        currentState = States.Dialogue;
+        yield return null;
 
-        dialogueSystem.OnDialogueFinish -= DialogueEnd;
-        dialogueSystem.UnsubscribeToBoss(this);
+        yield return new WaitUntil(() => !dialogueSegmentStarted);
+
+        enemyHealth.HideHealthBar();
+        Destroy(gameObject);
     }
 }

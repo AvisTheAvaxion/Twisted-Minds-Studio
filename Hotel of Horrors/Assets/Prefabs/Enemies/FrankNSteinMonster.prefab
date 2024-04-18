@@ -98,17 +98,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+  uiDisplay: {fileID: 0}
   flipToRotate: 1
   transformToFlip: {fileID: 2881490729553979416}
   dialogueSystem: {fileID: 0}
-  npcBlock: 2
+  introBlock: 0
   npcFile: F0D.txt
   stages:
   - stage: 1
-    healthThreshold: 100
-    correctChoice: 0
+    healthThresholdToNextStage: 75
+    dialogueBlock: 2
+    correctChoice: 2
   - stage: 2
-    healthThreshold: 50
+    healthThresholdToNextStage: 0
+    dialogueBlock: 0
     correctChoice: 0
   animator: {fileID: 3622643437465758043}
   afterImage: {fileID: 7322350937174340592}
@@ -119,7 +122,7 @@ MonoBehaviour:
     normalContactDamage: 1
     chargeSpeed: 150
     chargeLength: 3
-    chargeDamage: 0
+    chargeDamage: 10
     chargeKnockback: 8
     chargeStun: 1
     chargeSensitivity: 0.205
@@ -127,30 +130,30 @@ MonoBehaviour:
     chargeCooldownMin: 5
     chargeCooldownMax: 8
     slamMinAttackRange: 3
-    slamDamage: 0
+    slamDamage: 8
     slamRadius: 1.25
     slamKnockback: 5
     slamCooldownMin: 2
     slamCooldownMax: 3
   enragedAttackSettings:
     walkSpeed: 60
-    normalKnockback: 0
-    normalContactDamage: 0
+    normalKnockback: 5
+    normalContactDamage: 3
     chargeSpeed: 300
-    chargeLength: 0
-    chargeDamage: 0
-    chargeKnockback: 0
-    chargeStun: 0
-    chargeSensitivity: 0.518
-    chargeMaxAttackRange: 0
-    chargeCooldownMin: 0
-    chargeCooldownMax: 0
-    slamMinAttackRange: 0
-    slamDamage: 0
-    slamRadius: 0
-    slamKnockback: 0
-    slamCooldownMin: 0
-    slamCooldownMax: 0
+    chargeLength: 5
+    chargeDamage: 12
+    chargeKnockback: 12
+    chargeStun: 1.25
+    chargeSensitivity: 0.414
+    chargeMaxAttackRange: 1.5
+    chargeCooldownMin: 3
+    chargeCooldownMax: 6
+    slamMinAttackRange: 4
+    slamDamage: 10
+    slamRadius: 1.5
+    slamKnockback: 8
+    slamCooldownMin: 1
+    slamCooldownMax: 2
 --- !u!114 &8722076942917336173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +169,8 @@ MonoBehaviour:
   debug: 0
   healOverTime: 0
   timeBtwHeals: 5
+  isBoss: 1
+  uiDisplay: {fileID: 0}
 --- !u!114 &3269821355269556102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+  uiDisplay: {fileID: 0}
+  isPlayer: 0
   health:
     type: 0
     defaultValue: 150

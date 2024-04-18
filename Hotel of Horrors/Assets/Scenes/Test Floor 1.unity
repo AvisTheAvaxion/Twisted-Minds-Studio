@@ -4341,7 +4341,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 172240060}
+      - m_Target: {fileID: 985726702}
         m_TargetAssemblyTypeName: ElevatorMenuManager, Assembly-CSharp
         m_MethodName: SwitchToMain
         m_Mode: 1
@@ -4403,14 +4403,13 @@ GameObject:
   - component: {fileID: 172240058}
   - component: {fileID: 172240057}
   - component: {fileID: 172240056}
-  - component: {fileID: 172240060}
   m_Layer: 5
   m_Name: Floor UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &172240056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4485,10 +4484,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1298287970}
-  - {fileID: 1054389760}
-  - {fileID: 596224317}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4496,27 +4492,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &172240060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 172240055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1827c2ee0cad0944a95b87c8e3ddcced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainMenu: {fileID: 621255942}
-  loadMenu: {fileID: 364531226}
-  storeMenu: {fileID: 1062165284}
-  savedText: {fileID: 1245254912}
-  elevatorBackground: {fileID: 1054389759}
-  mindRoomMenu: {fileID: 596224316}
-  fadeImage: {fileID: 1298287971}
-  doorTransitionLength: 0.5
-  player: {fileID: 1953471803}
 --- !u!1 &177104582
 GameObject:
   m_ObjectHideFlags: 0
@@ -5006,7 +4981,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 172240060}
+      - m_Target: {fileID: 985726702}
         m_TargetAssemblyTypeName: ElevatorMenuManager, Assembly-CSharp
         m_MethodName: SwitchToMain
         m_Mode: 1
@@ -7557,7 +7532,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 172240060}
+      - m_Target: {fileID: 985726702}
         m_TargetAssemblyTypeName: ElevatorMenuManager, Assembly-CSharp
         m_MethodName: SwitchToStore
         m_Mode: 1
@@ -8012,15 +7987,15 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596224316}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 743689368}
   - {fileID: 1176109445}
   - {fileID: 730671941}
-  m_Father: {fileID: 172240059}
+  m_Father: {fileID: 985726701}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8216,7 +8191,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 172240060}
+      - m_Target: {fileID: 985726702}
         m_TargetAssemblyTypeName: ElevatorMenuManager, Assembly-CSharp
         m_MethodName: SwitchToLoad
         m_Mode: 1
@@ -9695,6 +9670,10 @@ PrefabInstance:
     - target: {fileID: 7780868464515115505, guid: c5272ed87a52e1949b426a645d835820, type: 3}
       propertyPath: m_Name
       value: FrankNSteinMonster (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780868464515115505, guid: c5272ed87a52e1949b426a645d835820, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11843,8 +11822,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2383543522033775856, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 596224317}
+    - targetCorrespondingSourceObject: {fileID: 2383543522033775856, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1298287970}
+    - targetCorrespondingSourceObject: {fileID: 2383543522033775856, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1054389760}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4781912082754897650, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 985726702}
   m_SourcePrefab: {fileID: 100100000, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
 --- !u!1 &933308241
 GameObject:
@@ -12535,6 +12526,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1988110418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &985726696 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4781912082754897650, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
+  m_PrefabInstance: {fileID: 925019258}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &985726701 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2383543522033775856, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
+  m_PrefabInstance: {fileID: 925019258}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &985726702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985726696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1827c2ee0cad0944a95b87c8e3ddcced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenu: {fileID: 621255942}
+  loadMenu: {fileID: 364531226}
+  storeMenu: {fileID: 1062165284}
+  savedText: {fileID: 1245254912}
+  elevatorBackground: {fileID: 1054389759}
+  mindRoomMenu: {fileID: 596224316}
+  fadeImage: {fileID: 1298287971}
+  doorTransitionLength: 0.5
+  player: {fileID: 1953471803}
 --- !u!1 &996425363
 GameObject:
   m_ObjectHideFlags: 0
@@ -13109,16 +13131,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1054389759}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1234831837}
   - {fileID: 364531227}
   - {fileID: 1062165285}
   - {fileID: 621255946}
-  m_Father: {fileID: 172240059}
+  m_Father: {fileID: 985726701}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13480,7 +13502,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 172240060}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ElevatorMenuManager, Assembly-CSharp
         m_MethodName: LeaveMindMenu
         m_Mode: 1
@@ -13796,7 +13818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2399797289723974077, guid: 58a5cf84c637706459b119eb087b86c7, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2399797289723974077, guid: 58a5cf84c637706459b119eb087b86c7, type: 3}
       propertyPath: spawnPerWave
@@ -14583,14 +14605,14 @@ RectTransform:
   m_GameObject: {fileID: 1298287969}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 172240059}
+  m_Father: {fileID: 985726701}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 81.18799, y: 156.8966}
+  m_AnchoredPosition: {x: 194.85112, y: 376.55182}
   m_SizeDelta: {x: 5095.79, y: 3427.9849}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1298287971
@@ -15072,11 +15094,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7498233101355432618, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.3
+      value: 2.7
       objectReference: {fileID: 0}
     - target: {fileID: 7498233101355432618, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -47.5
+      value: -47.4
       objectReference: {fileID: 0}
     - target: {fileID: 7498233101355432618, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20038,7 +20060,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 172240060}
+      - m_Target: {fileID: 985726702}
         m_TargetAssemblyTypeName: ElevatorMenuManager, Assembly-CSharp
         m_MethodName: ReturnToPrevRoom
         m_Mode: 1
@@ -20171,7 +20193,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 172240060}
+      - m_Target: {fileID: 985726702}
         m_TargetAssemblyTypeName: ElevatorMenuManager, Assembly-CSharp
         m_MethodName: SaveGame
         m_Mode: 1
@@ -20235,7 +20257,7 @@ GameObject:
   - component: {fileID: 2138111865}
   m_Layer: 6
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

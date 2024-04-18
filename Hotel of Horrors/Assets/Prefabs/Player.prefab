@@ -344,10 +344,12 @@ MonoBehaviour:
   player: {fileID: 1870587051542624426}
   rb: {fileID: 6971638880832592741}
   playerHealth: {fileID: 5367254218961287942}
+  stats: {fileID: 0}
   afterImage: {fileID: 625345098585316788}
   fadeImage: {fileID: 0}
   elevatorCanvas: {fileID: 0}
-  movementSpeed: 1.5
+  mindRoomCanvas: {fileID: 0}
+  movementSpeed: 0.5
   drag: 0.705
   canMove: 0
   canDash: 0
@@ -372,6 +374,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 8490620325508692427}
   playerMovement: {fileID: 3194915936490214647}
   uiDisplay: {fileID: 0}
+  stats: {fileID: 0}
   weaponStrikeParent: {fileID: 9158669448377762531}
   weaponStrike1SpawnPoint: {fileID: 3412874156805523533}
   weaponStrike2SpawnPoint: {fileID: 7306821455979691524}
@@ -399,11 +402,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a250b467ae679745838fc03006624da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryItems: []
   currentWeapon: {fileID: 0}
   itemOne: {fileID: 0}
-  itemTwo: {fileID: 0}
+  currentMemento: {fileID: 0}
   uiDisplay: {fileID: 0}
+  playerHealth: {fileID: 0}
 --- !u!114 &6240079413853661452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,6 +459,14 @@ MonoBehaviour:
   stats:
   - type: 2
     defaultValue: 0
+    hasMax: 0
+    maxValue: 0
+  - type: 6
+    defaultValue: 1
+    hasMax: 0
+    maxValue: 0
+  - type: 3
+    defaultValue: 3
     hasMax: 0
     maxValue: 0
 --- !u!1 &2906325751302042129

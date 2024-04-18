@@ -13,6 +13,7 @@ public class AttackController : MonoBehaviour
     //[SerializeField] AnimatorOverrideController weaponOverrideController;
     [SerializeField] PlayerMovement playerMovement; //Player movement reference to check whether dashing or not
     [SerializeField] UIDisplayContainer uiDisplay;
+    [SerializeField] StatsController stats;
     [SerializeField] Transform weaponStrikeParent; //The parent to spawn the weapon strike into
     [SerializeField] Transform weaponStrike1SpawnPoint; //The point to spawn the weapon strike
     [SerializeField] Transform weaponStrike2SpawnPoint; //The point to spawn the weapon strike
@@ -63,6 +64,8 @@ public class AttackController : MonoBehaviour
 
         if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
         if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
+
+        if (stats == null) stats = GetComponent<StatsController>();
 
         canAttack = true;
         isAttacking = false;
@@ -292,7 +295,7 @@ public class AttackController : MonoBehaviour
             if (currentWeapon.GetWeaponMode() == AttackModes.Ranged && currentAmmoCount <= 0)
                 StartCoroutine(ReloadCooldown(currentWeapon.GetReloadTime()));
             else
-                StartCoroutine(AttackCooldown(1 / currentWeapon.GetAttackSpeed()));
+                StartCoroutine(AttackCooldown(1 / (currentWeapon.GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed))));
         }
         else
         {

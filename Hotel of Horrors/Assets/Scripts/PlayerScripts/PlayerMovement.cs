@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] PlayerHealth playerHealth;
+    [SerializeField] StatsController stats;
     [SerializeField] AfterImage afterImage;
     [SerializeField] Image fadeImage;
     [SerializeField] GameObject elevatorCanvas;
@@ -69,6 +70,8 @@ public class PlayerMovement : MonoBehaviour
     {
         playerTrans = player.transform;
         roomManager = GameObject.Find("Room Manager")?.GetComponent<RoomManager>();
+
+        if (stats == null) stats = GetComponent<StatsController>();
 
         attackController = GetComponent<AttackController>();
         playerHealth = GetComponent<PlayerHealth>();
@@ -143,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (currentDashLength <= dashDistance / dashSpeed)
                 {
-                    rb.MovePosition(rb.position + dashMovementVector * dashSpeed * Time.fixedDeltaTime);
+                    rb.MovePosition(rb.position + dashMovementVector * (dashSpeed + stats.GetCurrentValue(Stat.StatType.MovementSpeed)) * Time.fixedDeltaTime);
                     currentDashLength += Time.fixedDeltaTime;
                 }
                 else
@@ -159,7 +162,8 @@ public class PlayerMovement : MonoBehaviour
                 float velMag = rb.velocity.magnitude;
                 movementVector.Normalize();
 
-                rb.velocity = movementVector * movementSpeed;
+                print(stats.GetCurrentValue(Stat.StatType.MovementSpeed));
+                rb.velocity = movementVector * (movementSpeed + stats.GetCurrentValue(Stat.StatType.MovementSpeed));
             }
             else
             {

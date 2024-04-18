@@ -218,13 +218,13 @@ public class StatsController : MonoBehaviour
             if (statEffect.StatType == Stat.StatType.Health) transform.SendMessage("UpdateHealth");
         }
 
-        WaitForSeconds wait = new WaitForSeconds(0.5f);
+        //WaitForSeconds wait = new WaitForSeconds(0.5f);
         float timer = 0;
         while(timer < effector.Effect.info.Duration)
         {
             timer += Time.deltaTime;
             if(isPlayer) effector.EffectIcon.UpdateDuration(effector.Effect.info.Duration - timer);
-            yield return wait;
+            yield return null;
         }
 
         if (debug) Debug.Log(effector.Effect.info.Name + " effect ended");
@@ -359,7 +359,7 @@ public class Stat
 
     public void AddValue(float strength, bool isPercentage)
     {
-        if (isPercentage) currentValue *= strength;
+        if (isPercentage) currentValue *= (1 + strength);
         else currentValue += strength;
 
         if (hasMax && currentValue > maxValue) currentValue = maxValue;
@@ -367,7 +367,7 @@ public class Stat
 
     public void RemoveValue(float strength, bool isPercentage)
     {
-        if (isPercentage) currentValue /= strength;
+        if (isPercentage) currentValue /= (1 + strength);
         else currentValue -= strength;
     }
 

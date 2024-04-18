@@ -36,7 +36,8 @@ public class EnemySpawner : MonoBehaviour
             //If there are still enemies to spawn
             else
             {
-                if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
+                GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
+                if (objects.Length <= 0 || (objects.Length == 1 && objects[0].GetComponent<BossStateMachine>()))
                 {
                     SpawnWave();
                 }

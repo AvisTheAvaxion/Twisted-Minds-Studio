@@ -34,6 +34,7 @@ public class Lootable : MonoBehaviour
             weightTotal += itemDrops[i].weight;
         }
 
+
         for (int i = 0; i < dropAmount; i++)
         {
             float rand = Random.Range(0, weightTotal);
@@ -42,7 +43,7 @@ public class Lootable : MonoBehaviour
             {
                 if (rand < itemDrops[e].weight)
                     break;
-                weightTotal -= itemDrops[e].weight;
+                rand -= itemDrops[e].weight;
             }
             if (e < itemDrops.Length)
             {

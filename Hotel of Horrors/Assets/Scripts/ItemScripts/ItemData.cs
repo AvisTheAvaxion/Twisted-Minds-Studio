@@ -11,6 +11,10 @@ public class ItemData : MonoBehaviour
     {
         return thisItemData;
     }
+    public int GetCount()
+    {
+        return count;
+    }
     public void SetItemData(Useables item, int count)
     {
         thisItemData = item;

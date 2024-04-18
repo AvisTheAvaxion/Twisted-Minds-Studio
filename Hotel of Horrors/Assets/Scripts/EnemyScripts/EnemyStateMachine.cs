@@ -163,7 +163,7 @@ public class EnemyStateMachine : MonoBehaviour
             {
                 if (rand < itemDrops[e].weight)
                     break;
-                weightTotal -= itemDrops[e].weight;
+                rand -= itemDrops[e].weight;
             }
             if(e < itemDrops.Length)
             {

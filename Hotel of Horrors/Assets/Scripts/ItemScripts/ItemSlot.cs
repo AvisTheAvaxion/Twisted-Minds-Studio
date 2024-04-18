@@ -52,6 +52,12 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
+    public void UnequipItem()
+    {
+        itemHeld = null;
+        UpdateImage();
+    }
+
     public void UpdateImage()
     {
         if (itemHeld == null)
@@ -83,29 +89,33 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             if (itemHeld.GetType() == typeof(Weapon))
             {
-                inventory.EquipWeapon((Weapon)itemHeld);
+                inventory.EquipWeapon((Weapon)itemHeld, this);
             }
             if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.Q))
             {
                 //inventory.EquipFreeItem(itemHeld, 0);
             }
-            if (itemHeld.GetType() != typeof(Weapon) && itemHeld.GetType() != typeof(Mementos) && Input.GetKey(KeyCode.E))
+            if (itemHeld.GetType() != typeof(Weapon) && itemHeld.GetType() != typeof(Mementos))
             {
-                inventory.EquipFreeItem(itemHeld);
+                inventory.EquipFreeItem(itemHeld, this);
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right && itemHeld != null)
         {
             if (isWeaponSlot)
             {
-                inventory.EquipWeapon(null);
+                inventory.EquipWeapon(null, null);
                 itemToolTip.gameObject.SetActive(false);
-            } 
+            }
             else if (isFreeSlot)
             {
                 itemHeld = null;
                 UpdateImage();
                 itemToolTip.gameObject.SetActive(false);
+            }
+            else if (itemHeld != null && itemHeld.GetType() == typeof(Item))
+            {
+                inventory.UseItem((Item)itemHeld, this);
             }
         }
     }

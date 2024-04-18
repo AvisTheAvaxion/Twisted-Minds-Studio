@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4490afb80dc30294c90e6c3732f7bcc4, type: 3}
-  m_Name: TestItem
+  m_Name: Bandaid
   m_EditorClassIdentifier: 
-  useableName: ChaliceOfLiquids
-  description: What is this liquid inside?
-  maxStackAmount: 1
-  sprite: {fileID: 21300000, guid: 3c9e3792be918da4e81af4d656826370, type: 3}
+  useableName: Bandaid
+  description: A piece of fabric with something sticky on both ends and a thing of
+    gauze in the middle.
+  maxStackAmount: 15
+  sprite: {fileID: 21300000, guid: 9a7911838b1de6b48918674abfa6c042, type: 3}
   effects:
   - {fileID: 11400000, guid: cc7ee330f4d785641a702a61aad9fc15, type: 2}

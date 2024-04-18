@@ -3,20 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Inventory : MonoBehaviour
 {
     [Header("Items")]
-    [SerializeField] List<Useables> inventoryItems;
+    List<Useables> inventoryItems = new List<Useables>();
+    List<ItemInstance> itemsInventory;
+    List<MementoInstance> mementosInventory;
+    List<AbilityInstance> abilitiesInventory;
+
     [SerializeField] public Weapon currentWeapon;
     [SerializeField] public Useables itemOne;
-    [SerializeField] public Useables itemTwo;
+    [SerializeField] public Mementos currentMemento;
 
     [Header("References")]
     [SerializeField] UIDisplayContainer uiDisplay;
+    [SerializeField] PlayerHealth playerHealth;
     ItemSlot weaponSlot;
     ItemSlot freeSlot;
     ItemSlot mementoSlot;
+    ItemSlot referencedWeaponSlot;
+    ItemSlot referencedFreeSlot;
     List<ItemSlot> slots;
 
     AttackController attackController;
@@ -26,6 +34,8 @@ public class Inventory : MonoBehaviour
         if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
         if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
 
+        if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
+
         uiDisplay.InventoryUI.SetActive(true);
         uiDisplay.InventoryUI.SetActive(false);
         attackController = GetComponent<AttackController>();
@@ -33,10 +43,6 @@ public class Inventory : MonoBehaviour
         slots = uiDisplay.InventoryUI.GetComponentsInChildren<ItemSlot>().ToList();
         foreach (ItemSlot slot in slots)
         {
-            //int order = 1;
-            //slot.gameObject.transform.GetChild(0).GetComponent<Canvas>().sortingOrder = order;
-            //order++;
-
             if (slot.IsWeaponSlot)
                 weaponSlot = slot;
             else if (freeSlot == null && slot.IsFreeSlot)
@@ -48,10 +54,26 @@ public class Inventory : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<ItemData>())
+        ItemData data = collision.GetComponent<ItemData>();
+
+        if (data)
         {
             //Debug.Log("PickUp Get");
-            Useables useable = collision.GetComponent<ItemData>().GetItemData();
+            Useables useable = data.GetItemData();
+            int count = data.GetCount();
+            if (useable.GetType() == typeof(Item))
+            {
+                //ItemInstance newItem = new ItemInstance((Item)useable, count);
+            }
+            else if (useable.GetType() == typeof(Mementos))
+            {
+
+            }
+            else if (useable.GetType() == typeof(Abilities))
+            {
+
+            }
+            //UseableInstance newItem = new UseableInstance(useable, count);
             //Debug.Log(useable.GetDescription());
             collision.gameObject.SetActive(false);
             inventoryItems.Add(useable);
@@ -59,13 +81,15 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void EquipWeapon(Weapon weapon)
+    public void EquipWeapon(Weapon weapon, ItemSlot slotRef)
     {
         attackController.Equip(weapon);
         weaponSlot.itemHeld = currentWeapon = weapon;
         weaponSlot.UpdateImage();
 
-        if(weapon == null)
+        referencedWeaponSlot = slotRef;
+
+        if (weapon == null)
         {
             uiDisplay.WeaponHotbarImage.enabled = false;
         }
@@ -75,10 +99,12 @@ public class Inventory : MonoBehaviour
             uiDisplay.WeaponHotbarImage.sprite = weapon.GetSprite();
         }
     }
-    public void EquipFreeItem(Useables item)
+    public void EquipFreeItem(Useables item, ItemSlot slotRef)
     {
         freeSlot.itemHeld = itemOne = item;
         freeSlot.UpdateImage();
+
+        referencedFreeSlot = slotRef;
 
         if (item == null)
         {
@@ -106,7 +132,6 @@ public class Inventory : MonoBehaviour
                 slot.itemHeld = item;
                 break;
             }
-            
         }
     }
 
@@ -123,6 +148,25 @@ public class Inventory : MonoBehaviour
             Cursor.visible = true;
         }
     }
+    void OnSecondaryAction(InputValue inputValue)
+    {
+        if(itemOne != null && itemOne.GetType() == typeof(Item))
+        {
+            UseItem((Item)itemOne, referencedFreeSlot);
+        }
+    }
+
+    public void UseItem(Item itemToUse, ItemSlot slot)
+    {
+        Item item = itemToUse;
+        foreach (EffectInfo effectInfo in item.GetEffectInfos())
+        {
+            Effect effect = new Effect(effectInfo, 1);
+            playerHealth.InflictEffect(effect);
+        }
+        slot.UnequipItem();
+        EquipFreeItem(null, null);
+    }
 
     public void UpdatePlayerMode()
     {
@@ -134,18 +178,22 @@ public class Inventory : MonoBehaviour
     
 }
 
-public class ItemInstance
+public class UseableInstance
 {
-    Useables info;
-    int currentAmount;
+    protected Useables info;
+    protected int currentAmount;
 
-    bool isFull;
+    protected bool isFull;
 
     public int CurrentAmount { get => currentAmount; }
-    public Useables Info { get => info; }
     public bool IsFull { get => isFull; }
 
-    public void SetItem(Item item, int amount)
+    public virtual Useables GetInfo()
+    {
+        return info;
+    }
+
+    public UseableInstance(Useables item, int amount)
     {
         this.info = item;
         currentAmount = amount;
@@ -162,5 +210,41 @@ public class ItemInstance
         isFull = false;
         currentAmount = currentAmount < 0 ? 0 : currentAmount;
         return currentAmount;
+    }
+}
+
+public class ItemInstance : UseableInstance
+{
+    public ItemInstance(Item item, int amount) : base(item, amount)
+    {
+    }
+
+    public Item GetInfo()
+    {
+        return (Item)info;
+    }
+}
+
+public class MementoInstance : UseableInstance
+{
+    public MementoInstance(Mementos item, int amount) : base(item, amount)
+    {
+    }
+
+    public Mementos GetInfo()
+    {
+        return (Mementos)info;
+    }
+}
+
+public class AbilityInstance : UseableInstance
+{
+    public AbilityInstance(Abilities item, int amount) : base(item, amount)
+    {
+    }
+
+    public Abilities GetInfo()
+    {
+        return (Abilities)info;
     }
 }

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 625567f93b398f147b00384f0c2adcbb, type: 3}
-  m_Name: Healing I
+  m_Name: Regeneration I
   m_EditorClassIdentifier: 
-  name: Healing I
-  hasEfficacyLevel: 0
+  name: Regeneration I
+  hasEfficacyLevel: 1
   description: New effect goes brrr
   particleEffect: {fileID: 0}
-  displaySprite: {fileID: 0}
-  mode: 2
+  displaySprite: {fileID: 21300000, guid: 74589525489636a49899b6b374e66f7b, type: 3}
+  mode: 1
   statEffects:
   - statType: 0
     effectType: 0
-    strength: 10
+    strength: 3
     isPercentage: 0
-  duration: 5
-  interval: 1
+  duration: 8
+  interval: 2

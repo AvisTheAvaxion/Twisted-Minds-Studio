@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     private static float[] volumes;
 
     public static bool Dash = false;
+    public static bool Attack = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -99,6 +100,7 @@ public class AudioManager : MonoBehaviour
         audioDict.Add("Elevator", 2);
         audioDict.Add("Door", 3);
         audioDict.Add("Dash", 4);
+        audioDict.Add("Attack", 5);
     }
 
     public static void Play(string audioName)
@@ -123,6 +125,11 @@ public class AudioManager : MonoBehaviour
         if (id == 4)
         {
             Dash = true;
+            return;
+        }
+        if (id == 5)
+        {
+            Attack = true;
             return;
         }
 

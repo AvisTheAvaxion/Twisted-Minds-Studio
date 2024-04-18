@@ -195,6 +195,8 @@ public class AttackController : MonoBehaviour
         isAttacking = true;
         attackButtonReleased = false;
 
+        AudioManager.Play("Attack");
+
         if (currentAttackMode == AttackModes.Ranged)
         {
             rangedFireTimer = 0;

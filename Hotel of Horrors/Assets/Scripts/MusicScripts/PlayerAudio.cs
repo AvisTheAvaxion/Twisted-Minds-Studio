@@ -40,7 +40,12 @@ public class PlayerAudio : MonoBehaviour
         {
             AudioManager.Dash = false;
             DashSource.Play();
-            Debug.Log("Dash");
+        }
+
+        if (AudioManager.Attack)
+        {
+            AudioManager.Attack = false;
+            AttackSource.Play();
         }
     }
 

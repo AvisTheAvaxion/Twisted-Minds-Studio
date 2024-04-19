@@ -19,7 +19,7 @@ public class MenuController : MonoBehaviour
         //Update when we have save/load features
         
         //loads the test scene
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(1);
     }
 
     public void GoToMainMenu()

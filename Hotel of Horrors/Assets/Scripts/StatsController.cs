@@ -18,7 +18,7 @@ public class StatsController : MonoBehaviour
     List<Effector> currentEffectors;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
         if (uiDisplay == null) Debug.LogError($"UI display container script not assigned to {name} and not found in scene (located on canvas UI prefab");

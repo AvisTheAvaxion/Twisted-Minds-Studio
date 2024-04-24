@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     public float dashDistance;
     public float dashSpeed;
     [SerializeField] float iFrameDistForDash;
+    [SerializeField] Transform dashPartcileSpawn;
+    [SerializeField] GameObject[] dashParticles;
     bool isDashing = false;
     float currentDashLength;
 
@@ -245,11 +247,15 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (movementVector.x <= -0.1f)
             {
+                if (dashPartcileSpawn && dashParticles[2]) Destroy(Instantiate(dashParticles[2], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
+
                 direction = "West";
                 animator.runtimeAnimatorController = leftController;
             }
             else if (movementVector.x >= 0.1f)
             {
+                if (dashPartcileSpawn && dashParticles[3]) Destroy(Instantiate(dashParticles[3], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
+
                 direction = "East";
                 animator.runtimeAnimatorController = rightController;
             } else

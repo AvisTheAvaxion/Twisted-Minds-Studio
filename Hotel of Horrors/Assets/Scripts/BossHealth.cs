@@ -8,7 +8,8 @@ public class BossHealth : MonoBehaviour, IHealth
     [SerializeField] bool debug;
     [SerializeField] bool healOverTime = false;
     [SerializeField] float timeBtwHeals = 5f;
-    [SerializeField] bool isBoss;
+    [SerializeField] float flashColorLength = 0.2f;
+    [SerializeField] FlashColor flashColor;
     [SerializeField] UIDisplayContainer uiDisplay;
 
     float timer = 0;
@@ -23,10 +24,6 @@ public class BossHealth : MonoBehaviour, IHealth
     }
     private void Update()
     {
-        if (isBoss)
-        {
-
-        }
 
         if (healOverTime)
         {
@@ -50,7 +47,8 @@ public class BossHealth : MonoBehaviour, IHealth
     {
         stats.TakeDamage(amount, effect);
 
-        if (isBoss) uiDisplay.Boss_healthBar.value = stats.GetHealthValue01();
+        uiDisplay.Boss_healthBar.value = stats.GetHealthValue01();
+        if (flashColor != null) flashColor.Flash(flashColorLength);
 
         if (debug) print("Health: " + stats.GetHealthValue());
 
@@ -73,7 +71,7 @@ public class BossHealth : MonoBehaviour, IHealth
 
     public void UpdateHealth()
     {
-        if (isBoss) uiDisplay.Boss_healthBar.value = stats.GetHealthValue01();
+       uiDisplay.Boss_healthBar.value = stats.GetHealthValue01();
 
         if (stats.GetHealthValue() <= 0)
         {
@@ -84,11 +82,11 @@ public class BossHealth : MonoBehaviour, IHealth
 
     public void ShowHealthBar()
     {
-        if (isBoss) uiDisplay.Boss_healthBar.gameObject.SetActive(true);
+        uiDisplay.Boss_healthBar.gameObject.SetActive(true);
     }
     public void HideHealthBar()
     {
-        if (isBoss) uiDisplay.Boss_healthBar.gameObject.SetActive(false);
+        uiDisplay.Boss_healthBar.gameObject.SetActive(false);
     }
 
     public void Knockback(Vector3 dir, float strength)

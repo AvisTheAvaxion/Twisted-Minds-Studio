@@ -36,7 +36,8 @@ public abstract class BossStateMachine : MonoBehaviour
     protected BossHealth bossHealth;
 
     [SerializeField] protected bool debug;
-    [SerializeField] UIDisplayContainer uiDisplay;
+    [SerializeField] protected UIDisplayContainer uiDisplay;
+    [SerializeField] protected CameraShake cameraShake;
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
     [Header("Dialogue Settings")]
@@ -64,6 +65,8 @@ public abstract class BossStateMachine : MonoBehaviour
         player = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
         bossHealth = GetComponent<BossHealth>();
+
+        if (cameraShake == null) cameraShake = FindObjectOfType<CameraShake>();
 
         if (dialogueSystem == null)
             dialogueSystem = FindObjectOfType<DialogueSystem>();

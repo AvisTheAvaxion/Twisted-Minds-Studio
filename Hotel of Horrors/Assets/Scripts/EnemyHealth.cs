@@ -9,6 +9,8 @@ public class EnemyHealth : MonoBehaviour, IHealth
     [SerializeField] bool debug;
     [SerializeField] bool healOverTime = false;
     [SerializeField] float timeBtwHeals = 5f;
+    [SerializeField] float flashColorLength = 0.2f;
+    [SerializeField] FlashColor flashColor;
     [SerializeField] EnemyStateMachine enemyMovement;
 
     float timer = 0;
@@ -42,6 +44,8 @@ public class EnemyHealth : MonoBehaviour, IHealth
         stats.TakeDamage(amount, effect);
 
         if(debug) print("Health: " + stats.GetHealthValue());
+
+        if (flashColor != null) flashColor.Flash(flashColorLength);
 
         if (stats.GetHealthValue() <= 0)
         {

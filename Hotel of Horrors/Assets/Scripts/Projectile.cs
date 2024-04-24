@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
         }
         else if(collision.tag.Equals("MeleeStrike"))
         {
-            MeleeStrike meleeStrike = collision.GetComponent<MeleeStrike>();
+            MeleeSlash meleeStrike = collision.GetComponent<MeleeSlash>();
             if(meleeStrike && meleeStrike.GetDeflectionStrength() > deflectionResistance)
             {
                 Rigidbody2D rb = GetComponent<Rigidbody2D>();

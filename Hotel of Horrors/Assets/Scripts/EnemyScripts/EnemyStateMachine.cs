@@ -73,7 +73,6 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected ItemDrop[] itemDrops;
     
     protected bool canMove;
-    protected bool isAttacking;
     protected bool canAttack;
 
     protected GameObject target;
@@ -102,8 +101,6 @@ public class EnemyStateMachine : MonoBehaviour
         navigation.canMove = false;
 
         navigation.speed = moveSpeed / 10f;
-
-        isAttacking = false;
 
         StartCoroutine(WaitBeforeMoving(pauseMin, pauseMax));
     }
@@ -263,38 +260,6 @@ public class EnemyStateMachine : MonoBehaviour
             {
                 if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
 
-                /*if((distToTarget > minDistToTarget || !maintainDistToTarget) && distToTarget < maxDistToTarget)
-                {
-                    CheckToRotate(dirToPlayer);
-                    if (hasWalkCycle && animator != null) animator.SetBool("isWalking", false);
-                } 
-                else
-                {
-                    if(!navigation.reachedEndOfPath)
-                    {
-                        CheckToRotate(dirToPlayer);
-                        if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
-                    } 
-                    else
-                    {
-                        CheckToRotate(dirToPlayer);
-                        if (hasWalkCycle && animator != null) animator.SetBool("isWalking", false);
-                    }
-
-                    //Simple navigation
-                    //navigation.destination = (Vector2)target.transform.position - dirToPlayer * (minDistToTarget + maxDistToTarget) / 2;
-
-                    //Advanced navigation
-                    RaycastHit2D hit = Physics2D.Raycast(target.transform.position, -dirToPlayer, float.MaxValue, wallsLayerMask);
-                    if (hit.collider != null)
-                    {
-                        navigation.destination = (Vector2)target.transform.position - dirToPlayer * Mathf.Min(hit.distance, (minDistToTarget + maxDistToTarget) / 2);
-                    } else
-                    {
-                        navigation.destination = (Vector2)target.transform.position - dirToPlayer * (minDistToTarget + maxDistToTarget) / 2;
-                    }
-                }*/
-
                 CheckToRotate(dirToPlayer);
 
                 combatAI.OrbitAroundTarget();
@@ -312,9 +277,7 @@ public class EnemyStateMachine : MonoBehaviour
     #region Melee Attack
     public virtual void MeleeAttackStart()
     {
-        //navigation.canMove = false;
         canMove = false;
-        //isAttacking = true;
         canAttack = false;
 
         if (animator != null) animator.SetTrigger("Attack");
@@ -327,10 +290,8 @@ public class EnemyStateMachine : MonoBehaviour
         {
             if (colliders[i].tag.Equals("Player"))
             {
-                PlayerMovement playerMovement = colliders[i].gameObject.GetComponent<PlayerMovement>();
                 IHealth health = colliders[i].gameObject.GetComponent<IHealth>();
                 Vector2 dir = (colliders[i].transform.position - transform.position).normalized;
-
 
                 health.TakeDamage(meleeDamage);
                 health.Knockback(dir, knockback);
@@ -347,9 +308,7 @@ public class EnemyStateMachine : MonoBehaviour
     }
     public virtual void MeleeAttackEnd()
     {
-        //navigation.canMove = true;
         canMove = true;
-        //isAttacking = false;
 
         if (debug) print("End Melee Attack");
 
@@ -363,11 +322,9 @@ public class EnemyStateMachine : MonoBehaviour
         if (!canMoveAndShoot) 
         { 
             canMove = false;
-            //navigation.canMove = false;
         }
 
         canAttack = false;
-        //isAttacking = true;
 
         if (animator != null) animator.SetTrigger("Attack");
     }
@@ -382,8 +339,6 @@ public class EnemyStateMachine : MonoBehaviour
     public virtual void RangedAttackEnd()
     {
         canMove = true;
-        //navigation.canMove = true;
-        //isAttacking = false;
 
         if (debug) print("End Ranged Attack");
 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6658179999741774060}
   - component: {fileID: 2162674519699983020}
+  - component: {fileID: 2028310183338750239}
   m_Layer: 0
   m_Name: TorseMonster_Sprite
   m_TagString: Untagged
@@ -85,6 +86,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2028310183338750239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2889669409692798943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19514a7b63bef574dacbbaf16bda2cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 447d690840723f1478fe148e4a36576d, type: 2}
+  defaultMaterial: {fileID: 0}
+  spriteRenderers:
+  - {fileID: 2162674519699983020}
 --- !u!1 &8646730134342870647
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,13 +336,12 @@ MonoBehaviour:
   meleeAttackPoint: {fileID: 4727642729652596645}
   meleeRange: 0.5
   meleeRadius: 0.5
-  meleeDamage: 2
+  meleeDamage: 6
   knockback: 2
   chanceToInflictEffect: 0
   effectsToInflict: []
   shooter: {fileID: 0}
   range: 2
-  maintainDistToTarget: 0
   canMoveAndShoot: 0
   wallsLayerMask:
     serializedVersion: 2
@@ -370,7 +386,9 @@ MonoBehaviour:
   debug: 0
   healOverTime: 0
   timeBtwHeals: 5
-  enemyMovement: {fileID: 0}
+  flashColorLength: 0.2
+  flashColor: {fileID: 2028310183338750239}
+  enemyMovement: {fileID: 4037469665766584045}
 --- !u!114 &5095426524737206994
 MonoBehaviour:
   m_ObjectHideFlags: 0

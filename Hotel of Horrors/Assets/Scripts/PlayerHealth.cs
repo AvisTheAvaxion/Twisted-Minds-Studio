@@ -12,9 +12,13 @@ public class PlayerHealth : MonoBehaviour, IHealth
     HeartsController heartsController;
 
     [SerializeField] PlayerMovement movement;
+    [SerializeField] CameraShake cameraShake;
+    [SerializeField] FlashColor flashColor;
     [SerializeField] UIDisplayContainer uiDisplay;
     [SerializeField] float iFramesTime;
     [SerializeField] float stunTime;
+    [SerializeField] float flashColorLength = 0.2f;
+    
     bool canGetHit = true;
 
     private void Start()
@@ -39,6 +43,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
             if (effect != null && Random.Range(0, 1f) <= effect.chanceToInflictEffect) stats.AddEffect(effect);
 
             if (heartsController) heartsController.AdjustHearts(stats.GetHealth());
+            if (cameraShake != null) cameraShake.ShakeCamera(amount / 15f);
+            if (flashColor != null) flashColor.Flash(flashColorLength);
 
             if (stats.GetHealthValue() <= 0)
             {
@@ -65,6 +71,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
             if (effect != null) stats.AddEffect(effect);
 
             if (heartsController) heartsController.AdjustHearts(stats.GetHealth());
+            if (cameraShake != null) cameraShake.ShakeCamera(amount / 15f);
+            if (flashColor != null) flashColor.Flash(flashColorLength);
 
             if (stats.GetHealthValue() <= 0)
             {

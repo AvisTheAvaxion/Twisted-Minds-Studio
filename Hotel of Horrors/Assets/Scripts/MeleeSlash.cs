@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeStrike : MonoBehaviour
+public class MeleeSlash : MonoBehaviour
 {
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Sprite[] sprites;
@@ -15,9 +15,11 @@ public class MeleeStrike : MonoBehaviour
     float knockback;
     float deflectionStrength;
 
+    CameraShake cameraShake;
+
     Effect[] effects;
 
-    public void Init(int damage, float deflectionStrength, float knockback, Effect[] effects = null)
+    public void Init(int damage, float deflectionStrength, float knockback, CameraShake cameraShake, Effect[] effects = null)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -25,13 +27,14 @@ public class MeleeStrike : MonoBehaviour
         this.knockback = knockback;
         this.deflectionStrength = deflectionStrength;
         this.targetTag = defaultTag;
+        this.cameraShake = cameraShake;
 
         this.effects = effects;
 
         StartCoroutine(Animate());
     }
 
-    public void Init(int damage, float knockback, float deflectionStrength, string targetTag, Effect[] effects = null)
+    public void Init(int damage, float knockback, float deflectionStrength, string targetTag, CameraShake cameraShake, Effect[] effects = null)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -39,6 +42,7 @@ public class MeleeStrike : MonoBehaviour
         this.knockback = knockback;
         this.deflectionStrength = deflectionStrength;
         this.targetTag = targetTag;
+        this.cameraShake = cameraShake;
 
         this.effects = effects;
 
@@ -58,6 +62,8 @@ public class MeleeStrike : MonoBehaviour
                     Vector2 dir = (collision.transform.position - transform.position).normalized;
                     health.Knockback(dir, knockback);
                 }
+
+                if(cameraShake != null) cameraShake.ShakeCamera(0.5f);
 
                 if (effects != null)
                 {

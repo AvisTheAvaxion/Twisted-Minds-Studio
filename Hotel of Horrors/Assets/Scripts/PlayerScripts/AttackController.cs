@@ -9,9 +9,8 @@ public class AttackController : MonoBehaviour
 {
     [SerializeField] AttackModes currentAttackMode;
     [SerializeField] Animator playerAnimator; //Animator that plays the base attack animations
-    //[SerializeField] Animator weaponAnimator; //Animator for the weapon that plays if clip exists and offers way to add custom input to base animation. Animator exists on the weapon pivot
-    //[SerializeField] AnimatorOverrideController weaponOverrideController;
     [SerializeField] PlayerMovement playerMovement; //Player movement reference to check whether dashing or not
+    [SerializeField] CameraShake cameraShake;
     [SerializeField] UIDisplayContainer uiDisplay;
     [SerializeField] StatsController stats;
     [SerializeField] Transform weaponStrikeParent; //The parent to spawn the weapon strike into
@@ -252,15 +251,15 @@ public class AttackController : MonoBehaviour
     {
         if(currentWeapon != null)
         {
-            MeleeStrike meleeStrike = null;
+            MeleeSlash meleeStrike = null;
             if (currentWeapon.GetAttackType() == AttackType.Melee1)
             {
                 GameObject go = Instantiate(currentWeapon.GetWeaponStrike(), weaponStrike1SpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetRange(), weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
-                meleeStrike = go.GetComponent<MeleeStrike>();
+                meleeStrike = go.GetComponent<MeleeSlash>();
             } else
             {
                 GameObject go = Instantiate(currentWeapon.GetWeaponStrike(), weaponStrike2SpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetRange(), weaponStrike2SpawnPoint.rotation, weaponStrikeParent);
-                meleeStrike = go.GetComponent<MeleeStrike>();
+                meleeStrike = go.GetComponent<MeleeSlash>();
             }
             if (meleeStrike)
             {
@@ -270,14 +269,14 @@ public class AttackController : MonoBehaviour
                 {
                     effects[i] = new Effect(effectInfos[i], currentWeapon.GetChanceToInflictEffect());
                 }
-                meleeStrike.Init(currentWeapon.GetDamage(), currentWeapon.GetKnockback(), currentWeapon.GetDeflectionStrength(), "Enemy", effects);
+                meleeStrike.Init(currentWeapon.GetDamage(), currentWeapon.GetKnockback(), currentWeapon.GetDeflectionStrength(), "Enemy", cameraShake, effects);
             }
         } 
         else
         {
             GameObject go = Instantiate(defaultMeleeStrike, weaponStrike1SpawnPoint.position, weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
-            MeleeStrike meleeStrike = go.GetComponent<MeleeStrike>();
-            if (meleeStrike) meleeStrike.Init(defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy");
+            MeleeSlash meleeStrike = go.GetComponent<MeleeSlash>();
+            if (meleeStrike) meleeStrike.Init(defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy", cameraShake);
         }
     }
 

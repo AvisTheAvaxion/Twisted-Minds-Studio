@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2922543608765051560}
   - component: {fileID: 9004313259983520654}
+  - component: {fileID: 6090670121490863816}
   m_Layer: 0
   m_Name: ScalpelPatientSprite
   m_TagString: Untagged
@@ -116,6 +117,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6090670121490863816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431259987297073418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19514a7b63bef574dacbbaf16bda2cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 447d690840723f1478fe148e4a36576d, type: 2}
+  defaultMaterial: {fileID: 0}
+  spriteRenderers:
+  - {fileID: 9004313259983520654}
 --- !u!1 &6865958303660939511
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +343,6 @@ MonoBehaviour:
   effectsToInflict: []
   shooter: {fileID: 8624140693439099872}
   range: 2
-  maintainDistToTarget: 1
   canMoveAndShoot: 0
   wallsLayerMask:
     serializedVersion: 2
@@ -383,7 +399,9 @@ MonoBehaviour:
   debug: 0
   healOverTime: 0
   timeBtwHeals: 5
-  enemyMovement: {fileID: 0}
+  flashColorLength: 0.2
+  flashColor: {fileID: 6090670121490863816}
+  enemyMovement: {fileID: 7887064575843007890}
 --- !u!114 &6802117315420560503
 MonoBehaviour:
   m_ObjectHideFlags: 0

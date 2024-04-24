@@ -6111,7 +6111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7780868464515115505, guid: 17aef9d978e1e0f48985e08295a7605e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6249,6 +6249,14 @@ PrefabInstance:
     - target: {fileID: 417761132821364109, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2162674519699983020, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4037469665766584045, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
+      propertyPath: meleeDamage
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8739289154397693608, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
       propertyPath: m_Name
@@ -23564,6 +23572,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3816594382241254047, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3816594382241254047, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3816594382241254047, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6071954231053187924, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
       propertyPath: m_Mass
       value: 1

@@ -40,6 +40,9 @@ public class FNSMonster : BossStateMachine
     [Header("Attack Settings")]
     [SerializeField] AttackSettings normalAttackSettings;
     [SerializeField] AttackSettings enragedAttackSettings;
+    [SerializeField] float chargeCameraShake = 0.65f;
+    [SerializeField] float slamCameraShake = 0.9f;
+    [SerializeField] float walkingCameraShake = 0.4f;
 
     AttackSettings currentSettings;
 
@@ -228,7 +231,7 @@ public class FNSMonster : BossStateMachine
                 break;
             }
         }
-
+        if(cameraShake != null) cameraShake.ShakeCamera(slamCameraShake);
         shooter.Attack();
     }
     public void SlamEnd()
@@ -322,5 +325,14 @@ public class FNSMonster : BossStateMachine
 
         bossHealth.HideHealthBar();
         Destroy(gameObject);
+    }
+
+    public void WalkCameraShake()
+    {
+        if (cameraShake != null) cameraShake.ShakeCamera(walkingCameraShake);
+    }
+    public void ChargeCameraShake()
+    {
+        if (cameraShake != null) cameraShake.ShakeCamera(chargeCameraShake);
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3622643437465758043}
   - component: {fileID: 2170412016194764509}
   - component: {fileID: 3258707720381061101}
-  - component: {fileID: 8722076942917336173}
+  - component: {fileID: 2001969177248108262}
   - component: {fileID: 3269821355269556102}
   - component: {fileID: 7819676505427196098}
   - component: {fileID: 838116091748070659}
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   uiDisplay: {fileID: 0}
+  cameraShake: {fileID: 0}
   flipToRotate: 1
   transformToFlip: {fileID: 2881490729553979416}
   dialogueSystem: {fileID: 0}
@@ -154,7 +155,10 @@ MonoBehaviour:
     slamKnockback: 8
     slamCooldownMin: 1
     slamCooldownMax: 2
---- !u!114 &8722076942917336173
+  chargeCameraShake: 0.65
+  slamCameraShake: 0.9
+  walkingCameraShake: 0.4
+--- !u!114 &2001969177248108262
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,13 +167,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7780868464515115505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 252b3b42aadea444081d9be1df084471, type: 3}
+  m_Script: {fileID: 11500000, guid: f114c9e14ecce3c41b48b03e4857ad67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
   healOverTime: 0
   timeBtwHeals: 5
-  isBoss: 1
+  flashColorLength: 0.2
+  flashColor: {fileID: 4898962650481716471}
   uiDisplay: {fileID: 0}
 --- !u!114 &3269821355269556102
 MonoBehaviour:
@@ -274,6 +279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2881490729553979416}
   - component: {fileID: 7147279581158553711}
+  - component: {fileID: 4898962650481716471}
   m_Layer: 0
   m_Name: FrankNSteinMonster_Sprite
   m_TagString: Untagged
@@ -348,6 +354,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4898962650481716471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544854332397373729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19514a7b63bef574dacbbaf16bda2cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 447d690840723f1478fe148e4a36576d, type: 2}
+  defaultMaterial: {fileID: 0}
+  spriteRenderers:
+  - {fileID: 7147279581158553711}
 --- !u!1001 &943561914585347013
 PrefabInstance:
   m_ObjectHideFlags: 0

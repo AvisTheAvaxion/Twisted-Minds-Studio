@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(EnemyHealth))]
+[RequireComponent(typeof(Rigidbody2D), typeof(BossHealth))]
 public abstract class BossStateMachine : MonoBehaviour
 {
     public enum FaceDirection
@@ -33,7 +33,7 @@ public abstract class BossStateMachine : MonoBehaviour
         public int correctChoice;
     }
 
-    protected EnemyHealth enemyHealth;
+    protected BossHealth bossHealth;
 
     [SerializeField] protected bool debug;
     [SerializeField] UIDisplayContainer uiDisplay;
@@ -63,7 +63,7 @@ public abstract class BossStateMachine : MonoBehaviour
     {
         player = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
-        enemyHealth = GetComponent<EnemyHealth>();
+        bossHealth = GetComponent<BossHealth>();
 
         if (dialogueSystem == null)
             dialogueSystem = FindObjectOfType<DialogueSystem>();

@@ -222,38 +222,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScalpelPatient
       objectReference: {fileID: 0}
-    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: itemHolder
-      value: 
-      objectReference: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
-    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: maxDropAmount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: minDropAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: itemDrops.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: itemDrops.Array.data[0].item
-      value: 
-      objectReference: {fileID: 11400000, guid: 31f7daa77a838a545bf97e2afc5375a3, type: 2}
-    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: itemDrops.Array.data[1].item
-      value: 
-      objectReference: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
-    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: itemDrops.Array.data[0].weight
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887064575843007890, guid: f8fbe461eca87a94cb3fe7fe7026520f, type: 3}
-      propertyPath: itemDrops.Array.data[1].weight
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4351,6 +4319,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallWerewolf
       objectReference: {fileID: 0}
+    - target: {fileID: 1381499431061357504, guid: 48854a7a2f47c6c44b1b373ac5936be0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5177964032689127156, guid: 48854a7a2f47c6c44b1b373ac5936be0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.175
@@ -5610,6 +5582,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyingCandy
       objectReference: {fileID: 0}
+    - target: {fileID: 9044792319657179407, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6273,10 +6249,6 @@ PrefabInstance:
     - target: {fileID: 417761132821364109, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4037469665766584045, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
-      propertyPath: maxDistToTarget
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8739289154397693608, guid: 510d4c352a7b02a48bf15fe35a6b0f4f, type: 3}
       propertyPath: m_Name
@@ -23514,6 +23486,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KarenWerewolf
       objectReference: {fileID: 0}
+    - target: {fileID: 4163444773169181561, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23571,6 +23547,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lawyer
       objectReference: {fileID: 0}
+    - target: {fileID: 6567816356068049374, guid: 1ab52c0624107db4a81250c77dbe6520, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23584,6 +23564,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6071954231053187924, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071954231053187924, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
+      propertyPath: m_LinearDrag
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6606269600983598422, guid: 9ffdd1efc2368e64ab556d64f3e50255, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.52

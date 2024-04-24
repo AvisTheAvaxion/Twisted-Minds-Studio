@@ -90,7 +90,7 @@ public class FNSMonster : BossStateMachine
                 break;
         }
 
-        if(enemyHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThresholdToNextStage)
+        if(bossHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThresholdToNextStage)
         {
             currentState = States.Dialogue;
             Disenrage();
@@ -223,7 +223,7 @@ public class FNSMonster : BossStateMachine
                 Vector2 dir = (colliders[i].transform.position - transform.position).normalized;
 
                 health.TakeDamage(currentSettings.slamDamage);
-                playerMovement.Knockback(dir, currentSettings.slamKnockback);
+                health.Knockback(dir, currentSettings.slamKnockback);
 
                 break;
             }
@@ -263,12 +263,12 @@ public class FNSMonster : BossStateMachine
             if (isCharging)
             {
                 health.TakeDamage(currentSettings.chargeDamage, currentSettings.chargeStun);
-                playerMovement.Knockback(dir, currentSettings.chargeKnockback);
+                health.Knockback(dir, currentSettings.chargeKnockback);
             }
             else
             {
                 health.TakeDamage(currentSettings.normalContactDamage);
-                playerMovement.Knockback(dir, currentSettings.normalKnockback);
+                health.Knockback(dir, currentSettings.normalKnockback);
             }
         }
     }
@@ -303,7 +303,7 @@ public class FNSMonster : BossStateMachine
             currentState = States.Idle;
             bossFightStarted = true;
 
-            enemyHealth.ShowHealthBar();
+            bossHealth.ShowHealthBar();
 
             dialogueSegmentStarted = false;
 
@@ -320,7 +320,7 @@ public class FNSMonster : BossStateMachine
 
         yield return new WaitUntil(() => !dialogueSegmentStarted);
 
-        enemyHealth.HideHealthBar();
+        bossHealth.HideHealthBar();
         Destroy(gameObject);
     }
 }

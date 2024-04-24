@@ -120,4 +120,9 @@ public class PlayerHealth : MonoBehaviour, IHealth
             SceneManager.LoadScene("Death Screen");
         }
     }
+
+    public void Knockback(Vector3 dir, float strength)
+    {
+        movement.Knockback(dir, strength);
+    }
 } 

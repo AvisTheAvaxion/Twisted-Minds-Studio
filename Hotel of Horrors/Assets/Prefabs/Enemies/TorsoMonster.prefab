@@ -129,11 +129,12 @@ GameObject:
   - component: {fileID: 4878542391581476537}
   - component: {fileID: 8129201505883869866}
   - component: {fileID: 7067235643821120618}
+  - component: {fileID: 4679584591052111178}
   - component: {fileID: 4037469665766584045}
   - component: {fileID: 5557790185517936632}
+  - component: {fileID: 5095426524737206994}
   - component: {fileID: 7160162389670505612}
   - component: {fileID: 8998228072204108313}
-  - component: {fileID: 5095426524737206994}
   m_Layer: 0
   m_Name: TorsoMonster
   m_TagString: Enemy
@@ -257,6 +258,36 @@ MonoBehaviour:
   bezierTangentLength: 0.4
   offset: 0.2
   factor: 0.1
+--- !u!114 &4679584591052111178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8739289154397693608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04822df9f773d3459508bb93808d18d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  currentDirSmoothing: 0.5
+  objectRadius: 0.2
+  speed: 2
+  orbitRadius: 1
+  orbitRadiusThickness: 0.2
+  numOfWeights: 16
+  visualizeWeights: 1
+  obstacleDistanceSensitivity: 1
+  desireKeepSameDir: 0.1
+  noObstacleDesire: 0.3
+  comradeTag: Enemy
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  obstructionDetectionThreshold: 0.1
+  maxObstructionChangeDir: 0
+  minObstructionChangeDir: -0.8
 --- !u!114 &4037469665766584045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,8 +304,6 @@ MonoBehaviour:
   gizmos: 0
   flipToRotate: 1
   transformToFlip: {fileID: 6658179999741774060}
-  navigation: {fileID: 8129201505883869866}
-  destSetter: {fileID: 0}
   animator: {fileID: 5346251851841856883}
   hasWalkCycle: 1
   attackType: 0
@@ -285,17 +314,17 @@ MonoBehaviour:
   aggroRadius: 3.22
   contactDamage: 3
   contactKnockback: 1
-  attackCooldownMin: 1
-  attackCooldownMax: 2
-  minDistToTarget: 0.75
-  maxDistToTarget: 0
+  attackCooldownMin: 3
+  attackCooldownMax: 4
   meleeAttackPoint: {fileID: 4727642729652596645}
+  meleeRange: 0.5
   meleeRadius: 0.5
   meleeDamage: 2
   knockback: 2
   chanceToInflictEffect: 0
   effectsToInflict: []
   shooter: {fileID: 0}
+  range: 2
   maintainDistToTarget: 0
   canMoveAndShoot: 0
   wallsLayerMask:
@@ -341,8 +370,28 @@ MonoBehaviour:
   debug: 0
   healOverTime: 0
   timeBtwHeals: 5
-  isBoss: 0
+  enemyMovement: {fileID: 0}
+--- !u!114 &5095426524737206994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8739289154397693608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
   uiDisplay: {fileID: 0}
+  isPlayer: 0
+  health:
+    type: 0
+    defaultValue: 25
+    hasMax: 1
+    maxValue: 25
+  stats: []
 --- !u!50 &7160162389670505612
 Rigidbody2D:
   serializedVersion: 4
@@ -356,8 +405,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 5
+  m_AngularDrag: 0.9
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -369,7 +418,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
 --- !u!61 &8998228072204108313
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -415,24 +464,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.24051261, y: 0.31235576}
   m_EdgeRadius: 0
---- !u!114 &5095426524737206994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8739289154397693608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  uiDisplay: {fileID: 0}
-  isPlayer: 0
-  health:
-    type: 0
-    defaultValue: 25
-    hasMax: 1
-    maxValue: 25
-  stats: []

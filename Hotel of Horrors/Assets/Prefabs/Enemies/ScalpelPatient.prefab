@@ -129,12 +129,13 @@ GameObject:
   - component: {fileID: 6383972062091107832}
   - component: {fileID: 9011499664093526356}
   - component: {fileID: 629670137548873685}
+  - component: {fileID: 6882138105969369504}
   - component: {fileID: 7887064575843007890}
   - component: {fileID: 8624140693439099872}
   - component: {fileID: 6566436765469326580}
+  - component: {fileID: 6802117315420560503}
   - component: {fileID: 1022842952698779654}
   - component: {fileID: 2892289427171861916}
-  - component: {fileID: 6802117315420560503}
   m_Layer: 0
   m_Name: ScalpelPatient
   m_TagString: Enemy
@@ -258,6 +259,36 @@ MonoBehaviour:
   bezierTangentLength: 0.4
   offset: 0.2
   factor: 0.1
+--- !u!114 &6882138105969369504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6865958303660939511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04822df9f773d3459508bb93808d18d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  currentDirSmoothing: 0.5
+  objectRadius: 0.2
+  speed: 2
+  orbitRadius: 1
+  orbitRadiusThickness: 0.2
+  numOfWeights: 16
+  visualizeWeights: 1
+  obstacleDistanceSensitivity: 1
+  desireKeepSameDir: 0.1
+  noObstacleDesire: 0.3
+  comradeTag: Enemy
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  obstructionDetectionThreshold: 0.1
+  maxObstructionChangeDir: 0
+  minObstructionChangeDir: -0.8
 --- !u!114 &7887064575843007890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,8 +305,6 @@ MonoBehaviour:
   gizmos: 0
   flipToRotate: 1
   transformToFlip: {fileID: 2922543608765051560}
-  navigation: {fileID: 9011499664093526356}
-  destSetter: {fileID: 0}
   animator: {fileID: 835126136890149486}
   hasWalkCycle: 1
   attackType: 1
@@ -288,41 +317,33 @@ MonoBehaviour:
   contactKnockback: 3
   attackCooldownMin: 2
   attackCooldownMax: 2.5
-  minDistToTarget: 2
-  maxDistToTarget: 2.5
   meleeAttackPoint: {fileID: 0}
+  meleeRange: 0.5
   meleeRadius: 0
   meleeDamage: 0
   knockback: 0
   chanceToInflictEffect: 0
   effectsToInflict: []
   shooter: {fileID: 8624140693439099872}
+  range: 2
   maintainDistToTarget: 1
   canMoveAndShoot: 0
   wallsLayerMask:
     serializedVersion: 2
     m_Bits: 64
   dropRadius: 0.25
-  minDropAmount: 2
+  minDropAmount: 1
   maxDropAmount: 3
   itemHolder: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
   itemDrops:
-  - item: {fileID: 11400000, guid: f9b67a3ac3470e04a8af490f8ee0f876, type: 2}
+  - item: {fileID: 11400000, guid: 31f7daa77a838a545bf97e2afc5375a3, type: 2}
     minCount: 1
     maxCount: 1
     weight: 1
   - item: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
     minCount: 1
     maxCount: 1
-    weight: 1.5
-  - item: {fileID: 11400000, guid: 31f7daa77a838a545bf97e2afc5375a3, type: 2}
-    minCount: 1
-    maxCount: 1
-    weight: 0.1
-  - item: {fileID: 11400000, guid: 55df27ef2cf334c48a4c8e818b2e0bf7, type: 2}
-    minCount: 1
-    maxCount: 1
-    weight: 0.5
+    weight: 1
 --- !u!114 &8624140693439099872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,8 +383,28 @@ MonoBehaviour:
   debug: 0
   healOverTime: 0
   timeBtwHeals: 5
-  isBoss: 0
+  enemyMovement: {fileID: 0}
+--- !u!114 &6802117315420560503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6865958303660939511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
   uiDisplay: {fileID: 0}
+  isPlayer: 0
+  health:
+    type: 0
+    defaultValue: 25
+    hasMax: 1
+    maxValue: 25
+  stats: []
 --- !u!61 &1022842952698779654
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -422,8 +463,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0.9
-  m_AngularDrag: 0.05
+  m_LinearDrag: 5
+  m_AngularDrag: 1
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -435,25 +476,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
---- !u!114 &6802117315420560503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6865958303660939511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  uiDisplay: {fileID: 0}
-  isPlayer: 0
-  health:
-    type: 0
-    defaultValue: 25
-    hasMax: 1
-    maxValue: 25
-  stats: []
+  m_Constraints: 4

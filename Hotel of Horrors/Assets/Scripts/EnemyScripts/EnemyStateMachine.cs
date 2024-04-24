@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
+[RequireComponent(typeof(AILerp), typeof(AI))]
 public class EnemyStateMachine : MonoBehaviour
 {
     public enum FaceDirection
@@ -23,9 +24,10 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
 
-    [Header("References")]
-    [SerializeField] protected AILerp navigation;
-    [SerializeField] protected AIDestinationSetter destSetter;
+    protected AILerp navigation;
+    protected AI combatAI;
+
+    protected Rigidbody2D rb;
 
     [Header("Animation")]
     [SerializeField] protected Animator animator;
@@ -47,11 +49,10 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected float contactKnockback;
     [SerializeField] protected float attackCooldownMin;
     [SerializeField] protected float attackCooldownMax;
-    [SerializeField] protected float minDistToTarget;
-    [SerializeField] protected float maxDistToTarget;
 
     [Header("Melee Fight Settings")]
     [SerializeField] protected Transform meleeAttackPoint;
+    [SerializeField] protected float meleeRange = 0.5f;
     [SerializeField] protected float meleeRadius;
     [SerializeField] protected float meleeDamage;
     [SerializeField] protected float knockback;
@@ -60,7 +61,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     [Header("Ranged Fight Settings")]
     [SerializeField] protected BasicShooter shooter;
-    [SerializeField] protected bool maintainDistToTarget = true;
+    [SerializeField] protected float range = 2;
     [SerializeField] protected bool canMoveAndShoot = true;
     [SerializeField] LayerMask wallsLayerMask;
 
@@ -86,6 +87,14 @@ public class EnemyStateMachine : MonoBehaviour
     {
         target = GameObject.Find("Player");
         if(target == null) Debug.LogError("Player not detected");
+
+        combatAI = GetComponent<AI>();
+        navigation = GetComponent<AILerp>();
+        rb = GetComponent<Rigidbody2D>();
+
+        combatAI.SetTarget(target.transform);
+        combatAI.SetCanMove(false);
+        combatAI.SetSpeed(moveSpeed / 10f);
 
         startPos = transform.position;
 
@@ -211,12 +220,14 @@ public class EnemyStateMachine : MonoBehaviour
         if (GetDistanceToPlayer() < aggroRadius)
         {
             canMove = true;
-            navigation.canMove = true;
-            navigation.canSearch = true;
-
             canAttack = true;
 
+            navigation.canMove = false;
+            navigation.canSearch = false;
+
             currentState = States.Fighting;
+
+            combatAI.SetCanMove(true);
 
             if (debug) print("Switch to Fighting State");
         }
@@ -232,21 +243,27 @@ public class EnemyStateMachine : MonoBehaviour
             if (attackType == Attacks.AttackModes.Melee)
             {
                 if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
-                if(navigation.reachedEndOfPath) animator.SetBool("isWalking", false);
 
-                navigation.destination = (Vector2)target.transform.position - dirToPlayer * maxDistToTarget;
                 CheckToRotate(dirToPlayer);
 
-                if (canAttack && distToTarget < minDistToTarget)
+                if (canAttack)
                 {
-                    MeleeAttackStart();
-
-                    if (hasWalkCycle && animator != null) animator.SetBool("isWalking", false);
+                    combatAI.MoveTowardsTarget();
+                    if (distToTarget < meleeRange)
+                    {
+                        MeleeAttackStart();
+                        if (hasWalkCycle && animator != null) animator.SetBool("isWalking", false);
+                    }
+                } else
+                {
+                    combatAI.OrbitAroundTarget();
                 }
             }
             else if (attackType == Attacks.AttackModes.Ranged)
             {
-                if((distToTarget > minDistToTarget || !maintainDistToTarget) && distToTarget < maxDistToTarget)
+                if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
+
+                /*if((distToTarget > minDistToTarget || !maintainDistToTarget) && distToTarget < maxDistToTarget)
                 {
                     CheckToRotate(dirToPlayer);
                     if (hasWalkCycle && animator != null) animator.SetBool("isWalking", false);
@@ -276,9 +293,13 @@ public class EnemyStateMachine : MonoBehaviour
                     {
                         navigation.destination = (Vector2)target.transform.position - dirToPlayer * (minDistToTarget + maxDistToTarget) / 2;
                     }
-                }
+                }*/
 
-                if(distToTarget < maxDistToTarget && canAttack)
+                CheckToRotate(dirToPlayer);
+
+                combatAI.OrbitAroundTarget();
+
+                if (distToTarget < range && canAttack)
                 {
                     RangedAttackStart();
 
@@ -288,9 +309,10 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
+    #region Melee Attack
     public virtual void MeleeAttackStart()
     {
-        navigation.canMove = false;
+        //navigation.canMove = false;
         canMove = false;
         //isAttacking = true;
         canAttack = false;
@@ -311,6 +333,7 @@ public class EnemyStateMachine : MonoBehaviour
 
 
                 health.TakeDamage(meleeDamage);
+                health.Knockback(dir, knockback);
                 if (effectsToInflict != null)
                 {
                     foreach (EffectInfo effectInfo in effectsToInflict)
@@ -318,15 +341,13 @@ public class EnemyStateMachine : MonoBehaviour
                         health.InflictEffect(new Effect(effectInfo, chanceToInflictEffect));
                     }
                 }
-                playerMovement.Knockback(dir, knockback);
-
                 break;
             }
         }
     }
     public virtual void MeleeAttackEnd()
     {
-        navigation.canMove = true;
+        //navigation.canMove = true;
         canMove = true;
         //isAttacking = false;
 
@@ -334,13 +355,15 @@ public class EnemyStateMachine : MonoBehaviour
 
         StartCoroutine(WaitBeforeAttacking(attackCooldownMin, attackCooldownMax));
     }
+    #endregion
 
+    #region Ranged Attack
     public virtual void RangedAttackStart()
     {
         if (!canMoveAndShoot) 
         { 
             canMove = false;
-            navigation.canMove = false;
+            //navigation.canMove = false;
         }
 
         canAttack = false;
@@ -359,14 +382,23 @@ public class EnemyStateMachine : MonoBehaviour
     public virtual void RangedAttackEnd()
     {
         canMove = true;
-        navigation.canMove = true;
+        //navigation.canMove = true;
         //isAttacking = false;
 
         if (debug) print("End Ranged Attack");
 
         StartCoroutine(WaitBeforeAttacking(attackCooldownMin, attackCooldownMax));
     }
+    #endregion
 
+    public void Knockback(Vector2 dir, float strength)
+    {
+        print("Knockback enemy");
+        combatAI.PauseMovement(0.5f);
+        rb.AddForce(dir * strength, ForceMode2D.Impulse);
+    }
+
+    //Used with Patrol
     protected IEnumerator WaitBeforeMoving(float minWait, float maxWait)
     {
         canMove = false;
@@ -374,6 +406,7 @@ public class EnemyStateMachine : MonoBehaviour
         canMove = true;
     }
 
+    //Attack cooldown
     protected IEnumerator WaitBeforeAttacking(float minWait, float maxWait)
     {
         canAttack = false;

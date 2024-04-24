@@ -32,4 +32,10 @@ public interface IHealth
     /// Method to force the update of any health visuals
     /// </summary>
     public void UpdateHealth();
+    /// <summary>
+    /// Applys knockback to character in dir at given strength
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="strength"></param>
+    public void Knockback(Vector3 dir, float strength);
 }

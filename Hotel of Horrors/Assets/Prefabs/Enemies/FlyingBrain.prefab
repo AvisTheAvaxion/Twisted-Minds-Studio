@@ -57,7 +57,7 @@ Transform:
   m_GameObject: {fileID: 2401005534927958967}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.12573089, y: 0.026176304, z: 0.006482818}
+  m_LocalPosition: {x: 0.004, y: 0.026176304, z: 0.006482818}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -130,12 +130,13 @@ GameObject:
   - component: {fileID: 3613590584620468461}
   - component: {fileID: 7960817718154146037}
   - component: {fileID: 6231032360499413097}
+  - component: {fileID: 8720933068207900272}
   - component: {fileID: 2685478914860777885}
   - component: {fileID: 6513521994882905555}
   - component: {fileID: -4455104578077453517}
+  - component: {fileID: 5834758641980206469}
   - component: {fileID: 2626282256757693886}
   - component: {fileID: 6071954231053187924}
-  - component: {fileID: 5834758641980206469}
   m_Layer: 0
   m_Name: FlyingBrain
   m_TagString: Enemy
@@ -259,6 +260,36 @@ MonoBehaviour:
   bezierTangentLength: 0.4
   offset: 0.2
   factor: 0.1
+--- !u!114 &8720933068207900272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7728880389295436849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04822df9f773d3459508bb93808d18d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  currentDirSmoothing: 0.5
+  objectRadius: 0.16
+  speed: 2
+  orbitRadius: 1
+  orbitRadiusThickness: 0.2
+  numOfWeights: 16
+  visualizeWeights: 1
+  obstacleDistanceSensitivity: 1
+  desireKeepSameDir: 0.1
+  noObstacleDesire: 0.3
+  comradeTag: Enemy
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  obstructionDetectionThreshold: 0.1
+  maxObstructionChangeDir: 0
+  minObstructionChangeDir: -0.8
 --- !u!114 &2685478914860777885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,8 +306,6 @@ MonoBehaviour:
   gizmos: 1
   flipToRotate: 1
   transformToFlip: {fileID: 4025602992522567503}
-  navigation: {fileID: 7960817718154146037}
-  destSetter: {fileID: 0}
   animator: {fileID: 6773491364635308731}
   hasWalkCycle: 1
   attackType: 1
@@ -289,16 +318,15 @@ MonoBehaviour:
   contactKnockback: 2
   attackCooldownMin: 1
   attackCooldownMax: 2
-  minDistToTarget: 1.5
-  maxDistToTarget: 2
   meleeAttackPoint: {fileID: 0}
+  meleeRange: 0.5
   meleeRadius: 0
   meleeDamage: 0
   knockback: 0
   chanceToInflictEffect: 0
   effectsToInflict: []
   shooter: {fileID: 6513521994882905555}
-  maintainDistToTarget: 0
+  range: 2
   canMoveAndShoot: 1
   wallsLayerMask:
     serializedVersion: 2
@@ -363,8 +391,28 @@ MonoBehaviour:
   debug: 0
   healOverTime: 0
   timeBtwHeals: 5
-  isBoss: 0
+  enemyMovement: {fileID: 0}
+--- !u!114 &5834758641980206469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7728880389295436849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
   uiDisplay: {fileID: 0}
+  isPlayer: 0
+  health:
+    type: 0
+    defaultValue: 25
+    hasMax: 1
+    maxValue: 25
+  stats: []
 --- !u!61 &2626282256757693886
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -397,7 +445,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.12259677, y: -0.033987224}
+  m_Offset: {x: 0.0022492409, y: -0.033987224}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -408,7 +456,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2547086, y: 0.15031916}
+  m_Size: {x: 0.2673769, y: 0.15031916}
   m_EdgeRadius: 0
 --- !u!50 &6071954231053187924
 Rigidbody2D:
@@ -422,7 +470,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -437,27 +485,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5834758641980206469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7728880389295436849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  uiDisplay: {fileID: 0}
-  isPlayer: 0
-  health:
-    type: 0
-    defaultValue: 25
-    hasMax: 1
-    maxValue: 25
-  stats: []
 --- !u!1 &8278585616756773676
 GameObject:
   m_ObjectHideFlags: 0

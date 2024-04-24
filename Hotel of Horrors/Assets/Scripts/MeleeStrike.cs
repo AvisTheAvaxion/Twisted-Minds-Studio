@@ -53,6 +53,12 @@ public class MeleeStrike : MonoBehaviour
             if (health != null) { 
                 health.TakeDamage(damage);
 
+                if (knockback > 0) 
+                {
+                    Vector2 dir = (collision.transform.position - transform.position).normalized;
+                    health.Knockback(dir, knockback);
+                }
+
                 if (effects != null)
                 {
                     foreach (Effect effect in effects)
@@ -60,12 +66,6 @@ public class MeleeStrike : MonoBehaviour
                         health.InflictEffect(effect);
                     }
                 }
-            }
-
-            if (knockback > 0)
-            {
-                //Rigidbody2D otherRB = collision.attachedRigidbody;
-                //otherRB.AddForce((collision.transform.position - transform.position).normalized * knockback, ForceMode2D.Impulse);
             }
         } else
         {

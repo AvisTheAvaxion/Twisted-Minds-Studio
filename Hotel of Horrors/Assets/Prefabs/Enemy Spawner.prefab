@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8263009404076726035}
   - component: {fileID: 2399797289723974077}
   - component: {fileID: 582406424742337936}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyQueue: []
   spawnPerWave: 0
+  isActiviated: 0
 --- !u!60 &582406424742337936
 PolygonCollider2D:
   m_ObjectHideFlags: 0

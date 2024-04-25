@@ -296,13 +296,13 @@ MonoBehaviour:
   orbitRadiusThickness: 0.2
   numOfWeights: 16
   visualizeWeights: 1
-  obstacleDistanceSensitivity: 1
+  obstacleDistanceSensitivity: 0.3
   desireKeepSameDir: 0.1
   noObstacleDesire: 0.3
   comradeTag: Enemy
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 247
   obstructionDetectionThreshold: 0.1
   maxObstructionChangeDir: 0
   minObstructionChangeDir: -0.8

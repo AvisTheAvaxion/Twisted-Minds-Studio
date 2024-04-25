@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1222665275652685480
+--- !u!1 &2815551542813213013
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6703327049489554621}
-  - component: {fileID: 2337994481140977103}
-  - component: {fileID: 205526482412022701}
+  - component: {fileID: 8586501289719914073}
+  - component: {fileID: 3808625522019221148}
+  - component: {fileID: 463618616993668783}
   m_Layer: 0
-  m_Name: EastDashParticle
+  m_Name: NorthDashParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6703327049489554621
+--- !u!4 &8586501289719914073
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1222665275652685480}
+  m_GameObject: {fileID: 2815551542813213013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.04747716, y: 0.12274162, z: -0.0035999985}
@@ -33,13 +33,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!198 &2337994481140977103
+--- !u!198 &3808625522019221148
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1222665275652685480}
+  m_GameObject: {fileID: 2815551542813213013}
   serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 1
@@ -1554,11 +1554,11 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: -115930462, guid: ee2df1f83593f5b4f9880fca975ae3a5, type: 3}
-    - sprite: {fileID: -499829271, guid: ee2df1f83593f5b4f9880fca975ae3a5, type: 3}
-    - sprite: {fileID: -1962953824, guid: ee2df1f83593f5b4f9880fca975ae3a5, type: 3}
-    - sprite: {fileID: 418279891, guid: ee2df1f83593f5b4f9880fca975ae3a5, type: 3}
-    - sprite: {fileID: 1146194903, guid: ee2df1f83593f5b4f9880fca975ae3a5, type: 3}
+    - sprite: {fileID: 12926106, guid: 56a2c09986e5d2e4b9d86e5ea7ea353d, type: 3}
+    - sprite: {fileID: -769306692, guid: 56a2c09986e5d2e4b9d86e5ea7ea353d, type: 3}
+    - sprite: {fileID: 1455672965, guid: 56a2c09986e5d2e4b9d86e5ea7ea353d, type: 3}
+    - sprite: {fileID: 1343135788, guid: 56a2c09986e5d2e4b9d86e5ea7ea353d, type: 3}
+    - sprite: {fileID: -1650447653, guid: 56a2c09986e5d2e4b9d86e5ea7ea353d, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -4827,14 +4827,14 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &205526482412022701
+--- !u!199 &463618616993668783
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1222665275652685480}
+  m_GameObject: {fileID: 2815551542813213013}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -4868,7 +4868,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 2
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -4882,7 +4882,7 @@ ParticleSystemRenderer:
   m_ShadowBias: 0
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
-  m_Flip: {x: 1, y: 0, z: 0}
+  m_Flip: {x: 0, y: 0, z: 0}
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1

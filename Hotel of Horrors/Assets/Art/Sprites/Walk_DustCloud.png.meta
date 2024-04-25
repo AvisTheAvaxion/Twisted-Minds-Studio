@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ee2df1f83593f5b4f9880fca975ae3a5
+guid: 66e0fcc721dc9aa44982203dbf4e48db
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dash_DustCloud_0
+      name: Walk_DustCloud_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 16
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2bc71ed07d13b894882906baf52bedaa
-      internalID: -115930462
+      spriteID: 5a8e4c68f4a189648bab8cc2aa733ce1
+      internalID: -1557872324
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dash_DustCloud_1
+      name: Walk_DustCloud_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 10
         y: 0
-        width: 32
-        height: 16
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95f54e55783756b4892f6ed53f93ae47
-      internalID: -499829271
+      spriteID: 93788a72ec324b442af0de384976fbc7
+      internalID: 1954897725
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dash_DustCloud_2
+      name: Walk_DustCloud_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 20
         y: 0
-        width: 32
-        height: 16
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +179,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 478b15d25f7bcae46954902ff62f30e2
-      internalID: -1962953824
+      spriteID: fbcff31b99dadd24489d3b7fe8358ee9
+      internalID: 1062459488
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dash_DustCloud_3
+      name: Walk_DustCloud_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 30
         y: 0
-        width: 32
-        height: 16
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,29 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ded56828ff9b2eb4e97ce08533925d5c
-      internalID: 418279891
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dash_DustCloud_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2bbc30e9b9a8250489748b846de37780
-      internalID: 1146194903
+      spriteID: fd9622b21bac0734b9993283716ff5f7
+      internalID: -819177862
       vertices: []
       indices: 
       edges: []
@@ -238,11 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Dash_DustCloud_0: -115930462
-      Dash_DustCloud_1: -499829271
-      Dash_DustCloud_2: -1962953824
-      Dash_DustCloud_3: 418279891
-      Dash_DustCloud_4: 1146194903
+      Walk_DustCloud_0: -1557872324
+      Walk_DustCloud_1: 1954897725
+      Walk_DustCloud_2: 1062459488
+      Walk_DustCloud_3: -819177862
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

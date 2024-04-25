@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Modifiers")]
     public float movementSpeed;
     [SerializeField] [Range(0,1)] float drag;
+    [SerializeField] ParticleSystem walkParticles;
     
     //public float collisionOffset = 0.05f;
     //public ContactFilter2D movementFilter;
@@ -237,11 +238,15 @@ public class PlayerMovement : MonoBehaviour
         {
             if (movementVector.y >= 0.1f)
             {
+                if (dashPartcileSpawn && dashParticles[0]) Destroy(Instantiate(dashParticles[0], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
+
                 direction = "North";
                 animator.runtimeAnimatorController = backController;
             }
             else if (movementVector.y <= -0.1f)
             {
+                if (dashPartcileSpawn && dashParticles[1]) Destroy(Instantiate(dashParticles[1], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
+
                 direction = "South";
                 animator.runtimeAnimatorController = forwardController;
             }
@@ -326,6 +331,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isAttackMode)
             AnimateMovement();
+    }
+
+    public void EmitWalkParticles()
+    {
+        if (walkParticles != null)
+        {
+            walkParticles.Stop();
+            walkParticles.Play();
+        }
     }
 
     #region RoomTraversal

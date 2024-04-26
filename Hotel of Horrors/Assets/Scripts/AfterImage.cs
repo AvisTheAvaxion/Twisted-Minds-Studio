@@ -14,7 +14,6 @@ public class AfterImage : MonoBehaviour
     [SerializeField] float trailLength = 0.4f;
     [SerializeField] int density = 10;
     [SerializeField] bool debug;
-    bool emitOverVelocity = false;
 
     bool playEffect;
 
@@ -49,17 +48,6 @@ public class AfterImage : MonoBehaviour
         ParticleSystem.EmissionModule afterImageEmission = afterImageEffect.emission;
         afterImageMain.startLifetime = trailLength;
 
-        /*if (emitOverVelocity)
-        {
-            afterImageEmission.rateOverTime = 0;
-            afterImageEmission.rateOverDistance = density;
-        }
-        else
-        {
-            afterImageEmission.rateOverTime = density;
-            afterImageEmission.rateOverDistance = 0;
-        }*/
-
         afterImageEmission.rateOverTime = density;
         afterImageEmission.rateOverDistance = 0;
 
@@ -87,17 +75,6 @@ public class AfterImage : MonoBehaviour
         ParticleSystem.MainModule afterImageMain = afterImageEffect.main;
         ParticleSystem.EmissionModule afterImageEmission = afterImageEffect.emission;
         afterImageMain.startLifetime = trailLength;
-
-        /*if (emitOverVelocity)
-        {
-            afterImageEmission.rateOverTime = 0;
-            afterImageEmission.rateOverDistance = density;
-        }
-        else
-        {
-            afterImageEmission.rateOverTime = density;
-            afterImageEmission.rateOverDistance = 0;
-        }*/
 
         afterImageEmission.rateOverTime = density;
         afterImageEmission.rateOverDistance = 0;

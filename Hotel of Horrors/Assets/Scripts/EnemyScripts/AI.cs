@@ -13,9 +13,6 @@ public class AI : MonoBehaviour
 
     Rigidbody2D rb;
 
-    Vector2 desiredDir;
-    int desiredDirIndex = 0;
-
     Vector2 unobstructedDir;
     int unobstructedIndex = 0;
 

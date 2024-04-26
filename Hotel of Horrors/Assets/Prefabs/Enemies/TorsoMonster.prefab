@@ -248,7 +248,7 @@ MonoBehaviour:
   orientation: 1
   enableRotation: 0
   rotationSpeed: 10
-  interpolatePathSwitches: 1
+  interpolatePathSwitches: 0
   switchPathInterpolationSpeed: 5
   targetCompatibility: {fileID: 0}
   repathRateCompatibility: NaN
@@ -295,7 +295,7 @@ MonoBehaviour:
   orbitRadiusThickness: 0.2
   numOfWeights: 16
   visualizeWeights: 1
-  obstacleDistanceSensitivity: 0.3
+  obstacleDistanceSensitivity: 0.15
   desireKeepSameDir: 0.1
   noObstacleDesire: 0.3
   comradeTag: Enemy
@@ -333,6 +333,7 @@ MonoBehaviour:
   contactKnockback: 1
   attackCooldownMin: 3
   attackCooldownMax: 4
+  maxDistanceToNavigate: 3
   meleeAttackPoint: {fileID: 4727642729652596645}
   meleeRange: 0.5
   meleeRadius: 0.5
@@ -345,11 +346,11 @@ MonoBehaviour:
   canMoveAndShoot: 0
   wallsLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   dropRadius: 0.5
   minDropAmount: 1
   maxDropAmount: 2
-  itemHolder: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
+  itemHolderPrefab: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
   itemDrops:
   - item: {fileID: 11400000, guid: e2383470b62dff64cabe2394330c307f, type: 2}
     minCount: 1

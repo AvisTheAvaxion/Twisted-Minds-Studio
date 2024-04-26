@@ -8,76 +8,162 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [SerializeField] public Useables itemHeld;
+    public int itemIndex { get; private set; }
     Image itemImage;
+
     Color slotEmptyColor = new Color(1, 1, 1, 0);
     Color slotFilledColor = new Color(1, 1, 1, 1);
 
     [Header("Item Slot Settings")]
+    [SerializeField] TextMeshProUGUI amountText;
     [SerializeField] bool isWeaponSlot;
-    [SerializeField] bool isFreeSlot;
-    [SerializeField] bool isMementoSlot;
+    [SerializeField] bool isItemSlot;
+    [SerializeField] bool isWeaponEquipSlot;
+    [SerializeField] bool isFreeEquipSlot;
+    [SerializeField] bool isMementoEquipSlot;
+    public bool IsWeaponEquipSlot { get => isWeaponEquipSlot; }
+    public bool IsFreeEquipSlot { get => isFreeEquipSlot; }
+    public bool IsMementoEquipSlot { get => isMementoEquipSlot; }
+
     public bool IsWeaponSlot { get => isWeaponSlot; }
-    public bool IsFreeSlot { get => isFreeSlot; }
-    public bool IsMementoSlot { get => isMementoSlot; }
+    public bool IsItemSlot { get => isItemSlot; }
 
     [Header("Item Tool Tip Reference")]
     [SerializeField] ItemToolTip itemToolTip;
     Inventory inventory;
 
-    bool firstStart = true;
-    // Start is called before the first frame update
-    void Start()
+    public void Init() 
     {
-        firstStart = false;
         inventory = FindObjectOfType<Inventory>();
         itemImage = GetComponent<Image>();
-        
-        if (itemHeld != null)
-            UpdateImage();
-        else
-            itemImage.color = slotEmptyColor;
+        amountText = GetComponentInChildren<TextMeshProUGUI>();
 
-        if(itemToolTip == null)
+        itemIndex = -1;
+
+        UpdateImage();
+
+        if (itemToolTip == null)
         {
             itemToolTip = FindObjectOfType<ItemToolTip>();
         }
     }
 
-    private void OnEnable()
-    {
-        if (itemHeld != null && firstStart == false)
-        {
-            UpdateImage();
-        }
-    }
-
     public void UnequipItem()
     {
-        itemHeld = null;
-        UpdateImage();
+        //itemHeld = null;
+        //UpdateImage();
     }
 
     public void UpdateImage()
     {
-        if (itemHeld == null)
+        if(isItemSlot)
+        {
+            ItemInstance item = inventory.GetItem(transform.parent.GetSiblingIndex());
+            if (item != null) 
+            { 
+                amountText.enabled = true;
+                itemImage.color = slotFilledColor;
+                amountText.text = item.CurrentAmount.ToString();
+                itemImage.sprite = item.GetInfo().GetSprite();
+            } else
+            {
+                itemImage.color = slotEmptyColor;
+                itemImage.sprite = null;
+                amountText.enabled = false;
+            }
+        } else if (isWeaponSlot)
+        {
+            Weapon weapon = inventory.GetWeapon(transform.parent.GetSiblingIndex());
+            if (weapon != null)
+            {
+                amountText.enabled = false;
+                itemImage.color = slotFilledColor;
+                itemImage.sprite = weapon.GetSprite();
+            }
+            else
+            {
+                itemImage.color = slotEmptyColor;
+                itemImage.sprite = null;
+                amountText.enabled = false;
+            }
+        } else
         {
             itemImage.color = slotEmptyColor;
             itemImage.sprite = null;
+            amountText.enabled = false;
         }
-        else
+    }
+    public void UpdateImage(int index)
+    {
+       
+        if (isFreeEquipSlot)
         {
-            itemImage.color = slotFilledColor;
-            itemImage.sprite = itemHeld.GetSprite();
+            ItemInstance item = inventory.GetItem(index);
+            if (item != null)
+            {
+                this.itemIndex = index;
+                amountText.enabled = true;
+                itemImage.color = slotFilledColor;
+                amountText.text = item.CurrentAmount.ToString();
+                itemImage.sprite = item.GetInfo().GetSprite();
+            }
+            else
+            {
+                itemImage.color = slotEmptyColor;
+                itemImage.sprite = null;
+                amountText.enabled = false;
+            }
+        }
+        else if (isWeaponEquipSlot)
+        {
+            Weapon weapon = inventory.GetWeapon(index);
+            if (weapon != null)
+            {
+                this.itemIndex = index;
+                amountText.enabled = false;
+                itemImage.color = slotFilledColor;
+                itemImage.sprite = weapon.GetSprite();
+            }
+            else
+            {
+                itemImage.color = slotEmptyColor;
+                itemImage.sprite = null;
+                amountText.enabled = false;
+            }
+        } else
+        {
+            itemImage.color = slotEmptyColor;
+            itemImage.sprite = null;
+            amountText.enabled = false;
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (itemHeld != null)
+        Useables info = null;
+        if(isItemSlot)
+        {
+            ItemInstance item = inventory.GetItem(transform.parent.GetSiblingIndex());
+            if (item != null) info = item.GetInfo();
+        }
+        else if (isWeaponSlot)
+        {
+            info = inventory.GetWeapon(transform.parent.GetSiblingIndex());
+        }
+        else if (isFreeEquipSlot)
+        {
+            ItemInstance item = inventory.GetItem(itemIndex);
+            if (item != null) info = item.GetInfo();
+        }
+        else if (isWeaponEquipSlot)
+        {
+            info = inventory.GetWeapon(itemIndex);
+        }
+
+        if (info != null)
         {
             itemToolTip.transform.position = (Vector2)transform.position + new Vector2(50f, 50f);
-            itemToolTip.AssignItem(itemHeld);
+            itemToolTip.AssignItem(info);
 
             itemToolTip.gameObject.SetActive(true);
         }
@@ -85,37 +171,32 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left && itemHeld != null && !isWeaponSlot && !isFreeSlot && !isMementoSlot)
-        {
-            if (itemHeld.GetType() == typeof(Weapon))
-            {
-                inventory.EquipWeapon((Weapon)itemHeld, this);
-            }
-            if (itemHeld.GetType() != typeof(Weapon) && Input.GetKey(KeyCode.Q))
-            {
-                //inventory.EquipFreeItem(itemHeld, 0);
-            }
-            if (itemHeld.GetType() != typeof(Weapon) && itemHeld.GetType() != typeof(Mementos))
-            {
-                inventory.EquipFreeItem(itemHeld, this);
-            }
-        }
-        else if (eventData.button == PointerEventData.InputButton.Right && itemHeld != null)
+        if (eventData.button == PointerEventData.InputButton.Left && !isWeaponEquipSlot && !isFreeEquipSlot && !isMementoEquipSlot)
         {
             if (isWeaponSlot)
             {
-                inventory.EquipWeapon(null, null);
+                inventory.EquipWeapon(transform.parent.GetSiblingIndex());
+            }
+            if (isItemSlot)
+            {
+                inventory.EquipFreeItem(transform.parent.GetSiblingIndex());
+            }
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (isWeaponEquipSlot)
+            {
+                inventory.EquipWeapon(-1);
                 itemToolTip.gameObject.SetActive(false);
             }
-            else if (isFreeSlot)
+            else if (isFreeEquipSlot)
             {
-                itemHeld = null;
-                UpdateImage();
+                UpdateImage(-1);
                 itemToolTip.gameObject.SetActive(false);
             }
-            else if (itemHeld != null && itemHeld.GetType() == typeof(Item))
+            else if (isItemSlot)
             {
-                inventory.UseItem((Item)itemHeld, this);
+                inventory.UseItem(transform.parent.GetSiblingIndex(), this);
             }
         }
     }

@@ -7,12 +7,12 @@ using UnityEngine.InputSystem;
 
 public class Inventory : MonoBehaviour
 {
-    [Header("Items")]
-    List<Useables> inventoryItems = new List<Useables>();
-    List<ItemInstance> itemsInventory;
+    Weapon[] weaponsInventory;
+    ItemInstance[] itemsInventory;
     List<MementoInstance> mementosInventory;
     List<AbilityInstance> abilitiesInventory;
 
+    [Header("Items")]
     [SerializeField] public Weapon currentWeapon;
     [SerializeField] public Useables itemOne;
     [SerializeField] public Mementos currentMemento;
@@ -23,9 +23,9 @@ public class Inventory : MonoBehaviour
     ItemSlot weaponSlot;
     ItemSlot freeSlot;
     ItemSlot mementoSlot;
-    ItemSlot referencedWeaponSlot;
-    ItemSlot referencedFreeSlot;
-    List<ItemSlot> slots;
+
+    ItemSlot[] itemSlots;
+    ItemSlot[] weaponSlots;
 
     AttackController attackController;
 
@@ -40,16 +40,24 @@ public class Inventory : MonoBehaviour
         uiDisplay.InventoryUI.SetActive(false);
         attackController = GetComponent<AttackController>();
 
-        slots = uiDisplay.InventoryUI.GetComponentsInChildren<ItemSlot>().ToList();
+        itemSlots = uiDisplay.ItemsContainer.GetComponentsInChildren<ItemSlot>();
+        weaponSlots = uiDisplay.WeaponsContainer.GetComponentsInChildren<ItemSlot>();
+
+        itemsInventory = new ItemInstance[itemSlots.Length];
+        weaponsInventory = new Weapon[weaponSlots.Length];
+
+        ItemSlot[] slots = uiDisplay.InventoryUI.GetComponentsInChildren<ItemSlot>();
         foreach (ItemSlot slot in slots)
         {
-            if (slot.IsWeaponSlot)
+            slot.Init();
+            if (slot.IsWeaponEquipSlot)
                 weaponSlot = slot;
-            else if (freeSlot == null && slot.IsFreeSlot)
+            else if (freeSlot == null && slot.IsFreeEquipSlot)
                 freeSlot = slot;
-            else if (mementoSlot == null && slot.IsMementoSlot)
-                mementoSlot = slot;
         }
+
+        uiDisplay.ItemsContainer.SetActive(false);
+        uiDisplay.WeaponsContainer.SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,12 +66,13 @@ public class Inventory : MonoBehaviour
 
         if (data)
         {
-            //Debug.Log("PickUp Get");
+            bool remove = true;
             Useables useable = data.GetItemData();
             int count = data.GetCount();
             if (useable.GetType() == typeof(Item))
             {
-                //ItemInstance newItem = new ItemInstance((Item)useable, count);
+                ItemInstance newItem = new ItemInstance((Item)useable, count);
+                remove = AddItem(newItem);
             }
             else if (useable.GetType() == typeof(Mementos))
             {
@@ -73,21 +82,28 @@ public class Inventory : MonoBehaviour
             {
 
             }
-            //UseableInstance newItem = new UseableInstance(useable, count);
-            //Debug.Log(useable.GetDescription());
-            collision.gameObject.SetActive(false);
-            inventoryItems.Add(useable);
-            SlotInItem(useable);
+            else if (useable.GetType() == typeof(Weapon))
+            {
+                remove = AddWeapon((Weapon)useable);
+            }
+            if(remove) Destroy(collision.gameObject);
         }
     }
 
-    public void EquipWeapon(Weapon weapon, ItemSlot slotRef)
+    public Weapon GetWeapon(int index)
     {
-        attackController.Equip(weapon);
-        weaponSlot.itemHeld = currentWeapon = weapon;
-        weaponSlot.UpdateImage();
+        return index >= 0 && index < weaponsInventory.Length ? weaponsInventory[index] : null;
+    }
+    public ItemInstance GetItem(int index)
+    {
+        return index >= 0 && index < itemsInventory.Length ? itemsInventory[index] : null;
+    }
 
-        referencedWeaponSlot = slotRef;
+    public void EquipWeapon(int index)
+    {
+        Weapon weapon = weaponsInventory[index];
+        attackController.Equip(weapon);
+        weaponSlot.UpdateImage(index);
 
         if (weapon == null)
         {
@@ -99,12 +115,10 @@ public class Inventory : MonoBehaviour
             uiDisplay.WeaponHotbarImage.sprite = weapon.GetSprite();
         }
     }
-    public void EquipFreeItem(Useables item, ItemSlot slotRef)
+    public void EquipFreeItem(int index)
     {
-        freeSlot.itemHeld = itemOne = item;
-        freeSlot.UpdateImage();
-
-        referencedFreeSlot = slotRef;
+        ItemInstance item = itemsInventory[index];
+        freeSlot.UpdateImage(index);
 
         if (item == null)
         {
@@ -113,26 +127,48 @@ public class Inventory : MonoBehaviour
         else
         {
             uiDisplay.FreeSlotHotbarImage.enabled = true;
-            uiDisplay.FreeSlotHotbarImage.sprite = item.GetSprite();
+            uiDisplay.FreeSlotHotbarImage.sprite = item.GetInfo().GetSprite();
         }
     }
 
-    public void SlotInItem(Useables item)
+    public bool AddItem(ItemInstance itemInstance)
     {
-        int skipThree = 0;
-        foreach(ItemSlot slot in slots)
+        for (int i = 0; i < itemsInventory.Length; i++)
         {
-            if(slot.itemHeld != null || skipThree < 3)
+            if (itemsInventory[i] == null)
             {
-                skipThree++;
-                continue;
-            }
-            else
+                itemsInventory[i] = itemInstance;
+                itemSlots[i].UpdateImage();
+                return true;
+            } 
+            else if (itemsInventory[i].GetInfo().GetName() == itemInstance.GetInfo().GetName())
             {
-                slot.itemHeld = item;
-                break;
+                int newAmount = itemsInventory[i].AddAmount(itemInstance.CurrentAmount);
+                if (freeSlot.itemIndex == i) freeSlot.UpdateImage(i);
+                itemSlots[i].UpdateImage();
+                if (newAmount > 0)
+                {
+                    itemInstance.SetCurrentAmount(newAmount);
+                    continue;
+                }
+                return true;
             }
         }
+        return false;
+    }
+
+    public bool AddWeapon(Weapon weapon)
+    {
+        for (int i = 0; i < weaponsInventory.Length; i++)
+        {
+            if (weaponsInventory[i] == null)
+            {
+                weaponsInventory[i] = weapon;
+                weaponSlots[i].UpdateImage();
+                return true;
+            }
+        }
+        return false;
     }
 
     void OnToggleInventory()
@@ -150,22 +186,38 @@ public class Inventory : MonoBehaviour
     }
     void OnSecondaryAction(InputValue inputValue)
     {
-        if(itemOne != null && itemOne.GetType() == typeof(Item))
-        {
-            UseItem((Item)itemOne, referencedFreeSlot);
-        }
+        UseItem(freeSlot.itemIndex, freeSlot);
     }
 
-    public void UseItem(Item itemToUse, ItemSlot slot)
+    public void UseItem(int index, ItemSlot slot)
     {
-        Item item = itemToUse;
-        foreach (EffectInfo effectInfo in item.GetEffectInfos())
+        ItemInstance item = GetItem(index);
+        if (item != null)
         {
-            Effect effect = new Effect(effectInfo, 1);
-            playerHealth.InflictEffect(effect);
+            item.RemoveAmount(1);
+            foreach (EffectInfo effectInfo in item.GetInfo().GetEffectInfos())
+            {
+                Effect effect = new Effect(effectInfo, 1);
+                playerHealth.InflictEffect(effect);
+            }
+
+            if(item.CurrentAmount <= 0)
+            {
+                itemsInventory[index] = null;
+            }
+
+            itemSlots[index].UpdateImage();
+            if (slot.IsFreeEquipSlot)
+            {
+                if(item.CurrentAmount > 0)
+                    slot.UpdateImage(index);
+                else
+                    slot.UpdateImage(-1);
+            } else if (freeSlot.itemIndex == index)
+            {
+                freeSlot.UpdateImage(index);
+            }
         }
-        slot.UnequipItem();
-        EquipFreeItem(null, null);
     }
 
     public void UpdatePlayerMode()
@@ -199,10 +251,17 @@ public class UseableInstance
         currentAmount = amount;
     }
 
-    public void AddAmount(int amount)
+    public int AddAmount(int amount)
     {
         currentAmount += amount;
-        currentAmount = (isFull = currentAmount > info.GetMaxStackAmount()) ? info.GetMaxStackAmount() : currentAmount;
+        isFull = currentAmount >= info.GetMaxStackAmount();
+        if(isFull)
+        {
+            int amountOver = currentAmount - info.GetMaxStackAmount();
+            currentAmount = info.GetMaxStackAmount();
+            return amountOver;
+        } else
+            return 0;
     }
     public int RemoveAmount(int amount)
     {
@@ -210,6 +269,11 @@ public class UseableInstance
         isFull = false;
         currentAmount = currentAmount < 0 ? 0 : currentAmount;
         return currentAmount;
+    }
+
+    public void SetCurrentAmount(int amount)
+    {
+        currentAmount = amount;
     }
 }
 

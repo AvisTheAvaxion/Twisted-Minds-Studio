@@ -296,7 +296,7 @@ MonoBehaviour:
   orbitRadiusThickness: 0.2
   numOfWeights: 16
   visualizeWeights: 1
-  obstacleDistanceSensitivity: 0.3
+  obstacleDistanceSensitivity: 0.15
   desireKeepSameDir: 0.1
   noObstacleDesire: 0.3
   comradeTag: Enemy
@@ -334,6 +334,7 @@ MonoBehaviour:
   contactKnockback: 3
   attackCooldownMin: 2
   attackCooldownMax: 2.5
+  maxDistanceToNavigate: 3
   meleeAttackPoint: {fileID: 0}
   meleeRange: 0.5
   meleeRadius: 0
@@ -350,7 +351,7 @@ MonoBehaviour:
   dropRadius: 0.25
   minDropAmount: 1
   maxDropAmount: 3
-  itemHolder: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
+  itemHolderPrefab: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
   itemDrops:
   - item: {fileID: 11400000, guid: 31f7daa77a838a545bf97e2afc5375a3, type: 2}
     minCount: 1

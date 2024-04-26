@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropRadius: 0.5
-  minDropAmount: 2
-  maxDropAmount: 5
+  minDropAmount: 1
+  maxDropAmount: 3
   itemHolder: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
   itemDrops:
   - item: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
@@ -147,7 +147,7 @@ MonoBehaviour:
     minCount: 1
     maxCount: 1
     weight: 0.1
-  health: 10
+  health: 1
   destroyEffect: {fileID: 0}
   destroyEffectLifetime: 2
 --- !u!61 &3013682109278790821

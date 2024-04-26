@@ -8,6 +8,8 @@ public class UIDisplayContainer : MonoBehaviour
 {
     [Header("Inventory UI")]
     [SerializeField] GameObject inventoryUI;
+    [SerializeField] GameObject weaponsContainer;
+    [SerializeField] GameObject itemsContainer;
     [SerializeField] ItemToolTip itemToolTip;
 
     [Header("Game UI")]
@@ -50,4 +52,6 @@ public class UIDisplayContainer : MonoBehaviour
     public Image ReloadCircle { get => reloadCircle; }
     public GameObject EffectsIconPrefab { get => effectsIconPrefab; }
     public Slider Boss_healthBar { get => boss_healthBar;}
+    public GameObject WeaponsContainer { get => weaponsContainer; }
+    public GameObject ItemsContainer { get => itemsContainer; }
 }

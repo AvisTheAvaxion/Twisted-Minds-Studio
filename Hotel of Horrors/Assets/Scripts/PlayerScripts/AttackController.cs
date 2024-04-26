@@ -70,7 +70,10 @@ public class AttackController : MonoBehaviour
         isAttacking = false;
         attackButtonReleased = true;
 
-        if (currentAttackMode.Equals(AttackModes.Melee) || currentAttackMode.Equals(AttackModes.None))
+        rangedCrosshair.SetActive(true);
+        meleeCrosshair.SetActive(false);
+
+        /*if (currentAttackMode.Equals(AttackModes.Melee) || currentAttackMode.Equals(AttackModes.None))
         {
             rangedCrosshair.SetActive(false);
             meleeCrosshair.SetActive(true);
@@ -79,7 +82,7 @@ public class AttackController : MonoBehaviour
         {
             rangedCrosshair.SetActive(true);
             meleeCrosshair.SetActive(false);
-        }
+        }*/
     }
 
     //Called by the inventory system to store reference to the current weapon
@@ -113,7 +116,7 @@ public class AttackController : MonoBehaviour
             currentAttackMode = AttackModes.None;
         }
 
-        if (currentAttackMode.Equals(AttackModes.Melee) || currentAttackMode.Equals(AttackModes.None))
+       /* if (currentAttackMode.Equals(AttackModes.Melee) || currentAttackMode.Equals(AttackModes.None))
         {
             rangedCrosshair.SetActive(false);
             meleeCrosshair.SetActive(true);
@@ -122,7 +125,7 @@ public class AttackController : MonoBehaviour
         {
             rangedCrosshair.SetActive(true);
             meleeCrosshair.SetActive(false);
-        }
+        }*/
     }
 
     void OnAttack(InputValue inputValue)

@@ -48,11 +48,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
             if (stats.GetHealthValue() <= 0)
             {
-                if (gameObject.tag.Equals("Player"))
-                {
-                    //loads death scene
-                    SceneManager.LoadScene("Death Screen");
-                }
+                //loads death scene
+                SceneManager.LoadScene("Death Screen");
             }
 
             GiveIFrames(iFramesTime);
@@ -76,11 +73,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
             if (stats.GetHealthValue() <= 0)
             {
-                if (gameObject.tag.Equals("Player"))
-                {
-                    //loads death scene
-                    SceneManager.LoadScene("Death Screen");
-                }
+                //loads death scene
+                SceneManager.LoadScene("Death Screen");
             }
 
             GiveIFrames(iFramesTime);

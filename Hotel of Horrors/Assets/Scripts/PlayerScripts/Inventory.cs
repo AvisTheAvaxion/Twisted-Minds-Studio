@@ -79,7 +79,7 @@ public class Inventory : MonoBehaviour
             }
             else if (useable.GetType() == typeof(Mementos))
             {
-
+                remove = AddMemento((Mementos)useable);
             }
             else if (useable.GetType() == typeof(Abilities))
             {
@@ -214,6 +214,29 @@ public class Inventory : MonoBehaviour
             }
         }
         return false;
+    }
+    public bool AddMemento(Mementos memento)
+    {
+        if(!mementosInventory.Contains(memento))
+        {
+            mementosInventory.Add(memento);
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+    public bool AddPlayerAbility(Abilities ability)
+    {
+        if (!abilitiesInventory.Contains(ability))
+        {
+            abilitiesInventory.Add(ability);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     void OnToggleInventory()

@@ -1,20 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class QuestStep : MonoBehaviour
+public abstract class QuestStep : ScriptableObject
 {
-    bool isCompleted;
-
     public abstract void StepCheck();
 
-    public void SetCompletion(bool isCompleted)
-    {
-        this.isCompleted = isCompleted;
-    }
+    public event EventHandler OnStepComplete;
 
-    public bool GetIsCompleted()
+    public void SetCompletion()
     {
-        return isCompleted;
+        OnStepComplete?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using System;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(AILerp), typeof(AI))]
 public class EnemyStateMachine : MonoBehaviour
@@ -70,6 +72,7 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected int minDropAmount, maxDropAmount;
     [SerializeField] protected GameObject itemHolderPrefab;
     [SerializeField] protected ItemDrop[] itemDrops;
+    public static event EventHandler OnEnemyDeath;
     
     protected bool canMove;
     protected bool canAttack;
@@ -146,6 +149,7 @@ public class EnemyStateMachine : MonoBehaviour
     }
     protected virtual void Death() 
     {
+        OnEnemyDeath?.Invoke(this, EventArgs.Empty);
         SpawnItemDrops();
         Destroy(gameObject);
     }

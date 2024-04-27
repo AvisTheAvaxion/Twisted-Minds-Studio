@@ -1,22 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Quest : MonoBehaviour
 {
-    [SerializeField] List<QuestStep> steps;
-    Queue<QuestStep> stepQueue;
-    QuestStep currentStep;
-    float percentComplete;
+    public List<QuestStep> Steps { get; set; } = new List<QuestStep>();
+    public string QuestName { get; set; }
+    public string Description { get; set; }
+    public Item ItemReward { get; set; }
+    public bool Completed { get; set; }
 
-    public void SetCurrentStep()
+
+    public void CheckGoals()
     {
-        currentStep = stepQueue.Dequeue();
+        Completed = Steps.All(s => s.Completed);
 
-        int stepTotal = steps.Count;
-        int stepsLeft = stepQueue.Count;
-        percentComplete = stepTotal - stepsLeft;
+        if (Completed)
+        {
+            GiveReward();
+        }
+        
     }
 
-    
+    void GiveReward()
+    {
+        if(ItemReward != null)
+        {
+            //Give the item to the player
+        }
+    }
 }

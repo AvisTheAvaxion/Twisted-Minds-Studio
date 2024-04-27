@@ -3,14 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class QuestStep : ScriptableObject
+public class QuestStep
 {
-    public abstract void StepCheck();
+    public string Description { get; set; }
+    public bool Completed { get; set; }
+    public int CurrentAmount { get; set; }
+    public int RequiredAmount { get; set; }
 
-    public event EventHandler OnStepComplete;
-
-    public void SetCompletion()
+    public virtual void Init()
     {
-        OnStepComplete?.Invoke(this, EventArgs.Empty);
+        //default initialization stuff
+    }
+
+    public void Evaluate()
+    {
+        if(CurrentAmount >= RequiredAmount)
+        {
+            Complete();
+        }
+    }
+
+    public void Complete()
+    {
+        Completed = true;
     }
 }

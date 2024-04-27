@@ -8,6 +8,14 @@ public class Projectile : MonoBehaviour
     [SerializeField] float deflectionResistance;
     [SerializeField] [Range(0,1)] float chanceToInflictEffect;
     [SerializeField] EffectInfo[] effectsToInflict;
+    [SerializeField] int maxTargets = 1;
+
+    int targetsHit = 0;
+
+    private void Start()
+    {
+        targetsHit = 0;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -38,17 +46,20 @@ public class Projectile : MonoBehaviour
                 IHealth health = collision.gameObject.GetComponent<IHealth>();
                 if (health != null)
                 {
-                    health.TakeDamage(damage);
-                    if(effectsToInflict != null)
+                    if (health.TakeDamage(damage))
                     {
-                        foreach(EffectInfo effectInfo in effectsToInflict)
+                        if (effectsToInflict != null)
                         {
-                            health.InflictEffect(new Effect(effectInfo, chanceToInflictEffect));
+                            foreach (EffectInfo effectInfo in effectsToInflict)
+                            {
+                                health.InflictEffect(new Effect(effectInfo, chanceToInflictEffect));
+                            }
                         }
-                    }
 
-                    Debug.Log(collision.name + " Destroyed " + gameObject.name);
-                    Destroy(gameObject);
+                        targetsHit++;
+                        if (targetsHit >= maxTargets)
+                            Destroy(gameObject);
+                    }
                 }
                 else
                 {
@@ -56,7 +67,9 @@ public class Projectile : MonoBehaviour
                     if (lootable != null)
                     {
                         lootable.TakeDamage(damage);
-                        Destroy(gameObject);
+                        targetsHit++;
+                        if(targetsHit >= maxTargets)
+                            Destroy(gameObject);
                     }
                 }
             }
@@ -72,16 +85,19 @@ public class Projectile : MonoBehaviour
                 IHealth health = collision.gameObject.GetComponent<IHealth>();
                 if (health != null)
                 {
-                    health.TakeDamage(damage);
-                    if (effectsToInflict != null)
+                    if (health.TakeDamage(damage))
                     {
-                        foreach (EffectInfo effectInfo in effectsToInflict)
+                        if (effectsToInflict != null)
                         {
-                            health.InflictEffect(new Effect(effectInfo, chanceToInflictEffect));
+                            foreach (EffectInfo effectInfo in effectsToInflict)
+                            {
+                                health.InflictEffect(new Effect(effectInfo, chanceToInflictEffect));
+                            }
                         }
+                        targetsHit++;
+                        if (targetsHit >= maxTargets)
+                            Destroy(gameObject);
                     }
-                    Debug.Log(collision.name + " Destroyed " + gameObject.name);
-                    Destroy(gameObject);
                 }
             }
         }

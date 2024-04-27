@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(StatsController))]
 public class BossHealth : MonoBehaviour, IHealth
 {
     public StatsController stats { get; private set; }
     [SerializeField] bool debug;
+    [SerializeField] float iFrameTime = 0.5f;
     [SerializeField] bool healOverTime = false;
     [SerializeField] float timeBtwHeals = 5f;
     [SerializeField] float flashColorLength = 0.2f;
     [SerializeField] FlashColor flashColor;
     [SerializeField] UIDisplayContainer uiDisplay;
+
+    bool canTakeDamage;
 
     float timer = 0;
     private void Start()
@@ -43,8 +47,10 @@ public class BossHealth : MonoBehaviour, IHealth
         stats.Heal(amount);
     }
 
-    public void TakeDamage(float amount, Effect effect = null)
+    public bool TakeDamage(float amount, Effect effect = null)
     {
+        if (!canTakeDamage) return false;
+
         stats.TakeDamage(amount, effect);
 
         uiDisplay.Boss_healthBar.value = stats.GetHealthValue01();
@@ -56,10 +62,15 @@ public class BossHealth : MonoBehaviour, IHealth
         {
             transform.SendMessage("OnDeath");
             //Destroy(gameObject);
+        }else
+        {
+            canTakeDamage = false;
+            StartCoroutine(IFrame());
         }
+        return true;
     }
 
-    public void TakeDamage(float amount, float stunLength, Effect effect = null)
+    public bool TakeDamage(float amount, float stunLength, Effect effect = null)
     {
         throw new System.NotImplementedException();
     }
@@ -91,5 +102,12 @@ public class BossHealth : MonoBehaviour, IHealth
 
     public void Knockback(Vector3 dir, float strength)
     {
+    }
+
+    IEnumerator IFrame()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(iFrameTime);
+        canTakeDamage = true;
     }
 }

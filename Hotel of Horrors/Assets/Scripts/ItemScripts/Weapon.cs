@@ -9,6 +9,9 @@ public class Weapon : Useables
     [Header("Weapon Settings")]
     [SerializeField] AttackModes mode;
     [SerializeField] AttackType type;
+    [SerializeField] string weaponAbilityName;
+    [SerializeField] string weaponAbilityDescription;
+    [SerializeField] Sprite weaponAbilitySprite;
     [SerializeField] GameObject weaponAbility;
     [Space(20)]
     [SerializeField] float attackSpeed;
@@ -34,9 +37,21 @@ public class Weapon : Useables
     {
         //Debug.Log($"WEAPON {this.GetName()} USED");
     }
-    public GameObject WeaponAbility()
+    public GameObject GetWeaponAbility()
     {
         return weaponAbility;
+    }
+    public string GetWeaponAbilityName()
+    {
+        return weaponAbilityName;
+    }
+    public string GetWeaponAbilityDescription()
+    {
+        return weaponAbilityDescription;
+    }
+    public Sprite GetWeaponAbilitySprite()
+    {
+        return weaponAbilitySprite;
     }
 
     public int GetDamage()

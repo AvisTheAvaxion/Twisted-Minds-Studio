@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
         if (heartsController) heartsController.Init(stats.GetHealth());
     }
 
-    public void TakeDamage(float amount, Effect effect = null)
+    public bool TakeDamage(float amount, Effect effect = null)
     {
         //first checking if they have iframes
         if (canGetHit)
@@ -54,10 +54,13 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
             GiveIFrames(iFramesTime);
             Stun(stunTime);
+
+            return true;
         }
+        return false;
     }
 
-    public void TakeDamage(float amount, float stunLength, Effect effect = null)
+    public bool TakeDamage(float amount, float stunLength, Effect effect = null)
     {
         //first checking if they have iframes
         if (canGetHit)
@@ -79,7 +82,10 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
             GiveIFrames(iFramesTime);
             Stun(stunLength);
+
+            return true;
         }
+        return false;
     }
 
     public void Heal(float amount)

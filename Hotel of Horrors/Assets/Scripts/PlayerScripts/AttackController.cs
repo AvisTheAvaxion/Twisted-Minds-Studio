@@ -43,6 +43,7 @@ public class AttackController : MonoBehaviour
     bool isAttacking;
     public bool IsAttacking { get => isAttacking; }
     public AttackModes CurrentAttackMode { get => currentAttackMode; }
+    public Vector2 CrosshairPosition { get => rangedCrosshair.transform.position; }
 
     bool canAttack;
 
@@ -397,6 +398,11 @@ public class AttackController : MonoBehaviour
         }
 
         canDoWeaponAbility = true;
+    }
+
+    public void ShakeCamera(float frequency, float length)
+    {
+        cameraShake.ShakeCamera(frequency, 0.5f, length);
     }
 }
 

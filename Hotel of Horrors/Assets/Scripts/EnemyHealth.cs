@@ -7,17 +7,22 @@ public class EnemyHealth : MonoBehaviour, IHealth
 {
     public StatsController stats { get; private set; }
     [SerializeField] bool debug;
+    [SerializeField] float iFrameTime = 0.5f;
     [SerializeField] bool healOverTime = false;
     [SerializeField] float timeBtwHeals = 5f;
     [SerializeField] float flashColorLength = 0.2f;
     [SerializeField] FlashColor flashColor;
     [SerializeField] EnemyStateMachine enemyMovement;
 
+    bool canTakeDamage;
+
     float timer = 0;
     private void Start()
     {
         stats = GetComponent<StatsController>();
         if (enemyMovement == null) enemyMovement = GetComponent<EnemyStateMachine>();
+
+        canTakeDamage = true;
     }
     private void Update()
     {
@@ -39,8 +44,10 @@ public class EnemyHealth : MonoBehaviour, IHealth
         stats.Heal(amount);
     }
 
-    public void TakeDamage(float amount, Effect effect = null)
+    public bool TakeDamage(float amount, Effect effect = null)
     {
+        if (!canTakeDamage) return false;
+
         stats.TakeDamage(amount, effect);
 
         if(debug) print("Health: " + stats.GetHealthValue());
@@ -51,10 +58,15 @@ public class EnemyHealth : MonoBehaviour, IHealth
         {
             transform.SendMessage("OnDeath");
             //Destroy(gameObject);
+        } else
+        {
+            canTakeDamage = false;
+            StartCoroutine(IFrame());
         }
+        return true;
     }
 
-    public void TakeDamage(float amount, float stunLength, Effect effect = null)
+    public bool TakeDamage(float amount, float stunLength, Effect effect = null)
     {
         throw new System.NotImplementedException();
     }
@@ -76,5 +88,12 @@ public class EnemyHealth : MonoBehaviour, IHealth
     public void Knockback(Vector3 dir, float strength)
     {
         if (enemyMovement != null) enemyMovement.Knockback(dir, strength);
+    }
+
+    IEnumerator IFrame()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(iFrameTime);
+        canTakeDamage = true;
     }
 }

@@ -9,14 +9,14 @@ public interface IHealth
     /// </summary>
     /// <param name="amount"></param>
     /// <param name="effect"></param>
-    public void TakeDamage(float amount, Effect effect = null);
+    public bool TakeDamage(float amount, Effect effect = null);
     /// <summary>
     /// Applies the given damage and optional effects and stuns the character for given stun length
     /// </summary>
     /// <param name="amount"></param>
     /// <param name="stunLength"></param>
     /// <param name="effect"></param>
-    public void TakeDamage(float amount, float stunLength, Effect effect = null);
+    public bool TakeDamage(float amount, float stunLength, Effect effect = null);
     /// <summary>
     /// Heals the character for given amount
     /// </summary>

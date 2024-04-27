@@ -16,6 +16,7 @@ public class CustomRigidbody2D : MonoBehaviour
     [SerializeField] float drag;
     [SerializeField] float bounciness = 1;
     [SerializeField] int maxNumberOfBounces = 3;
+    [SerializeField] ContactFilter2D contactFilter;
     [SerializeField] bool onStart;
 
     int numberOfBounces = 0;
@@ -26,6 +27,8 @@ public class CustomRigidbody2D : MonoBehaviour
 
     Vector3 defaultScale;
 
+    Collider2D[] colliders;
+
     public void Initialize(float height, float upVelocity,  bool freeze = false)
     {
         this.height = height;
@@ -35,6 +38,8 @@ public class CustomRigidbody2D : MonoBehaviour
         numberOfBounces = 0;
 
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+        colliders = transform.GetComponentsInChildren<Collider2D>();
 
         Vector2 newVel = rb.velocity;
         newVel.y += upVelocity;
@@ -53,6 +58,7 @@ public class CustomRigidbody2D : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
+        colliders = transform.GetComponentsInChildren<Collider2D>();
 
         Vector2 newVel = rb.velocity;
         newVel.y += upVelocity;
@@ -68,6 +74,7 @@ public class CustomRigidbody2D : MonoBehaviour
         {
             rb = GetComponent<Rigidbody2D>();
             rb.gravityScale = 0;
+            colliders = transform.GetComponentsInChildren<Collider2D>();
 
             //AddForce(new Vector3(-2f, -0.3f, 0.5f), ForceMode2D.Impulse);
 
@@ -87,11 +94,11 @@ public class CustomRigidbody2D : MonoBehaviour
     {
         if(forceMode == ForceMode2D.Force)
         {
-            rb.AddForce(new Vector2(force.x * 10, force.y * 10), forceMode);
+            rb.AddForce(new Vector2(force.x * 2, force.y * 2), forceMode);
             upVelocity += force.z / rb.mass * Time.fixedDeltaTime;
         } else
         {
-            rb.AddForce(new Vector2(force.x * 10, force.y * 10), forceMode);
+            rb.AddForce(new Vector2(force.x * 2, force.y * 2), forceMode);
             upVelocity += force.z / rb.mass;
         }
     }
@@ -104,6 +111,14 @@ public class CustomRigidbody2D : MonoBehaviour
             float dragForce = drag / rb.mass * Time.fixedDeltaTime * Time.fixedDeltaTime;
             if (height > 0 || upVelocity > 0)
             {
+                if (colliders.Length > 0 && colliders[0].isTrigger == false)
+                {
+                    for (int i = 0; i < colliders.Length; i++)
+                    {
+                        colliders[i].isTrigger = true;
+                    }
+                }
+
                 isGrounded = false;
 
                 Vector2 newVel = rb.velocity;
@@ -156,6 +171,14 @@ public class CustomRigidbody2D : MonoBehaviour
 
                 if (height <= 0)
                 {
+                    if (colliders.Length > 0 && colliders[0].isTrigger == true)
+                    {
+                        for (int i = 0; i < colliders.Length; i++)
+                        {
+                            colliders[i].isTrigger = false;
+                        }
+                    }
+
                     isGrounded = true;
                     upVelocity = 0;
 
@@ -168,7 +191,7 @@ public class CustomRigidbody2D : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.collider.isTrigger)
         {
@@ -180,6 +203,82 @@ public class CustomRigidbody2D : MonoBehaviour
             newVel.y -= upVelocity;
             newVel.x *= normal.x * contact.normalImpulse * bounciness;
             newVel.y *= normal.y * contact.normalImpulse * bounciness;
+            newVel.y += upVelocity;
+
+            rb.velocity = newVel;
+        }
+    }*/
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        /*List<Collider2D> overlappingColliders = new List<Collider2D>();
+        int num = collision.OverlapCollider(contactFilter, overlappingColliders);
+        Collider2D activeCollider = null;
+        for (int i = 0; i < num; i++)
+        {
+            for (int j = 0; j < colliders.Length; j++)
+            {
+                if (overlappingColliders[i] == colliders[j])
+                {
+                    activeCollider = colliders[j];
+                    break;
+                }
+            }
+        }
+        if (activeCollider == null) return;*/
+        Vector2 updatedPosition = (Vector2)transform.position - new Vector2(0, height);
+        Vector2 closestPointOnOtherCollider = collision.ClosestPoint(updatedPosition);
+        //Vector2 closestPointOnActiveCollider = activeCollider.ClosestPoint(closestPointOnOtherCollider);
+
+        //print(closestPointOnActiveCollider);
+        if(true)
+        {
+            Vector2 normal = (updatedPosition - closestPointOnOtherCollider).normalized;
+            print(normal);
+            Vector2 newVel = rb.velocity;
+
+            newVel.y -= upVelocity;
+            newVel.x *= -normal.x * bounciness;
+            newVel.y *= -normal.y * bounciness;
+            newVel.y += upVelocity;
+
+            rb.velocity = newVel;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Wall")) return;
+
+        /*List<Collider2D> overlappingColliders = new List<Collider2D>();
+        int num = collision.OverlapCollider(contactFilter, overlappingColliders);
+        Collider2D activeCollider = null;
+        for (int i = 0; i < num; i++)
+        {
+            for (int j = 0; j < colliders.Length; j++)
+            {
+                if (overlappingColliders[i] == colliders[j])
+                {
+                    activeCollider = colliders[j];
+                    break;
+                }
+            }
+        }
+        if (activeCollider == null) return;*/
+        Vector2 updatedPosition = (Vector2)transform.position - new Vector2(0, height);
+        Vector2 closestPointOnOtherCollider = collision.ClosestPoint(updatedPosition);
+        //Vector2 closestPointOnActiveCollider = activeCollider.ClosestPoint(closestPointOnOtherCollider);
+
+        //print(collision.OverlapPoint(closestPointOnActiveCollider));
+        if (true)
+        {
+            Vector2 normal = (updatedPosition - closestPointOnOtherCollider).normalized;
+            print(normal);
+            Vector2 newVel = rb.velocity;
+
+            newVel.y -= upVelocity;
+            newVel.x *= -normal.x * bounciness;
+            newVel.y *= -normal.y * bounciness;
             newVel.y += upVelocity;
 
             rb.velocity = newVel;

@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 860863201
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 9b6240f83237aa84989282a8bbebaaab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -148,8 +148,13 @@ MonoBehaviour:
     maxCount: 1
     weight: 0.1
   health: 1
-  destroyedVersion: {fileID: 3988705698088295203, guid: e27d0a70ee3092d419b3e0aed7223076, type: 3}
-  destroyEffectLifetime: 2
+  destroyedPieces:
+  - {fileID: 477782861262504029, guid: 8c2962f2bbe165640ad81c0fdf9598b2, type: 3}
+  - {fileID: 5853118444926480722, guid: dee40f44a0e283146b46f847b04d6823, type: 3}
+  - {fileID: 4321606555095670877, guid: cacaf9218bc35034ba5da34bb0ca097c, type: 3}
+  - {fileID: 3267920356445700539, guid: 7d4a9cc9ec928604e994ccf68abe0857, type: 3}
+  - {fileID: 2342416455464142874, guid: 591456abc83bc2b4393d3977a34a0903, type: 3}
+  - {fileID: 3537693030754162945, guid: 7e6ea4e639517ea4085b4022416436d2, type: 3}
 --- !u!61 &3013682109278790821
 BoxCollider2D:
   m_ObjectHideFlags: 0

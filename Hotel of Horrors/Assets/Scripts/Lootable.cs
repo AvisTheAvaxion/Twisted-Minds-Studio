@@ -15,8 +15,7 @@ public class Lootable : MonoBehaviour
 
     [Header("Other Settings")]
     [SerializeField] float health = 10;
-    [SerializeField] GameObject destroyedVersion;
-    [SerializeField] float destroyEffectLifetime = 2f;
+    [SerializeField] GameObject[] destroyedPieces;
 
     CustomRigidbody2D[] rigidBodies;
 
@@ -74,17 +73,17 @@ public class Lootable : MonoBehaviour
         if(currentHealth <= 0)
         {
             SpawnItemDrops();
-            if (destroyedVersion)
+            for (int i = 0; i < destroyedPieces.Length; i++)
             {
-                GameObject go = Instantiate(destroyedVersion, transform.position, transform.rotation);
-                rigidBodies = go.GetComponentsInChildren<CustomRigidbody2D>();
-                for (int i = 0; i < rigidBodies.Length; i++)
+                GameObject go = Instantiate(destroyedPieces[i], transform.position + destroyedPieces[i].transform.localPosition, destroyedPieces[i].transform.rotation);
+                CustomRigidbody2D rigidBody = go.GetComponent<CustomRigidbody2D>();
+                if (rigidBody)
                 {
-                    rigidBodies[i].gameObject.SetActive(true);
-                    rigidBodies[i].transform.parent = null;
-                    rigidBodies[i].Initialize(0);
-                    Vector2 dir = GetRandomDir() * 2;
-                    rigidBodies[i].AddForce(new Vector3(dir.x, dir.y, 0.5f), ForceMode2D.Impulse);
+                    rigidBody.gameObject.SetActive(true);
+                    rigidBody.transform.parent = null;
+                    rigidBody.Initialize(0);
+                    Vector2 dir = GetRandomDir();
+                    rigidBody.AddForce(new Vector3(dir.x, dir.y, 0.5f), ForceMode2D.Impulse);
                 }
             }
             Destroy(gameObject);

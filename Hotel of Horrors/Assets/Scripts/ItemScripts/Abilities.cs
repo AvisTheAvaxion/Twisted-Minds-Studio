@@ -6,8 +6,13 @@ using UnityEngine;
 
 public class Abilities : Useables
 {
+    [SerializeField] GameObject playerAbility;
     public override void Use()
     {
         Debug.Log($"Abilities {GetName()} Used");
+    }
+    public GameObject GetPlayerAbility()
+    {
+        return playerAbility;
     }
 }

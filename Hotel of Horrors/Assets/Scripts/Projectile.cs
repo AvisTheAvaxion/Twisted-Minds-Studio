@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
 {
     [SerializeField] int damage = 1;
@@ -9,6 +10,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] [Range(0,1)] float chanceToInflictEffect;
     [SerializeField] EffectInfo[] effectsToInflict;
     [SerializeField] int maxTargets = 1;
+    [SerializeField] bool goThroughWalls = false;
 
     int targetsHit = 0;
 
@@ -19,7 +21,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag.Equals("Wall"))
+        if(collision.tag.Equals("Wall") && !goThroughWalls)
         {
             Destroy(gameObject);
         }

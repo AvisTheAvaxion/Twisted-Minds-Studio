@@ -20,11 +20,11 @@ public class EnergyArcAbility : PlayerAbility
         isAttacking = true;
         //Leaves room for start animation
         yield return null;
-        spawnPoint.rotation = Quaternion.FromToRotation(transform.up, (controller.CrosshairPosition - (Vector2)spawnPoint.position).normalized) * spawnPoint.rotation;
+        transform.rotation = Quaternion.FromToRotation(transform.up, (controller.CrosshairPosition - (Vector2)transform.position).normalized) * transform.rotation;
         GameObject go = Instantiate(arc, spawnPoint.position, spawnPoint.rotation);
         Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
         if (rb) rb.AddForce(go.transform.up * launchForce, ForceMode2D.Impulse);
-        controller.ShakeCamera(cameraShakeFrequency, duration);
+        controller.ShakeCamera(cameraShakeFrequency, duration, false);
         Destroy(go, maxLifeTime);
         isAttacking = false;
     }

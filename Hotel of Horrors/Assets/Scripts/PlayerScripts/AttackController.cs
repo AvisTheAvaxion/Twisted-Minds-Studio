@@ -47,8 +47,9 @@ public class AttackController : MonoBehaviour
 
     bool canAttack;
 
-    bool canDoAbility;
-    bool canDoWeaponAbility;
+    bool canDoPlayerAbility = true;
+    bool canDoWeaponAbility = true;
+    bool canDoSpecialAbility = true;
 
     float currentAmmoCount;
     float rangedFireTimer;
@@ -59,7 +60,7 @@ public class AttackController : MonoBehaviour
     Weapon currentWeapon;
     WeaponAbility currentWeaponAbility;
 
-    PlayerAbility currentPlayerAbitlity;
+    public PlayerAbility currentPlayerAbitlity;
 
     SpecialAbility currentSpecialAbility;
     
@@ -93,7 +94,7 @@ public class AttackController : MonoBehaviour
     }
 
     //Called by the inventory system to store reference to the current weapon
-    public void Equip(Weapon weapon)
+    public void EquipWeapon(Weapon weapon)
     {
         currentWeapon = weapon;
 
@@ -105,6 +106,15 @@ public class AttackController : MonoBehaviour
             weaponVisual.sprite = currentWeapon.GetSprite();
 
             currentAttackMode = currentWeapon.GetWeaponMode();
+
+            if (currentWeaponAbility != null) Destroy(currentWeaponAbility.gameObject);
+
+            if (weapon.GetWeaponAbility() != null)
+            {
+                GameObject go = Instantiate(weapon.GetWeaponAbility(), Vector3.zero, Quaternion.identity, transform);
+                WeaponAbility ability = go.GetComponent<WeaponAbility>();
+                if (ability != null) currentWeaponAbility = ability;
+            }
 
             if(currentAttackMode == AttackModes.Ranged)
             {
@@ -119,6 +129,8 @@ public class AttackController : MonoBehaviour
         } 
         else
         {
+            if (currentWeaponAbility != null) Destroy(currentWeaponAbility.gameObject);
+
             weaponVisual.enabled = false;
             currentAttackMode = AttackModes.None;
         }
@@ -135,6 +147,39 @@ public class AttackController : MonoBehaviour
         }*/
     }
 
+    public void UnequipPlayerAbility()
+    {
+        if (currentPlayerAbitlity != null) Destroy(currentPlayerAbitlity.gameObject);
+    }
+    public void EquipPlayerAbility(Abilities abilities)
+    {
+        if (abilities != null && canDoPlayerAbility)
+        {
+            if (currentPlayerAbitlity != null) Destroy(currentPlayerAbitlity.gameObject);
+
+            if (abilities.GetPlayerAbility() != null)
+            {
+                GameObject go = Instantiate(abilities.GetPlayerAbility(), Vector3.zero, Quaternion.identity, transform);
+                PlayerAbility ability = go.GetComponent<PlayerAbility>();
+                if (ability != null) currentPlayerAbitlity = ability;
+            }
+        }
+    }
+    public void EquipSpecialAbility(Mementos mententos)
+    {
+        if (mententos != null && canDoSpecialAbility)
+        {
+            if (currentSpecialAbility != null) Destroy(currentSpecialAbility.gameObject);
+
+            if (mententos.GetSpecialAbility() != null)
+            {
+                GameObject go = Instantiate(mententos.GetSpecialAbility(), Vector3.zero, Quaternion.identity, transform);
+                SpecialAbility ability = go.GetComponent<SpecialAbility>();
+                if (ability != null) currentSpecialAbility = ability;
+            }
+        }
+    }
+
     void OnAttack(InputValue inputValue)
     {
         attackButtonPressed = inputValue.isPressed;
@@ -144,6 +189,30 @@ public class AttackController : MonoBehaviour
         if (isAttacking && !attackButtonPressed && currentAttackMode == AttackModes.Ranged)
         {
             AttackEnd();
+        }
+    }
+    void OnAttackAbility(InputValue inputValue)
+    {
+        if (currentWeaponAbility != null && canDoWeaponAbility)
+        {
+            currentWeaponAbility.Use(this);
+            StartCoroutine(WeaponAbilityCooldown(currentWeaponAbility.Cooldown));
+        }
+    }
+    void OnPrimaryAction(InputValue inputValue)
+    {
+        if (currentSpecialAbility != null && canDoSpecialAbility)
+        {
+            currentSpecialAbility.Use(this);
+            StartCoroutine(SpecialAbilityCooldown(currentSpecialAbility.Cooldown));
+        }
+    }
+    void OnSecondaryAction(InputValue inputValue)
+    {
+        if(currentPlayerAbitlity != null && canDoPlayerAbility)
+        {
+            currentPlayerAbitlity.Use(this);
+            StartCoroutine(PlayerAbilityCooldown(currentPlayerAbitlity.Cooldown));
         }
     }
 
@@ -327,6 +396,7 @@ public class AttackController : MonoBehaviour
     IEnumerator AttackCooldown(float waitTime)
     {
         canAttack = false;
+        
         yield return new WaitForSeconds(waitTime);
 
         canAttack = true;
@@ -372,10 +442,12 @@ public class AttackController : MonoBehaviour
         }
     }
 
-    IEnumerator AbilityCooldown(float cooldown)
+    IEnumerator PlayerAbilityCooldown(float cooldown)
     {
         float timer = 0;
-        canDoAbility = false;
+        canDoPlayerAbility = false;
+
+        yield return new WaitUntil(() => !currentPlayerAbitlity.isAttacking);
 
         while (timer <= cooldown)
         {
@@ -383,13 +455,15 @@ public class AttackController : MonoBehaviour
             yield return null;
         }
 
-        canDoAbility = true;
+        canDoPlayerAbility = true;
     }
 
     IEnumerator WeaponAbilityCooldown(float cooldown)
     {
         float timer = 0;
         canDoWeaponAbility = false;
+
+        yield return new WaitUntil(() => !currentWeaponAbility.isAttacking);
 
         while (timer <= cooldown)
         {
@@ -400,9 +474,25 @@ public class AttackController : MonoBehaviour
         canDoWeaponAbility = true;
     }
 
-    public void ShakeCamera(float frequency, float length)
+    IEnumerator SpecialAbilityCooldown(float cooldown)
     {
-        cameraShake.ShakeCamera(frequency, 0.5f, length);
+        float timer = 0;
+        canDoSpecialAbility = false;
+
+        yield return new WaitUntil(() => !currentSpecialAbility.isAttacking);
+
+        while (timer <= cooldown)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        canDoSpecialAbility = true;
+    }
+
+    public void ShakeCamera(float frequency, float length, bool interruptable = true)
+    {
+        cameraShake.ShakeCamera(frequency, 0.5f, length, interruptable);
     }
 }
 

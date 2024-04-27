@@ -234,7 +234,6 @@ public class CustomRigidbody2D : MonoBehaviour
         if(true)
         {
             Vector2 normal = (updatedPosition - closestPointOnOtherCollider).normalized;
-            print(normal);
             Vector2 newVel = rb.velocity;
 
             newVel.y -= upVelocity;
@@ -273,7 +272,6 @@ public class CustomRigidbody2D : MonoBehaviour
         if (true)
         {
             Vector2 normal = (updatedPosition - closestPointOnOtherCollider).normalized;
-            print(normal);
             Vector2 newVel = rb.velocity;
 
             newVel.y -= upVelocity;

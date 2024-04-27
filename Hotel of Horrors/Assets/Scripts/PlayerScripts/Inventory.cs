@@ -9,8 +9,8 @@ public class Inventory : MonoBehaviour
 {
     Weapon[] weaponsInventory;
     ItemInstance[] itemsInventory;
-    List<MementoInstance> mementosInventory;
-    List<AbilityInstance> abilitiesInventory;
+    List<Mementos> mementosInventory;
+    List<Abilities> abilitiesInventory;
 
     [Header("Items")]
     [SerializeField] public Weapon currentWeapon;
@@ -45,6 +45,9 @@ public class Inventory : MonoBehaviour
 
         itemsInventory = new ItemInstance[itemSlots.Length];
         weaponsInventory = new Weapon[weaponSlots.Length];
+
+        abilitiesInventory = new List<Abilities>();
+        mementosInventory = new List<Mementos>();
 
         ItemSlot[] slots = uiDisplay.InventoryUI.GetComponentsInChildren<ItemSlot>();
         foreach (ItemSlot slot in slots)
@@ -101,23 +104,30 @@ public class Inventory : MonoBehaviour
 
     public void EquipWeapon(int index)
     {
-        Weapon weapon = weaponsInventory[index];
-        attackController.Equip(weapon);
+        Weapon weapon = GetWeapon(index);
+        attackController.EquipWeapon(weapon);
         weaponSlot.UpdateImage(index);
 
         if (weapon == null)
         {
             uiDisplay.WeaponHotbarImage.enabled = false;
+            uiDisplay.WeaponAbilityHotbarImage.enabled = false;
         }
         else
         {
             uiDisplay.WeaponHotbarImage.enabled = true;
             uiDisplay.WeaponHotbarImage.sprite = weapon.GetSprite();
+
+            if(weapon.GetWeaponAbility() != null)
+            {
+                uiDisplay.WeaponAbilityHotbarImage.enabled = true;
+                uiDisplay.WeaponAbilityHotbarImage.sprite = weapon.GetWeaponAbilitySprite();
+            }
         }
     }
-    public void EquipFreeItem(int index)
+    public void EquipItem(int index)
     {
-        ItemInstance item = itemsInventory[index];
+        ItemInstance item = GetItem(index);
         freeSlot.UpdateImage(index);
 
         if (item == null)
@@ -126,8 +136,43 @@ public class Inventory : MonoBehaviour
         }
         else
         {
+            attackController.UnequipPlayerAbility();
             uiDisplay.FreeSlotHotbarImage.enabled = true;
             uiDisplay.FreeSlotHotbarImage.sprite = item.GetInfo().GetSprite();
+        }
+    }
+    public void EquipPlayerAbility(int index)
+    {
+        Abilities ability = index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
+        //ItemInstance item = itemsInventory[index];
+        //freeSlot.UpdateImage(index);
+
+        if (ability == null)
+        {
+            uiDisplay.FreeSlotHotbarImage.enabled = false;
+        }
+        else
+        {
+            attackController.EquipPlayerAbility(ability);
+            uiDisplay.FreeSlotHotbarImage.enabled = true;
+            uiDisplay.FreeSlotHotbarImage.sprite = ability.GetSprite();
+        }
+    }
+    public void EquipMemento(int index)
+    {
+        Mementos mementos = index < mementosInventory.Count ? mementosInventory[index] : null;
+        //ItemInstance item = itemsInventory[index];
+        //freeSlot.UpdateImage(index);
+
+        if (mementos == null)
+        {
+            uiDisplay.MementoHotbarImage.enabled = false;
+        }
+        else
+        {
+            attackController.EquipSpecialAbility(mementos);
+            uiDisplay.MementoHotbarImage.enabled = true;
+            uiDisplay.MementoHotbarImage.sprite = mementos.GetSprite();
         }
     }
 
@@ -286,29 +331,5 @@ public class ItemInstance : UseableInstance
     public Item GetInfo()
     {
         return (Item)info;
-    }
-}
-
-public class MementoInstance : UseableInstance
-{
-    public MementoInstance(Mementos item, int amount) : base(item, amount)
-    {
-    }
-
-    public Mementos GetInfo()
-    {
-        return (Mementos)info;
-    }
-}
-
-public class AbilityInstance : UseableInstance
-{
-    public AbilityInstance(Abilities item, int amount) : base(item, amount)
-    {
-    }
-
-    public Abilities GetInfo()
-    {
-        return (Abilities)info;
     }
 }

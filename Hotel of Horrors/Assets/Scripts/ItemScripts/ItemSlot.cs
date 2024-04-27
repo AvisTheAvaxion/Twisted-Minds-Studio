@@ -179,7 +179,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
             if (isItemSlot)
             {
-                inventory.EquipFreeItem(transform.parent.GetSiblingIndex());
+                inventory.EquipItem(transform.parent.GetSiblingIndex());
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right)

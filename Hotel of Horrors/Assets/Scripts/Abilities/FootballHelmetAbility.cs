@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FootballHelmetAbility : MonoBehaviour
+public class FootballHelmetAbility : SpecialAbility
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Use(AttackController controller)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this.controller = controller;
     }
 }

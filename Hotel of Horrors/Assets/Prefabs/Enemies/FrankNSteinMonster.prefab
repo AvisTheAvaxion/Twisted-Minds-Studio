@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3269821355269556102}
   - component: {fileID: 7819676505427196098}
   - component: {fileID: 838116091748070659}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FrankNSteinMonster
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+  iFrameTime: 0.5
   healOverTime: 0
   timeBtwHeals: 5
   flashColorLength: 0.2
@@ -280,7 +281,7 @@ GameObject:
   - component: {fileID: 2881490729553979416}
   - component: {fileID: 7147279581158553711}
   - component: {fileID: 4898962650481716471}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FrankNSteinMonster_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,6 +438,10 @@ PrefabInstance:
     - target: {fileID: 5705827624489963674, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_Name
       value: AfterImage
+      objectReference: {fileID: 0}
+    - target: {fileID: 5705827624489963674, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7531711748189192245, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: debug

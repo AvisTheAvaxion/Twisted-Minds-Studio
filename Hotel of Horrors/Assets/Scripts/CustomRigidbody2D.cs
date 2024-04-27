@@ -107,7 +107,7 @@ public class CustomRigidbody2D : MonoBehaviour
     {
         if (!freeze)
         {
-            rb.constraints = RigidbodyConstraints2D.None;
+            //rb.constraints = RigidbodyConstraints2D.None;
             float dragForce = drag / rb.mass * Time.fixedDeltaTime * Time.fixedDeltaTime;
             if (height > 0 || upVelocity > 0)
             {
@@ -187,7 +187,7 @@ public class CustomRigidbody2D : MonoBehaviour
             }
         } else
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            //rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
 

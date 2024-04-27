@@ -60,9 +60,9 @@ public class AttackController : MonoBehaviour
     Weapon currentWeapon;
     WeaponAbility currentWeaponAbility;
 
-    public PlayerAbility currentPlayerAbitlity;
+    PlayerAbility currentPlayerAbitlity;
 
-    SpecialAbility currentSpecialAbility;
+    public SpecialAbility currentSpecialAbility;
     
 
     private void Awake()

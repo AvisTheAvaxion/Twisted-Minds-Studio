@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5574785889938037912}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4025602992522567503}
   - component: {fileID: 7621195629991446159}
   - component: {fileID: 4389084019458546241}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FlyingBrainSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 5834758641980206469}
   - component: {fileID: 2626282256757693886}
   - component: {fileID: 6071954231053187924}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FlyingBrain
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -296,6 +296,7 @@ MonoBehaviour:
   speed: 2
   orbitRadius: 1
   orbitRadiusThickness: 0.2
+  minDistanceThreshold: 0.05
   numOfWeights: 16
   visualizeWeights: 1
   obstacleDistanceSensitivity: 0.15
@@ -408,6 +409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+  iFrameTime: 0.5
   healOverTime: 0
   timeBtwHeals: 5
   flashColorLength: 0.2
@@ -516,7 +518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3081905631518739288}
   - component: {fileID: 3816594382241254047}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ArmTendrils
   m_TagString: Untagged
   m_Icon: {fileID: 0}

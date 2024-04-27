@@ -25,6 +25,7 @@ public class AI : MonoBehaviour
     [SerializeField] float speed = 2f;
     [SerializeField] float orbitRadius = 1f;
     [SerializeField] float orbitRadiusThickness = 0.2f;
+    [SerializeField] float minDistanceThreshold = 0.05f;
     float orbitOffset;
     [Header("Weight Settings")]
     [SerializeField][Range(4, 24)] int numOfWeights = 16;
@@ -138,7 +139,11 @@ public class AI : MonoBehaviour
     {
         if (!canMove) return;
 
-        Vector2 dirToTarget = (targetPosition - transform.position).normalized;
+        Vector2 vectorToTarget = targetPosition - transform.position;
+        float distToTarget = vectorToTarget.magnitude;
+        Vector2 dirToTarget = vectorToTarget.normalized;
+
+        if (distToTarget < minDistanceThreshold) return;
 
         float largestWeight = 0;
         //Set baseline weight based off dot product to desire direction
@@ -166,6 +171,8 @@ public class AI : MonoBehaviour
                 largestWeight = weights[i].weight;
             }
         }
+
+        PathObstruction(largestWeight, largestWeightIndex);
 
         Move();
     }

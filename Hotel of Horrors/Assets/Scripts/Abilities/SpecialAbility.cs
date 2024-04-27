@@ -13,4 +13,5 @@ public abstract class SpecialAbility : MonoBehaviour
     protected AttackController controller;
 
     public abstract void Use(AttackController controller);
+    public abstract void CancelUse();
 }

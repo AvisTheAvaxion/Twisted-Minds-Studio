@@ -148,7 +148,7 @@ MonoBehaviour:
     maxCount: 1
     weight: 0.1
   health: 1
-  destroyEffect: {fileID: 0}
+  destroyedVersion: {fileID: 3988705698088295203, guid: e27d0a70ee3092d419b3e0aed7223076, type: 3}
   destroyEffectLifetime: 2
 --- !u!61 &3013682109278790821
 BoxCollider2D:
@@ -182,7 +182,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.08706117}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -193,5 +193,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.48, y: 0.48}
+  m_Size: {x: 0.28538156, y: 0.16034222}
   m_EdgeRadius: 0

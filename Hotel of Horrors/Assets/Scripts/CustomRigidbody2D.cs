@@ -43,14 +43,33 @@ public class CustomRigidbody2D : MonoBehaviour
         defaultScale = transform.localScale;
     }
 
+    public void Initialize(float upVelocity, bool freeze = false)
+    {
+        height = startHeight;
+        this.upVelocity = upVelocity;
+        this.freeze = freeze;
+
+        numberOfBounces = 0;
+
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+
+        Vector2 newVel = rb.velocity;
+        newVel.y += upVelocity;
+        rb.velocity = newVel;
+
+        defaultScale = transform.localScale;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         if (onStart)
         {
             rb = GetComponent<Rigidbody2D>();
+            rb.gravityScale = 0;
 
-            AddForce(new Vector3(-2f, -0.3f, 0.5f), ForceMode2D.Impulse);
+            //AddForce(new Vector3(-2f, -0.3f, 0.5f), ForceMode2D.Impulse);
 
             height = startHeight;
 
@@ -68,11 +87,11 @@ public class CustomRigidbody2D : MonoBehaviour
     {
         if(forceMode == ForceMode2D.Force)
         {
-            rb.AddForce(new Vector2(force.x, force.y), forceMode);
+            rb.AddForce(new Vector2(force.x * 10, force.y * 10), forceMode);
             upVelocity += force.z / rb.mass * Time.fixedDeltaTime;
         } else
         {
-            rb.AddForce(new Vector2(force.x, force.y), forceMode);
+            rb.AddForce(new Vector2(force.x * 10, force.y * 10), forceMode);
             upVelocity += force.z / rb.mass;
         }
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Lootable : MonoBehaviour
 {
+    SpriteRenderer spriteRenderer;
+
     [Header("Drop Settings")]
     [SerializeField] protected float dropRadius = 0.5f;
     [SerializeField] protected int minDropAmount;
@@ -13,14 +15,18 @@ public class Lootable : MonoBehaviour
 
     [Header("Other Settings")]
     [SerializeField] float health = 10;
-    [SerializeField] GameObject destroyEffect;
+    [SerializeField] GameObject destroyedVersion;
     [SerializeField] float destroyEffectLifetime = 2f;
+
+    CustomRigidbody2D[] rigidBodies;
 
     float currentHealth;
 
     private void Start()
     {
         currentHealth = health;
+
+        rigidBodies = GetComponentsInChildren<CustomRigidbody2D>();
     }
 
     protected virtual void SpawnItemDrops()
@@ -68,9 +74,18 @@ public class Lootable : MonoBehaviour
         if(currentHealth <= 0)
         {
             SpawnItemDrops();
-            if (destroyEffect) 
+            if (destroyedVersion)
             {
-                Destroy(Instantiate(destroyEffect, transform.position, transform.rotation), destroyEffectLifetime);
+                GameObject go = Instantiate(destroyedVersion, transform.position, transform.rotation);
+                rigidBodies = go.GetComponentsInChildren<CustomRigidbody2D>();
+                for (int i = 0; i < rigidBodies.Length; i++)
+                {
+                    rigidBodies[i].gameObject.SetActive(true);
+                    rigidBodies[i].transform.parent = null;
+                    rigidBodies[i].Initialize(0);
+                    Vector2 dir = GetRandomDir() * 2;
+                    rigidBodies[i].AddForce(new Vector3(dir.x, dir.y, 0.5f), ForceMode2D.Impulse);
+                }
             }
             Destroy(gameObject);
         }

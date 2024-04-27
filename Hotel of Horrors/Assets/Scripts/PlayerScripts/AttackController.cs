@@ -19,8 +19,6 @@ public class AttackController : MonoBehaviour
     [SerializeField] SpriteRenderer weaponVisual; //The sprite renderer of the weapon visual located under Hand on the player
     [SerializeField] Transform hand;
 
-    RuntimeAnimatorController defaultWeaponController;
-
     //Note: the weapon strike effect will be what detects a collision and does damage and be unique to each weapon
 
     [Header("Ranged")]
@@ -48,6 +46,9 @@ public class AttackController : MonoBehaviour
 
     bool canAttack;
 
+    bool canDoAbility;
+    bool canDoWeaponAbility;
+
     float currentAmmoCount;
     float rangedFireTimer;
 
@@ -55,6 +56,11 @@ public class AttackController : MonoBehaviour
 
     //Current weapon equipped in the inventory
     Weapon currentWeapon;
+    WeaponAbility currentWeaponAbility;
+
+    PlayerAbility currentPlayerAbitlity;
+
+    SpecialAbility currentSpecialAbility;
     
 
     private void Awake()
@@ -363,6 +369,34 @@ public class AttackController : MonoBehaviour
                 Attack();
             }
         }
+    }
+
+    IEnumerator AbilityCooldown(float cooldown)
+    {
+        float timer = 0;
+        canDoAbility = false;
+
+        while (timer <= cooldown)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        canDoAbility = true;
+    }
+
+    IEnumerator WeaponAbilityCooldown(float cooldown)
+    {
+        float timer = 0;
+        canDoWeaponAbility = false;
+
+        while (timer <= cooldown)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        canDoWeaponAbility = true;
     }
 }
 

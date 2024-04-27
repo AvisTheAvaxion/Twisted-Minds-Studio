@@ -9,7 +9,7 @@ public class Weapon : Useables
     [Header("Weapon Settings")]
     [SerializeField] AttackModes mode;
     [SerializeField] AttackType type;
-    [SerializeField] AnimationClip extraAttackAnim;
+    [SerializeField] GameObject weaponAbility;
     [Space(20)]
     [SerializeField] float attackSpeed;
     [SerializeField] bool autoAttack;
@@ -34,9 +34,9 @@ public class Weapon : Useables
     {
         //Debug.Log($"WEAPON {this.GetName()} USED");
     }
-    public void WeaponSkill()
+    public GameObject WeaponAbility()
     {
-        Debug.Log("WEAPON SKILL USED");
+        return weaponAbility;
     }
 
     public int GetDamage()
@@ -82,10 +82,6 @@ public class Weapon : Useables
     public AttackType GetAttackType()
     {
         return type;
-    }
-    public AnimationClip GetWeaponAnimation()
-    {
-        return extraAttackAnim;
     }
     public GameObject GetProjectile()
     {

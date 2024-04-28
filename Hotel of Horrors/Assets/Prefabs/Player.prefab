@@ -409,6 +409,7 @@ MonoBehaviour:
   defaultKnockback: 2
   defaultAttackSpeed: 3
   defaultDeflectionStrength: 2
+  currentSpecialAbility: {fileID: 0}
 --- !u!114 &5196756706972270376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5702,13 +5703,13 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

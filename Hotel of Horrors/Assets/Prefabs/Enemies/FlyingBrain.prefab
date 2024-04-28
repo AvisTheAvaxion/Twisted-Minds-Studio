@@ -293,6 +293,7 @@ MonoBehaviour:
   target: {fileID: 0}
   currentDirSmoothing: 0.5
   objectRadius: 0.16
+  centerOffset: {x: 0, y: -0.1}
   speed: 2
   orbitRadius: 1
   orbitRadiusThickness: 0.2
@@ -327,6 +328,7 @@ MonoBehaviour:
   transformToFlip: {fileID: 4025602992522567503}
   animator: {fileID: 6773491364635308731}
   hasWalkCycle: 0
+  moveParticles: {fileID: 0}
   attackType: 1
   moveSpeed: 12
   patrolRadius: 1

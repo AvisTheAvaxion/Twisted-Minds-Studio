@@ -60,7 +60,7 @@ public class AttackController : MonoBehaviour
     Weapon currentWeapon;
     WeaponAbility currentWeaponAbility;
 
-    PlayerAbility currentPlayerAbitlity;
+    public PlayerAbility currentPlayerAbitlity;
 
     public SpecialAbility currentSpecialAbility;
     

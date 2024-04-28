@@ -22,8 +22,10 @@ public class EnergyArcAbility : PlayerAbility
         yield return null;
         transform.rotation = Quaternion.FromToRotation(transform.up, (controller.CrosshairPosition - (Vector2)transform.position).normalized) * transform.rotation;
         GameObject go = Instantiate(arc, spawnPoint.position, spawnPoint.rotation);
-        Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
-        if (rb) rb.AddForce(go.transform.up * launchForce, ForceMode2D.Impulse);
+        MultiProjectile multi = go.GetComponent<MultiProjectile>();
+        if (multi) multi.Launch(launchForce, go.transform.up);
+        //Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
+        //if (rb) rb.AddForce(go.transform.up * launchForce, ForceMode2D.Impulse);
         controller.ShakeCamera(cameraShakeFrequency, duration, false);
         Destroy(go, maxLifeTime);
         isAttacking = false;

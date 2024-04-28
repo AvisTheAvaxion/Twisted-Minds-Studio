@@ -203,8 +203,6 @@ public class LittleStein : MonoBehaviour
             navigation.canSearch = false;
             navigation.canMove = false;
             bool moving = combatAI.MoveTowardsTarget((Vector2)player.position - dirToPlayer * followRadius);
-            print(moving);
-
             if (moving)
             {
                 if (animator) animator.SetBool("isWalking", true);

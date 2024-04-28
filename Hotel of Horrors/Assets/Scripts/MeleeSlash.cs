@@ -54,22 +54,23 @@ public class MeleeSlash : MonoBehaviour
         if (collision.CompareTag(targetTag))
         {
             IHealth health = collision.GetComponent<IHealth>();
-            if (health != null) { 
-                health.TakeDamage(damage);
-
-                if (knockback > 0) 
+            if (health != null) {
+                if (health.TakeDamage(damage))
                 {
-                    Vector2 dir = (collision.transform.position - transform.position).normalized;
-                    health.Knockback(dir, knockback);
-                }
-
-                if(cameraShake != null) cameraShake.ShakeCamera(0.5f);
-
-                if (effects != null)
-                {
-                    foreach (Effect effect in effects)
+                    if (knockback > 0)
                     {
-                        health.InflictEffect(effect);
+                        Vector2 dir = (collision.transform.position - transform.position).normalized;
+                        health.Knockback(dir, knockback);
+                    }
+
+                    if (cameraShake != null) cameraShake.ShakeCamera(0.5f);
+
+                    if (effects != null)
+                    {
+                        foreach (Effect effect in effects)
+                        {
+                            health.InflictEffect(effect);
+                        }
                     }
                 }
             }

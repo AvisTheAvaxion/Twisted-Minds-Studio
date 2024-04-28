@@ -16,7 +16,8 @@ public class FootballHelmetAbility : SpecialAbility
     {
         this.controller = controller;
 
-        transform.rotation = Quaternion.FromToRotation(transform.up, (controller.CrosshairPosition - (Vector2)transform.position).normalized) * transform.rotation;
+        Vector2 dir = (controller.CrosshairPosition - (Vector2)transform.position).normalized;
+        transform.rotation = Quaternion.FromToRotation(transform.up, dir) * transform.rotation;
         GameObject go = Instantiate(footballHelmetProjectile, spawnPoint.position, Quaternion.identity);
         FootballHelmetProjectile proj = go.GetComponent<FootballHelmetProjectile>();
         if (proj) proj.Init(this);
@@ -24,7 +25,7 @@ public class FootballHelmetAbility : SpecialAbility
         if (rb) 
         {
             rb.Initialize(launchHeight);
-            rb.AddForce(new Vector3(go.transform.up.x, go.transform.up.y, 0.5f) * launchForce, ForceMode2D.Impulse); 
+            rb.AddForce(new Vector3(dir.x, dir.y, 0.5f) * launchForce, ForceMode2D.Impulse); 
         }
         isAttacking = true;
     }

@@ -98,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c14db421eb8cd74cb5543bd9e3aabf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropRadius: 0.5
+  dropRadius: 1
+  destroyedLaunchForce: 0.5
   minDropAmount: 1
   maxDropAmount: 3
   itemHolder: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}

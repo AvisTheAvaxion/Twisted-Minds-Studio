@@ -29,6 +29,8 @@ public class CustomRigidbody2D : MonoBehaviour
 
     Collider2D[] colliders;
 
+    bool skipFrame;
+
     public void Initialize(float height, float upVelocity,  bool freeze = false)
     {
         this.height = height;
@@ -41,9 +43,7 @@ public class CustomRigidbody2D : MonoBehaviour
         rb.gravityScale = 0;
         colliders = transform.GetComponentsInChildren<Collider2D>();
 
-        Vector2 newVel = rb.velocity;
-        newVel.y += upVelocity;
-        rb.velocity = newVel;
+        AddForce(new Vector3(0, 0, upVelocity), ForceMode2D.Impulse);
 
         defaultScale = transform.localScale;
     }
@@ -60,9 +60,7 @@ public class CustomRigidbody2D : MonoBehaviour
         rb.gravityScale = 0;
         colliders = transform.GetComponentsInChildren<Collider2D>();
 
-        Vector2 newVel = rb.velocity;
-        newVel.y += upVelocity;
-        rb.velocity = newVel;
+        AddForce(new Vector3(0, 0, upVelocity), ForceMode2D.Impulse);
 
         defaultScale = transform.localScale;
     }
@@ -101,12 +99,16 @@ public class CustomRigidbody2D : MonoBehaviour
             rb.AddForce(new Vector2(force.x * 2, force.y / 2), forceMode);
             upVelocity += force.z / rb.mass;
         }
+
+        skipFrame = true;
     }
 
     private void FixedUpdate()
     {
         if (!freeze)
         {
+            if(skipFrame) { skipFrame = false; return; }
+
             //rb.constraints = RigidbodyConstraints2D.None;
             float dragForce = drag / rb.mass * Time.fixedDeltaTime * Time.fixedDeltaTime;
             if (height > 0 || upVelocity > 0)
@@ -237,8 +239,10 @@ public class CustomRigidbody2D : MonoBehaviour
             Vector2 newVel = rb.velocity;
 
             newVel.y -= upVelocity;
-            newVel.x *= -normal.x * bounciness;
-            newVel.y *= -normal.y * bounciness;
+            if (Mathf.Sign(normal.x) != Mathf.Sign(newVel.x))
+                newVel.x *= Mathf.Abs(normal.x) * bounciness * -1;
+            if (Mathf.Sign(normal.y) != Mathf.Sign(newVel.y))
+                newVel.y *= Mathf.Abs(normal.y) * bounciness * -1;
             newVel.y += upVelocity;
 
             rb.velocity = newVel;
@@ -268,15 +272,17 @@ public class CustomRigidbody2D : MonoBehaviour
         Vector2 closestPointOnOtherCollider = collision.ClosestPoint(updatedPosition);
         //Vector2 closestPointOnActiveCollider = activeCollider.ClosestPoint(closestPointOnOtherCollider);
 
-        //print(collision.OverlapPoint(closestPointOnActiveCollider));
+        //print(closestPointOnActiveCollider);
         if (true)
         {
             Vector2 normal = (updatedPosition - closestPointOnOtherCollider).normalized;
             Vector2 newVel = rb.velocity;
 
             newVel.y -= upVelocity;
-            newVel.x *= -normal.x * bounciness;
-            newVel.y *= -normal.y * bounciness;
+            if (Mathf.Sign(normal.x) != Mathf.Sign(newVel.x))
+                newVel.x *= Mathf.Abs(normal.x) * bounciness * -1;
+            if (Mathf.Sign(normal.y) != Mathf.Sign(newVel.y))
+                newVel.y *= Mathf.Abs(normal.y) * bounciness * -1;
             newVel.y += upVelocity;
 
             rb.velocity = newVel;

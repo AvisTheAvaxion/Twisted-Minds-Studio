@@ -48,51 +48,54 @@ public class BasicShooter : MonoBehaviour
 
     IEnumerator ShootRoutine()
     {
-        isShooting = true;
-
-        float startAngle, currentAngle, angleStep, endAngle;
-        float timeTimeBetweenProjectiles = 0f;
-
-        TargetConeOfInfluence(out startAngle, out currentAngle, out angleStep, out endAngle);
-
-        if (stagger)
-            timeTimeBetweenProjectiles = timeBetweenBursts / projectilesPerBurst;
-
-        for (int i = 0; i < burstCount; i++)
+        if (target != null)
         {
-            if(!oscillate)
+            isShooting = true;
+
+            float startAngle, currentAngle, angleStep, endAngle;
+            float timeTimeBetweenProjectiles = 0f;
+
+            TargetConeOfInfluence(out startAngle, out currentAngle, out angleStep, out endAngle);
+
+            if (stagger)
+                timeTimeBetweenProjectiles = timeBetweenBursts / projectilesPerBurst;
+
+            for (int i = 0; i < burstCount; i++)
             {
-                TargetConeOfInfluence(out startAngle, out currentAngle, out angleStep, out endAngle);
+                if (!oscillate)
+                {
+                    TargetConeOfInfluence(out startAngle, out currentAngle, out angleStep, out endAngle);
+                }
+                else
+                {
+                    currentAngle = endAngle;
+                    endAngle = startAngle;
+                    startAngle = currentAngle;
+                    angleStep *= -1;
+                }
+
+                for (int j = 0; j < projectilesPerBurst; j++)
+                {
+                    Vector2 pos = FindBulletSpawnPos(currentAngle);
+                    GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
+
+
+                    //var dir = newBullet.transform.position - GameObject.Find("Player").transform.position;
+                    //var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+                    newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);
+
+                    newBullet.GetComponent<Rigidbody2D>().AddForce(-newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
+
+                    currentAngle += angleStep;
+
+                    if (stagger)
+                        yield return new WaitForSeconds(timeTimeBetweenProjectiles);
+                }
+
+                currentAngle = startAngle;
+
+                yield return new WaitForSeconds(timeBetweenShots);
             }
-            else
-            {
-                currentAngle = endAngle;
-                endAngle = startAngle;
-                startAngle = currentAngle;
-                angleStep *= -1;
-            }
-
-            for (int j = 0; j < projectilesPerBurst; j++)
-            {
-                Vector2 pos = FindBulletSpawnPos(currentAngle);
-                GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
-
-
-                //var dir = newBullet.transform.position - GameObject.Find("Player").transform.position;
-                //var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
-                newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);
-
-                newBullet.GetComponent<Rigidbody2D>().AddForce(-newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
-
-                currentAngle += angleStep;
-
-                if (stagger)
-                    yield return new WaitForSeconds(timeTimeBetweenProjectiles);
-            }
-
-            currentAngle = startAngle;
-
-            yield return new WaitForSeconds(timeBetweenShots);
         }
 
         yield return new WaitForSeconds(timeBetweenBursts);

@@ -29,7 +29,7 @@ TagManager:
   - Spawner
   - Destructable
   - Enemies
-  - 
+  - UpperWalls
   - 
   - 
   - 
@@ -57,8 +57,11 @@ TagManager:
   - name: Background
     uniqueID: 3225584619
     locked: 0
-  - name: Foreground
+  - name: Middleground
     uniqueID: 860863201
+    locked: 0
+  - name: Foreground
+    uniqueID: 2533244761
     locked: 0
   - name: UI
     uniqueID: 284332589

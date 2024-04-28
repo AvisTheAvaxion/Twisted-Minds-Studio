@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 4025602992522567503}
   - component: {fileID: 7621195629991446159}
   - component: {fileID: 4389084019458546241}
+  - component: {fileID: 6482974782349583255}
   m_Layer: 10
   m_Name: FlyingBrainSprite
   m_TagString: Untagged
@@ -135,6 +136,18 @@ MonoBehaviour:
   spriteRenderers:
   - {fileID: 7621195629991446159}
   - {fileID: 3816594382241254047}
+--- !u!210 &6482974782349583255
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2401005534927958967}
+  m_Enabled: 1
+  m_SortingLayerID: 860863201
+  m_SortingLayer: 2
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
 --- !u!1 &7728880389295436849
 GameObject:
   m_ObjectHideFlags: 0

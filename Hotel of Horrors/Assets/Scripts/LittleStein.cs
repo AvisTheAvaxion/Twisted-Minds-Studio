@@ -12,42 +12,45 @@ public class LittleStein : MonoBehaviour
         Left, Right
     }
 
-    protected FaceDirection currentFaceDir = FaceDirection.Left;
+    FaceDirection currentFaceDir = FaceDirection.Left;
 
     public enum States
     {
         Follow, Fighting, Death
     }
 
-    protected States currentState = States.Follow;
+    States currentState = States.Follow;
 
-    [SerializeField] protected bool flipToRotate;
+    [SerializeField] bool flipToRotate;
     [SerializeField] Transform transformToFlip;
 
-    protected AILerp navigation;
-    protected AI combatAI;
+    AILerp navigation;
+    AI combatAI;
 
-    protected Rigidbody2D rb;
+    Rigidbody2D rb;
 
     Transform player;
 
     [Header("References")]
-    [SerializeField] protected Animator animator;
-    [SerializeField] protected BasicShooter shooter;
-    [SerializeField] protected Transform pivot;
+    [SerializeField] Animator animator;
+    [SerializeField] BasicShooter shooter;
+    [SerializeField] Transform pivot;
+    [SerializeField] ParticleSystem walkParticles;
 
     [Header("Settings")]
-    [SerializeField] protected LayerMask enemyMask;
-    [SerializeField] protected float moveSpeed = 10f;
-    [SerializeField] protected float attackCooldown = 1f;
-    [SerializeField] protected float attackRange = 1f;
-    [SerializeField] protected float agroRadius = 2f;
-    [SerializeField] protected float timeBtwChecks = 1f;
-    [SerializeField] protected float followRadius = 0.5f;
-    [SerializeField] protected float maxDistanceFromPlayer = 4f;
+    [SerializeField] LayerMask enemyMask;
+    [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float attackRange = 1f;
+    [SerializeField] float attackCooldown = 1f;
+    [SerializeField] float agroRadius = 2f;
+    [SerializeField] float timeBtwChecks = 1f;
+    [SerializeField] float followRadius = 0.5f;
+    [SerializeField] float maxDistanceFromPlayer = 4f;
 
     Collider2D[] possibleTargets;
     Transform currentTarget;
+
+    Vector2 dirToTarget;
 
     float timer = 0;
 
@@ -86,7 +89,7 @@ public class LittleStein : MonoBehaviour
         ChooseState();
     }
 
-    protected void ChooseState()
+    void ChooseState()
     {
         switch (currentState)
         {
@@ -126,9 +129,11 @@ public class LittleStein : MonoBehaviour
 
         if (currentTarget != null)
         {
+            if (animator) animator.SetBool("isWalking", true);
+
             Vector2 vectorToTarget = (Vector2)currentTarget.position - (Vector2)transform.position;
             float distToTarget = vectorToTarget.magnitude;
-            Vector2 dirToTarget = vectorToTarget.normalized;
+            dirToTarget = vectorToTarget.normalized;
 
             combatAI.SetCanMove(true);
             combatAI.SetTarget(currentTarget);
@@ -136,13 +141,27 @@ public class LittleStein : MonoBehaviour
 
             if (canAttack && distToTarget <= attackRange)
             {
-                pivot.rotation = Quaternion.FromToRotation(pivot.up, dirToTarget) * pivot.rotation;
-                shooter.SetTarget(currentTarget);
-                shooter.Attack();
+                if (animator) animator.SetTrigger("Attack");
+                StartCoroutine(AttackCooldown(attackCooldown));
             }
+
+            CheckToRotate(dirToTarget);
         }
 
         timer += Time.deltaTime;
+    }
+
+    public void Attack()
+    {
+        pivot.rotation = Quaternion.FromToRotation(pivot.up, dirToTarget) * pivot.rotation;
+        shooter.SetTarget(currentTarget);
+        shooter.Attack();
+    }
+
+    public void EmitWalkParticles()
+    {
+        if (walkParticles) walkParticles.Stop();
+        if (walkParticles) walkParticles.Play();
     }
 
     private void Follow()
@@ -157,6 +176,8 @@ public class LittleStein : MonoBehaviour
 
             if (!navigation.canSearch)
             {
+                if (animator) animator.SetBool("isWalking", true);
+
                 combatAI.SetCanMove(false);
                 navigation.canSearch = true;
                 navigation.canMove = true;
@@ -181,8 +202,20 @@ public class LittleStein : MonoBehaviour
             combatAI.SetCanMove(true);
             navigation.canSearch = false;
             navigation.canMove = false;
-            combatAI.MoveTowardsTarget((Vector2)player.position - dirToPlayer * followRadius);
+            bool moving = combatAI.MoveTowardsTarget((Vector2)player.position - dirToPlayer * followRadius);
+            print(moving);
+
+            if (moving)
+            {
+                if (animator) animator.SetBool("isWalking", true);
+            }
+            else
+            {
+                if (animator) animator.SetBool("isWalking", false);
+            }
         }
+
+        CheckToRotate(dirToPlayer);
 
         timer += Time.deltaTime;
     }
@@ -203,6 +236,30 @@ public class LittleStein : MonoBehaviour
             {
                 currentTarget = possibleTargets[i].transform;
                 closestDistanceSqr = distSqr;
+            }
+        }
+    }
+
+    void CheckToRotate(Vector2 dir)
+    {
+        if (flipToRotate)
+        {
+            float angle = Vector2.SignedAngle(dir, Vector2.up);
+            if (angle <= 0 && currentFaceDir == FaceDirection.Right)
+            {
+                Vector2 newScale = transformToFlip.localScale;
+                newScale.x *= -1;
+                transformToFlip.localScale = newScale;
+
+                currentFaceDir = FaceDirection.Left;
+            }
+            else if (angle > 0 && currentFaceDir == FaceDirection.Left)
+            {
+                Vector2 newScale = transformToFlip.localScale;
+                newScale.x *= -1;
+                transformToFlip.localScale = newScale;
+
+                currentFaceDir = FaceDirection.Right;
             }
         }
     }

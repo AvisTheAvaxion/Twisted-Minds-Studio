@@ -34,6 +34,7 @@ public class EnemyStateMachine : MonoBehaviour
     [Header("Animation")]
     [SerializeField] protected Animator animator;
     [SerializeField] protected bool hasWalkCycle = true;
+    [SerializeField] protected ParticleSystem moveParticles;
 
     protected States currentState = States.Idle;
 
@@ -478,6 +479,13 @@ public class EnemyStateMachine : MonoBehaviour
                 currentFaceDir = FaceDirection.Right;
             }
         }
+    }
+
+    //Animation Event
+    public void EmitMoveParticles()
+    {
+        if (moveParticles) moveParticles.Stop();
+        if (moveParticles) moveParticles.Play();
     }
 
     #region Helper Functions

@@ -22,6 +22,7 @@ public class AI : MonoBehaviour
     [Header("Settings")]
     [SerializeField] float currentDirSmoothing = 0.5f;
     [SerializeField] float objectRadius = 0.2f;
+    [SerializeField] Vector2 centerOffset = new Vector2(0, 0);
     [SerializeField] float speed = 2f;
     [SerializeField] float orbitRadius = 1f;
     [SerializeField] float orbitRadiusThickness = 0.2f;
@@ -135,15 +136,19 @@ public class AI : MonoBehaviour
 
         Move();
     }
-    public void MoveTowardsTarget(Vector3 targetPosition)
+    public bool MoveTowardsTarget(Vector3 targetPosition)
     {
-        if (!canMove) return;
+        if (!canMove) return false;
 
         Vector2 vectorToTarget = targetPosition - transform.position;
         float distToTarget = vectorToTarget.magnitude;
         Vector2 dirToTarget = vectorToTarget.normalized;
 
-        if (distToTarget < minDistanceThreshold) return;
+        if (distToTarget < minDistanceThreshold) 
+        { 
+            rb.velocity = Vector2.zero; 
+            return false; 
+        }
 
         float largestWeight = 0;
         //Set baseline weight based off dot product to desire direction
@@ -175,6 +180,8 @@ public class AI : MonoBehaviour
         PathObstruction(largestWeight, largestWeightIndex);
 
         Move();
+
+        return true;
     }
 
     bool isOrbiting;
@@ -278,7 +285,7 @@ public class AI : MonoBehaviour
         //Check for obstacles in the path of weights
         for (int i = 0; i < numOfWeights; i++)
         {
-            RaycastHit2D[] hitInfos = Physics2D.RaycastAll((Vector2)transform.position + weights[i].dir * objectRadius, weights[i].dir, obstacleDistanceSensitivity, obstacleMask);
+            RaycastHit2D[] hitInfos = Physics2D.RaycastAll((Vector2)transform.position + centerOffset + weights[i].dir * objectRadius, weights[i].dir, obstacleDistanceSensitivity, obstacleMask);
             if (hitInfos.Length > 0)
             {
                 RaycastHit2D hitInfo = hitInfos[hitInfos.Length - 1];
@@ -336,7 +343,7 @@ public class AI : MonoBehaviour
         if (!visualizeWeights) return;
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, objectRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + centerOffset, objectRadius);
 
         if (weights == null) return;
 
@@ -349,7 +356,7 @@ public class AI : MonoBehaviour
             {
                 Gizmos.color = Color.red;
             }
-            Gizmos.DrawLine((Vector2)transform.position + weights[i].dir * objectRadius, (Vector2)transform.position + weights[i].dir * objectRadius + weights[i].dir * Mathf.Abs(weights[i].weight));
+            Gizmos.DrawLine((Vector2)transform.position + centerOffset +  weights[i].dir * objectRadius, (Vector2)transform.position + weights[i].dir * objectRadius + weights[i].dir * Mathf.Abs(weights[i].weight));
         }
     }
 }

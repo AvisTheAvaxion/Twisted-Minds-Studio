@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestStep
+public class QuestStep : ScriptableObject
 {
-    public string Description { get; set; }
-    public bool Completed { get; set; }
-    public int CurrentAmount { get; set; }
-    public int RequiredAmount { get; set; }
+    [Header("Step Info")]
+    public bool Completed;
+    public int RequiredAmount;
+    public string Description;
+    public int CurrentAmount;
+    
 
     public virtual void Init()
     {
@@ -26,5 +28,25 @@ public class QuestStep
     public void Complete()
     {
         Completed = true;
+    }
+
+    public bool GetCompletion()
+    {
+        return Completed;
+    }
+
+    public void SetCompletion(bool status)
+    {
+        Completed = status;
+    }
+
+    public bool GetReqAmount()
+    {
+        return Completed;
+    }
+
+    public void SetReqAmount(int amount)
+    {
+        RequiredAmount = amount;
     }
 }

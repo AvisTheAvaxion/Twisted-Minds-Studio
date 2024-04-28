@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
+[CreateAssetMenu(fileName = "KillStep", menuName = "QuestItems/Steps/Kill Step", order = 0)]
 public class KillStep : QuestStep
 {
-    public string EnemyName { get; set; }
+    [Header("Target Info")]
+    public string EnemyName;
 
     public KillStep(string enemyName, string desc, bool completed, int currentAmo, int requiredAmo)
     {

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Quest : MonoBehaviour
+[CreateAssetMenu(fileName = "Quest", menuName = "QuestItems/Quest", order = 0)]
+public class Quest : ScriptableObject
 {
-    public List<QuestStep> Steps { get; set; } = new List<QuestStep>();
-    public string QuestName { get; set; }
-    public string Description { get; set; }
-    public Item ItemReward { get; set; }
-    public bool Completed { get; set; }
+    public List<QuestStep> Steps;
+    public string QuestName;
+    public string Description;
+    public List<Useables> ItemRewards;
+    public bool Completed;
 
 
     public void CheckGoals()
@@ -25,9 +26,19 @@ public class Quest : MonoBehaviour
 
     void GiveReward()
     {
-        if(ItemReward != null)
+        if(ItemRewards != null)
         {
-            //Give the item to the player
+            //Give the items to the player
         }
+    }
+
+    public List<QuestStep> GetSteps()
+    {
+        return Steps;
+    }
+
+    public void AddStep(QuestStep newStep)
+    {
+        Steps.Add(newStep);
     }
 }

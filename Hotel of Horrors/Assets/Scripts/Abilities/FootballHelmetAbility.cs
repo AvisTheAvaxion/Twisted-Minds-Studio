@@ -17,7 +17,7 @@ public class FootballHelmetAbility : SpecialAbility
         this.controller = controller;
 
         transform.rotation = Quaternion.FromToRotation(transform.up, (controller.CrosshairPosition - (Vector2)transform.position).normalized) * transform.rotation;
-        GameObject go = Instantiate(footballHelmetProjectile, spawnPoint.position, spawnPoint.rotation);
+        GameObject go = Instantiate(footballHelmetProjectile, spawnPoint.position, Quaternion.identity);
         FootballHelmetProjectile proj = go.GetComponent<FootballHelmetProjectile>();
         if (proj) proj.Init(this);
         CustomRigidbody2D rb = go.GetComponent<CustomRigidbody2D>();

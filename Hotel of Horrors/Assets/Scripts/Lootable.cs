@@ -83,7 +83,8 @@ public class Lootable : MonoBehaviour
                     rigidBody.gameObject.SetActive(true);
                     rigidBody.transform.parent = null;
                     rigidBody.Initialize(0);
-                    Vector2 dir = (go.transform.position - transform.position).normalized * destroyedLaunchForce;
+                    //Vector2 dir = (go.transform.position - transform.position).normalized * destroyedLaunchForce;
+                    Vector2 dir = GetRandomDir().normalized * destroyedLaunchForce;
                     rigidBody.AddForce(new Vector3(dir.x, dir.y, 0.5f), ForceMode2D.Impulse);
                 }
             }

@@ -12,7 +12,7 @@ public class LightFlicker : MonoBehaviour
     [SerializeField] bool changeSize = false;
     [SerializeField] float minSizeChange, maxSizeChange;
 
-    Vector3 defaultLightSize;
+    float defaultLightSize;
     Vector3 defaultLightRingSize;
 
     float timer = 0;
@@ -27,7 +27,7 @@ public class LightFlicker : MonoBehaviour
         if (light2D == null) light2D = GetComponentInChildren<Light2D>();
         if (lightRing == null) lightRing = GetComponentInChildren<SpriteRenderer>();
 
-        defaultLightSize = light2D.gameObject.transform.localScale;
+        defaultLightSize = light2D.pointLightOuterRadius;
         defaultLightRingSize = lightRing.gameObject.transform.localScale;
 
         currentFlickerRate = 1f / Random.Range(minFlickerRate, maxFlickerRate);
@@ -44,12 +44,12 @@ public class LightFlicker : MonoBehaviour
         {
             index = (index + 1) % sprites.Length;
             lightRing.sprite = sprites[index];
-            light2D.lightCookieSprite = sprites[index];
+            //light2D.lightCookieSprite = sprites[index];
 
             if (changeSize)
             {
                 lightRing.transform.localScale = defaultLightRingSize * (1 + Random.Range(minSizeChange, maxSizeChange));
-                light2D.transform.localScale = defaultLightSize * (1 + Random.Range(minSizeChange, maxSizeChange));
+                light2D.pointLightOuterRadius = defaultLightSize * (1 + Random.Range(minSizeChange, maxSizeChange) * 2);
             }
 
             currentFlickerRate = 1f / Random.Range(minFlickerRate, maxFlickerRate);

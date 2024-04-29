@@ -25,7 +25,7 @@ public class FootballHelmetAbility : SpecialAbility
         if (rb) 
         {
             rb.Initialize(launchHeight);
-            rb.AddForce(new Vector3(dir.x, dir.y, 0.5f) * launchForce, ForceMode2D.Impulse); 
+            rb.AddForce(new Vector3(dir.x, dir.y, 0.1f) * launchForce, ForceMode2D.Impulse); 
         }
         isAttacking = true;
     }

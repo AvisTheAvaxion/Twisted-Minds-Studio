@@ -6,7 +6,7 @@ using UnityEngine;
 public class CustomRigidbody2D : MonoBehaviour
 {
     const float EPSILON = 0.01f;
-    public static float gravity = -1f;
+    public static float gravity = -2f;
     public static float scalingFactor = 0.4f;
 
     Rigidbody2D rb;
@@ -92,11 +92,11 @@ public class CustomRigidbody2D : MonoBehaviour
     {
         if(forceMode == ForceMode2D.Force)
         {
-            rb.AddForce(new Vector2(force.x * 2, force.y / 2), forceMode);
+            rb.AddForce(new Vector2(force.x * 2, force.y), forceMode);
             upVelocity += force.z / rb.mass * Time.fixedDeltaTime;
         } else
         {
-            rb.AddForce(new Vector2(force.x * 2, force.y / 2), forceMode);
+            rb.AddForce(new Vector2(force.x * 2, force.y), forceMode);
             upVelocity += force.z / rb.mass;
         }
 

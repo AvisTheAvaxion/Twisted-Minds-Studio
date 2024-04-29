@@ -378,7 +378,7 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: aa13f91874e46064bb5d7c8204290a89, type: 2}
     minCount: 1
     maxCount: 1
-    weight: 0.1
+    weight: 0.01
   - item: {fileID: 11400000, guid: ac3ab661bcdfda444b86dd893de0156d, type: 2}
     minCount: 1
     maxCount: 1
@@ -387,6 +387,10 @@ MonoBehaviour:
     minCount: 1
     maxCount: 1
     weight: 0.5
+  - item: {fileID: 11400000, guid: a226a13a06d1a57448080f67b5e5acc7, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 0.2
 --- !u!114 &6513521994882905555
 MonoBehaviour:
   m_ObjectHideFlags: 0

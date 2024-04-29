@@ -359,12 +359,12 @@ public class PlayerMovement : MonoBehaviour
         Door door = obj.GetComponent<Door>();
 
         //Ensure player is facing the door
-        if ((door.doorLocation == Door.DoorLocations.North && direction.Equals("North")) ||
+        /*if ((door.doorLocation == Door.DoorLocations.North && direction.Equals("North")) ||
             (door.doorLocation == Door.DoorLocations.South && direction.Equals("South")) ||
             (door.doorLocation == Door.DoorLocations.East && direction.Equals("East")) ||
             (door.doorLocation == Door.DoorLocations.West && direction.Equals("West")) ||
             (door.doorLocation == Door.DoorLocations.Special))
-        {
+        {*/
             rb.velocity = Vector2.zero;
             animator.SetBool("isWalking", false);
 
@@ -389,25 +389,25 @@ public class PlayerMovement : MonoBehaviour
             {
                 case Door.DoorLocations.North:
                     print("North");
-                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0f, -0.4f, 0);
+                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0f, -0.6f, 0);
                     direction = "North";
                     animator.runtimeAnimatorController = backController;
                     break;
                 case Door.DoorLocations.South:
                     print("South");
-                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0, 0.4f, 0);
+                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0, 0.6f, 0);
                     direction = "South";
                     animator.runtimeAnimatorController = forwardController;
                     break;
                 case Door.DoorLocations.East:
                     print("East");
-                    this.transform.position = door.assignedDoor.transform.position - new Vector3(-0.4f, 0, 0);
+                    this.transform.position = door.assignedDoor.transform.position - new Vector3(-0.6f, 0, 0);
                     direction = "East";
                     animator.runtimeAnimatorController = rightController;
                     break;
                 case Door.DoorLocations.West:
                     print("West");
-                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0.4f, 0, 0);
+                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0.6f, 0, 0);
                     direction = "West";
                     animator.runtimeAnimatorController = leftController;
                     break;
@@ -433,7 +433,7 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool("isWalking", true);
             else
                 animator.SetBool("isWalking", false);
-        }
+        //}
     }
 
     Vector3 GetSpecialRoom(Door door)

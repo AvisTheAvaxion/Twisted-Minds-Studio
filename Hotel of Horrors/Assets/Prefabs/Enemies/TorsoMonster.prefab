@@ -5243,7 +5243,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   dropRadius: 0.5
-  minDropAmount: 1
+  minDropAmount: 0
   maxDropAmount: 2
   itemHolderPrefab: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
   itemDrops:
@@ -5262,11 +5262,11 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 31f7daa77a838a545bf97e2afc5375a3, type: 2}
     minCount: 1
     maxCount: 1
-    weight: 1
+    weight: 0.01
   - item: {fileID: 11400000, guid: 55df27ef2cf334c48a4c8e818b2e0bf7, type: 2}
     minCount: 1
     maxCount: 1
-    weight: 1
+    weight: 0.2
 --- !u!114 &5557790185517936632
 MonoBehaviour:
   m_ObjectHideFlags: 0

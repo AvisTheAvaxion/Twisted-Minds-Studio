@@ -5239,23 +5239,35 @@ MonoBehaviour:
   effectsToInflict: []
   shooter: {fileID: 8624140693439099872}
   range: 2
-  canMoveAndShoot: 1
+  canMoveAndShoot: 0
   wallsLayerMask:
     serializedVersion: 2
     m_Bits: 64
   dropRadius: 0.25
-  minDropAmount: 1
+  minDropAmount: 0
   maxDropAmount: 3
   itemHolderPrefab: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
   itemDrops:
   - item: {fileID: 11400000, guid: 31f7daa77a838a545bf97e2afc5375a3, type: 2}
     minCount: 1
     maxCount: 1
-    weight: 1
-  - item: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
+    weight: 0.01
+  - item: {fileID: 11400000, guid: 36aab2a0480a5784cad25bed698e5cea, type: 2}
     minCount: 1
     maxCount: 1
+    weight: 0.2
+  - item: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
+    minCount: 1
+    maxCount: 2
     weight: 1
+  - item: {fileID: 11400000, guid: 55df27ef2cf334c48a4c8e818b2e0bf7, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 0.2
+  - item: {fileID: 11400000, guid: f9b67a3ac3470e04a8af490f8ee0f876, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 0.05
 --- !u!114 &8624140693439099872
 MonoBehaviour:
   m_ObjectHideFlags: 0

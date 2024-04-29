@@ -25,10 +25,10 @@ public class BossHealth : MonoBehaviour, IHealth
         if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
 
         uiDisplay.Boss_healthBar.value = 1;
+        canTakeDamage = true;
     }
     private void Update()
     {
-
         if (healOverTime)
         {
             if (timer <= 0)

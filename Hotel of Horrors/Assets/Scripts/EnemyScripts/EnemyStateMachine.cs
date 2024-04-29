@@ -103,6 +103,8 @@ public class EnemyStateMachine : MonoBehaviour
         navigation.canSearch = false;
         navigation.canMove = false;
 
+        canAttack = true;
+
         navigation.speed = moveSpeed / 10f;
 
         StartCoroutine(WaitBeforeMoving(pauseMin, pauseMax));
@@ -321,10 +323,9 @@ public class EnemyStateMachine : MonoBehaviour
     #region Melee Attack
     public virtual void MeleeAttackStart()
     {
+        if (animator != null) animator.SetTrigger("Attack");
         canMove = false;
         canAttack = false;
-
-        if (animator != null) animator.SetTrigger("Attack");
     }
     public virtual void MeleeAttack()
     {
@@ -368,9 +369,8 @@ public class EnemyStateMachine : MonoBehaviour
             canMove = false;
         }
 
-        canAttack = false;
-
         if (animator != null) animator.SetTrigger("Attack");
+        canAttack = false;
     }
     public virtual void RangedAttack()
     {
@@ -407,7 +407,7 @@ public class EnemyStateMachine : MonoBehaviour
     //Attack cooldown
     protected IEnumerator WaitBeforeAttacking(float minWait, float maxWait)
     {
-        canAttack = false;
+        //canAttack = false;
         yield return new WaitForSeconds(Random.Range(minWait, maxWait));
         canAttack = true;
     }

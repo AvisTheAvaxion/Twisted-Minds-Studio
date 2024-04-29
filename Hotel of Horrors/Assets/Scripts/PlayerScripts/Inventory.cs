@@ -275,15 +275,15 @@ public class Inventory : MonoBehaviour
             }
 
             itemSlots[index].UpdateImage();
-            if (slot.IsFreeEquipSlot)
+            if (freeSlot.itemIndex == index)
             {
-                if(item.CurrentAmount > 0)
-                    slot.UpdateImage(index);
+                if (item.CurrentAmount > 0)
+                    freeSlot.UpdateImage(index);
                 else
-                    slot.UpdateImage(-1);
-            } else if (freeSlot.itemIndex == index)
-            {
-                freeSlot.UpdateImage(index);
+                {
+                    uiDisplay.FreeSlotHotbarImage.enabled = false;
+                    freeSlot.UpdateImage(-1);
+                }
             }
         }
     }

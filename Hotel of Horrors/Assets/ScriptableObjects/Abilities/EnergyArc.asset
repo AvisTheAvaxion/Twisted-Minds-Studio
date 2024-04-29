@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8bc98286725570646b9a2f660f538220, type: 3}
-  m_Name: TestAbility
+  m_Name: EnergyArc
   m_EditorClassIdentifier: 
-  useableName: Test Ability
-  description: TRRRIIIIIIIII BEEEEEEEEEAAAAAAAAAAAMMMMMMMM
-  sprite: {fileID: 21300000, guid: 2abd26343682e0144b7e8a7298d767fc, type: 3}
+  useableName: EnergyArc
+  description: Shoot out an Arc of emotional energy
+  maxStackAmount: 1
+  sprite: {fileID: 21300000, guid: 42c27b3088ff7e84398c18a160d1f5fc, type: 3}
+  playerAbility: {fileID: 5262229291953371984, guid: 458b049490e25704aad7a2686f48762e, type: 3}

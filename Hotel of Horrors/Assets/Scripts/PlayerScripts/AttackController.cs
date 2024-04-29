@@ -111,7 +111,7 @@ public class AttackController : MonoBehaviour
 
             if (weapon.GetWeaponAbility() != null)
             {
-                GameObject go = Instantiate(weapon.GetWeaponAbility(), Vector3.zero, Quaternion.identity, transform);
+                GameObject go = Instantiate(weapon.GetWeaponAbility(), transform.position + weapon.GetWeaponAbility().transform.localPosition, Quaternion.identity, transform);
                 WeaponAbility ability = go.GetComponent<WeaponAbility>();
                 if (ability != null) currentWeaponAbility = ability;
             }
@@ -159,7 +159,7 @@ public class AttackController : MonoBehaviour
 
             if (abilities.GetPlayerAbility() != null)
             {
-                GameObject go = Instantiate(abilities.GetPlayerAbility(), Vector3.zero, Quaternion.identity, transform);
+                GameObject go = Instantiate(abilities.GetPlayerAbility(), transform.position + abilities.GetPlayerAbility().transform.localPosition, Quaternion.identity, transform);
                 PlayerAbility ability = go.GetComponent<PlayerAbility>();
                 if (ability != null) currentPlayerAbitlity = ability;
             }
@@ -173,7 +173,7 @@ public class AttackController : MonoBehaviour
 
             if (mententos.GetSpecialAbility() != null)
             {
-                GameObject go = Instantiate(mententos.GetSpecialAbility(), Vector3.zero, Quaternion.identity, transform);
+                GameObject go = Instantiate(mententos.GetSpecialAbility(), transform.position + mententos.GetSpecialAbility().transform.localPosition, Quaternion.identity, transform);
                 SpecialAbility ability = go.GetComponent<SpecialAbility>();
                 if (ability != null) currentSpecialAbility = ability;
             }

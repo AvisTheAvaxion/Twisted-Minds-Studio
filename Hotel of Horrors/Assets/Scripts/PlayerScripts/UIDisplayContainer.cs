@@ -10,6 +10,7 @@ public class UIDisplayContainer : MonoBehaviour
     [SerializeField] GameObject inventoryUI;
     [SerializeField] GameObject weaponsContainer;
     [SerializeField] GameObject itemsContainer;
+    [SerializeField] GameObject abilitiesContainer;
     [SerializeField] ItemToolTip itemToolTip;
 
     [Header("Game UI")]
@@ -54,4 +55,5 @@ public class UIDisplayContainer : MonoBehaviour
     public Slider Boss_healthBar { get => boss_healthBar;}
     public GameObject WeaponsContainer { get => weaponsContainer; }
     public GameObject ItemsContainer { get => itemsContainer; }
+    public GameObject AbilitiesContainer { get => abilitiesContainer; }
 }

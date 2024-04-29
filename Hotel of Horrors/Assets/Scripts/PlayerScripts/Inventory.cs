@@ -26,6 +26,7 @@ public class Inventory : MonoBehaviour
 
     ItemSlot[] itemSlots;
     ItemSlot[] weaponSlots;
+    List<AbilitySlot> abilitySlots;
 
     AttackController attackController;
 
@@ -40,6 +41,8 @@ public class Inventory : MonoBehaviour
         uiDisplay.InventoryUI.SetActive(false);
         attackController = GetComponent<AttackController>();
 
+        abilitySlots = new List<AbilitySlot>();
+        abilitySlots = uiDisplay.AbilitiesContainer.GetComponentsInChildren<AbilitySlot>().ToList<AbilitySlot>();
         itemSlots = uiDisplay.ItemsContainer.GetComponentsInChildren<ItemSlot>();
         weaponSlots = uiDisplay.WeaponsContainer.GetComponentsInChildren<ItemSlot>();
 
@@ -59,7 +62,13 @@ public class Inventory : MonoBehaviour
                 freeSlot = slot;
         }
 
+        for (int i = 0; i < abilitySlots.Count; i++)
+        {
+            AddPlayerAbility(abilitySlots[i].abilityInfo);
+        }
+
         uiDisplay.ItemsContainer.SetActive(false);
+        uiDisplay.AbilitiesContainer.SetActive(false);
         uiDisplay.WeaponsContainer.SetActive(true);
     }
 
@@ -143,19 +152,42 @@ public class Inventory : MonoBehaviour
     }
     public void EquipPlayerAbility(int index)
     {
-        Abilities ability = index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
+        Abilities ability = index >= 0 && index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
+
+        if (ability == null)
+        {
+            freeSlot.UpdateImage(null);
+            attackController.UnequipPlayerAbility();
+            uiDisplay.FreeSlotHotbarImage.enabled = false;
+        }
+        else
+        {
+            EquipItem(-1);
+            attackController.EquipPlayerAbility(ability);
+            uiDisplay.FreeSlotHotbarImage.enabled = true;
+            uiDisplay.FreeSlotHotbarImage.sprite = ability.GetSprite();
+            freeSlot.UpdateImage(ability.GetSprite());
+        }
+    }
+    public void EquipPlayerAbility(Abilities ability)
+    {
+        //Abilities ability = index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
         //ItemInstance item = itemsInventory[index];
         //freeSlot.UpdateImage(index);
 
         if (ability == null)
         {
+            freeSlot.UpdateImage(null);
+            attackController.UnequipPlayerAbility();
             uiDisplay.FreeSlotHotbarImage.enabled = false;
         }
         else
         {
+            EquipItem(-1);
             attackController.EquipPlayerAbility(ability);
             uiDisplay.FreeSlotHotbarImage.enabled = true;
             uiDisplay.FreeSlotHotbarImage.sprite = ability.GetSprite();
+            freeSlot.UpdateImage(ability.GetSprite());
         }
     }
     public void EquipMemento(int index)

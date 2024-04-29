@@ -99,9 +99,9 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (isFreeEquipSlot)
         {
             ItemInstance item = inventory.GetItem(index);
+            this.itemIndex = index;
             if (item != null)
             {
-                this.itemIndex = index;
                 amountText.enabled = true;
                 itemImage.color = slotFilledColor;
                 amountText.text = item.CurrentAmount.ToString();
@@ -135,6 +135,23 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             itemImage.color = slotEmptyColor;
             itemImage.sprite = null;
             amountText.enabled = false;
+        }
+    }
+    public void UpdateImage(Sprite sprite)
+    {
+        if(isFreeEquipSlot)
+        {
+            if(sprite != null)
+            {
+                amountText.enabled = false;
+                itemImage.color = slotFilledColor;
+                itemImage.sprite = sprite;
+            } else
+            {
+                itemImage.color = slotEmptyColor;
+                itemImage.sprite = null;
+                amountText.enabled = false;
+            }
         }
     }
 
@@ -191,7 +208,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
             else if (isFreeEquipSlot)
             {
-                UpdateImage(-1);
+                inventory.EquipItem(-1);
                 itemToolTip.gameObject.SetActive(false);
             }
             else if (isItemSlot)

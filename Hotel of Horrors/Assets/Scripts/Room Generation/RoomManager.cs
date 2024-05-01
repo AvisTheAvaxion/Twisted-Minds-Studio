@@ -21,16 +21,22 @@ public class RoomManager : MonoBehaviour
         GetAllDoors();
     }
 
+    public void IncrementRoomsTraversed()
+    {
+        roomsTraversed++;
+        if(roomsTraversed >= doorsToReset)
+        {
+            roomsTraversed = 0;
+            GetAllDoors();
+        }
+    }
+
     /// <summary>
     /// Returns an available room to assign to a door
     /// </summary>
     public GameObject GetNextRoom(Door.DoorLocations orientation)
     {
-        if(roomsTraversed++ >= doorsToReset)
-        {
-            roomsTraversed = 0;
-            GetAllDoors();
-        }
+        IncrementRoomsTraversed();
 
         GameObject door;
         switch (orientation)
@@ -57,6 +63,27 @@ public class RoomManager : MonoBehaviour
 
     void GetAllDoors()
     {
+       /* for (int i = 0; i < northDoors.Count; i++)
+        {
+            Door door = northDoors[i].GetComponent<Door>();
+            if (door) door.assignedDoor = null;
+        }
+        for (int i = 0; i < southDoors.Count; i++)
+        {
+            Door door = southDoors[i].GetComponent<Door>();
+            if (door) door.assignedDoor = null;
+        }
+        for (int i = 0; i < westDoors.Count; i++)
+        {
+            Door door = westDoors[i].GetComponent<Door>();
+            if (door) door.assignedDoor = null;
+        }
+        for (int i = 0; i < eastDoors.Count; i++)
+        {
+            Door door = eastDoors[i].GetComponent<Door>();
+            if (door) door.assignedDoor = null;
+        }*/
+
         northDoors.Clear();
         eastDoors.Clear();
         southDoors.Clear();
@@ -66,6 +93,8 @@ public class RoomManager : MonoBehaviour
 
         foreach (GameObject theDoor in doors)
         {
+            Door door = theDoor.GetComponent<Door>();
+            if (door) door.assignedDoor = null;
             westDoors.Add(theDoor);
         }
 
@@ -73,6 +102,8 @@ public class RoomManager : MonoBehaviour
 
         foreach (GameObject theDoor in doors)
         {
+            Door door = theDoor.GetComponent<Door>();
+            if (door) door.assignedDoor = null;
             eastDoors.Add(theDoor);
         }
 
@@ -80,6 +111,8 @@ public class RoomManager : MonoBehaviour
 
         foreach (GameObject theDoor in doors)
         {
+            Door door = theDoor.GetComponent<Door>();
+            if (door) door.assignedDoor = null;
             northDoors.Add(theDoor);
         }
 
@@ -87,6 +120,8 @@ public class RoomManager : MonoBehaviour
 
         foreach (GameObject theDoor in doors)
         {
+            Door door = theDoor.GetComponent<Door>();
+            if (door) door.assignedDoor = null;
             southDoors.Add(theDoor);
         }
     }

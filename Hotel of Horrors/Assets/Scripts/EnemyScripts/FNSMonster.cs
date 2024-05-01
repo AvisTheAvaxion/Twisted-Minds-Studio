@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FNSMonster : BossStateMachine
 {
@@ -324,7 +325,7 @@ public class FNSMonster : BossStateMachine
         yield return new WaitUntil(() => !dialogueSegmentStarted);
 
         bossHealth.HideHealthBar();
-        Destroy(gameObject);
+        SceneManager.LoadScene("EndDemo");
     }
 
     public void WalkCameraShake()

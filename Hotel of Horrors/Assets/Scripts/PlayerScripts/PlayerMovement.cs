@@ -342,6 +342,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void TogglePlayerControls(bool toggle)
+    {
+        canMove = toggle;
+
+        if(attackController == null) attackController = GetComponent<AttackController>();
+
+        attackController.ToggleAttackControls(toggle);
+    }
+
+
     #region RoomTraversal
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -365,74 +375,81 @@ public class PlayerMovement : MonoBehaviour
             (door.doorLocation == Door.DoorLocations.West && direction.Equals("West")) ||
             (door.doorLocation == Door.DoorLocations.Special))
         {*/
-            rb.velocity = Vector2.zero;
-            animator.SetBool("isWalking", false);
+        rb.velocity = Vector2.zero;
+        animator.SetBool("isWalking", false);
 
-            canMove = false;
-            print("fading black");
-            AudioManager.Play("Door");
-            // loop over 1 second - fade to black
-            for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
-            {
-                // set color with i as alpha
-                fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
-                yield return null;
-            }
+        canMove = false;
+        //print("fading black");
+        AudioManager.Play("Door");
+        // loop over 1 second - fade to black
+        for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
+        {
+            // set color with i as alpha
+            fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
+            yield return null;
+        }
 
+        if (door.assignedDoor == null)
+        {
+            door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
+        } else
+        {
+            roomManager.IncrementRoomsTraversed();
             if (door.assignedDoor == null)
             {
                 door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
             }
+        }
 
 
-            switch (door.doorLocation)
-            {
-                case Door.DoorLocations.North:
-                    print("North");
-                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0f, -0.6f, 0);
-                    direction = "North";
-                    animator.runtimeAnimatorController = backController;
-                    break;
-                case Door.DoorLocations.South:
-                    print("South");
-                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0, 0.6f, 0);
-                    direction = "South";
-                    animator.runtimeAnimatorController = forwardController;
-                    break;
-                case Door.DoorLocations.East:
-                    print("East");
-                    this.transform.position = door.assignedDoor.transform.position - new Vector3(-0.6f, 0, 0);
-                    direction = "East";
-                    animator.runtimeAnimatorController = rightController;
-                    break;
-                case Door.DoorLocations.West:
-                    print("West");
-                    this.transform.position = door.assignedDoor.transform.position - new Vector3(0.6f, 0, 0);
-                    direction = "West";
-                    animator.runtimeAnimatorController = leftController;
-                    break;
-                case Door.DoorLocations.Special:
-                    print("special");
-                    this.transform.position = GetSpecialRoom(door);
-                    direction = "North";
-                    animator.runtimeAnimatorController = leftController;
-                    break;
-            }
+        switch (door.doorLocation)
+        {
+            case Door.DoorLocations.North:
+                print("North");
+                this.transform.position = door.assignedDoor.transform.position - new Vector3(0f, -0.6f, 0);
+                direction = "North";
+                animator.runtimeAnimatorController = backController;
+                break;
+            case Door.DoorLocations.South:
+                print("South");
+                this.transform.position = door.assignedDoor.transform.position - new Vector3(0, 0.6f, 0);
+                direction = "South";
+                animator.runtimeAnimatorController = forwardController;
+                break;
+            case Door.DoorLocations.East:
+                print("East");
+                this.transform.position = door.assignedDoor.transform.position - new Vector3(-0.6f, 0, 0);
+                direction = "East";
+                animator.runtimeAnimatorController = rightController;
+                break;
+            case Door.DoorLocations.West:
+                print("West");
+                this.transform.position = door.assignedDoor.transform.position - new Vector3(0.6f, 0, 0);
+                direction = "West";
+                animator.runtimeAnimatorController = leftController;
+                break;
+            case Door.DoorLocations.Special:
+                print("special");
+                this.transform.position = GetSpecialRoom(door);
+                direction = "North";
+                animator.runtimeAnimatorController = leftController;
+                break;
+        }
 
-            print("fading clear");
-            // loop over 1 second backwards - fade to clear
-            for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)
-            {
-                // set color with i as alpha
-                fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
-                yield return null;
-            }
-            canMove = true;
+        //print("fading clear");
+        // loop over 1 second backwards - fade to clear
+        for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)
+        {
+            // set color with i as alpha
+            fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
+            yield return null;
+        }
+        canMove = true;
 
-            if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
-                animator.SetBool("isWalking", true);
-            else
-                animator.SetBool("isWalking", false);
+        if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
+            animator.SetBool("isWalking", true);
+        else
+            animator.SetBool("isWalking", false);
         //}
     }
 

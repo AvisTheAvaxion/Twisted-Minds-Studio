@@ -45,6 +45,8 @@ public class AttackController : MonoBehaviour
     public AttackModes CurrentAttackMode { get => currentAttackMode; }
     public Vector2 CrosshairPosition { get => rangedCrosshair.transform.position; }
 
+    bool disableAttackControls = false;
+
     bool canAttack;
 
     bool canDoPlayerAbility = true;
@@ -63,6 +65,11 @@ public class AttackController : MonoBehaviour
     public PlayerAbility currentPlayerAbitlity;
 
     public SpecialAbility currentSpecialAbility;
+
+    public void ToggleAttackControls(bool toggle)
+    {
+        disableAttackControls = !toggle;
+    }
     
 
     private void Awake()
@@ -182,6 +189,8 @@ public class AttackController : MonoBehaviour
 
     void OnAttack(InputValue inputValue)
     {
+        if (disableAttackControls) return;
+
         attackButtonPressed = inputValue.isPressed;
 
         if(isAttacking || (!isAttacking && attackButtonReleased == false)) attackButtonReleased = !inputValue.isPressed;
@@ -193,6 +202,8 @@ public class AttackController : MonoBehaviour
     }
     void OnAttackAbility(InputValue inputValue)
     {
+        if (disableAttackControls) return;
+
         if (currentWeaponAbility != null && canDoWeaponAbility)
         {
             currentWeaponAbility.Use(this);
@@ -201,6 +212,8 @@ public class AttackController : MonoBehaviour
     }
     void OnPrimaryAction(InputValue inputValue)
     {
+        if (disableAttackControls) return;
+
         if (currentSpecialAbility != null && canDoSpecialAbility)
         {
             currentSpecialAbility.Use(this);
@@ -209,7 +222,9 @@ public class AttackController : MonoBehaviour
     }
     void OnSecondaryAction(InputValue inputValue)
     {
-        if(currentPlayerAbitlity != null && canDoPlayerAbility)
+        if (disableAttackControls) return;
+
+        if (currentPlayerAbitlity != null && canDoPlayerAbility)
         {
             currentPlayerAbitlity.Use(this);
             StartCoroutine(PlayerAbilityCooldown(currentPlayerAbitlity.Cooldown));

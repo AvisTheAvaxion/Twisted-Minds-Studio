@@ -14,6 +14,7 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] GameObject canvasPrefab;
     [SerializeField] GameObject choicePrefab;
 
+
     //Event Variables
     NPCInteraction npcInteraction;
     DialogueBoxInteractions dialogueBoxInteract;

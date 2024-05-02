@@ -16,13 +16,14 @@ public class IntroCutscene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement.TogglePlayerControls(false);
 
         StartCoroutine(IntroSequence());
     }
 
     IEnumerator IntroSequence()
     {
+        yield return null;
+        playerMovement.TogglePlayerControls(false);
         varrenAnimator.gameObject.SetActive(true);
         varrenAnimator.gameObject.transform.position = startTransform.position;
         varrenAnimator.SetBool("isWalking", true);

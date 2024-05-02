@@ -169,7 +169,7 @@ public class StatsController : MonoBehaviour
                 if (currentEffectors[i].Effect.info.Name == effect.info.Name)
                 {
                     if(isPlayer) Destroy(currentEffectors[i].EffectIcon.gameObject);
-                    RemoveEffector(currentEffectors[i]);
+                    RemoveEffector(currentEffectors[i], true);
                     break;
                 }
             }
@@ -198,11 +198,23 @@ public class StatsController : MonoBehaviour
     /// Removes the given effector from the list of current effectors and stop their effects if they haven't stopped already
     /// </summary>
     /// <param name="effector"></param>
-    public void RemoveEffector(Effector effector)
+    public void RemoveEffector(Effector effector, bool preemptive)
     {
         if (effector.activeCoroutine != null)
             StopCoroutine(effector.activeCoroutine);
         if(isPlayer) Destroy(effector.EffectIcon.gameObject);
+        if(preemptive && effector.Effect.info.Mode == EffectInfo.EffectMode.Duration)
+        {
+            foreach (EffectInfo.StatEffect statEffect in effector.Effect.info.StatEffects)
+            {
+                if (statEffect.EffectType == EffectInfo.EffectType.Debuff)
+                    ChangeStatValue(statEffect.StatType, statEffect.Strength, statEffect.IsPercentage);
+                else
+                    ChangeStatValue(statEffect.StatType, statEffect.IsPercentage ? statEffect.Strength : -statEffect.Strength, statEffect.IsPercentage, statEffect.IsPercentage);
+
+                if (statEffect.StatType == Stat.StatType.Health) transform.SendMessage("UpdateHealth");
+            }
+        }
         currentEffectors.Remove(effector);
     }
 
@@ -240,7 +252,7 @@ public class StatsController : MonoBehaviour
 
         effector.onEffectEnd?.Invoke(this, null);
 
-        RemoveEffector(effector);
+        RemoveEffector(effector, false);
     }
 
     public IEnumerator EffectOverTime(Effector effector)
@@ -298,7 +310,7 @@ public class StatsController : MonoBehaviour
         }
         effector.onEffectEnd?.Invoke(this, new EffectEventArgs(affectedStats, beforeValues, afterValues, GetHealthValue()));
 
-        RemoveEffector(effector);
+        RemoveEffector(effector, false);
     }
 
     public class Effector

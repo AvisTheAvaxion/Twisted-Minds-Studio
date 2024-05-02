@@ -121,6 +121,7 @@ public class DialogueSystem : MonoBehaviour
         if (dialogueIndex < dialogueLines.Count)
         {
             UpdateVisuals(dialogueLines[dialogueIndex]);
+            AudioManager.Play("NextLine");
         }
         else
         {

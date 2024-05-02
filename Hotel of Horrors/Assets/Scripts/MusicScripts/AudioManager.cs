@@ -99,8 +99,9 @@ public class AudioManager : MonoBehaviour
         audioDict.Add("KarrenTheme", 1);
         audioDict.Add("Elevator", 2);
         audioDict.Add("Door", 3);
-        audioDict.Add("Dash", 4);
-        audioDict.Add("Attack", 5);
+        audioDict.Add("NextLine", 4);
+        audioDict.Add("Dash", 99);
+        audioDict.Add("Attack", 100);
     }
 
     public static void Play(string audioName)
@@ -117,21 +118,23 @@ public class AudioManager : MonoBehaviour
 
     public static void Play(int id)
     {
+        if (id == 99)
+        {
+            Dash = true;
+            return;
+        }
+        if (id == 100)
+        {
+            Attack = true;
+            return;
+        }
+
         if (id > audioDict.Count)
         {
             throw new AudioError("The track with id '" + id + "' could not be found. Please call AudioManager.Sounds() to view all available tracks");
         }
 
-        if (id == 4)
-        {
-            Dash = true;
-            return;
-        }
-        if (id == 5)
-        {
-            Attack = true;
-            return;
-        }
+
 
         if (id <= 2) { songQueue.Add(id); }
 

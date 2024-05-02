@@ -435,12 +435,13 @@ MonoBehaviour:
   bgmSource: {fileID: 7693977996571068035}
   soundEffectSource: {fileID: 306839182055275764}
   ambientSource: {fileID: 3001658837465445364}
+  DashSource: {fileID: 0}
   audioClips:
   - {fileID: 8300000, guid: 229b83bdc3de08a44ac03f5777fc4c05, type: 3}
   - {fileID: 8300000, guid: 8546be25c51e79c45910eef7d7b8fc99, type: 3}
   - {fileID: 8300000, guid: f9323b1325f9b0443bbfe97e8e8fe72b, type: 3}
   - {fileID: 8300000, guid: fe60615ff42877242a6079e7112990d2, type: 3}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 1d3db838fe1d15449ba1780ae49526d6, type: 3}
 --- !u!1 &6436958377807463556
 GameObject:
   m_ObjectHideFlags: 0
@@ -877,3 +878,4 @@ MonoBehaviour:
   DashSource: {fileID: 8133196455947437776}
   AudioClips:
   - {fileID: 8300000, guid: 5c05ceaba7c80e744aa31dc1ab39843c, type: 3}
+  animator: {fileID: 0}

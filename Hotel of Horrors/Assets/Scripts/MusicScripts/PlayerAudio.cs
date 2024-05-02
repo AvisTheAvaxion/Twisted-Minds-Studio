@@ -10,6 +10,8 @@ public class PlayerAudio : MonoBehaviour
 
     [SerializeField] private AudioClip[] AudioClips;
 
+    [SerializeField]  Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,7 @@ public class PlayerAudio : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Moving())
+        if (animator.GetBool("isWalking"))
         {
             if (!MovementSource.isPlaying)
             {
@@ -46,15 +48,5 @@ public class PlayerAudio : MonoBehaviour
             AudioManager.Attack = false;
             AttackSource.Play();
         }
-    }
-
-    bool Moving()
-    {
-        bool moving = false;
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            moving = true;
-        }
-        return moving;
     }
 }

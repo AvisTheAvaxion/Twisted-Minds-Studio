@@ -65955,6 +65955,10 @@ PrefabInstance:
       propertyPath: doorTransitionLength
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3958856602650725404, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1953471807}
     - target: {fileID: 5196756706972270376, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: inventoryUI
       value: 
@@ -89604,6 +89608,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6070cf5928c394282a77ecb0e84ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1953471807 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8490620325508692427, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+  m_PrefabInstance: {fileID: 1340211018}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1967508823
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -360,6 +360,7 @@ MonoBehaviour:
   fadeImage: {fileID: 0}
   elevatorCanvas: {fileID: 0}
   mindRoomCanvas: {fileID: 0}
+  playerAudio: {fileID: 3958856602650725404}
   movementSpeed: 0.5
   drag: 0.705
   walkParticles: {fileID: 27261255123880283}
@@ -409,6 +410,8 @@ MonoBehaviour:
   defaultKnockback: 2
   defaultAttackSpeed: 3
   defaultDeflectionStrength: 2
+  playerAudio: {fileID: 0}
+  currentPlayerAbitlity: {fileID: 0}
   currentSpecialAbility: {fileID: 0}
 --- !u!114 &5196756706972270376
 MonoBehaviour:
@@ -459,6 +462,7 @@ MonoBehaviour:
   iFramesTime: 0.7
   stunTime: 0.2
   flashColorLength: 0.2
+  playerAudio: {fileID: 3958856602650725404}
 --- !u!114 &9195956232266042739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6428,6 +6432,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 500463849900545150, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
   m_PrefabInstance: {fileID: 2474971484506125546}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3958856602650725404 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1488565472923334902, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
+  m_PrefabInstance: {fileID: 2474971484506125546}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad1ff45a1b3d554fad28d2b90ae374e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6929825845062245761
 PrefabInstance:
   m_ObjectHideFlags: 0

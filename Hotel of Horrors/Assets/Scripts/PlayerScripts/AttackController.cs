@@ -35,6 +35,8 @@ public class AttackController : MonoBehaviour
     [SerializeField] float defaultAttackSpeed = 3f;
     [SerializeField] float defaultDeflectionStrength = 2f;
 
+    [SerializeField] PlayerAudio playerAudio;
+
     bool autoAttack = false;
 
     bool attackButtonPressed;
@@ -238,6 +240,7 @@ public class AttackController : MonoBehaviour
             if (attackButtonReleased && attackButtonPressed && !playerMovement.IsDashing)
             {
                 Attack();
+                playerAudio.Play("Attack");
             }
             if(playerMovement.IsDashing)
             {
@@ -287,8 +290,6 @@ public class AttackController : MonoBehaviour
 
         isAttacking = true;
         attackButtonReleased = false;
-
-        AudioManager.Play("Attack");
 
         if (currentAttackMode == AttackModes.Ranged)
         {
@@ -461,6 +462,7 @@ public class AttackController : MonoBehaviour
     {
         float timer = 0;
         canDoPlayerAbility = false;
+        playerAudio.PlayAbility(currentPlayerAbitlity.ToString());
 
         yield return new WaitUntil(() => !currentPlayerAbitlity.isAttacking);
 

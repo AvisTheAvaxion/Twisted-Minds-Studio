@@ -84,6 +84,9 @@ public class EnemyStateMachine : MonoBehaviour
 
     protected Vector2 startPos;
 
+    [Header("Audio Settings")]
+    [SerializeField] EnemyAudioManager enemyAudioManager;
+
 
     private void Start()
     {
@@ -154,6 +157,7 @@ public class EnemyStateMachine : MonoBehaviour
     {
         OnEnemyDeath?.Invoke(this, EventArgs.Empty);
         SpawnItemDrops();
+        enemyAudioManager.Die();
         Destroy(gameObject);
     }
     protected virtual void SpawnItemDrops()
@@ -331,6 +335,9 @@ public class EnemyStateMachine : MonoBehaviour
     {
         //Do melee attack
         Collider2D[] colliders = Physics2D.OverlapCircleAll(meleeAttackPoint.position, meleeRadius);
+
+        enemyAudioManager.Attack(gameObject);
+
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].tag.Equals("Player"))
@@ -378,6 +385,8 @@ public class EnemyStateMachine : MonoBehaviour
         if(shooter != null)
         {
             shooter.Attack();
+
+            enemyAudioManager.Attack(gameObject);
         }
     }
     public virtual void RangedAttackEnd()

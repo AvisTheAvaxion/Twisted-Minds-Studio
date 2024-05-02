@@ -862,6 +862,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4094848050660363272, guid: b29c081c5bd7ae74988c1b6d37f130e5, type: 3}
   m_PrefabInstance: {fileID: 87935838}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &88261937 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3958856602650725404, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+  m_PrefabInstance: {fileID: 1340211018}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad1ff45a1b3d554fad28d2b90ae374e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &90478508
 GameObject:
   m_ObjectHideFlags: 0
@@ -65979,6 +65990,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2963760138129520684, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9b720152a7a71ad4e97d2c2a221f5ccb, type: 3}
+    - target: {fileID: 2963760138129520684, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3194915936490214647, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: drag
       value: 0.705
@@ -65987,6 +66006,10 @@ PrefabInstance:
       propertyPath: fadeImage
       value: 
       objectReference: {fileID: 1298287971}
+    - target: {fileID: 3194915936490214647, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: playerAudio
+      value: 
+      objectReference: {fileID: 88261937}
     - target: {fileID: 3194915936490214647, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: playerHealth
       value: 
@@ -66015,6 +66038,14 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 1953471807}
+    - target: {fileID: 3958856602650725404, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 1953471809}
+    - target: {fileID: 3958856602650725404, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: DamageSource
+      value: 
+      objectReference: {fileID: 1369335187}
     - target: {fileID: 5196756706972270376, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: inventoryUI
       value: 
@@ -66080,6 +66111,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8294943214975604175, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: playerAudio
+      value: 
+      objectReference: {fileID: 88261937}
+    - target: {fileID: 8294943214975604175, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: rangedCrosshair
       value: 
       objectReference: {fileID: 357418484}
@@ -66087,6 +66122,10 @@ PrefabInstance:
       propertyPath: currentAttackMode
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 9195956232266042739, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: playerAudio
+      value: 
+      objectReference: {fileID: 88261937}
     - target: {fileID: 9195956232266042739, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: health.maxValue
       value: 40
@@ -66508,6 +66547,11 @@ PolygonCollider2D:
       - {x: -0.51764524, y: -0.46461082}
       - {x: 0.0067129135, y: 0.014606416}
   m_UseDelaunayMesh: 0
+--- !u!82 &1369335187 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2963760138129520684, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+  m_PrefabInstance: {fileID: 1340211018}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1372550742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89719,6 +89763,17 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 8490620325508692427, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
   m_PrefabInstance: {fileID: 1340211018}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1953471809 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8294943214975604175, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+  m_PrefabInstance: {fileID: 1340211018}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a35e4dd2db3b8c4da7a66956259aab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1967508823
 PrefabInstance:
   m_ObjectHideFlags: 0

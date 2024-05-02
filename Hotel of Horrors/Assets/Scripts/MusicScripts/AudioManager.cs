@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -9,7 +7,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource soundEffectSource;
     [SerializeField] AudioSource ambientSource;
 
-    [SerializeField] AudioSource DashSource;
 
     private static Dictionary<string, int> audioDict = new Dictionary<string, int>();
 
@@ -22,8 +19,6 @@ public class AudioManager : MonoBehaviour
     private static bool updateVolume = false;
     private static float[] volumes;
 
-    public static bool Dash = false;
-    public static bool Attack = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -31,6 +26,8 @@ public class AudioManager : MonoBehaviour
         if (audioDict.Count == 0) { createDict(); }
         if (PlayerPrefs.HasKey("SFXVolume")) { volumes = Load(); }
         else { volumes = new float[3] { 1f, 1f, 1f}; }
+
+        updateVolume = true;
     }
 
     // Update is called once per frame
@@ -100,8 +97,6 @@ public class AudioManager : MonoBehaviour
         audioDict.Add("Elevator", 2);
         audioDict.Add("Door", 3);
         audioDict.Add("NextLine", 4);
-        audioDict.Add("Dash", 99);
-        audioDict.Add("Attack", 100);
     }
 
     public static void Play(string audioName)
@@ -118,17 +113,6 @@ public class AudioManager : MonoBehaviour
 
     public static void Play(int id)
     {
-        if (id == 99)
-        {
-            Dash = true;
-            return;
-        }
-        if (id == 100)
-        {
-            Attack = true;
-            return;
-        }
-
         if (id > audioDict.Count)
         {
             throw new AudioError("The track with id '" + id + "' could not be found. Please call AudioManager.Sounds() to view all available tracks");

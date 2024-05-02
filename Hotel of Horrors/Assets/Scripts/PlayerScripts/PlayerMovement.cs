@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Image fadeImage;
     [SerializeField] GameObject elevatorCanvas;
     [SerializeField] GameObject mindRoomCanvas;
+    [SerializeField] PlayerAudio playerAudio;
     private Transform playerTrans;
 
     [Header("Movement Modifiers")]
@@ -273,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
             isDashing = true;
             currentDashLength = 0;
 
-            AudioManager.Play("Dash");
+            playerAudio.Play("Dash");
 
             animator.SetTrigger("Dash");
             animator.SetBool("Dashing", true);

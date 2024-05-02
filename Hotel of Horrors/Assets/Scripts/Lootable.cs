@@ -22,6 +22,8 @@ public class Lootable : MonoBehaviour
 
     float currentHealth;
 
+    [SerializeField] GameObject DeathSound;
+
     private void Start()
     {
         currentHealth = health;
@@ -60,6 +62,8 @@ public class Lootable : MonoBehaviour
                 if (rb) rb.AddForce(GetRandomDir() * dropRadius, ForceMode2D.Impulse);
             }
         }
+
+        Instantiate(DeathSound);
     }
 
     Vector2 GetRandomDir()

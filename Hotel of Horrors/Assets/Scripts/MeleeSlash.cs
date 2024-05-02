@@ -19,6 +19,8 @@ public class MeleeSlash : MonoBehaviour
 
     Effect[] effects;
 
+    [SerializeField] EnemyAudioManager enemyAudioManager;
+
     public void Init(int damage, float deflectionStrength, float knockback, CameraShake cameraShake, Effect[] effects = null)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
@@ -57,6 +59,8 @@ public class MeleeSlash : MonoBehaviour
             if (health != null) {
                 if (health.TakeDamage(damage))
                 {
+                    enemyAudioManager.Damage();
+
                     if (knockback > 0)
                     {
                         Vector2 dir = (collision.transform.position - transform.position).normalized;

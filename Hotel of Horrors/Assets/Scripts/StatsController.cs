@@ -13,6 +13,8 @@ public class StatsController : MonoBehaviour
     [SerializeField] Stat health = new Stat();
     [SerializeField] Stat[] stats;
 
+    [SerializeField] PlayerAudio playerAudio;
+
     Dictionary<Stat.StatType, Stat> statsDictionary;
 
     List<Effector> currentEffectors;
@@ -97,6 +99,9 @@ public class StatsController : MonoBehaviour
     {
         Stat health = GetHealth();
         health.RemoveValue(damage, false);
+
+        playerAudio.Play("PlayerDamage");
+
         return health.CurrentValue;
     }
     /// <summary>

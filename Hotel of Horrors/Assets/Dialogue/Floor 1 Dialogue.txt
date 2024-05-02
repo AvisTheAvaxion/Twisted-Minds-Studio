@@ -1,0 +1,155 @@
+﻿:0|Protag: Ughhh
+:0|Protag: What? Where am I?
+:0|Protag: *looks around* Is this a... barn?
+:0|Protag: Well, just standing here isn't going to accomplish anything
+:0|: Use WSAD to move
+:0|Protag: I wonder if there is anything useful around here?
+:0|System: Press F to interact with drawers and doors
+
+
+:1|Protag: Huh? I could've sworn I just left this room.
+
+
+:2|Protag: Nope.
+
+
+:3#|Varren: Oh? And who might you be?[1No one1][2AHHHHH!]
+:#a|Protag: Who are you? Where did you come from?
+:3a|Varren: Me? I'm a... resident of this lovely establishment
+:#b|Protag: A GHOST!!!
+:3b|Varren: Calm down kid, I'm not a ghost
+:3b|Varren: I'm just another person trapped here like you
+:3|Protag: Where are we?
+:3|Varren: Hell of course! You died! Where else did you think you would end up?
+:#|Protag: What do you mean? Isn't this a barn?
+:3#|Varren: It's a hotel, and it's where you'll be spending the rest of your days, trapped here for eternity because of all of the terrible things you've done.[1Are you pulling my leg?1][2What terrible things?2]
+:3a|Protag: I think I'd remember dying.
+:3b|Varren: Murder, theft, being an all around terrible person
+:3b|Varren: Whatever horrible deeds you've commited, you're now stuck here as punishment
+:3b|Protag: But why would I be sent to a hotel?
+:3|Varren: Haven't you noticed how this place seems off? The rooms shifting, the lack of windows, the monsters?
+:3|Protag: Yes but-
+:3|Varren: Welcome to hell. You died. You're stuck here for eternity to be forever haunted by those... things. There is no exit, no escape. The atrocities you've committed have condemned you here for eternity.
+:3|Protag: But there has to be some kind of a mistake. I don't remember committing any atrocities or dying, maybe if I look around for long enough then I can find an exit, or the person who trapped us here?
+:3|Varren: You're going to fail. I've searched every nook and cranny of this place. I'm sorry, but there's no way out kid.
+:3|Protag: Maybe you missed a spot?
+:3|Varren: No.
+:3|Protag: Maybe there is a hidden room?
+:3|Varren: NO!!!
+:3|Varren: $i("Sigh")
+:3|Varren: $i("stubborn little ****")
+:3|Varren: There aren't any hidden rooms
+:3|Varren: There is no one watching us
+:3|Varren: And there certantly aren't any exits.
+:3|Varren: Once you arrive, there is no way to leave. You're stuck here.
+:3|Varren: Forever.
+:3|Varren: And Ever.
+:3|Varren: And Ever.
+:3|Varren: Varren:...
+:3|Varren: Since we're stuck here why don't you go ahead and tell me what it is you've done to end up here?
+:3|Protag: I really don't remember. There has to be some sort of mix-up here. I'm going to find whoever put us here and prove that there is a way out.
+:3#|Varren: There's no convincing you is there kid?[1Well just giving up and just sitting here isn't going to accomplish anything.1][2There's no way I can stay in this stinky place2]
+:3|Varren: Your stubbornness is quite amusing, take this
+:3|Varren:$give("Dagger")
+:3| Varren: You can't die here, but you still can feel pain. Let's see how far you get before you give up.
+
+:4|Protag: Well, I guess I should get moving.
+
+
+
+
+:5|Protag: A monster!
+:5|Protag: This is a good time to try testing my dagger
+:|Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that
+:5|Protag: You can talk?
+:5#|Monster: Why wouldn't I be able to? My name is Samantha, and yours?[1Protag1][2What's it matter to you2]
+:5a|Samantha: Well it's certainly nice to meet you Protag, but please do try to refrain from attacking me for no reason
+:5b|Samantha: One finds it helps to make friends
+
+
+
+
+
+:6|Dr. Harris: There you are! You must be my new assistant!
+:6|Protag: Assistant?
+:6|Dr. Harris: Yes. Come along now, we have a lot to do. We need to get everything ready for the surgery.
+:6|Protag: Surgery?
+:6|Dr. Harris: Did the nurse not tell you anything? I'm afraid the good doctor's son won't make it if we aren't on schedule.
+:6|Dr. Harris: Let's see here, first off we need bandages and antiseptic, I'll handle that, you just collect some rootweed and numblumbitantrilia.
+:6|Protag: Rootfeet and numblubi... what?
+:6|Dr. Harris: Rootweed, and.. forget it. You should be able to find some from defeating monsters.
+:6|Dr. Harris: Come find me when you've got at least 20 pieces of each, don't keep me waiting.
+:6|Dr. Harris: Todaloo!
+
+
+:7|Protag: None of these monsters seem to be leaving anything besides this goop. Is this what he wants?
+
+
+:8|Protag: Still nothing but goop.
+
+
+:9|Dr. Harris: Ah! Just in time. I was wondering what was taking you so long.
+:9|Protag: I couldn't find anything but this goop.
+:9|Dr. Harris: Such a hard worker too! This should be more than enough. Keep this up and I'll be sure to let the doctor know to give you a bonus.
+:9|As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads
+:9|Protag: How did you do that?
+:9|Dr. Harris: Do what?
+:9|Protag: The goop! It turned into what we needed!
+:9|Dr. Harris: Goop? I appreciate your hard work, but please make sure you are getting enough rest.
+:9|Dr. Harris: If you would like I can talk to the doctor about prescribing you some sleep medications. We can't have you making mistakes on the job now, can we?
+:9|Dr. Harris: The next thing on the list is rimblenut, I'll do that one, and O- Blood.
+:9|Dr. Harris: For this one, you'll need something to collect the blood in, so let's see here.
+:9|: Dr. Harris digs through his bag, which holds a collection of perfectly normal medical instruments and the most bizarre of ingredients before pulling out a scalpel)
+
+:9|Dr. Harris: Ah, here we are. This should make it easier. When you encounter the monsters, use this scalpel. Severing the arteries should make collecting the blood we need a breeze.
+:9|Dr. Harris:$give("Scapel")
+:9|Dr. Harris:$give("BloodBag")
+:9|Dr. Harris: As usual, come and find me when you're done.
+:9|Protag: Wait!
+:9|Dr. Harris: Sorry, no time for questions, we're on a tight schedule here.
+:9|Dr. Harris: Todaloo!
+
+
+
+
+:10|Dr. Harris: Ah just on time, I knew we could count on you!
+:10|: You give the bag back to Dr. Harris
+:10|Dr. Harris: You can keep the scalpel, never know when you might need it
+:10|Protag: So, what happened to the doctor's son?
+:10|Dr. Harris: It was tragic, really. The poor boy only had 30 yards left to go, when he went down hard.
+:10|Protag: What do you mean?
+:10|Dr. Harris: A broken leg, a sprained wrist, and a concussion, just one week before the finals.
+:10|Dr. Harris: But no matter, once we've got this cure finished he'll be back up and at it in no time, even better than he was before.
+:10|Dr. Harris: Now for the final ingredient, well not really an ingredient, but we need his jersey. You should be able to find it in the good doctor's office.
+:10|Dr. Harris: In the meantime, I shall start preparing the ingredients so that the doctor can do his work.
+:10|Dr. Harris: Todaloo!
+
+
+:11|Dr. Harris: Ah, the jersey.
+:11|Dr. Harris: This should be all for now, I've prepared the ingredients for the doctor and he should be able to cure his son now. Thank you for all of your help, I shall let the doctor how helpful you've been.
+:11|Dr. Harris: Todaloo!
+
+
+:12|Dr. Frank N. Stein: ...
+:12|Dr. Frank N. Stein: Ah! You're here. And not a moment too soon.
+:12|Dr. Frank N. Stein: You have my thanks. Dr. Harris let me know how usefull you've been.
+:12|Dr. Frank N. Stein: Thanks to your efforts, the surgery was a sucess!
+:12|Dr. Frank N. Stein: Behold the results of my work! He's even better than before!
+:12|Protag: Eww. Gross.
+
+:12|Dr. Frank N. Stein: DIE!
+
+
+
+
+:10|Frank: Behold, this is what it means to go further beyond!!!
+:10#|Protag: Shoit, he is gonna wreck your shit! What are you gonna do!? [1Shoot him with a gun1][2Watch like an idiot2]
+:10a|Protag: *Bang* Get owned idiot
+:10a|Protag: Frank: Damn, im dead
+:10b|Protag: Pretty colors
+:10b|Frank: You're fucked.
+:10b|Frank: Die
+
+
+
+

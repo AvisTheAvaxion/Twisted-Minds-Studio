@@ -18,7 +18,10 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [SerializeField] float iFramesTime;
     [SerializeField] float stunTime;
     [SerializeField] float flashColorLength = 0.2f;
-    
+
+    [SerializeField] PlayerAudio playerAudio;
+
+
     bool canGetHit = true;
 
     private void Start()
@@ -39,6 +42,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
         {
             stats.TakeDamage(amount);
             //print("Health: " + currentHealth);
+
+            playerAudio.Play("PlayerDamage");
 
             if (effect != null && Random.Range(0, 1f) <= effect.chanceToInflictEffect) stats.AddEffect(effect);
 

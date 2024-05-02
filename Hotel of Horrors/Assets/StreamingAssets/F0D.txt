@@ -1,9 +1,10 @@
-:0|Charlotte: Hello
-:0|Protag: Hi
-:0#|Charlotte: How is your day going? [1Not bad1][2Terrible2]
-:0a|Charlotte: I'm happy to hear that
-:0b|Charlotte: I'm sorry to hear that
-:0b|Charlotte: I hope it gets better
+$Play(StienTheme)
+:0|Dr. Frank N. Stein: ...
+:0|Dr. Frank N. Stein: Ah! You're here. And not a moment too soon.
+:0|Dr. Frank N. Stein: You have my thanks. Dr. Harris let me know how usefull you've been.
+:0|Dr. Frank N. Stein: Thanks to your efforts, the surgery was a sucess!
+:0|Dr. Frank N. Stein: Now, I just have one last task for you.
+:0|Dr. Frank N. Stein: DIE!
 
 :1#|Charlotte: What theme would you like to listen to? [1Stien's Theme1][2Karren's Theme2][3Elavator Theme3][4Stop the music4][5Exit5]
 :1a|System: $Play(StienTheme)
@@ -12,7 +13,13 @@
 :1d|System: $Play(StopAll)
 :1e|Charlotte: Alright
 
-:2|Frank: I am confused?
-:2#|Frank: What is a man? [1Man am I bad at math1][2A miserable little pile of secrets2]
-:2a|Frank: WRONG!!!!
-:2b|Frank: But enough talk... Have at you!
+:2|Dr. Frank N. Stein: You!!!
+:2#|Dr. Frank N. Stein: How are you beating my glorious creation?! [1He's actually not that good1][2Skill I guess2]
+:2a|Dr. Frank N. Stein: You... Just die already!
+:2b|Dr. Frank N. Stein: IMPOSSIBLE!
+
+
+:4|Dr. Frank N. Stein: NOOOO!
+:4|Dr. Frank N. Stein: My glorius creation!
+:4|Dr. Frank N. Stein: This isn't over!
+

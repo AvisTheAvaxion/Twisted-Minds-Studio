@@ -355,12 +355,11 @@ public class PlayerMovement : MonoBehaviour
     #region RoomTraversal
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
         GameObject obj = collision.gameObject;
         if (obj.tag.Equals("Door") || obj.tag.Equals("WestDoor")|| obj.tag.Equals("EastDoor") || obj.tag.Equals("NorthDoor")|| obj.tag.Equals("SouthDoor"))
         {
-            
-            StartCoroutine(FadeImageOut(obj));
+            if(collision.IsTouching(GetComponent<Collider2D>())) //this is very bad quick fix for demo vid
+                StartCoroutine(FadeImageOut(obj));
         }
     }
 

@@ -21,11 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] StatsController stats;
     [SerializeField] AfterImage afterImage;
-    [SerializeField] Image fadeImage;
-    [SerializeField] GameObject elevatorCanvas;
-    [SerializeField] GameObject mindRoomCanvas;
     [SerializeField] PlayerAudio playerAudio;
-    private Transform playerTrans;
 
     [Header("Movement Modifiers")]
     public float movementSpeed;
@@ -56,11 +52,6 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movementVector = new Vector2();
     Vector2 dashMovementVector = new Vector2();
 
-    [Header("Room Traversal")]
-    [SerializeField] float doorTransitionLength = 0.5f;
-    RoomManager roomManager;
-    bool inRangeOfChair;
-
     AttackController attackController;
 
     #endregion
@@ -68,12 +59,11 @@ public class PlayerMovement : MonoBehaviour
     public bool CanMove { get => canMove; }
     public bool IsDashing { get => isDashing; }
     public string Direction { get => direction; }
+    public Vector2 MovementVector { get => movementVector; }
 
     // Start is called before the first frame update
     void Start()
     {
-        playerTrans = player.transform;
-        roomManager = GameObject.Find("Room Manager")?.GetComponent<RoomManager>();
 
         if (stats == null) stats = GetComponent<StatsController>();
 
@@ -352,155 +342,9 @@ public class PlayerMovement : MonoBehaviour
         attackController.ToggleAttackControls(toggle);
     }
 
-
-    #region RoomTraversal
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void SetDirection(string newDirection)
     {
-        GameObject obj = collision.gameObject;
-        if (obj.tag.Equals("Door") || obj.tag.Equals("WestDoor")|| obj.tag.Equals("EastDoor") || obj.tag.Equals("NorthDoor")|| obj.tag.Equals("SouthDoor"))
-        {
-            if(collision.IsTouching(GetComponent<Collider2D>())) //this is very bad quick fix for demo vid
-                StartCoroutine(FadeImageOut(obj));
-        }
+        this.direction = newDirection;
     }
 
-    IEnumerator FadeImageOut(GameObject obj)
-    {
-        Door door = obj.GetComponent<Door>();
-
-        //Ensure player is facing the door
-        /*if ((door.doorLocation == Door.DoorLocations.North && direction.Equals("North")) ||
-            (door.doorLocation == Door.DoorLocations.South && direction.Equals("South")) ||
-            (door.doorLocation == Door.DoorLocations.East && direction.Equals("East")) ||
-            (door.doorLocation == Door.DoorLocations.West && direction.Equals("West")) ||
-            (door.doorLocation == Door.DoorLocations.Special))
-        {*/
-        rb.velocity = Vector2.zero;
-        animator.SetBool("isWalking", false);
-
-        canMove = false;
-        //print("fading black");
-        AudioManager.Play("Door");
-        // loop over 1 second - fade to black
-        for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
-        {
-            // set color with i as alpha
-            fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
-            yield return null;
-        }
-
-        if (door.assignedDoor == null)
-        {
-            door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
-        } else
-        {
-            roomManager.IncrementRoomsTraversed();
-            if (door.assignedDoor == null)
-            {
-                door.assignedDoor = roomManager.GetNextRoom(door.doorLocation);
-            }
-        }
-
-
-        switch (door.doorLocation)
-        {
-            case Door.DoorLocations.North:
-                print("North");
-                this.transform.position = door.assignedDoor.transform.position - new Vector3(0f, -0.6f, 0);
-                direction = "North";
-                animator.runtimeAnimatorController = backController;
-                break;
-            case Door.DoorLocations.South:
-                print("South");
-                this.transform.position = door.assignedDoor.transform.position - new Vector3(0, 0.6f, 0);
-                direction = "South";
-                animator.runtimeAnimatorController = forwardController;
-                break;
-            case Door.DoorLocations.East:
-                print("East");
-                this.transform.position = door.assignedDoor.transform.position - new Vector3(-0.6f, 0, 0);
-                direction = "East";
-                animator.runtimeAnimatorController = rightController;
-                break;
-            case Door.DoorLocations.West:
-                print("West");
-                this.transform.position = door.assignedDoor.transform.position - new Vector3(0.6f, 0, 0);
-                direction = "West";
-                animator.runtimeAnimatorController = leftController;
-                break;
-            case Door.DoorLocations.Special:
-                print("special");
-                this.transform.position = GetSpecialRoom(door);
-                direction = "North";
-                animator.runtimeAnimatorController = leftController;
-                break;
-        }
-
-        //print("fading clear");
-        // loop over 1 second backwards - fade to clear
-        for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)
-        {
-            // set color with i as alpha
-            fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
-            yield return null;
-        }
-        canMove = true;
-
-        if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
-            animator.SetBool("isWalking", true);
-        else
-            animator.SetBool("isWalking", false);
-        //}
-    }
-
-    Vector3 GetSpecialRoom(Door door)
-    {
-        switch (door.gameObject.name)
-        {
-            case "Elevator Room Door":
-                print("Going to elevator");
-                elevatorCanvas.SetActive(true);
-                Cursor.visible = true;
-                return this.transform.position;
-            case "Boss Room Door":
-                return GameObject.Find("Boss Room Spawn").transform.position;
-            case "Mind Room Door":
-                return GameObject.Find("Mind Room Spawn").transform.position;
-            case "Return Mind Room Door":
-                return GameObject.Find("Mind Room Return").transform.position;
-        }
-
-        print("No Dice");
-        return this.transform.position;
-    }
-    #endregion
-
-    #region MindRoomInteraction
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag.Equals("MindRoomChair"))
-        {
-            inRangeOfChair = true;
-            
-        }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag.Equals("MindRoomChair"))
-        {
-            inRangeOfChair = false;
-        }
-    }
-
-    void OnInteract()
-    {
-        print("interacting");
-        if (inRangeOfChair)
-        {
-            mindRoomCanvas.SetActive(true);
-            Cursor.visible = true;
-        }
-    }
-
-    #endregion
 }

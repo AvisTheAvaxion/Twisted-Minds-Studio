@@ -5,7 +5,7 @@ using Pathfinding;
 using System;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(AILerp), typeof(AI))]
+[RequireComponent(typeof(AI))]
 public class EnemyStateMachine : MonoBehaviour
 {
     public enum FaceDirection
@@ -17,7 +17,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     public enum States
     {
-        Idle, Dialogue, Patrolling, Fighting, Death
+        Idle, Dialogue, Patrolling, Fighting, Death, Searching
     }
 
     [SerializeField] bool debug;
@@ -25,9 +25,9 @@ public class EnemyStateMachine : MonoBehaviour
 
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
+    [SerializeField] Transform rayCastOrigin;
 
-    protected AILerp navigation;
-    protected AI combatAI;
+    protected AI navigation;
 
     protected Rigidbody2D rb;
 
@@ -44,6 +44,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     [Header("Patrol Settings")]
     [SerializeField] protected float patrolRadius;
+    [SerializeField] protected float patrolTime = 3f;
     [SerializeField] protected float pauseMin, pauseMax;
     [SerializeField] protected float aggroRadius = 9;
 
@@ -78,7 +79,12 @@ public class EnemyStateMachine : MonoBehaviour
     protected bool canMove;
     protected bool canAttack;
 
+    protected bool patrolling;
+    protected Vector2 patrolTargetPos;
+    protected float patrolTimer;
+
     protected GameObject target;
+    protected Vector3 lastTargetPos;
 
     protected Transform currentRoom;
 
@@ -93,22 +99,16 @@ public class EnemyStateMachine : MonoBehaviour
         target = GameObject.Find("Player");
         if(target == null) Debug.LogError("Player not detected");
 
-        combatAI = GetComponent<AI>();
-        navigation = GetComponent<AILerp>();
+        navigation = GetComponent<AI>();
         rb = GetComponent<Rigidbody2D>();
 
-        combatAI.SetTarget(target.transform);
-        combatAI.SetCanMove(false);
-        combatAI.SetSpeed(moveSpeed / 10f);
+        navigation.SetTarget(target.transform);
+        navigation.SetCanMove(true);
+        navigation.SetSpeed(moveSpeed / 10f);
 
         startPos = transform.position;
 
-        navigation.canSearch = false;
-        navigation.canMove = false;
-
         canAttack = true;
-
-        navigation.speed = moveSpeed / 10f;
 
         StartCoroutine(WaitBeforeMoving(pauseMin, pauseMax));
     }
@@ -137,6 +137,9 @@ public class EnemyStateMachine : MonoBehaviour
             case States.Death:
                 Death();
                 break;
+            case States.Searching:
+                Search();
+                break;
         }
     }
 
@@ -160,6 +163,7 @@ public class EnemyStateMachine : MonoBehaviour
         enemyAudioManager.Die();
         Destroy(gameObject);
     }
+
     protected virtual void SpawnItemDrops()
     {
         if (itemDrops == null || itemDrops.Length == 0) return;
@@ -192,59 +196,58 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
+    protected RaycastHit2D RaycastPlayer(Vector2 dir, float distance)
+    {
+        return Physics2D.Raycast(rayCastOrigin.position, dir, distance, wallsLayerMask);
+    }
+
     protected virtual void Patrol()
     {
         if(canMove)
         {
-            navigation.interpolatePathSwitches = true;
-
-            if (navigation.canMove == false)
+            if (!patrolling)
             {
+                patrolling = true;
                 Vector2 randomPos = startPos + GetRandomDir() * patrolRadius;
-                navigation.destination = randomPos;
+                patrolTargetPos = randomPos;
 
-                navigation.canMove = true;
-                navigation.canSearch = true;
-
-                Vector2 dir = (randomPos - (Vector2)transform.position).normalized;
-                CheckToRotate(dir);
-
-                if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
-
-                navigation.SearchPath();
-                return;
+                patrolTimer = 0;
             }
 
-            if(navigation.reachedDestination || navigation.reachedEndOfPath)
+            bool arrived = !navigation.MoveTowardsTarget(patrolTargetPos);
+
+            Vector2 dir = (patrolTargetPos - (Vector2)transform.position).normalized;
+            CheckToRotate(dir);
+
+            if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
+
+            if(arrived || patrolTimer >= patrolTime)
             {
-                navigation.canMove = false;
-                navigation.canSearch = false;
+                patrolling = false;
 
                 if (hasWalkCycle && animator != null) animator.SetBool("isWalking", false);
 
                 StartCoroutine(WaitBeforeMoving(pauseMin, pauseMax));
             }
+
+            patrolTimer += Time.deltaTime;
         }
 
-        if (GetDistanceToPlayer() < aggroRadius)
+        float distToPlayer = GetDistanceToPlayer();
+        Vector2 dirToPlayer = GetDirToPlayer();
+        if (distToPlayer < aggroRadius && RaycastPlayer(dirToPlayer, distToPlayer).collider == null)
         {
             canMove = true;
             canAttack = true;
 
-            navigation.canMove = false;
-            navigation.canSearch = false;
-
-            navigation.interpolatePathSwitches = false;
-
             currentState = States.Fighting;
 
-            combatAI.SetCanMove(true);
+            navigation.SetCanMove(true);
 
             if (debug) print("Switch to Fighting State");
         }
     }
 
-    bool wallObstructingPath;
     protected virtual void Fight()
     {
         if (canMove)
@@ -252,25 +255,14 @@ public class EnemyStateMachine : MonoBehaviour
             float distToTarget = GetDistanceToPlayer();
             Vector2 dirToPlayer = GetDirToPlayer();
 
-            if (distToTarget > maxDistanceToNavigate || Physics2D.Raycast(transform.position, dirToPlayer, distToTarget, wallsLayerMask).collider != null)
+            lastTargetPos = target.transform.position;
+
+            if (distToTarget > maxDistanceToNavigate || RaycastPlayer(dirToPlayer, distToTarget).collider != null)
             {
-                if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
-                CheckToRotate(dirToPlayer);
-
-                navigation.destination = target.transform.position;
-
-                if (!wallObstructingPath)
-                {
-                    StartCoroutine(RecalculatePath());
-                }
+                currentState = States.Searching;
             }
             else
             {
-                wallObstructingPath = false;
-
-                navigation.canMove = false;
-                navigation.canSearch = false;
-
                 if (attackType == Attacks.AttackModes.Melee)
                 {
                     if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
@@ -279,7 +271,7 @@ public class EnemyStateMachine : MonoBehaviour
 
                     if (canAttack)
                     {
-                        combatAI.MoveTowardsTarget();
+                        navigation.MoveTowardsTarget();
                         if (distToTarget < meleeRange)
                         {
                             MeleeAttackStart();
@@ -288,7 +280,7 @@ public class EnemyStateMachine : MonoBehaviour
                     }
                     else
                     {
-                        combatAI.OrbitAroundTarget();
+                        navigation.OrbitAroundTarget();
                     }
                 }
                 else if (attackType == Attacks.AttackModes.Ranged)
@@ -297,7 +289,7 @@ public class EnemyStateMachine : MonoBehaviour
 
                     CheckToRotate(dirToPlayer);
 
-                    combatAI.OrbitAroundTarget();
+                    navigation.OrbitAroundTarget();
 
                     if (distToTarget < range && canAttack)
                     {
@@ -310,18 +302,27 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
-    private IEnumerator RecalculatePath()
+    protected virtual void Search()
     {
-        wallObstructingPath = true;
+        if(canMove)
+        {
+            if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
 
-        navigation.canSearch = true;
-        navigation.SearchPath();
+            bool arrived = !navigation.MoveTowardsTarget(lastTargetPos);
 
-        yield return null;
+            float distToTarget = GetDistanceToPlayer();
+            Vector2 dirToPlayer = GetDirToPlayer();
 
-        navigation.canMove = true;
-
-        rb.velocity = Vector2.zero;
+            if(!(distToTarget > maxDistanceToNavigate || RaycastPlayer(dirToPlayer, distToTarget).collider != null))
+            {
+                currentState = States.Fighting;
+            }
+            else if (arrived)
+            {
+                startPos = transform.position;
+                currentState = States.Patrolling;
+            }
+        }
     }
 
     #region Melee Attack
@@ -401,7 +402,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     public void Knockback(Vector2 dir, float strength)
     {
-        combatAI.PauseMovement(0.5f);
+        navigation.PauseMovement(0.5f);
         rb.AddForce(dir * strength, ForceMode2D.Impulse);
     }
 
@@ -539,6 +540,11 @@ public class EnemyStateMachine : MonoBehaviour
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, aggroRadius);
+
+            Gizmos.color = Color.blue;
+            float distToPlayer = GetDistanceToPlayer();
+            Vector2 dirToPlayer = GetDirToPlayer();
+            Gizmos.DrawLine(rayCastOrigin.position, rayCastOrigin.position + (Vector3)(dirToPlayer * distToPlayer));
         }
     }
 }

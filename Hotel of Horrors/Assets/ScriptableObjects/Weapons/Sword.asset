@@ -9,26 +9,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbb02fbfcc90b584c815e83d2b2f10e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 892376513f573e340b463b66ffc4eeb5, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
   useableName: Sword
-  description: I Swing My Sword
+  description: Boring
   maxStackAmount: 1
   sprite: {fileID: 21300000, guid: af8e4e7afb78c31439f641874f9268a2, type: 3}
   mode: 0
   type: 0
-  extraAttackAnim: {fileID: 0}
-  attackSpeed: 45
+  weaponAbilityName: 
+  weaponAbilityDescription: 
+  weaponAbilitySprite: {fileID: 0}
+  weaponAbility: {fileID: 0}
+  baseLevel: 1
+  attackSpeed: 0.6
   autoAttack: 0
   damage: 8
   deflectionStrength: 3
-  knockback: 2
-  range: 2
+  knockback: 1.5
+  range: 1.5
   weaponStrike: {fileID: 8308924630415093721, guid: 249c10b6d22bb584aaf264aac288b6e5, type: 3}
-  chanceToInflictEffect: 0.2
-  effectsToInflict:
-  - {fileID: 11400000, guid: 468c61e0eca26bd49b25067517367bd7, type: 2}
+  chanceToInflictEffect: 0
+  effectsToInflict: []
   projectile: {fileID: 0}
   fireRate: 0
   maxAmmoCount: 0

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbb02fbfcc90b584c815e83d2b2f10e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 892376513f573e340b463b66ffc4eeb5, type: 3}
   m_Name: Hammer
   m_EditorClassIdentifier: 
   useableName: Hammer
-  description: Hammer TIme
+  description: Hammer time!
   maxStackAmount: 1
   sprite: {fileID: 21300000, guid: f6e9fc38716fa9942b0c14bd225ea480, type: 3}
   mode: 0
@@ -22,10 +22,11 @@ MonoBehaviour:
   weaponAbilityDescription: 
   weaponAbilitySprite: {fileID: 0}
   weaponAbility: {fileID: 0}
-  attackSpeed: 30
+  baseLevel: 1
+  attackSpeed: 0.7
   autoAttack: 0
-  damage: 10
-  deflectionStrength: 3
+  damage: 12
+  deflectionStrength: 2
   knockback: 2
   range: 1
   weaponStrike: {fileID: 8308924630415093721, guid: 249c10b6d22bb584aaf264aac288b6e5, type: 3}

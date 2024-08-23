@@ -26,4 +26,9 @@ public class QuestManager : MonoBehaviour
     {
         return currentQuest;
     }
+
+    public List<Quest> GetQuests()
+    {
+        return allQuest;
+    }
 }

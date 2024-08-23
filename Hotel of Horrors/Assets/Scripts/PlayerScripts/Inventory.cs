@@ -327,7 +327,26 @@ public class Inventory : MonoBehaviour
         else
             attackController.ChangeAttackMode(currentWeapon.GetWeaponMode());
     }
-    
+
+    public WeaponInfo[] GetWeapons()
+    {
+        return weaponsInventory;
+    }
+
+    public Item[] GetItems()
+    {
+        return itemsInventory;
+    }
+
+    public List<MementoInfo> GetMementos()
+    {
+        return mementosInventory;
+    }
+
+    public List<AbilityInfo> GetAbilities()
+    {
+        return abilitiesInventory;
+    }
 }
 
 public class Useable

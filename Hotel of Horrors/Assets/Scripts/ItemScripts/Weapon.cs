@@ -1,118 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Attacks;
 
-[CreateAssetMenu(fileName = "Weapon", menuName = "Useables/Weapon", order = 0)]
-public class Weapon : Useables
+public class Weapon
 {
-    [Header("Weapon Settings")]
-    [SerializeField] AttackModes mode;
-    [SerializeField] AttackType type;
-    [SerializeField] string weaponAbilityName;
-    [SerializeField] string weaponAbilityDescription;
-    [SerializeField] Sprite weaponAbilitySprite;
-    [SerializeField] GameObject weaponAbility;
-    [Space(20)]
-    [SerializeField] float attackSpeed;
-    [SerializeField] bool autoAttack;
+    int currentLevel;
+    WeaponInfo info;
 
-    [Header("Melee Settings")]
-    [SerializeField] int damage;
-    [SerializeField] float deflectionStrength;
-    [SerializeField] float knockback;
-    [SerializeField] float range;
-    [SerializeField] GameObject weaponStrike;
-    [SerializeField] [Range(0,1)] float chanceToInflictEffect;
-    [SerializeField] EffectInfo[] effectsToInflict;
-
-    [Header("Ranged Settings")]
-    [SerializeField] GameObject projectile;
-    [SerializeField] float fireRate;
-    [SerializeField] int maxAmmoCount;
-    [SerializeField] float reloadTime;
-
-
-    public override void Use()
+    public Weapon(WeaponInfo info)
     {
-        //Debug.Log($"WEAPON {this.GetName()} USED");
-    }
-    public GameObject GetWeaponAbility()
-    {
-        return weaponAbility;
-    }
-    public string GetWeaponAbilityName()
-    {
-        return weaponAbilityName;
-    }
-    public string GetWeaponAbilityDescription()
-    {
-        return weaponAbilityDescription;
-    }
-    public Sprite GetWeaponAbilitySprite()
-    {
-        return weaponAbilitySprite;
+        this.info = info;
+        currentLevel = info.GetBaseLevel();
     }
 
-    public int GetDamage()
+    public void Upgrade(Weapon otherWeapon)
     {
-        return damage;
+
     }
-    public float GetKnockback()
-    {
-        return knockback;
-    }
-    public float GetDeflectionStrength()
-    {
-        return deflectionStrength;
-    }
-    public float GetAttackSpeed()
-    {
-        return attackSpeed / 10f;
-    }
-    public float GetRange()
-    {
-        return range / 10f;
-    }
-    public float GetFireRate()
-    {
-        return fireRate;
-    }
-    public int GetMaxAmmoCount()
-    {
-        return maxAmmoCount;
-    }
-    public float GetReloadTime()
-    {
-        return reloadTime;
-    }
-    public bool IsAutoAttack()
-    {
-        return autoAttack;
-    }
-    public AttackModes GetWeaponMode()
-    {
-        return mode;
-    }
-    public AttackType GetAttackType()
-    {
-        return type;
-    }
-    public GameObject GetProjectile()
-    {
-        return projectile;
-    }
-    public GameObject GetWeaponStrike()
-    {
-        return weaponStrike;
-    }
-    public float GetChanceToInflictEffect()
-    {
-        return chanceToInflictEffect;
-    }
-    public EffectInfo[] GetEffectsToInflict()
-    {
-        return effectsToInflict;
-    } 
 }
-

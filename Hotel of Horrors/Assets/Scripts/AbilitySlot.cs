@@ -8,7 +8,7 @@ public class AbilitySlot : MonoBehaviour, IPointerClickHandler
 {
     Inventory inventory;
     [SerializeField] TextMeshProUGUI abilityName;
-    public Abilities abilityInfo;
+    public AbilityInfo abilityInfo;
 
     private void Start()
     {

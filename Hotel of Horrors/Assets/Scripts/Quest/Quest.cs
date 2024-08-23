@@ -9,7 +9,7 @@ public class Quest : ScriptableObject
     public List<QuestStep> Steps;
     public string QuestName;
     public string Description;
-    public List<Useables> ItemRewards;
+    public List<UseableInfo> ItemRewards;
     public bool Completed;
 
 

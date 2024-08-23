@@ -7,15 +7,15 @@ using UnityEngine.InputSystem;
 
 public class Inventory : MonoBehaviour
 {
-    Weapon[] weaponsInventory;
-    ItemInstance[] itemsInventory;
-    List<Mementos> mementosInventory;
-    List<Abilities> abilitiesInventory;
+    WeaponInfo[] weaponsInventory;
+    Item[] itemsInventory;
+    List<MementoInfo> mementosInventory;
+    List<AbilityInfo> abilitiesInventory;
 
     [Header("Items")]
-    [SerializeField] public Weapon currentWeapon;
-    [SerializeField] public Useables itemOne;
-    [SerializeField] public Mementos currentMemento;
+    [SerializeField] public WeaponInfo currentWeapon;
+    [SerializeField] public UseableInfo itemOne;
+    [SerializeField] public MementoInfo currentMemento;
 
     [Header("References")]
     [SerializeField] UIDisplayContainer uiDisplay;
@@ -46,11 +46,11 @@ public class Inventory : MonoBehaviour
         itemSlots = uiDisplay.ItemsContainer.GetComponentsInChildren<ItemSlot>();
         weaponSlots = uiDisplay.WeaponsContainer.GetComponentsInChildren<ItemSlot>();
 
-        itemsInventory = new ItemInstance[itemSlots.Length];
-        weaponsInventory = new Weapon[weaponSlots.Length];
+        itemsInventory = new Item[itemSlots.Length];
+        weaponsInventory = new WeaponInfo[weaponSlots.Length];
 
-        abilitiesInventory = new List<Abilities>();
-        mementosInventory = new List<Mementos>();
+        abilitiesInventory = new List<AbilityInfo>();
+        mementosInventory = new List<MementoInfo>();
 
         ItemSlot[] slots = uiDisplay.InventoryUI.GetComponentsInChildren<ItemSlot>();
         foreach (ItemSlot slot in slots)
@@ -79,41 +79,41 @@ public class Inventory : MonoBehaviour
         if (data)
         {
             bool remove = true;
-            Useables useable = data.GetItemData();
+            UseableInfo useable = data.GetItemData();
             int count = data.GetCount();
-            if (useable.GetType() == typeof(Item))
+            if (useable.GetType() == typeof(ItemInfo))
             {
-                ItemInstance newItem = new ItemInstance((Item)useable, count);
+                Item newItem = new Item((ItemInfo)useable, count);
                 remove = AddItem(newItem);
             }
-            else if (useable.GetType() == typeof(Mementos))
+            else if (useable.GetType() == typeof(MementoInfo))
             {
-                remove = AddMemento((Mementos)useable);
+                remove = AddMemento((MementoInfo)useable);
             }
-            else if (useable.GetType() == typeof(Abilities))
+            else if (useable.GetType() == typeof(AbilityInfo))
             {
 
             }
-            else if (useable.GetType() == typeof(Weapon))
+            else if (useable.GetType() == typeof(WeaponInfo))
             {
-                remove = AddWeapon((Weapon)useable);
+                remove = AddWeapon((WeaponInfo)useable);
             }
             if(remove) Destroy(collision.gameObject);
         }
     }
 
-    public Weapon GetWeapon(int index)
+    public WeaponInfo GetWeapon(int index)
     {
         return index >= 0 && index < weaponsInventory.Length ? weaponsInventory[index] : null;
     }
-    public ItemInstance GetItem(int index)
+    public Item GetItem(int index)
     {
         return index >= 0 && index < itemsInventory.Length ? itemsInventory[index] : null;
     }
 
     public void EquipWeapon(int index)
     {
-        Weapon weapon = GetWeapon(index);
+        WeaponInfo weapon = GetWeapon(index);
         attackController.EquipWeapon(weapon);
         weaponSlot.UpdateImage(index);
 
@@ -136,7 +136,7 @@ public class Inventory : MonoBehaviour
     }
     public void EquipItem(int index)
     {
-        ItemInstance item = GetItem(index);
+        Item item = GetItem(index);
         freeSlot.UpdateImage(index);
 
         if (item == null)
@@ -152,7 +152,7 @@ public class Inventory : MonoBehaviour
     }
     public void EquipPlayerAbility(int index)
     {
-        Abilities ability = index >= 0 && index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
+        AbilityInfo ability = index >= 0 && index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
 
         if (ability == null)
         {
@@ -169,7 +169,7 @@ public class Inventory : MonoBehaviour
             freeSlot.UpdateImage(ability.GetSprite());
         }
     }
-    public void EquipPlayerAbility(Abilities ability)
+    public void EquipPlayerAbility(AbilityInfo ability)
     {
         //Abilities ability = index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
         //ItemInstance item = itemsInventory[index];
@@ -192,7 +192,7 @@ public class Inventory : MonoBehaviour
     }
     public void EquipMemento(int index)
     {
-        Mementos mementos = index < mementosInventory.Count ? mementosInventory[index] : null;
+        MementoInfo mementos = index < mementosInventory.Count ? mementosInventory[index] : null;
         //ItemInstance item = itemsInventory[index];
         //freeSlot.UpdateImage(index);
 
@@ -208,7 +208,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool AddItem(ItemInstance itemInstance)
+    public bool AddItem(Item itemInstance)
     {
         for (int i = 0; i < itemsInventory.Length; i++)
         {
@@ -234,7 +234,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public bool AddWeapon(Weapon weapon)
+    public bool AddWeapon(WeaponInfo weapon)
     {
         for (int i = 0; i < weaponsInventory.Length; i++)
         {
@@ -247,7 +247,7 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
-    public bool AddMemento(Mementos memento)
+    public bool AddMemento(MementoInfo memento)
     {
         if(!mementosInventory.Contains(memento))
         {
@@ -258,7 +258,7 @@ public class Inventory : MonoBehaviour
             return false;
         }
     }
-    public bool AddPlayerAbility(Abilities ability)
+    public bool AddPlayerAbility(AbilityInfo ability)
     {
         if (!abilitiesInventory.Contains(ability))
         {
@@ -291,7 +291,7 @@ public class Inventory : MonoBehaviour
 
     public void UseItem(int index, ItemSlot slot)
     {
-        ItemInstance item = GetItem(index);
+        Item item = GetItem(index);
         if (item != null)
         {
             item.RemoveAmount(1);
@@ -330,9 +330,9 @@ public class Inventory : MonoBehaviour
     
 }
 
-public class UseableInstance
+public class Useable
 {
-    protected Useables info;
+    protected UseableInfo info;
     protected int currentAmount;
 
     protected bool isFull;
@@ -340,12 +340,12 @@ public class UseableInstance
     public int CurrentAmount { get => currentAmount; }
     public bool IsFull { get => isFull; }
 
-    public virtual Useables GetInfo()
+    public virtual UseableInfo GetInfo()
     {
         return info;
     }
 
-    public UseableInstance(Useables item, int amount)
+    public Useable(UseableInfo item, int amount)
     {
         this.info = item;
         currentAmount = amount;
@@ -377,14 +377,14 @@ public class UseableInstance
     }
 }
 
-public class ItemInstance : UseableInstance
+public class Item : Useable
 {
-    public ItemInstance(Item item, int amount) : base(item, amount)
+    public Item(ItemInfo item, int amount) : base(item, amount)
     {
     }
 
-    public Item GetInfo()
+    public ItemInfo GetInfo()
     {
-        return (Item)info;
+        return (ItemInfo)info;
     }
 }

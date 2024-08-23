@@ -552,7 +552,7 @@ public class EnemyStateMachine : MonoBehaviour
 [System.Serializable]
 public struct ItemDrop
 {
-    public Useables item;
+    public UseableInfo item;
     public int minCount;
     public int maxCount;
     public float weight;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemData : MonoBehaviour
 {
-    [SerializeField] Useables thisItemData;
+    [SerializeField] UseableInfo thisItemData;
     [SerializeField] int count = 1;
     [SerializeField] float activationTime = 0.7f;
 
@@ -13,7 +13,7 @@ public class ItemData : MonoBehaviour
         Invoke("ActivateCollider", activationTime);
     }
 
-    public Useables GetItemData()
+    public UseableInfo GetItemData()
     {
         return thisItemData;
     }
@@ -21,7 +21,7 @@ public class ItemData : MonoBehaviour
     {
         return count;
     }
-    public void SetItemData(Useables item, int count)
+    public void SetItemData(UseableInfo item, int count)
     {
         thisItemData = item;
         this.count = count;

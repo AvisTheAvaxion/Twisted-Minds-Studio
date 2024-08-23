@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Abilities", menuName = "Useables/Abilities", order = 3)]
 
-public class Abilities : Useables
+public class AbilityInfo : UseableInfo
 {
     [SerializeField] GameObject playerAbility;
     public override void Use()

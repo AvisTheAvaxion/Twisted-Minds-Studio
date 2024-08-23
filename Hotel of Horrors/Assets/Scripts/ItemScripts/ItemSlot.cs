@@ -58,7 +58,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if(isItemSlot)
         {
-            ItemInstance item = inventory.GetItem(transform.parent.GetSiblingIndex());
+            Item item = inventory.GetItem(transform.parent.GetSiblingIndex());
             if (item != null) 
             { 
                 amountText.enabled = true;
@@ -73,7 +73,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
         } else if (isWeaponSlot)
         {
-            Weapon weapon = inventory.GetWeapon(transform.parent.GetSiblingIndex());
+            WeaponInfo weapon = inventory.GetWeapon(transform.parent.GetSiblingIndex());
             if (weapon != null)
             {
                 amountText.enabled = false;
@@ -98,7 +98,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
        
         if (isFreeEquipSlot)
         {
-            ItemInstance item = inventory.GetItem(index);
+            Item item = inventory.GetItem(index);
             this.itemIndex = index;
             if (item != null)
             {
@@ -116,7 +116,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         else if (isWeaponEquipSlot)
         {
-            Weapon weapon = inventory.GetWeapon(index);
+            WeaponInfo weapon = inventory.GetWeapon(index);
             if (weapon != null)
             {
                 this.itemIndex = index;
@@ -157,10 +157,10 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Useables info = null;
+        UseableInfo info = null;
         if(isItemSlot)
         {
-            ItemInstance item = inventory.GetItem(transform.parent.GetSiblingIndex());
+            Item item = inventory.GetItem(transform.parent.GetSiblingIndex());
             if (item != null) info = item.GetInfo();
         }
         else if (isWeaponSlot)
@@ -169,7 +169,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         else if (isFreeEquipSlot)
         {
-            ItemInstance item = inventory.GetItem(itemIndex);
+            Item item = inventory.GetItem(itemIndex);
             if (item != null) info = item.GetInfo();
         }
         else if (isWeaponEquipSlot)

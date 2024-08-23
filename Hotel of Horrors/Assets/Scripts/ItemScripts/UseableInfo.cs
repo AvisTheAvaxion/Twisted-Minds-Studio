@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Useables : ScriptableObject
+public abstract class UseableInfo : ScriptableObject
 {
     [SerializeField] string useableName;
     [SerializeField, TextArea] string description;

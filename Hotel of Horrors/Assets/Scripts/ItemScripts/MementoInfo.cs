@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Memento", menuName = "Useables/Memento", order = 1)]
-public class Mementos : Useables
+public class MementoInfo : UseableInfo
 {
     [SerializeField] GameObject specialAbility;
     public override void Use()

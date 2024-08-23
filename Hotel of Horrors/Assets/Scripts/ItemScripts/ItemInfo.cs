@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Useables/Item", order = 2)]
-public class Item : Useables
+public class ItemInfo : UseableInfo
 {
     [SerializeField] EffectInfo[] effects;
 

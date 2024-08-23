@@ -61,7 +61,7 @@ public class AttackController : MonoBehaviour
     Inventory inventory;
 
     //Current weapon equipped in the inventory
-    Weapon currentWeapon;
+    WeaponInfo currentWeapon;
     WeaponAbility currentWeaponAbility;
 
     public PlayerAbility currentPlayerAbitlity;
@@ -103,7 +103,7 @@ public class AttackController : MonoBehaviour
     }
 
     //Called by the inventory system to store reference to the current weapon
-    public void EquipWeapon(Weapon weapon)
+    public void EquipWeapon(WeaponInfo weapon)
     {
         currentWeapon = weapon;
 
@@ -160,7 +160,7 @@ public class AttackController : MonoBehaviour
     {
         if (currentPlayerAbitlity != null) Destroy(currentPlayerAbitlity.gameObject);
     }
-    public void EquipPlayerAbility(Abilities abilities)
+    public void EquipPlayerAbility(AbilityInfo abilities)
     {
         if (abilities != null && canDoPlayerAbility)
         {
@@ -174,7 +174,7 @@ public class AttackController : MonoBehaviour
             }
         }
     }
-    public void EquipSpecialAbility(Mementos mententos)
+    public void EquipSpecialAbility(MementoInfo mententos)
     {
         if (mententos != null && canDoSpecialAbility)
         {
@@ -425,7 +425,7 @@ public class AttackController : MonoBehaviour
 
     IEnumerator ReloadCooldown(float reloadTime)
     {
-        Weapon startWeapon = currentWeapon;
+        WeaponInfo startWeapon = currentWeapon;
 
         //playerAnimator.SetBool("Shooting1", false);
         //playerAnimator.SetLayerWeight(1, 0); //Disables the attack layer on the player animator

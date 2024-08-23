@@ -15,16 +15,16 @@ public class ItemToolTip : MonoBehaviour
     
     TextMeshProUGUI[] itemStatsTxt;
 
-    public void AssignItem(Useables item)
+    public void AssignItem(UseableInfo item)
     {
         ResetTertiaryItemStats();
 
         itemNameTxt.text = item.GetName();
         itemDescriptionTxt.text = item.GetDescription();
 
-        if (item.GetType() == typeof(Weapon))
+        if (item.GetType() == typeof(WeaponInfo))
         {
-            Weapon heldWeapon = (Weapon)item;
+            WeaponInfo heldWeapon = (WeaponInfo)item;
             itemTypeTxt.text = $"{heldWeapon.GetWeaponMode()}";
             itemMainStatTxt.text = $"Damage: {heldWeapon.GetDamage()}";
 
@@ -55,9 +55,9 @@ public class ItemToolTip : MonoBehaviour
                     itemStatsTxt[3].text += $"{heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
             }
         }
-        else if (item.GetType() == typeof(Item))
+        else if (item.GetType() == typeof(ItemInfo))
         {
-            Item heldItem = (Item)item;
+            ItemInfo heldItem = (ItemInfo)item;
             itemTypeTxt.text = "Consumable";
             EffectInfo[] heldItemEffects = heldItem.GetEffectInfos();
             if (heldItemEffects.Length > 0)

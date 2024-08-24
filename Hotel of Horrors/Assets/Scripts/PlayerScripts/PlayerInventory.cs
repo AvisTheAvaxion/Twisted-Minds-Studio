@@ -15,68 +15,35 @@ public class PlayerInventory : MonoBehaviour
     public int currentWeaponIndex { get; private set; }
     public int currentItemIndex { get; private set; }
     public int currentAbilityIndex { get; private set; }
+    public int currentMementoIndex { get; private set; }
     public Weapon CurrentWeapon { get => GetWeapon(currentWeaponIndex); }
     public Item CurrentItem { get => GetItem(currentItemIndex); }
     public Ability CurrentAbility { get => GetAbility(currentAbilityIndex); }
-    public MementoInfo CurrentMemento { get; private set; }
+    public MementoInfo CurrentMemento { get => GetMemento(currentMementoIndex); }
 
     [Header("References")]
-    [SerializeField] UIDisplayContainer uiDisplay;
+    [SerializeField] int itemInventorySize = 12;
+    [SerializeField] int weaponInventorySize = 12;
     [SerializeField] PlayerHealth playerHealth;
-    ItemSlot weaponSlot;
-    ItemSlot freeSlot;
-    ItemSlot mementoSlot;
 
-    ItemSlot[] itemSlots;
-    ItemSlot[] weaponSlots;
-    List<AbilitySlot> abilitySlots;
-
-    ActionController attackController;
+    ActionController actionController;
 
     private void Awake()
     {
-        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
-        if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
-
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
 
-        //uiDisplay.InventoryUI.SetActive(true);
-        //uiDisplay.InventoryUI.SetActive(false);
-        attackController = GetComponent<ActionController>();
+        actionController = GetComponent<ActionController>();
 
         currentWeaponIndex = -1;
         currentItemIndex = -1;
         currentAbilityIndex = -1;
+        currentMementoIndex = -1;
 
-        abilitySlots = new List<AbilitySlot>();
-        abilitySlots = uiDisplay.AbilitiesContainer.GetComponentsInChildren<AbilitySlot>().ToList<AbilitySlot>();
-        itemSlots = uiDisplay.ItemsContainer.GetComponentsInChildren<ItemSlot>();
-        weaponSlots = uiDisplay.WeaponsContainer.GetComponentsInChildren<ItemSlot>();
-
-        itemsInventory = new Item[itemSlots.Length];
-        weaponsInventory = new Weapon[weaponSlots.Length];
+        itemsInventory = new Item[itemInventorySize];
+        weaponsInventory = new Weapon[weaponInventorySize];
 
         abilitiesInventory = new List<Ability>();
         mementosInventory = new List<MementoInfo>();
-
-        ItemSlot[] slots = uiDisplay.InventoryUI.GetComponentsInChildren<ItemSlot>();
-        foreach (ItemSlot slot in slots)
-        {
-            slot.Init();
-            if (slot.IsWeaponEquipSlot)
-                weaponSlot = slot;
-            else if (freeSlot == null && slot.IsFreeEquipSlot)
-                freeSlot = slot;
-        }
-
-        /*for (int i = 0; i < abilitySlots.Count; i++)
-        {
-            AddPlayerAbility(abilitySlots[i].ability);
-        }*/
-
-        //uiDisplay.ItemsContainer.SetActive(false);
-        //uiDisplay.AbilitiesContainer.SetActive(false);
-        //uiDisplay.WeaponsContainer.SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -96,10 +63,6 @@ public class PlayerInventory : MonoBehaviour
             else if (useable.GetType() == typeof(MementoInfo))
             {
                 remove = AddMemento((MementoInfo)useable);
-            }
-            else if (useable.GetType() == typeof(AbilityInfo))
-            {
-
             }
             else if (useable.GetType() == typeof(WeaponInfo))
             {
@@ -121,11 +84,16 @@ public class PlayerInventory : MonoBehaviour
     {
         return index >= 0 && (index < abilitiesInventory.Count && index >= 0) ? abilitiesInventory[index] : null;
     }
+    public MementoInfo GetMemento(int index)
+    {
+        return index >= 0 && (index < mementosInventory.Count && index >= 0) ? mementosInventory[index] : null;
+    }
 
+    #region Equipping From Inventory
     public void EquipWeapon(int index)
     {
         Weapon weapon = GetWeapon(index);
-        attackController.EquipWeapon(weapon);
+        actionController.EquipWeapon(weapon);
 
         if (weapon != null || index < 0)
         {
@@ -142,7 +110,7 @@ public class PlayerInventory : MonoBehaviour
             currentItemIndex = index;
             currentAbilityIndex = -1;
 
-            attackController.UnequipPlayerAbility();
+            actionController.UnequipPlayerAbility();
         }
     }
     public void EquipPlayerAbility(int index)
@@ -153,51 +121,25 @@ public class PlayerInventory : MonoBehaviour
         {
             currentAbilityIndex = index;
             currentItemIndex = -1;
-            attackController.EquipPlayerAbility(ability);
+            actionController.EquipPlayerAbility(ability);
         }
         else
         {
-            attackController.UnequipPlayerAbility();
+            actionController.UnequipPlayerAbility();
         }
     }
-    /*public void EquipPlayerAbility(Ability ability)
-    {
-        //Abilities ability = index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
-        //ItemInstance item = itemsInventory[index];
-        //freeSlot.UpdateImage(index);
 
-        if (ability == null)
-        {
-            //freeSlot.UpdateImage(null);
-            attackController.UnequipPlayerAbility();
-            //uiDisplay.FreeSlotHotbarImage.enabled = false;
-        }
-        else
-        {
-            //EquipItem(-1);
-            attackController.EquipPlayerAbility(ability);
-            uiDisplay.FreeSlotHotbarImage.enabled = true;
-            uiDisplay.FreeSlotHotbarImage.sprite = ability.GetInfo().GetSprite();
-            //freeSlot.UpdateImage(ability.GetInfo().GetSprite());
-        }
-    }*/
     public void EquipMemento(int index)
     {
         MementoInfo mementos = index < mementosInventory.Count ? mementosInventory[index] : null;
-        //ItemInstance item = itemsInventory[index];
-        //freeSlot.UpdateImage(index);
 
-        if (mementos == null)
+        if (mementos != null)
         {
-            //uiDisplay.MementoHotbarImage.enabled = false;
-        }
-        else
-        {
-            attackController.EquipSpecialAbility(mementos);
-            //uiDisplay.MementoHotbarImage.enabled = true;
-            //uiDisplay.MementoHotbarImage.sprite = mementos.GetSprite();
+            currentMementoIndex = index;
+            actionController.EquipSpecialAbility(mementos);
         }
     }
+    #endregion
 
     #region Adding to Inventory
     public bool AddItem(Item item)
@@ -259,10 +201,6 @@ public class PlayerInventory : MonoBehaviour
     }
     #endregion
 
-    void OnSecondaryAction(InputValue inputValue)
-    {
-        //UseItem(freeSlot.itemIndex, freeSlot);
-    }
 
     public void UseItem(int index)
     {
@@ -270,11 +208,6 @@ public class PlayerInventory : MonoBehaviour
         if (item != null)
         {
             item.RemoveAmount(1);
-            /*foreach (EffectInfo effectInfo in item.GetInfo().GetEffectInfos())
-            {
-                Effect effect = new Effect(effectInfo, 1);
-                playerHealth.InflictEffect(effect);
-            }*/
 
             if(item.CurrentAmount <= 0)
             {
@@ -283,27 +216,7 @@ public class PlayerInventory : MonoBehaviour
                 if (index == currentItemIndex)
                     currentItemIndex = -1;
             }
-
-            //itemSlots[index].UpdateImage();
-            /*if (freeSlot.itemIndex == index)
-            {
-                *//*if (item.CurrentAmount > 0)
-                    //freeSlot.UpdateImage(index);
-                else
-                {
-                    uiDisplay.FreeSlotHotbarImage.enabled = false;
-                    //freeSlot.UpdateImage(-1);
-                }*//*
-            }*/
         }
-    }
-
-    public void UpdatePlayerMode()
-    {
-        if (CurrentWeapon == null)
-            attackController.ChangeAttackMode(AttackModes.None);
-        else
-            attackController.ChangeAttackMode(CurrentWeapon.GetInfo().GetWeaponMode());
     }
 
     public Weapon[] GetWeapons()

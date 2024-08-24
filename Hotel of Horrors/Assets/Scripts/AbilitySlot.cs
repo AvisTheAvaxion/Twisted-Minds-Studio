@@ -6,20 +6,22 @@ using UnityEngine.EventSystems;
 
 public class AbilitySlot : MonoBehaviour, IPointerClickHandler
 {
-    PlayerInventory inventory;
+    InventoryGUI inventoryGUI;
     [SerializeField] TextMeshProUGUI abilityName;
-    public Ability ability;
 
     private void Start()
     {
-        inventory = FindObjectOfType<PlayerInventory>();
+        inventoryGUI = FindObjectOfType<InventoryGUI>();
+    }
+
+    public void UpdateImage(Ability ability)
+    {
+        if (ability != null)
+            abilityName.text = ability.GetInfo().GetName();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(ability != null)
-        {
-            //inventory.EquipPlayerAbility(ability);
-        }
+        inventoryGUI.EquipAbility(transform.GetSiblingIndex());
     }
 }

@@ -192,6 +192,7 @@ public class ActionController : MonoBehaviour
         }
     }
 
+    #region Input Detection
     void OnAttack(InputValue inputValue)
     {
         if (disableAttackControls) return;
@@ -246,6 +247,7 @@ public class ActionController : MonoBehaviour
             playerGUI.UpdateHotbarGUI();
         }
     }
+    #endregion
 
     private void Update()
     {
@@ -423,6 +425,7 @@ public class ActionController : MonoBehaviour
         this.autoAttack = autoAttack;
     }
 
+    #region Cooldowns
     IEnumerator AttackCooldown(float waitTime)
     {
         canAttack = false;
@@ -520,6 +523,7 @@ public class ActionController : MonoBehaviour
 
         canDoSpecialAbility = true;
     }
+    #endregion
 
     public void ShakeCamera(float frequency, float length, bool interruptable = true)
     {

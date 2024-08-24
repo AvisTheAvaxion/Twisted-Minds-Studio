@@ -12,6 +12,7 @@ public class InventoryGUI : MonoBehaviour
     [SerializeField] GameObject weaponsContainer;
     [SerializeField] GameObject itemsContainer;
     [SerializeField] GameObject abilitiesContainer;
+    [SerializeField] GameObject abilitySlotPrefab;
     [SerializeField] ItemToolTip itemToolTip;
 
     ItemSlot weaponSlot;
@@ -20,6 +21,8 @@ public class InventoryGUI : MonoBehaviour
     ItemSlot[] itemSlots;
     ItemSlot[] weaponSlots;
     List<AbilitySlot> abilitySlots;
+
+    bool initialized = false;
 
     // Start is called before the first frame update
     void Start()
@@ -44,13 +47,14 @@ public class InventoryGUI : MonoBehaviour
             else if (freeSlot == null && slot.IsFreeEquipSlot)
                 freeSlot = slot;
         }
-
-        /*for (int i = 0; i < abilitySlots.Count; i++)
+        for (int i = 0; i < itemSlots.Length; i++)
         {
-            inventory.AddPlayerAbility(abilitySlots[i].ability);
-        }*/
+            itemSlots[i].Init();
+        }
 
         inventoryUI.SetActive(false);
+
+        initialized = true;
     }
 
     void UpdateGUI()
@@ -73,6 +77,18 @@ public class InventoryGUI : MonoBehaviour
         if (inventory.CurrentAbility != null)
         {
             freeSlot.UpdateImage(inventory.CurrentAbility, inventory.currentAbilityIndex);
+        }
+
+        for (int i = 0; i < inventory.GetAbilities().Count; i++)
+        {
+            if(i >= abilitySlots.Count)
+            {
+                GameObject go = Instantiate(abilitySlotPrefab, abilitiesContainer.transform);
+                AbilitySlot newSlot = go.GetComponent<AbilitySlot>();
+                if (newSlot) abilitySlots.Add(newSlot);
+            }
+
+            abilitySlots[i].UpdateImage(inventory.GetAbility(i));
         }
     }
 
@@ -151,6 +167,8 @@ public class InventoryGUI : MonoBehaviour
         {
             inventoryUI.SetActive(true);
             Cursor.visible = true;
+
+            if (!initialized) Start();
 
             UpdateGUI();
         }

@@ -30,17 +30,17 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [Header("Item Tool Tip Reference")]
     [SerializeField] ItemToolTip itemToolTip;
-    Inventory inventory;
+    InventoryGUI inventoryGUI;
 
     public void Init() 
     {
-        inventory = FindObjectOfType<Inventory>();
+        inventoryGUI = FindObjectOfType<InventoryGUI>();
         itemImage = GetComponent<Image>();
         amountText = GetComponentInChildren<TextMeshProUGUI>();
 
         itemIndex = -1;
 
-        UpdateImage();
+        //UpdateImage();
 
         if (itemToolTip == null)
         {
@@ -48,142 +48,138 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
-    public void UnequipItem()
+    public void UpdateImage(Item item)
     {
-        //itemHeld = null;
-        //UpdateImage();
-    }
-
-    public void UpdateImage()
-    {
-        if(isItemSlot)
+        if (item != null)
         {
-            Item item = inventory.GetItem(transform.parent.GetSiblingIndex());
-            if (item != null) 
-            { 
-                amountText.enabled = true;
-                itemImage.color = slotFilledColor;
-                amountText.text = item.CurrentAmount.ToString();
-                itemImage.sprite = item.GetInfo().GetSprite();
-            } else
-            {
-                itemImage.color = slotEmptyColor;
-                itemImage.sprite = null;
-                amountText.enabled = false;
-            }
-        } else if (isWeaponSlot)
-        {
-            WeaponInfo weapon = inventory.GetWeapon(transform.parent.GetSiblingIndex());
-            if (weapon != null)
-            {
-                amountText.enabled = false;
-                itemImage.color = slotFilledColor;
-                itemImage.sprite = weapon.GetSprite();
-            }
-            else
-            {
-                itemImage.color = slotEmptyColor;
-                itemImage.sprite = null;
-                amountText.enabled = false;
-            }
-        } else
+            amountText.enabled = true;
+            itemImage.color = slotFilledColor;
+            amountText.text = item.CurrentAmount.ToString();
+            itemImage.sprite = item.GetInfo().GetSprite();
+        }
+        else
         {
             itemImage.color = slotEmptyColor;
             itemImage.sprite = null;
             amountText.enabled = false;
         }
     }
-    public void UpdateImage(int index)
+    public void UpdateImage(Item item, int index)
     {
-       
-        if (isFreeEquipSlot)
+        if (item != null)
         {
-            Item item = inventory.GetItem(index);
             this.itemIndex = index;
-            if (item != null)
-            {
-                amountText.enabled = true;
-                itemImage.color = slotFilledColor;
-                amountText.text = item.CurrentAmount.ToString();
-                itemImage.sprite = item.GetInfo().GetSprite();
-            }
-            else
-            {
-                itemImage.color = slotEmptyColor;
-                itemImage.sprite = null;
-                amountText.enabled = false;
-            }
+
+            amountText.enabled = true;
+            itemImage.color = slotFilledColor;
+            amountText.text = item.CurrentAmount.ToString();
+            itemImage.sprite = item.GetInfo().GetSprite();
         }
-        else if (isWeaponEquipSlot)
-        {
-            WeaponInfo weapon = inventory.GetWeapon(index);
-            if (weapon != null)
-            {
-                this.itemIndex = index;
-                amountText.enabled = false;
-                itemImage.color = slotFilledColor;
-                itemImage.sprite = weapon.GetSprite();
-            }
-            else
-            {
-                itemImage.color = slotEmptyColor;
-                itemImage.sprite = null;
-                amountText.enabled = false;
-            }
-        } else
+        else
         {
             itemImage.color = slotEmptyColor;
             itemImage.sprite = null;
             amountText.enabled = false;
         }
     }
-    public void UpdateImage(Sprite sprite)
+    public void UpdateImage(Weapon weapon)
     {
-        if(isFreeEquipSlot)
+        if (weapon != null)
         {
-            if(sprite != null)
-            {
-                amountText.enabled = false;
-                itemImage.color = slotFilledColor;
-                itemImage.sprite = sprite;
-            } else
-            {
-                itemImage.color = slotEmptyColor;
-                itemImage.sprite = null;
-                amountText.enabled = false;
-            }
+            amountText.enabled = false;
+            itemImage.color = slotFilledColor;
+            itemImage.sprite = weapon.GetInfo().GetSprite();
+        }
+        else
+        {
+            itemImage.color = slotEmptyColor;
+            itemImage.sprite = null;
+            amountText.enabled = false;
+        }
+    }
+    public void UpdateImage(Weapon weapon, int index)
+    {
+        if (weapon != null)
+        {
+            this.itemIndex = index;
+
+            amountText.enabled = false;
+            itemImage.color = slotFilledColor;
+            itemImage.sprite = weapon.GetInfo().GetSprite();
+        }
+        else
+        {
+            itemImage.color = slotEmptyColor;
+            itemImage.sprite = null;
+            amountText.enabled = false;
         }
     }
 
+    public void UpdateImage(Ability ability)
+    {
+        if (ability != null)
+        {
+            amountText.enabled = false;
+            itemImage.color = slotFilledColor;
+            itemImage.sprite = ability.GetInfo().GetSprite();
+        }
+        else
+        {
+            itemImage.color = slotEmptyColor;
+            itemImage.sprite = null;
+            amountText.enabled = false;
+        }
+    }
+    public void UpdateImage(Ability ability, int index)
+    {
+        if (ability != null)
+        {
+            this.itemIndex = index;
+
+            amountText.enabled = false;
+            itemImage.color = slotFilledColor;
+            itemImage.sprite = ability.GetInfo().GetSprite();
+        }
+        else
+        {
+            itemImage.color = slotEmptyColor;
+            itemImage.sprite = null;
+            amountText.enabled = false;
+        }
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UseableInfo info = null;
-        if(isItemSlot)
+        //UseableInfo info = null;
+        if(isItemSlot || isFreeEquipSlot)
         {
-            Item item = inventory.GetItem(transform.parent.GetSiblingIndex());
-            if (item != null) info = item.GetInfo();
+            inventoryGUI.UpdateItemToolTip(transform.parent.GetSiblingIndex(), isFreeEquipSlot, transform.position);
+            //Item item = inventory.GetItem(transform.parent.GetSiblingIndex());
+            //if (item != null) info = item.GetInfo();
         }
-        else if (isWeaponSlot)
+        else if (isWeaponSlot || isWeaponEquipSlot)
         {
-            info = inventory.GetWeapon(transform.parent.GetSiblingIndex());
+            inventoryGUI.UpdateWeaponToolTip(transform.parent.GetSiblingIndex(), isWeaponEquipSlot, transform.position);
+            //Weapon weapon = inventory.GetWeapon(transform.parent.GetSiblingIndex());
+            //if (weapon != null) info = weapon.GetInfo();
         }
-        else if (isFreeEquipSlot)
+        /*else if (isFreeEquipSlot)
         {
             Item item = inventory.GetItem(itemIndex);
             if (item != null) info = item.GetInfo();
         }
         else if (isWeaponEquipSlot)
         {
-            info = inventory.GetWeapon(itemIndex);
-        }
+            Weapon weapon = inventory.GetWeapon(itemIndex);
+            if (weapon != null) info = weapon.GetInfo();
+        }*/
 
-        if (info != null)
+        /*if (info != null)
         {
             itemToolTip.transform.position = (Vector2)transform.position + new Vector2(50f, 50f);
             itemToolTip.AssignItem(info);
 
             itemToolTip.gameObject.SetActive(true);
-        }
+        }*/
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -192,34 +188,35 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             if (isWeaponSlot)
             {
-                inventory.EquipWeapon(transform.parent.GetSiblingIndex());
+                inventoryGUI.EquipWeapon(transform.parent.GetSiblingIndex());
             }
             if (isItemSlot)
             {
-                inventory.EquipItem(transform.parent.GetSiblingIndex());
+                inventoryGUI.EquipItem(transform.parent.GetSiblingIndex());
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
             if (isWeaponEquipSlot)
             {
-                inventory.EquipWeapon(-1);
+                inventoryGUI.EquipWeapon(-1);
                 itemToolTip.gameObject.SetActive(false);
             }
             else if (isFreeEquipSlot)
             {
-                inventory.EquipItem(-1);
+                inventoryGUI.EquipItem(-1);
                 itemToolTip.gameObject.SetActive(false);
             }
-            else if (isItemSlot)
+            /*else if (isItemSlot)
             {
                 inventory.UseItem(transform.parent.GetSiblingIndex(), this);
-            }
+            }*/
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        itemToolTip.gameObject.SetActive(false);
+        inventoryGUI.DisableToolTip();
+        //itemToolTip.gameObject.SetActive(false);
     }
 }

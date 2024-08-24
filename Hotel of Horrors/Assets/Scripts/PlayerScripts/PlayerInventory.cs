@@ -5,17 +5,20 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Inventory : MonoBehaviour
+public class PlayerInventory : MonoBehaviour
 {
-    WeaponInfo[] weaponsInventory;
+    Weapon[] weaponsInventory;
     Item[] itemsInventory;
     List<MementoInfo> mementosInventory;
-    List<AbilityInfo> abilitiesInventory;
+    List<Ability> abilitiesInventory;
 
-    [Header("Items")]
-    [SerializeField] public WeaponInfo currentWeapon;
-    [SerializeField] public UseableInfo itemOne;
-    [SerializeField] public MementoInfo currentMemento;
+    public int currentWeaponIndex { get; private set; }
+    public int currentItemIndex { get; private set; }
+    public int currentAbilityIndex { get; private set; }
+    public Weapon CurrentWeapon { get => GetWeapon(currentWeaponIndex); }
+    public Item CurrentItem { get => GetItem(currentItemIndex); }
+    public Ability CurrentAbility { get => GetAbility(currentAbilityIndex); }
+    public MementoInfo CurrentMemento { get; private set; }
 
     [Header("References")]
     [SerializeField] UIDisplayContainer uiDisplay;
@@ -28,7 +31,7 @@ public class Inventory : MonoBehaviour
     ItemSlot[] weaponSlots;
     List<AbilitySlot> abilitySlots;
 
-    AttackController attackController;
+    ActionController attackController;
 
     private void Awake()
     {
@@ -37,9 +40,13 @@ public class Inventory : MonoBehaviour
 
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
 
-        uiDisplay.InventoryUI.SetActive(true);
-        uiDisplay.InventoryUI.SetActive(false);
-        attackController = GetComponent<AttackController>();
+        //uiDisplay.InventoryUI.SetActive(true);
+        //uiDisplay.InventoryUI.SetActive(false);
+        attackController = GetComponent<ActionController>();
+
+        currentWeaponIndex = -1;
+        currentItemIndex = -1;
+        currentAbilityIndex = -1;
 
         abilitySlots = new List<AbilitySlot>();
         abilitySlots = uiDisplay.AbilitiesContainer.GetComponentsInChildren<AbilitySlot>().ToList<AbilitySlot>();
@@ -47,9 +54,9 @@ public class Inventory : MonoBehaviour
         weaponSlots = uiDisplay.WeaponsContainer.GetComponentsInChildren<ItemSlot>();
 
         itemsInventory = new Item[itemSlots.Length];
-        weaponsInventory = new WeaponInfo[weaponSlots.Length];
+        weaponsInventory = new Weapon[weaponSlots.Length];
 
-        abilitiesInventory = new List<AbilityInfo>();
+        abilitiesInventory = new List<Ability>();
         mementosInventory = new List<MementoInfo>();
 
         ItemSlot[] slots = uiDisplay.InventoryUI.GetComponentsInChildren<ItemSlot>();
@@ -62,14 +69,14 @@ public class Inventory : MonoBehaviour
                 freeSlot = slot;
         }
 
-        for (int i = 0; i < abilitySlots.Count; i++)
+        /*for (int i = 0; i < abilitySlots.Count; i++)
         {
-            AddPlayerAbility(abilitySlots[i].abilityInfo);
-        }
+            AddPlayerAbility(abilitySlots[i].ability);
+        }*/
 
-        uiDisplay.ItemsContainer.SetActive(false);
-        uiDisplay.AbilitiesContainer.SetActive(false);
-        uiDisplay.WeaponsContainer.SetActive(true);
+        //uiDisplay.ItemsContainer.SetActive(false);
+        //uiDisplay.AbilitiesContainer.SetActive(false);
+        //uiDisplay.WeaponsContainer.SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -96,80 +103,64 @@ public class Inventory : MonoBehaviour
             }
             else if (useable.GetType() == typeof(WeaponInfo))
             {
-                remove = AddWeapon((WeaponInfo)useable);
+                remove = AddWeapon(new Weapon((WeaponInfo)useable));
             }
             if(remove) Destroy(collision.gameObject);
         }
     }
 
-    public WeaponInfo GetWeapon(int index)
+    public Weapon GetWeapon(int index)
     {
-        return index >= 0 && index < weaponsInventory.Length ? weaponsInventory[index] : null;
+        return index >= 0 && (index < weaponsInventory.Length && index >= 0) ? weaponsInventory[index] : null;
     }
     public Item GetItem(int index)
     {
-        return index >= 0 && index < itemsInventory.Length ? itemsInventory[index] : null;
+        return index >= 0 && (index < itemsInventory.Length && index >= 0) ? itemsInventory[index] : null;
+    }
+    public Ability GetAbility(int index)
+    {
+        return index >= 0 && (index < abilitiesInventory.Count && index >= 0) ? abilitiesInventory[index] : null;
     }
 
     public void EquipWeapon(int index)
     {
-        WeaponInfo weapon = GetWeapon(index);
+        Weapon weapon = GetWeapon(index);
         attackController.EquipWeapon(weapon);
-        weaponSlot.UpdateImage(index);
 
-        if (weapon == null)
+        if (weapon != null || index < 0)
         {
-            uiDisplay.WeaponHotbarImage.enabled = false;
-            uiDisplay.WeaponAbilityHotbarImage.enabled = false;
+            currentWeaponIndex = index;
         }
-        else
-        {
-            uiDisplay.WeaponHotbarImage.enabled = true;
-            uiDisplay.WeaponHotbarImage.sprite = weapon.GetSprite();
 
-            if(weapon.GetWeaponAbility() != null)
-            {
-                uiDisplay.WeaponAbilityHotbarImage.enabled = true;
-                uiDisplay.WeaponAbilityHotbarImage.sprite = weapon.GetWeaponAbilitySprite();
-            }
-        }
     }
     public void EquipItem(int index)
     {
         Item item = GetItem(index);
-        freeSlot.UpdateImage(index);
 
-        if (item == null)
+        if (item != null || index < 0)
         {
-            uiDisplay.FreeSlotHotbarImage.enabled = false;
-        }
-        else
-        {
+            currentItemIndex = index;
+            currentAbilityIndex = -1;
+
             attackController.UnequipPlayerAbility();
-            uiDisplay.FreeSlotHotbarImage.enabled = true;
-            uiDisplay.FreeSlotHotbarImage.sprite = item.GetInfo().GetSprite();
         }
     }
     public void EquipPlayerAbility(int index)
     {
-        AbilityInfo ability = index >= 0 && index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
+        Ability ability = index >= 0 && index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
 
-        if (ability == null)
+        if (ability != null || index < 0)
         {
-            freeSlot.UpdateImage(null);
-            attackController.UnequipPlayerAbility();
-            uiDisplay.FreeSlotHotbarImage.enabled = false;
+            currentAbilityIndex = index;
+            currentItemIndex = -1;
+            attackController.EquipPlayerAbility(ability);
         }
         else
         {
-            EquipItem(-1);
-            attackController.EquipPlayerAbility(ability);
-            uiDisplay.FreeSlotHotbarImage.enabled = true;
-            uiDisplay.FreeSlotHotbarImage.sprite = ability.GetSprite();
-            freeSlot.UpdateImage(ability.GetSprite());
+            attackController.UnequipPlayerAbility();
         }
     }
-    public void EquipPlayerAbility(AbilityInfo ability)
+    /*public void EquipPlayerAbility(Ability ability)
     {
         //Abilities ability = index < abilitiesInventory.Count ? abilitiesInventory[index] : null;
         //ItemInstance item = itemsInventory[index];
@@ -177,19 +168,19 @@ public class Inventory : MonoBehaviour
 
         if (ability == null)
         {
-            freeSlot.UpdateImage(null);
+            //freeSlot.UpdateImage(null);
             attackController.UnequipPlayerAbility();
-            uiDisplay.FreeSlotHotbarImage.enabled = false;
+            //uiDisplay.FreeSlotHotbarImage.enabled = false;
         }
         else
         {
-            EquipItem(-1);
+            //EquipItem(-1);
             attackController.EquipPlayerAbility(ability);
             uiDisplay.FreeSlotHotbarImage.enabled = true;
-            uiDisplay.FreeSlotHotbarImage.sprite = ability.GetSprite();
-            freeSlot.UpdateImage(ability.GetSprite());
+            uiDisplay.FreeSlotHotbarImage.sprite = ability.GetInfo().GetSprite();
+            //freeSlot.UpdateImage(ability.GetInfo().GetSprite());
         }
-    }
+    }*/
     public void EquipMemento(int index)
     {
         MementoInfo mementos = index < mementosInventory.Count ? mementosInventory[index] : null;
@@ -198,34 +189,32 @@ public class Inventory : MonoBehaviour
 
         if (mementos == null)
         {
-            uiDisplay.MementoHotbarImage.enabled = false;
+            //uiDisplay.MementoHotbarImage.enabled = false;
         }
         else
         {
             attackController.EquipSpecialAbility(mementos);
-            uiDisplay.MementoHotbarImage.enabled = true;
-            uiDisplay.MementoHotbarImage.sprite = mementos.GetSprite();
+            //uiDisplay.MementoHotbarImage.enabled = true;
+            //uiDisplay.MementoHotbarImage.sprite = mementos.GetSprite();
         }
     }
 
-    public bool AddItem(Item itemInstance)
+    #region Adding to Inventory
+    public bool AddItem(Item item)
     {
         for (int i = 0; i < itemsInventory.Length; i++)
         {
             if (itemsInventory[i] == null)
             {
-                itemsInventory[i] = itemInstance;
-                itemSlots[i].UpdateImage();
+                itemsInventory[i] = item;
                 return true;
             } 
-            else if (itemsInventory[i].GetInfo().GetName() == itemInstance.GetInfo().GetName())
+            else if (itemsInventory[i].GetInfo().GetName() == item.GetInfo().GetName())
             {
-                int newAmount = itemsInventory[i].AddAmount(itemInstance.CurrentAmount);
-                if (freeSlot.itemIndex == i) freeSlot.UpdateImage(i);
-                itemSlots[i].UpdateImage();
+                int newAmount = itemsInventory[i].AddAmount(item.CurrentAmount);
                 if (newAmount > 0)
                 {
-                    itemInstance.SetCurrentAmount(newAmount);
+                    item.SetCurrentAmount(newAmount);
                     continue;
                 }
                 return true;
@@ -233,15 +222,13 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
-
-    public bool AddWeapon(WeaponInfo weapon)
+    public bool AddWeapon(Weapon weapon)
     {
         for (int i = 0; i < weaponsInventory.Length; i++)
         {
             if (weaponsInventory[i] == null)
             {
                 weaponsInventory[i] = weapon;
-                weaponSlots[i].UpdateImage();
                 return true;
             }
         }
@@ -258,7 +245,7 @@ public class Inventory : MonoBehaviour
             return false;
         }
     }
-    public bool AddPlayerAbility(AbilityInfo ability)
+    public bool AddPlayerAbility(Ability ability)
     {
         if (!abilitiesInventory.Contains(ability))
         {
@@ -270,65 +257,56 @@ public class Inventory : MonoBehaviour
             return false;
         }
     }
+    #endregion
 
-    void OnToggleInventory()
-    {
-        if(uiDisplay.InventoryUI.activeSelf == true)
-        {
-            uiDisplay.InventoryUI.SetActive(false);
-            Cursor.visible = false;
-        }
-        else
-        {
-            uiDisplay.InventoryUI.SetActive(true);
-            Cursor.visible = true;
-        }
-    }
     void OnSecondaryAction(InputValue inputValue)
     {
-        UseItem(freeSlot.itemIndex, freeSlot);
+        //UseItem(freeSlot.itemIndex, freeSlot);
     }
 
-    public void UseItem(int index, ItemSlot slot)
+    public void UseItem(int index)
     {
         Item item = GetItem(index);
         if (item != null)
         {
             item.RemoveAmount(1);
-            foreach (EffectInfo effectInfo in item.GetInfo().GetEffectInfos())
+            /*foreach (EffectInfo effectInfo in item.GetInfo().GetEffectInfos())
             {
                 Effect effect = new Effect(effectInfo, 1);
                 playerHealth.InflictEffect(effect);
-            }
+            }*/
 
             if(item.CurrentAmount <= 0)
             {
                 itemsInventory[index] = null;
+
+                if (index == currentItemIndex)
+                    currentItemIndex = -1;
             }
 
-            itemSlots[index].UpdateImage();
-            if (freeSlot.itemIndex == index)
+            //itemSlots[index].UpdateImage();
+            /*if (freeSlot.itemIndex == index)
             {
-                if (item.CurrentAmount > 0)
-                    freeSlot.UpdateImage(index);
+                *//*if (item.CurrentAmount > 0)
+                    //freeSlot.UpdateImage(index);
                 else
                 {
                     uiDisplay.FreeSlotHotbarImage.enabled = false;
-                    freeSlot.UpdateImage(-1);
-                }
-            }
+                    //freeSlot.UpdateImage(-1);
+                }*//*
+            }*/
         }
     }
 
     public void UpdatePlayerMode()
     {
-        if (currentWeapon == null)
+        if (CurrentWeapon == null)
             attackController.ChangeAttackMode(AttackModes.None);
         else
-            attackController.ChangeAttackMode(currentWeapon.GetWeaponMode());
+            attackController.ChangeAttackMode(CurrentWeapon.GetInfo().GetWeaponMode());
     }
 
-    public WeaponInfo[] GetWeapons()
+    public Weapon[] GetWeapons()
     {
         return weaponsInventory;
     }
@@ -343,7 +321,7 @@ public class Inventory : MonoBehaviour
         return mementosInventory;
     }
 
-    public List<AbilityInfo> GetAbilities()
+    public List<Ability> GetAbilities()
     {
         return abilitiesInventory;
     }

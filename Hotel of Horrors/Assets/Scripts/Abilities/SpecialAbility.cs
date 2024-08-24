@@ -10,8 +10,8 @@ public abstract class SpecialAbility : MonoBehaviour
     public float Cooldown { get => cooldown; }
     public bool isAttacking { get; protected set; }
 
-    protected AttackController controller;
+    protected ActionController controller;
 
-    public abstract void Use(AttackController controller);
+    public abstract void Use(ActionController controller);
     public abstract void CancelUse();
 }

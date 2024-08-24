@@ -18,7 +18,7 @@ public class EnergyBlastAbility : PlayerAbility
 
     }
 
-    public override void Use(AttackController controller)
+    public override void Use(ActionController controller)
     {
         this.controller = controller;
         StartCoroutine(Attack());

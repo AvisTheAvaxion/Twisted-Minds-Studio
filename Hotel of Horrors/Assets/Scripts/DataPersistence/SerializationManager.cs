@@ -22,8 +22,8 @@ public class SerializationManager : MonoBehaviour
         jsonLines.Add(JsonUtility.ToJson(classToSave.weaponsInventory));
         jsonLines.Add(JsonUtility.ToJson(classToSave.mementosInventory));
         jsonLines.Add(JsonUtility.ToJson(classToSave.abilitiesInventory));
-        jsonLines.Add(JsonUtility.ToJson(classToSave.currentWeapon));
-        jsonLines.Add(JsonUtility.ToJson(classToSave.itemOne));
+        jsonLines.Add(JsonUtility.ToJson(classToSave.currentWeaponIndex));
+        jsonLines.Add(JsonUtility.ToJson(classToSave.currentItemIndex));
         jsonLines.Add(JsonUtility.ToJson(classToSave.currentMemento));
 
         //write JSON data to file
@@ -40,11 +40,11 @@ public class SerializationManager : MonoBehaviour
         classToLoad.level = JsonUtility.FromJson<int>(jsonLines[0]);
         classToLoad.emotionalEnergy = JsonUtility.FromJson<int>(jsonLines[1]);
         classToLoad.itemsInventory = JsonUtility.FromJson<Item[]>(jsonLines[2]);
-        classToLoad.weaponsInventory = JsonUtility.FromJson<WeaponInfo[]>(jsonLines[3]);
+        classToLoad.weaponsInventory = JsonUtility.FromJson<Weapon[]>(jsonLines[3]);
         classToLoad.mementosInventory = JsonUtility.FromJson<List<MementoInfo>>(jsonLines[4]);
-        classToLoad.abilitiesInventory = JsonUtility.FromJson<List<AbilityInfo>>(jsonLines[5]);
-        classToLoad.currentWeapon = JsonUtility.FromJson<WeaponInfo>(jsonLines[6]);
-        classToLoad.itemOne = JsonUtility.FromJson<ItemInfo>(jsonLines[7]);
+        classToLoad.abilitiesInventory = JsonUtility.FromJson<List<Ability>>(jsonLines[5]);
+        classToLoad.currentWeaponIndex = JsonUtility.FromJson<int>(jsonLines[6]);
+        classToLoad.currentItemIndex = JsonUtility.FromJson<int>(jsonLines[7]);
         classToLoad.currentMemento = JsonUtility.FromJson<MementoInfo>(jsonLines[8]);
 
 

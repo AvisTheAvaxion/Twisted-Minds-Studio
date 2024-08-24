@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movementVector = new Vector2();
     Vector2 dashMovementVector = new Vector2();
 
-    AttackController attackController;
+    ActionController attackController;
 
     #endregion
 
@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (stats == null) stats = GetComponent<StatsController>();
 
-        attackController = GetComponent<AttackController>();
+        attackController = GetComponent<ActionController>();
         playerHealth = GetComponent<PlayerHealth>();
 
         if (animator == null)
@@ -337,7 +337,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canMove = toggle;
 
-        if(attackController == null) attackController = GetComponent<AttackController>();
+        if(attackController == null) attackController = GetComponent<ActionController>();
 
         attackController.ToggleAttackControls(toggle);
     }

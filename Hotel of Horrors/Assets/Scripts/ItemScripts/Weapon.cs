@@ -7,6 +7,11 @@ public class Weapon
     int currentLevel;
     WeaponInfo info;
 
+    public WeaponInfo GetInfo()
+    {
+        return info;
+    }
+
     public Weapon(WeaponInfo info)
     {
         this.info = info;

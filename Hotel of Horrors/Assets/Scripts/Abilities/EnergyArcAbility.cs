@@ -9,7 +9,7 @@ public class EnergyArcAbility : PlayerAbility
     [SerializeField] float maxLifeTime = 10f;
     [SerializeField] GameObject arc;
 
-    public override void Use(AttackController controller)
+    public override void Use(ActionController controller)
     {
         this.controller = controller;
         StartCoroutine(Attack());

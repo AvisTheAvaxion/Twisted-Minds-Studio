@@ -6,6 +6,11 @@ public class Ability
 {
     AbilityInfo info;
 
+    public AbilityInfo GetInfo()
+    {
+        return info;
+    }
+
     public Ability(AbilityInfo info)
     {
         this.info = info;

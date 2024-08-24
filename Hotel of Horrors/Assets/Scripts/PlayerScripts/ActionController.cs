@@ -5,14 +5,16 @@ using UnityEngine.InputSystem;
 using TMPro;
 using Attacks;
 
-public class AttackController : MonoBehaviour
+public class ActionController : MonoBehaviour
 {
     [SerializeField] AttackModes currentAttackMode;
     [SerializeField] Animator playerAnimator; //Animator that plays the base attack animations
     [SerializeField] PlayerMovement playerMovement; //Player movement reference to check whether dashing or not
     [SerializeField] CameraShake cameraShake;
     [SerializeField] UIDisplayContainer uiDisplay;
+    [SerializeField] PlayerGUI playerGUI;
     [SerializeField] StatsController stats;
+    [SerializeField] PlayerHealth playerHealth;
     [SerializeField] Transform weaponStrikeParent; //The parent to spawn the weapon strike into
     [SerializeField] Transform weaponStrike1SpawnPoint; //The point to spawn the weapon strike
     [SerializeField] Transform weaponStrike2SpawnPoint; //The point to spawn the weapon strike
@@ -58,10 +60,10 @@ public class AttackController : MonoBehaviour
     float currentAmmoCount;
     float rangedFireTimer;
 
-    Inventory inventory;
+    PlayerInventory inventory;
 
     //Current weapon equipped in the inventory
-    WeaponInfo currentWeapon;
+    Weapon currentWeapon;
     WeaponAbility currentWeaponAbility;
 
     public PlayerAbility currentPlayerAbitlity;
@@ -76,7 +78,8 @@ public class AttackController : MonoBehaviour
 
     private void Awake()
     {
-        inventory = GetComponent<Inventory>();
+        inventory = GetComponent<PlayerInventory>();
+        playerGUI = FindObjectOfType<PlayerGUI>();
 
         if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
         if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
@@ -103,7 +106,7 @@ public class AttackController : MonoBehaviour
     }
 
     //Called by the inventory system to store reference to the current weapon
-    public void EquipWeapon(WeaponInfo weapon)
+    public void EquipWeapon(Weapon weapon)
     {
         currentWeapon = weapon;
 
@@ -112,22 +115,22 @@ public class AttackController : MonoBehaviour
         if(currentWeapon != null)
         {
             weaponVisual.enabled = true;
-            weaponVisual.sprite = currentWeapon.GetSprite();
+            weaponVisual.sprite = currentWeapon.GetInfo().GetSprite();
 
-            currentAttackMode = currentWeapon.GetWeaponMode();
+            currentAttackMode = currentWeapon.GetInfo().GetWeaponMode();
 
             if (currentWeaponAbility != null) Destroy(currentWeaponAbility.gameObject);
 
-            if (weapon.GetWeaponAbility() != null)
+            /*if (weapon.GetWeaponAbility() != null)
             {
                 GameObject go = Instantiate(weapon.GetWeaponAbility(), transform.position + weapon.GetWeaponAbility().transform.localPosition, Quaternion.identity, transform);
                 WeaponAbility ability = go.GetComponent<WeaponAbility>();
                 if (ability != null) currentWeaponAbility = ability;
-            }
+            }*/
 
             if(currentAttackMode == AttackModes.Ranged)
             {
-                currentAmmoCount = currentWeapon.GetMaxAmmoCount();
+                currentAmmoCount = currentWeapon.GetInfo().GetMaxAmmoCount();
                 if (uiDisplay.AmmoTextContainer) uiDisplay.AmmoTextContainer.SetActive(true);
                 if (uiDisplay.MaxAmmoText) uiDisplay.MaxAmmoText.text = currentAmmoCount.ToString();
                 if (uiDisplay.CurrentAmmoText) uiDisplay.CurrentAmmoText.text = currentAmmoCount.ToString();
@@ -160,17 +163,17 @@ public class AttackController : MonoBehaviour
     {
         if (currentPlayerAbitlity != null) Destroy(currentPlayerAbitlity.gameObject);
     }
-    public void EquipPlayerAbility(AbilityInfo abilities)
+    public void EquipPlayerAbility(Ability ability)
     {
-        if (abilities != null && canDoPlayerAbility)
+        if (ability != null && canDoPlayerAbility)
         {
             if (currentPlayerAbitlity != null) Destroy(currentPlayerAbitlity.gameObject);
 
-            if (abilities.GetPlayerAbility() != null)
+            if (ability.GetInfo().GetPlayerAbility() != null)
             {
-                GameObject go = Instantiate(abilities.GetPlayerAbility(), transform.position + abilities.GetPlayerAbility().transform.localPosition, Quaternion.identity, transform);
-                PlayerAbility ability = go.GetComponent<PlayerAbility>();
-                if (ability != null) currentPlayerAbitlity = ability;
+                GameObject go = Instantiate(ability.GetInfo().GetPlayerAbility(), transform.position + ability.GetInfo().GetPlayerAbility().transform.localPosition, Quaternion.identity, transform);
+                PlayerAbility playerAbility = go.GetComponent<PlayerAbility>();
+                if (playerAbility != null) currentPlayerAbitlity = playerAbility;
             }
         }
     }
@@ -231,6 +234,17 @@ public class AttackController : MonoBehaviour
             currentPlayerAbitlity.Use(this);
             StartCoroutine(PlayerAbilityCooldown(currentPlayerAbitlity.Cooldown));
         }
+        else if (inventory.CurrentItem != null)
+        {
+            Item item = inventory.CurrentItem;
+            inventory.UseItem(inventory.currentItemIndex);
+            foreach (EffectInfo effectInfo in item.GetInfo().GetEffectInfos())
+            {
+                Effect effect = new Effect(effectInfo, 1);
+                playerHealth.InflictEffect(effect);
+            }
+            playerGUI.UpdateHotbarGUI();
+        }
     }
 
     private void Update()
@@ -276,7 +290,7 @@ public class AttackController : MonoBehaviour
                 rangedFireTimer += Time.deltaTime;
 
                 if (currentWeapon != null)
-                    if (rangedFireTimer > 1 / currentWeapon.GetFireRate()) AttackEnd();
+                    if (rangedFireTimer > 1 / currentWeapon.GetInfo().GetFireRate()) AttackEnd();
                 else
                     if (rangedFireTimer > 0.4f) AttackEnd();
             }
@@ -307,7 +321,7 @@ public class AttackController : MonoBehaviour
         }
         else if (currentAttackMode == AttackModes.Melee && currentWeapon != null)
         {
-            if(currentWeapon.GetAttackType() == AttackType.Melee1)
+            if(currentWeapon.GetInfo().GetAttackType() == AttackType.Melee1)
             {
                 hand.transform.localRotation = Quaternion.identity;
                 playerAnimator.SetTrigger("MeleeAttack1");
@@ -347,24 +361,24 @@ public class AttackController : MonoBehaviour
         if(currentWeapon != null)
         {
             MeleeSlash meleeStrike = null;
-            if (currentWeapon.GetAttackType() == AttackType.Melee1)
+            if (currentWeapon.GetInfo().GetAttackType() == AttackType.Melee1)
             {
-                GameObject go = Instantiate(currentWeapon.GetWeaponStrike(), weaponStrike1SpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetRange(), weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
+                GameObject go = Instantiate(currentWeapon.GetInfo().GetWeaponStrike(), weaponStrike1SpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetInfo().GetRange(), weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
                 meleeStrike = go.GetComponent<MeleeSlash>();
             } else
             {
-                GameObject go = Instantiate(currentWeapon.GetWeaponStrike(), weaponStrike2SpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetRange(), weaponStrike2SpawnPoint.rotation, weaponStrikeParent);
+                GameObject go = Instantiate(currentWeapon.GetInfo().GetWeaponStrike(), weaponStrike2SpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetInfo().GetRange(), weaponStrike2SpawnPoint.rotation, weaponStrikeParent);
                 meleeStrike = go.GetComponent<MeleeSlash>();
             }
             if (meleeStrike)
             {
-                EffectInfo[] effectInfos = currentWeapon.GetEffectsToInflict();
+                EffectInfo[] effectInfos = currentWeapon.GetInfo().GetEffectsToInflict();
                 Effect[] effects = new Effect[effectInfos.Length];
                 for (int i = 0; i < effects.Length; i++)
                 {
-                    effects[i] = new Effect(effectInfos[i], currentWeapon.GetChanceToInflictEffect());
+                    effects[i] = new Effect(effectInfos[i], currentWeapon.GetInfo().GetChanceToInflictEffect());
                 }
-                meleeStrike.Init(currentWeapon.GetDamage(), currentWeapon.GetKnockback(), currentWeapon.GetDeflectionStrength(), "Enemy", cameraShake, effects);
+                meleeStrike.Init(currentWeapon.GetInfo().GetDamage(), currentWeapon.GetInfo().GetKnockback(), currentWeapon.GetInfo().GetDeflectionStrength(), "Enemy", cameraShake, effects);
             }
         } 
         else
@@ -388,10 +402,10 @@ public class AttackController : MonoBehaviour
         canAttack = false;
         if (currentWeapon != null)
         {
-            if (currentWeapon.GetWeaponMode() == AttackModes.Ranged && currentAmmoCount <= 0)
-                StartCoroutine(ReloadCooldown(currentWeapon.GetReloadTime()));
+            if (currentWeapon.GetInfo().GetWeaponMode() == AttackModes.Ranged && currentAmmoCount <= 0)
+                StartCoroutine(ReloadCooldown(currentWeapon.GetInfo().GetReloadTime()));
             else
-                StartCoroutine(AttackCooldown(1 / (currentWeapon.GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed))));
+                StartCoroutine(AttackCooldown(1 / (currentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed))));
         }
         else
         {
@@ -417,7 +431,7 @@ public class AttackController : MonoBehaviour
 
         canAttack = true;
 
-        if (attackButtonPressed && (autoAttack || (currentWeapon != null && currentWeapon.IsAutoAttack())))
+        if (attackButtonPressed && (autoAttack || (currentWeapon != null && currentWeapon.GetInfo().IsAutoAttack())))
         {
             Attack();
         }
@@ -425,7 +439,7 @@ public class AttackController : MonoBehaviour
 
     IEnumerator ReloadCooldown(float reloadTime)
     {
-        WeaponInfo startWeapon = currentWeapon;
+        Weapon startWeapon = currentWeapon;
 
         //playerAnimator.SetBool("Shooting1", false);
         //playerAnimator.SetLayerWeight(1, 0); //Disables the attack layer on the player animator
@@ -448,10 +462,10 @@ public class AttackController : MonoBehaviour
         canAttack = true;
         if (startWeapon == currentWeapon)
         {
-            currentAmmoCount = currentWeapon.GetMaxAmmoCount();
+            currentAmmoCount = currentWeapon.GetInfo().GetMaxAmmoCount();
             if (uiDisplay.CurrentAmmoText) uiDisplay.CurrentAmmoText.text = currentAmmoCount.ToString();
 
-            if (attackButtonPressed && (autoAttack || (currentWeapon != null && currentWeapon.IsAutoAttack())))
+            if (attackButtonPressed && (autoAttack || (currentWeapon != null && currentWeapon.GetInfo().IsAutoAttack())))
             {
                 Attack();
             }

@@ -12,7 +12,7 @@ public class FootballHelmetAbility : SpecialAbility
 
     LittleStein littleStein;
 
-    public override void Use(AttackController controller)
+    public override void Use(ActionController controller)
     {
         this.controller = controller;
 

@@ -357,9 +357,6 @@ MonoBehaviour:
   playerHealth: {fileID: 5367254218961287942}
   stats: {fileID: 9195956232266042739}
   afterImage: {fileID: 625345098585316788}
-  fadeImage: {fileID: 0}
-  elevatorCanvas: {fileID: 0}
-  mindRoomCanvas: {fileID: 0}
   playerAudio: {fileID: 3958856602650725404}
   movementSpeed: 0.5
   drag: 0.705
@@ -376,7 +373,6 @@ MonoBehaviour:
   - {fileID: 3406015402621822103, guid: 8bbffcce4ec9b9a4da171cef27f207a7, type: 3}
   - {fileID: 726553003626226448, guid: 54fe9497f5f293b49bb9e80cac4d528a, type: 3}
   - {fileID: 1222665275652685480, guid: 7d0e3b76c99c27e4bb2713107fdd5223, type: 3}
-  doorTransitionLength: 1
 --- !u!114 &8294943214975604175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +390,9 @@ MonoBehaviour:
   playerMovement: {fileID: 3194915936490214647}
   cameraShake: {fileID: 7305724931220426512}
   uiDisplay: {fileID: 0}
+  playerGUI: {fileID: 0}
   stats: {fileID: 9195956232266042739}
+  playerHealth: {fileID: 5367254218961287942}
   weaponStrikeParent: {fileID: 9158669448377762531}
   weaponStrike1SpawnPoint: {fileID: 3412874156805523533}
   weaponStrike2SpawnPoint: {fileID: 7306821455979691524}
@@ -425,9 +423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a250b467ae679745838fc03006624da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeapon: {fileID: 0}
-  itemOne: {fileID: 0}
-  currentMemento: {fileID: 0}
   uiDisplay: {fileID: 0}
   playerHealth: {fileID: 0}
 --- !u!114 &6240079413853661452

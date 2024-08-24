@@ -6,19 +6,19 @@ using UnityEngine;
 [System.Serializable]
 public class SerializedClass : MonoBehaviour
 {
-    int level;
-    int emotionalEnergy;
+    public int level;
+    public int emotionalEnergy;
 
-    Item[] itemsInventory;
-    WeaponInfo[] weaponsInventory;
-    List<MementoInfo> mementosInventory;
-    List<AbilityInfo> abilitiesInventory;
+    public Item[] itemsInventory;
+    public WeaponInfo[] weaponsInventory;
+    public List<MementoInfo> mementosInventory;
+    public List<AbilityInfo> abilitiesInventory;
 
-    WeaponInfo currentWeapon;
-    UseableInfo itemOne;
-    MementoInfo currentMemento;
+    public WeaponInfo currentWeapon;
+    public UseableInfo itemOne;
+    public MementoInfo currentMemento;
 
-    List<Quest> quests;
+    public List<Quest> quests;
 
     public SerializedClass()
     {

@@ -41,6 +41,7 @@ public class EnemyStateMachine : MonoBehaviour
     [Header("Settings")]
     [SerializeField] Attacks.AttackModes attackType = Attacks.AttackModes.Melee;
     [SerializeField] protected float moveSpeed;
+    [SerializeField] protected int emotionalEnergyWorth = 50;
 
     [Header("Patrol Settings")]
     [SerializeField] protected float patrolRadius;

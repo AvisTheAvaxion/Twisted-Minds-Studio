@@ -21,6 +21,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] bool isWeaponEquipSlot;
     [SerializeField] bool isFreeEquipSlot;
     [SerializeField] bool isMementoEquipSlot;
+    [SerializeField] bool isWeaponUpgradeInventory;
     public bool IsWeaponEquipSlot { get => isWeaponEquipSlot; }
     public bool IsFreeEquipSlot { get => isFreeEquipSlot; }
     public bool IsMementoEquipSlot { get => isMementoEquipSlot; }
@@ -28,24 +29,22 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public bool IsWeaponSlot { get => isWeaponSlot; }
     public bool IsItemSlot { get => isItemSlot; }
 
-    [Header("Item Tool Tip Reference")]
-    [SerializeField] ItemToolTip itemToolTip;
     InventoryGUI inventoryGUI;
+    WeaponUpgradeGUI weaponUpgradeGUI;
 
     public void Init() 
     {
-        inventoryGUI = FindObjectOfType<InventoryGUI>();
+        if(isWeaponUpgradeInventory)
+        {
+            weaponUpgradeGUI = FindObjectOfType<WeaponUpgradeGUI>();
+        } else
+        {
+            inventoryGUI = FindObjectOfType<InventoryGUI>();
+        }
         itemImage = GetComponent<Image>();
         amountText = GetComponentInChildren<TextMeshProUGUI>();
 
         itemIndex = -1;
-
-        //UpdateImage();
-
-        if (itemToolTip == null)
-        {
-            itemToolTip = FindObjectOfType<ItemToolTip>();
-        }
     }
 
     public void UpdateImage(Item item)
@@ -149,74 +148,74 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //UseableInfo info = null;
-        if(isItemSlot || isFreeEquipSlot)
+        if (weaponUpgradeGUI)
         {
-            inventoryGUI.UpdateItemToolTip(transform.parent.GetSiblingIndex(), isFreeEquipSlot, transform.position);
-            //Item item = inventory.GetItem(transform.parent.GetSiblingIndex());
-            //if (item != null) info = item.GetInfo();
+            weaponUpgradeGUI.UpdateWeaponToolTip(transform.parent.GetSiblingIndex(), isWeaponEquipSlot, transform.position);
         }
-        else if (isWeaponSlot || isWeaponEquipSlot)
+        else
         {
-            inventoryGUI.UpdateWeaponToolTip(transform.parent.GetSiblingIndex(), isWeaponEquipSlot, transform.position);
-            //Weapon weapon = inventory.GetWeapon(transform.parent.GetSiblingIndex());
-            //if (weapon != null) info = weapon.GetInfo();
+            if (isItemSlot || isFreeEquipSlot)
+            {
+                inventoryGUI.UpdateItemToolTip(transform.parent.GetSiblingIndex(), isFreeEquipSlot, transform.position);
+            }
+            else if (isWeaponSlot || isWeaponEquipSlot)
+            {
+                inventoryGUI.UpdateWeaponToolTip(transform.parent.GetSiblingIndex(), isWeaponEquipSlot, transform.position);
+            }
         }
-        /*else if (isFreeEquipSlot)
-        {
-            Item item = inventory.GetItem(itemIndex);
-            if (item != null) info = item.GetInfo();
-        }
-        else if (isWeaponEquipSlot)
-        {
-            Weapon weapon = inventory.GetWeapon(itemIndex);
-            if (weapon != null) info = weapon.GetInfo();
-        }*/
-
-        /*if (info != null)
-        {
-            itemToolTip.transform.position = (Vector2)transform.position + new Vector2(50f, 50f);
-            itemToolTip.AssignItem(info);
-
-            itemToolTip.gameObject.SetActive(true);
-        }*/
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left && !isWeaponEquipSlot && !isFreeEquipSlot && !isMementoEquipSlot)
         {
-            if (isWeaponSlot)
+            if (isWeaponUpgradeInventory)
             {
-                inventoryGUI.EquipWeapon(transform.parent.GetSiblingIndex());
+
             }
-            if (isItemSlot)
+            else
             {
-                inventoryGUI.EquipItem(transform.parent.GetSiblingIndex());
+                if (isWeaponSlot)
+                {
+                    inventoryGUI.EquipWeapon(transform.parent.GetSiblingIndex());
+                }
+                if (isItemSlot)
+                {
+                    inventoryGUI.EquipItem(transform.parent.GetSiblingIndex());
+                }
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (isWeaponEquipSlot)
+            if (isWeaponUpgradeInventory)
             {
-                inventoryGUI.EquipWeapon(-1);
-                itemToolTip.gameObject.SetActive(false);
+
             }
-            else if (isFreeEquipSlot)
-            {
-                inventoryGUI.EquipItem(-1);
-                itemToolTip.gameObject.SetActive(false);
+            else 
+            { 
+                if (isWeaponEquipSlot)
+                {
+                    inventoryGUI.EquipWeapon(-1);
+                    inventoryGUI.DisableToolTip();
+                }
+                else if (isFreeEquipSlot)
+                {
+                    inventoryGUI.EquipItem(-1);
+                    inventoryGUI.DisableToolTip();
+                }
             }
-            /*else if (isItemSlot)
-            {
-                inventory.UseItem(transform.parent.GetSiblingIndex(), this);
-            }*/
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        inventoryGUI.DisableToolTip();
-        //itemToolTip.gameObject.SetActive(false);
+        if (isWeaponUpgradeInventory)
+        {
+            weaponUpgradeGUI.DisableToolTip();
+        }
+        else
+        {
+            inventoryGUI.DisableToolTip();
+        }
     }
 }

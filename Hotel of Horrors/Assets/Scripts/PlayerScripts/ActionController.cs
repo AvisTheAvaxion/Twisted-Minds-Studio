@@ -546,4 +546,8 @@ namespace Attacks
         Melee2,
         Range1,
     }
+    public enum WeaponClass
+    {
+        Stab, HeavyStab, Slash, HeavySlash, Slam, Swing
+    }
 }

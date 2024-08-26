@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerGUI : MonoBehaviour
 {
     PlayerInventory inventory;
 
+    [SerializeField] TMP_Text emotionalEnergyText;
     [SerializeField] Image weaponHotbarImage;
     [SerializeField] Image freeSlotHotbarImage;
     [SerializeField] Image mementoHotbarImage;
@@ -14,6 +16,16 @@ public class PlayerGUI : MonoBehaviour
     private void Start()
     {
         inventory = FindObjectOfType<PlayerInventory>();
+    }
+
+    private void Update()
+    {
+        //UpdateEmotionalEnergy();
+    }
+
+    public void UpdateEmotionalEnergy()
+    {
+        emotionalEnergyText.text = inventory.emotionalEnergy.ToString();
     }
 
     public void UpdateHotbarGUI()

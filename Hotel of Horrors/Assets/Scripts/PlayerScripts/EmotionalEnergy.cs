@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class EmotionalEnergy : MonoBehaviour
 {
-    [SerializeField] int emtionalEnergy;
+    public int emtionalEnergy { get; private set; }
 
-    private void Start()
+    public void SetEmotionalEnergy(int emotionalEnergy)
     {
-        emtionalEnergy = 0;
-    }
-
-    public int GetEmotionalEnergy()
-    {
-        return this.emtionalEnergy;
+        this.emtionalEnergy = emotionalEnergy;
     }
 }

@@ -24,7 +24,7 @@ public class SerializationManager : MonoBehaviour
         jsonLines.Add(JsonUtility.ToJson(classToSave.abilitiesInventory));
         jsonLines.Add(JsonUtility.ToJson(classToSave.currentWeaponIndex));
         jsonLines.Add(JsonUtility.ToJson(classToSave.currentItemIndex));
-        jsonLines.Add(JsonUtility.ToJson(classToSave.currentMemento));
+        jsonLines.Add(JsonUtility.ToJson(classToSave.currentMementoIndex));
 
         //write JSON data to file
         File.WriteAllLines(saveFile, jsonLines);
@@ -45,9 +45,7 @@ public class SerializationManager : MonoBehaviour
         classToLoad.abilitiesInventory = JsonUtility.FromJson<List<Ability>>(jsonLines[5]);
         classToLoad.currentWeaponIndex = JsonUtility.FromJson<int>(jsonLines[6]);
         classToLoad.currentItemIndex = JsonUtility.FromJson<int>(jsonLines[7]);
-        classToLoad.currentMemento = JsonUtility.FromJson<MementoInfo>(jsonLines[8]);
-
-
+        classToLoad.currentMementoIndex = JsonUtility.FromJson<int>(jsonLines[8]);
 
         classToLoad.OverWriteData();
     }

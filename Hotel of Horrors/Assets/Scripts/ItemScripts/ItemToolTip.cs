@@ -15,49 +15,17 @@ public class ItemToolTip : MonoBehaviour
     
     TextMeshProUGUI[] itemStatsTxt;
 
-    public void AssignItem(UseableInfo item)
+    public void AssignItem(Item item)
     {
-        ResetTertiaryItemStats();
-
-        itemNameTxt.text = item.GetName();
-        itemDescriptionTxt.text = item.GetDescription();
-
-        if (item.GetType() == typeof(WeaponInfo))
+        if (item != null)
         {
-            WeaponInfo heldWeapon = (WeaponInfo)item;
-            itemTypeTxt.text = $"{heldWeapon.GetWeaponMode()}";
-            itemMainStatTxt.text = $"Damage: {heldWeapon.GetDamage()}";
+            ResetTertiaryItemStats();
 
-            itemStatsTxt = new TextMeshProUGUI[4];
-            for (int i = 0; i < 3; i++)
-            {
-                itemStatsTxt[i] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
-            }
-            itemStatsTxt[0].text = $"Attack Speed: {heldWeapon.GetAttackSpeed()}";
-            itemStatsTxt[1].text = $"Knockback: {heldWeapon.GetKnockback()}";
-            itemStatsTxt[2].text = $"Deflection Strength: {heldWeapon.GetDeflectionStrength()}";
+            ItemInfo heldItem = item.GetInfo();
 
-            EffectInfo[] heldWeaponEffects = heldWeapon.GetEffectsToInflict();
-            if(heldWeaponEffects.Length > 0)
-            {
-                itemStatsTxt[3] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
+            itemNameTxt.text = heldItem.GetName();
+            itemDescriptionTxt.text = heldItem.GetDescription();
 
-                itemStatsTxt[3].text = $"{heldWeapon.GetChanceToInflictEffect() * 100}% chance to inflict ";
-                for (int i = 0; i < heldWeaponEffects.Length - 1; i++)
-                {
-                    itemStatsTxt[3].text += heldWeaponEffects[i].Name;
-                    if (heldWeaponEffects.Length > 2 && i < heldWeaponEffects.Length)
-                        itemStatsTxt[3].text += ", ";
-                }
-                if(heldWeaponEffects.Length > 1)
-                    itemStatsTxt[3].text += $"and {heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
-                else
-                    itemStatsTxt[3].text += $"{heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
-            }
-        }
-        else if (item.GetType() == typeof(ItemInfo))
-        {
-            ItemInfo heldItem = (ItemInfo)item;
             itemTypeTxt.text = "Consumable";
             EffectInfo[] heldItemEffects = heldItem.GetEffectInfos();
             if (heldItemEffects.Length > 0)
@@ -67,28 +35,29 @@ public class ItemToolTip : MonoBehaviour
                 for (int i = 0; i < heldItemEffects.Length; i++)
                 {
                     EffectInfo current = heldItemEffects[i];
-                    if(current.Mode == EffectInfo.EffectMode.Permenant)
+                    if (current.Mode == EffectInfo.EffectMode.Permenant)
                     {
                         string str = "";
                         for (int e = 0; e < current.StatEffects.Length; e++)
                         {
                             EffectInfo.StatEffect currentSE = current.StatEffects[e];
-                            if(currentSE.StatType == Stat.StatType.Health)
+                            if (currentSE.StatType == Stat.StatType.Health)
                             {
-                                if(currentSE.EffectType == EffectInfo.EffectType.Buff)
+                                if (currentSE.EffectType == EffectInfo.EffectType.Buff)
                                     str += $"Heals {currentSE.Strength}\n";
                                 else
                                     str += $"Damages for {currentSE.Strength}\n";
-                            } else
+                            }
+                            else
                             {
                                 if (currentSE.EffectType == EffectInfo.EffectType.Buff)
-                                    str += $"{(currentSE.IsPercentage ?  "%" + (currentSE.Strength * 100).ToString("#") : "+" + currentSE.Strength.ToString("#"))} {currentSE.StatType.ToString()}\n";
+                                    str += $"{(currentSE.IsPercentage ? "%" + (currentSE.Strength * 100).ToString("#") : "+" + currentSE.Strength.ToString("#"))} {currentSE.StatType.ToString()}\n";
                                 else
                                     str += $"{(currentSE.IsPercentage ? "-%" + (currentSE.Strength * 100).ToString("#") : "-" + currentSE.Strength.ToString("#"))} {currentSE.StatType.ToString()}\n";
                             }
                         }
                         itemMainStatTxt.text = str;
-                    } 
+                    }
                     else if (current.Mode == EffectInfo.EffectMode.Overtime)
                     {
                         string str = "";
@@ -118,11 +87,50 @@ public class ItemToolTip : MonoBehaviour
                     }
                 }
             }
-        } else
-        {
-            itemTypeTxt.text = item.GetType().ToString();
-            itemMainStatTxt.text = "";
         }
+    }
+
+    public void AssignWeapon(Weapon weapon)
+    {
+        if (weapon != null)
+        {
+            ResetTertiaryItemStats();
+
+            Weapon heldWeapon = weapon;
+
+            itemNameTxt.text = heldWeapon.info.GetName();
+            itemDescriptionTxt.text = heldWeapon.info.GetDescription();
+
+            itemTypeTxt.text = $"{heldWeapon.info.GetWeaponMode()}";
+            itemMainStatTxt.text = $"Damage: {heldWeapon.damage}";
+
+            itemStatsTxt = new TextMeshProUGUI[4];
+            for (int i = 0; i < 3; i++)
+            {
+                itemStatsTxt[i] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
+            }
+            itemStatsTxt[0].text = $"Attack Speed: {heldWeapon.attackSpeed}";
+            itemStatsTxt[1].text = $"Knockback: {heldWeapon.knockback}";
+            itemStatsTxt[2].text = $"Deflection Strength: {heldWeapon.deflectionStrength}";
+
+            EffectInfo[] heldWeaponEffects = heldWeapon.info.GetEffectsToInflict();
+            if (heldWeaponEffects.Length > 0)
+            {
+                itemStatsTxt[3] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
+
+                itemStatsTxt[3].text = $"{heldWeapon.info.GetChanceToInflictEffect() * 100}% chance to inflict ";
+                for (int i = 0; i < heldWeaponEffects.Length - 1; i++)
+                {
+                    itemStatsTxt[3].text += heldWeaponEffects[i].Name;
+                    if (heldWeaponEffects.Length > 2 && i < heldWeaponEffects.Length)
+                        itemStatsTxt[3].text += ", ";
+                }
+                if (heldWeaponEffects.Length > 1)
+                    itemStatsTxt[3].text += $"and {heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
+                else
+                    itemStatsTxt[3].text += $"{heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
+            }
+        } 
     }
 
     void ResetTertiaryItemStats()

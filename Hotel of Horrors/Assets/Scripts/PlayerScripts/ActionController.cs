@@ -374,13 +374,14 @@ public class ActionController : MonoBehaviour
             }
             if (meleeStrike)
             {
-                EffectInfo[] effectInfos = currentWeapon.GetInfo().GetEffectsToInflict();
+                meleeStrike.Init(inventory.CurrentWeapon, "Enemy", cameraShake);
+                /*EffectInfo[] effectInfos = currentWeapon.GetInfo().GetEffectsToInflict();
                 Effect[] effects = new Effect[effectInfos.Length];
                 for (int i = 0; i < effects.Length; i++)
                 {
                     effects[i] = new Effect(effectInfos[i], currentWeapon.GetInfo().GetChanceToInflictEffect());
                 }
-                meleeStrike.Init(currentWeapon.GetInfo().GetDamage(), currentWeapon.GetInfo().GetKnockback(), currentWeapon.GetInfo().GetDeflectionStrength(), "Enemy", cameraShake, effects);
+                meleeStrike.Init(currentWeapon.GetInfo().GetDamage(), currentWeapon.GetInfo().GetKnockback(), currentWeapon.GetInfo().GetDeflectionStrength(), "Enemy", cameraShake, effects);*/
             }
         } 
         else

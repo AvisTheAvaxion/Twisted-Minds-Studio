@@ -11,6 +11,7 @@ public class WeaponInfo : UseableInfo
     {
         public float percentageIncrease;
         public float otherWeaponPercPerLevel;
+        public int eeCost;
     }
 
     [Header("Weapon Settings")]

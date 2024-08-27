@@ -42,9 +42,9 @@ public class InventoryGUI : MonoBehaviour
         foreach (ItemSlot slot in slots)
         {
             slot.Init();
-            if (slot.IsWeaponEquipSlot)
+            if (slot.SlotType == ItemSlot.ItemSlotType.WeaponEquipSlot)
                 weaponSlot = slot;
-            else if (freeSlot == null && slot.IsFreeEquipSlot)
+            else if (freeSlot == null && slot.SlotType == ItemSlot.ItemSlotType.FreeEquipSlot)
                 freeSlot = slot;
         }
         for (int i = 0; i < itemSlots.Length; i++)
@@ -127,7 +127,7 @@ public class InventoryGUI : MonoBehaviour
 
         if (item != null)
         {
-            itemToolTip.AssignItem(item.GetInfo());
+            itemToolTip.AssignItem(item);
             itemToolTip.transform.position = position + new Vector2(50f, 50f);
             itemToolTip.gameObject.SetActive(true);
         }
@@ -146,7 +146,7 @@ public class InventoryGUI : MonoBehaviour
 
         if (weapon != null)
         {
-            itemToolTip.AssignItem(weapon.GetInfo());
+            itemToolTip.AssignWeapon(weapon);
             itemToolTip.transform.position = position + new Vector2(50f, 50f);
             itemToolTip.gameObject.SetActive(true);
         }

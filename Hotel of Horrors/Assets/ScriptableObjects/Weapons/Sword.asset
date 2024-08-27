@@ -23,6 +23,7 @@ MonoBehaviour:
   weaponAbilitySprite: {fileID: 0}
   weaponAbility: {fileID: 0}
   baseLevel: 1
+  maxLevel: 3
   attackSpeed: 0.6
   autoAttack: 0
   damage: 8
@@ -32,6 +33,46 @@ MonoBehaviour:
   weaponStrike: {fileID: 8308924630415093721, guid: 249c10b6d22bb584aaf264aac288b6e5, type: 3}
   chanceToInflictEffect: 0
   effectsToInflict: []
+  creationRandomFactor:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.20001562
+      outSlope: 0.20001562
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.10000781
+      inSlope: 0.22560285
+      outSlope: 0.22560285
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.122302175
+      outWeight: 0.18917644
+    - serializedVersion: 3
+      time: 1
+      value: 0.30000687
+      inSlope: 0.39999813
+      outSlope: 0.39999813
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  upgradeInfos:
+  - percentageIncrease: 0.4
+    otherWeaponPercPerLevel: 0.15
+    eeCost: 150
+  - percentageIncrease: 0.3
+    otherWeaponPercPerLevel: 0.1
+    eeCost: 350
   projectile: {fileID: 0}
   fireRate: 0
   maxAmmoCount: 0

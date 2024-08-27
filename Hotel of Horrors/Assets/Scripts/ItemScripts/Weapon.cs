@@ -40,6 +40,13 @@ public class Weapon
         currentLevel = weapon.currentLevel;
     }
 
+    public int GetUpgradeCost(Weapon otherWeapon)
+    {
+        return info.GetUpgradeInfo(currentLevel - 1).eeCost +
+            Mathf.RoundToInt(otherWeapon.info.GetUpgradeInfo(otherWeapon.currentLevel - 1).eeCost * 
+            info.GetUpgradeInfo(currentLevel - 1).otherWeaponPercPerLevel * otherWeapon.currentLevel);
+    }
+
     public Weapon UpgradePreview(Weapon otherWeapon)
     {
         if (currentLevel >= info.GetMaxLevel()) return null;

@@ -218,6 +218,33 @@ public class PlayerInventory : MonoBehaviour
     }
     #endregion
 
+    public void RemoveWeapon(int index)
+    {
+        Weapon weapon = GetWeapon(index);
+        if(weapon != null)
+        {
+            if(index == currentWeaponIndex)
+            {
+                EquipWeapon(-1);
+            }
+
+            weaponsInventory[index] = null;
+        }
+    }
+    public void RemoveItem(int index)
+    {
+        Item item = GetItem(index);
+        if (item != null)
+        {
+            if (index == currentItemIndex)
+            {
+                EquipItem(-1);
+            }
+
+            itemsInventory[index] = null;
+        }
+    }
+
 
     public void UseItem(int index)
     {

@@ -66,7 +66,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  upgradeInfos: []
+  upgradeInfos:
+  - percentageIncrease: 0.45
+    otherWeaponPercPerLevel: 0.25
+    eeCost: 125
+  - percentageIncrease: 0.35
+    otherWeaponPercPerLevel: 0.15
+    eeCost: 300
   projectile: {fileID: 0}
   fireRate: 0
   maxAmmoCount: 0

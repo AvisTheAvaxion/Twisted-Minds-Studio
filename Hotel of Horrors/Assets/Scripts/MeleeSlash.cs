@@ -9,6 +9,8 @@ public class MeleeSlash : MonoBehaviour
     [SerializeField] float frameRate;
     [SerializeField] string defaultTag = "Enemy";
 
+    Weapon weapon;
+
     string targetTag;
 
     int damage;
@@ -20,21 +22,6 @@ public class MeleeSlash : MonoBehaviour
     Effect[] effects;
 
     [SerializeField] EnemyAudioManager enemyAudioManager;
-
-    public void Init(int damage, float deflectionStrength, float knockback, CameraShake cameraShake, Effect[] effects = null)
-    {
-        if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
-
-        this.damage = damage;
-        this.knockback = knockback;
-        this.deflectionStrength = deflectionStrength;
-        this.targetTag = defaultTag;
-        this.cameraShake = cameraShake;
-
-        this.effects = effects;
-
-        StartCoroutine(Animate());
-    }
 
     public void Init(int damage, float knockback, float deflectionStrength, string targetTag, CameraShake cameraShake, Effect[] effects = null)
     {
@@ -50,6 +37,24 @@ public class MeleeSlash : MonoBehaviour
 
         StartCoroutine(Animate());
     }
+    public void Init(Weapon weapon, string targetTag, CameraShake cameraShake)
+    {
+        if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+
+        this.weapon = weapon;
+
+        EffectInfo[] effectInfos = weapon.info.GetEffectsToInflict();
+        Effect[] effects = new Effect[effectInfos.Length];
+        for (int i = 0; i < effects.Length; i++)
+        {
+            effects[i] = new Effect(effectInfos[i], weapon.info.GetChanceToInflictEffect());
+        }
+
+        this.targetTag = targetTag;
+        this.cameraShake = cameraShake;
+
+        StartCoroutine(Animate());
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -57,14 +62,14 @@ public class MeleeSlash : MonoBehaviour
         {
             IHealth health = collision.GetComponent<IHealth>();
             if (health != null) {
-                if (health.TakeDamage(damage))
+                if (health.TakeDamage(weapon != null ? weapon.damage : damage))
                 {
                     enemyAudioManager.Damage();
 
-                    if (knockback > 0)
+                    if ((weapon != null ? weapon.knockback : knockback) > 0)
                     {
                         Vector2 dir = (collision.transform.position - transform.position).normalized;
-                        health.Knockback(dir, knockback);
+                        health.Knockback(dir, weapon != null ? weapon.knockback : knockback);
                     }
 
                     if (cameraShake != null) cameraShake.ShakeCamera(0.5f);
@@ -83,14 +88,14 @@ public class MeleeSlash : MonoBehaviour
             Lootable lootable = collision.gameObject.GetComponent<Lootable>();
             if (lootable != null)
             {
-                lootable.TakeDamage(damage);
+                lootable.TakeDamage(weapon != null ? weapon.damage : damage);
             }
         }
     }
 
     public float GetDeflectionStrength()
     {
-        return deflectionStrength;
+        return weapon != null ? weapon.deflectionStrength : deflectionStrength;
     }
 
     IEnumerator Animate()

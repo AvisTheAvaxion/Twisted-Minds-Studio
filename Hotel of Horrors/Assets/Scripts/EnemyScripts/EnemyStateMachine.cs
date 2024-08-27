@@ -75,6 +75,7 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected int minDropAmount, maxDropAmount;
     [SerializeField] protected GameObject itemHolderPrefab;
     [SerializeField] protected ItemDrop[] itemDrops;
+    [SerializeField] protected GameObject emotionalEnergyPrefab;
     public static event EventHandler OnEnemyDeath;
     
     protected bool canMove;
@@ -194,6 +195,20 @@ public class EnemyStateMachine : MonoBehaviour
                 Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
                 if(rb) rb.AddForce(GetRandomDir() * dropRadius, ForceMode2D.Impulse);
             }
+        }
+
+        int currentEE = emotionalEnergyWorth;
+        while(currentEE > 0)
+        {
+            int ee = Mathf.Clamp(Random.Range(EmotionalEnergy.minEmotionalEnergyPickup, EmotionalEnergy.maxEmotionalEnergyPickup + 1), 0, currentEE);
+
+            GameObject go = Instantiate(emotionalEnergyPrefab, transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.forward));
+            EmotionalEnergy data = go.GetComponent<EmotionalEnergy>();
+            if (data) data.SetEmotionalEnergy(ee);
+            Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
+            if (rb) rb.AddForce(GetRandomDir() * dropRadius * 2, ForceMode2D.Impulse);
+
+            currentEE -= ee;
         }
     }
 

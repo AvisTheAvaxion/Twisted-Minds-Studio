@@ -5176,6 +5176,7 @@ MonoBehaviour:
   moveParticles: {fileID: 1308703423842716411}
   attackType: 0
   moveSpeed: 10
+  emotionalEnergyWorth: 50
   patrolRadius: 1
   patrolTime: 3
   pauseMin: 2
@@ -5224,6 +5225,7 @@ MonoBehaviour:
     minCount: 1
     maxCount: 1
     weight: 0.2
+  emotionalEnergyPrefab: {fileID: 98322870789914543, guid: 88afadea5fb2250408442fb5baf50973, type: 3}
   enemyAudioManager: {fileID: 1229601363505676949}
 --- !u!114 &5557790185517936632
 MonoBehaviour:

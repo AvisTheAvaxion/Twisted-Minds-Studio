@@ -32,62 +32,64 @@ public class Dialogue
         "System: Press F to interact with drawers and doors",
     };
 
+    string[] SameRoomAgain = new string[]
+    {
+        //Protag ends up in same room after leaving
+        "Protag: Huh? I could've sworn I just left this room."
+    };
+
+    string[] FirstMonster = new string[]
+    {
+        //Protag sees a monster in a room
+        "Protag: Nope."
+        //Protage leaves
+    };
+
+    string[] VarrenEncounter = new string[]
+    {
+        "$PromptVarren: Oh? And who might you be?|No one|AHHHHH",
+        "$OptionAProtag: Who are you? Where did you come from?",
+        "$OptionAVarren: Me? I'm a... resident of this lovely establishment",
+        "$OptionBProtag: A GHOST!!!",
+        "$OptionBVarren: Calm down kid, I'm not a ghost",
+        "$OptionBVarren: I'm just another person trapped here like you",
+        "Protag: Where are we?",
+        "Varren: Hell of course! You died! Where else did you think you would end up?",
+        "Protag: What do you mean? Isn't this a barn?",
+        "$PromptVarren: It's a hotel, and it's where you'll be spending the rest of your days, trapped here for eternity because of all of the terrible things you've done.|Are you pulling my leg?|What terrible things?",
+        "$OptionAProtag: I think I'd remember dying.",
+        "$OptionBVarren: Murder, theft, being an all around terrible person",
+        "$OptionBVarren: Whatever horrible deeds you've commited, you're now stuck here as punishment",
+        "$OptionBProtag: But why would I be sent to a hotel?",
+        "Varren: Haven't you noticed how this place seems off? The rooms shifting, the lack of windows, the monsters?",
+        "Protag: Yes but-",
+        "Varren: Welcome to hell. You died. You're stuck here for eternity to be forever haunted by those... things. There is no exit, no escape. The atrocities you've committed have condemned you here for eternity.",
+        "Protag: But there has to be some kind of a mistake. I don't remember committing any atrocities or dying, maybe if I look around for long enough then I can find an exit, or the person who trapped us here?",
+        "Varren: You're going to fail. I've searched every nook and cranny of this place. I'm sorry, but there's no way out kid.",
+        "Protag: Maybe you missed a spot?",
+        "Varren: No.",
+        "Protag: Maybe there is a hidden room?",
+        "Varren: NO!!!",
+        "$ItalicVarren: (Sigh)",
+        "$ItalicVarren: (stubborn little ****)",
+        "Varren: There aren't any hidden rooms",
+        "Varren: There is no one watching us",
+        "Varren: And there certantly aren't any exits.",
+        "Varren: Once you arrive, there is no way to leave. You're stuck here.",
+        "Varren: Forever.",
+        "Varren: And Ever.",
+        "Varren: And Ever.",
+        "Varren: Varren:...",
+        "Varren: Since we're stuck here why don't you go ahead and tell me what it is you've done to end up here?",
+        "Protag: I really don't remember. There has to be some sort of mix-up here. I'm going to find whoever put us here and prove that there is a way out.",
+        "$PromptVarren: There's no convincing you is there kid?|Well just giving up and just sitting here isn't going to accomplish anything.|There's no way I can stay in this stinky place",
+        "Varren: Your stubbornness is quite amusing, take this",
+        "Varren: $Give(Dagger)",
+        "Varren: You can't die here, but you still can feel pain. Let's see how far you get before you give up.",
+        //"(Varren disappears into smoke)",
+        "Protag: Well, I guess I should get moving.",
+    };
     /*
-
-
-//Protag leaves room A and ends up in room A again)
-0|Protag: Huh? I could've sworn I just left this room.
-
-
-//Protag sees a monster in a room
-0|Protag: Nope.
-//Protage leaves
-
-//- Varren first floor encounter
-
-1#|Varren: Oh? And who might you be?[1No one1][2AHHHHH!]
-1a|Protag: Who are you? Where did you come from?
-1a|Varren: Me? I'm a... resident of this lovely establishment
-1b|Protag: A GHOST!!!
-1b|Varren: Calm down kid, I'm not a ghost
-1b|Varren: I'm just another person trapped here like you
-1|Protag: Where are we?
-1|Varren: Hell of course! You died! Where else did you think you would end up?
-1|Protag: What do you mean? Isn't this a barn?
-1#|Varren: It's a hotel, and it's where you'll be spending the rest of your days, trapped here for eternity because of all of the terrible things you've done.[1Are you pulling my leg?1][2What terrible things?2]
-1a|Protag: I think I'd remember dying.
-1b|Varren: Murder, theft, being an all around terrible person
-1b|Varren: Whatever horrible deeds you've commited, you're now stuck here as punishment
-1b|Protag: But why would I be sent to a hotel?
-1|Varren: Haven't you noticed how this place seems off? The rooms shifting, the lack of windows, the monsters?
-1|Protag: Yes but-
-1|Varren: Welcome to hell. You died. You're stuck here for eternity to be forever haunted by those... things. There is no exit, no escape. The atrocities you've committed have condemned you here for eternity.
-1|Protag: But there has to be some kind of a mistake. I don't remember committing any atrocities or dying, maybe if I look around for long enough then I can find an exit, or the person who trapped us here?
-1|Varren: You're going to fail. I've searched every nook and cranny of this place. I'm sorry, but there's no way out kid.
-1|Protag: Maybe you missed a spot?
-1|Varren: No.
-1|Protag: Maybe there is a hidden room?
-1|Varren: NO!!!
-1|Varren: $i("Sigh")
-1|Varren: $i("stubborn little ****")
-1|Varren: There aren't any hidden rooms
-1|Varren: There is no one watching us
-1|Varren: And there certantly aren't any exits.
-1|Varren: Once you arrive, there is no way to leave. You're stuck here.
-1|Varren: Forever.
-1|Varren: And Ever.
-1|Varren: And Ever.
-1|Varren: Varren:...
-1|Varren: Since we're stuck here why don't you go ahead and tell me what it is you've done to end up here?
-1|Protag: I really don't remember. There has to be some sort of mix-up here. I'm going to find whoever put us here and prove that there is a way out.
-1#|Varren: There's no convincing you is there kid?[1Well just giving up and just sitting here isn't going to accomplish anything.1][2There's no way I can stay in this stinky place2]
-1|Varren: Your stubbornness is quite amusing, take this
-1|Varren:$give("Dagger")
-1| Varren: You can't die here, but you still can feel pain. Let's see how far you get before you give up.
-(Varren disappears into smoke)
-Protag: Well, I guess I should get moving.
-
-
 
 //- Combat tutorial
 
@@ -179,17 +181,4 @@ Dr. Harris: Ah, the jersey.
 Dr. Harris: This should be all for now, I've prepared the ingredients for the doctor and he should be able to cure his son now. Thank you for all of your help, I shall let the doctor how helpful you've been.
 Dr. Harris: Todaloo!
     */
-
-
-
-
-
-    string[] VarrenEncounter = new string[]
-    {
-
-    };
-
-
-
-
 }

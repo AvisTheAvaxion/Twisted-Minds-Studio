@@ -21,7 +21,7 @@ public class SerializedClass
     public int currentAbilityIndex;
     public int currentMementoIndex;
 
-    public List<Quest> quests;
+    //public List<Quest> quests;
 
     public SerializedClass(PlayerInventory inventory)
     {

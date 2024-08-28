@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Attacks;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "Weapon", menuName = "Useables/Weapon", order = 0)]
 public class WeaponInfo : UseableInfo
 {

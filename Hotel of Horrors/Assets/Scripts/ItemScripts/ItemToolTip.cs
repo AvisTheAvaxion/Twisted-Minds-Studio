@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class ItemToolTip : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI itemNameTxt;

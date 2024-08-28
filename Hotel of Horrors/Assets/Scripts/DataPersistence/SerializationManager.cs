@@ -33,7 +33,11 @@ public class SerializationManager : MonoBehaviour
         //    return;
         //}
 
+        
+
         SerializedClass classToSave = new SerializedClass(inventory);
+
+        print(classToSave.itemsInventory[0].GetInfo().GetName());
 
         string json = JsonUtility.ToJson(classToSave);
         print(json);

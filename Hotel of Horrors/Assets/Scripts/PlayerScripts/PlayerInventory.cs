@@ -328,7 +328,7 @@ public class PlayerInventory : MonoBehaviour
         currentItemIndex = serializedClass.currentItemIndex;
         currentWeaponIndex = serializedClass.currentWeaponIndex;
         currentAbilityIndex = serializedClass.currentAbilityIndex;
-        currentMementoIndex = serializedClass.currentMementoIndex;
+        //currentMementoIndex = serializedClass.currentMementoIndex;
 
         for (int i = 0; i < serializedClass.weaponsInventory.Length; i++)
         {
@@ -359,6 +359,7 @@ public class PlayerInventory : MonoBehaviour
     }
 }
 
+[System.Serializable]
 public class Useable
 {
     protected UseableInfo info;
@@ -406,6 +407,7 @@ public class Useable
     }
 }
 
+[System.Serializable]
 public class Item : Useable
 {
     public Item(ItemInfo item, int amount) : base(item, amount)

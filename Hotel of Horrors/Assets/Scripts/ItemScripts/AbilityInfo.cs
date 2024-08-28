@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "Abilities", menuName = "Useables/Abilities", order = 3)]
-
 public class AbilityInfo : UseableInfo
 {
     [SerializeField] int unlockEECost = 200;

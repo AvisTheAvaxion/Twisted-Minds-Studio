@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dialogue System
       objectReference: {fileID: 0}
+    - target: {fileID: 7042842034925127218, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13440,6 +13444,8 @@ GameObject:
   m_Component:
   - component: {fileID: 365589117}
   - component: {fileID: 365589116}
+  - component: {fileID: 365589118}
+  - component: {fileID: 365589119}
   m_Layer: 0
   m_Name: Room Manager
   m_TagString: Untagged
@@ -13475,6 +13481,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &365589118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365589115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 203233bdcf789be4e8e13cb8ee4a840d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &365589119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365589115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee6d03fbf58c9346a1c97ac5d086c63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allQuest: []
 --- !u!1001 &381186335
 PrefabInstance:
   m_ObjectHideFlags: 0

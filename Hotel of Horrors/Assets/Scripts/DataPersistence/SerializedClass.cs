@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
-public class SerializedClass : MonoBehaviour
+public class SerializedClass
 {
     public int level;
+    public int maxLevelAchieved;
     public int emotionalEnergy;
 
     public Item[] itemsInventory;
@@ -21,11 +23,12 @@ public class SerializedClass : MonoBehaviour
 
     public List<Quest> quests;
 
-    public SerializedClass()
+    public SerializedClass(PlayerInventory inventory)
     {
-        level = 1; //initalizing to 1 every time for now because i dont know how we plan on tracking this in the future
+        level = SceneManager.GetActiveScene().buildIndex; 
+        maxLevelAchieved = -1; //initalizing to -1 until evelator is implemented
 
-        PlayerInventory playerInventory = FindObjectOfType<PlayerInventory>();
+        PlayerInventory playerInventory = inventory;
         emotionalEnergy = playerInventory.emotionalEnergy;
 
         itemsInventory = playerInventory.GetItems();
@@ -40,11 +43,13 @@ public class SerializedClass : MonoBehaviour
         abilitiesInventory = playerInventory.GetAbilities();
         currentAbilityIndex = playerInventory.currentAbilityIndex;
 
-        quests = FindObjectOfType<QuestManager>().GetQuests();
+        //quests = questManager.GetQuests();
     }
 
-    public void OverWriteData()
+    public void OverWriteData(PlayerInventory inventory)
     {
         //set all the corresponding variables in their home scripts
+        inventory.LoadInventory(this);
+
     }
 }

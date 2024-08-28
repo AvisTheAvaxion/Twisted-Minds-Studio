@@ -161,6 +161,8 @@ public class PlayerInventory : MonoBehaviour
     #region Adding to Inventory
     public bool AddItem(Item item)
     {
+        print("adding item: " + item.GetInfo().GetName());
+
         for (int i = 0; i < itemsInventory.Length; i++)
         {
             if (itemsInventory[i] == null)
@@ -333,6 +335,9 @@ public class PlayerInventory : MonoBehaviour
             if (serializedClass.weaponsInventory[i] != null)
                 AddWeapon(serializedClass.weaponsInventory[i]);
         }
+
+        print(serializedClass.itemsInventory[0].GetInfo().GetName());
+
         for (int i = 0; i < serializedClass.itemsInventory.Length; i++)
         {
             if (serializedClass.itemsInventory[i] != null)

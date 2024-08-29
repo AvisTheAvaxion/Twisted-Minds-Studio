@@ -11,7 +11,10 @@ public class Dialogue
         {
             case "WakeUpTutorial":
                 return WakeUpTutorial;
-
+            case "SameRoomAgain":
+                return SameRoomAgain;
+            case "FirstMonster":
+                return FirstMonster;
             case "VarrenEncounter":
                 return VarrenEncounter;
                 
@@ -19,15 +22,22 @@ public class Dialogue
         return null;
     }
 
+    public enum Dialog
+    {
+        WakeUpTutorial,
+        SameRoomAgain,
+        FirstMonster,
+        VarrenEncounter,
+    }
 
-
+    #region Floor 1 Dialog
     string[] WakeUpTutorial = new string[]
     {
         "Protag: Ughhh",
         "Protag: What? Where am I?",
         "Protag: *looks around* Is this a... barn?",
         "Protag: Well, just standing here isn't going to accomplish anything",
-        "Use WSAD to move",
+        "System: Use WASD to move",
         "Protag: I wonder if there is anything useful around here?",
         "System: Press F to interact with drawers and doors",
     };
@@ -79,14 +89,14 @@ public class Dialogue
         "Varren: Forever.",
         "Varren: And Ever.",
         "Varren: And Ever.",
-        "Varren: Varren:...",
+        "Varren: ...",
         "Varren: Since we're stuck here why don't you go ahead and tell me what it is you've done to end up here?",
         "Protag: I really don't remember. There has to be some sort of mix-up here. I'm going to find whoever put us here and prove that there is a way out.",
         "$PromptVarren: There's no convincing you is there kid?|Well just giving up and just sitting here isn't going to accomplish anything.|There's no way I can stay in this stinky place",
         "Varren: Your stubbornness is quite amusing, take this",
         "Varren: $Give(Dagger)",
         "Varren: You can't die here, but you still can feel pain. Let's see how far you get before you give up.",
-        //"(Varren disappears into smoke)",
+        "(Varren disappears into smoke)",
         "Protag: Well, I guess I should get moving.",
     };
     /*
@@ -181,4 +191,5 @@ Dr. Harris: Ah, the jersey.
 Dr. Harris: This should be all for now, I've prepared the ingredients for the doctor and he should be able to cure his son now. Thank you for all of your help, I shall let the doctor how helpful you've been.
 Dr. Harris: Todaloo!
     */
+    #endregion
 }

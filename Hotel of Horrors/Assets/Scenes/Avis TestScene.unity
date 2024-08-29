@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &94610698
 RectTransform:
   m_ObjectHideFlags: 0
@@ -455,8 +455,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -23.930603, y: 137.52441}
-  m_SizeDelta: {x: 576.5869, y: 211.7787}
+  m_AnchoredPosition: {x: -23.930603, y: 200}
+  m_SizeDelta: {x: 576.5869, y: 175.8963}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1001220764
 GameObject:
@@ -487,9 +487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45349d24ec31044399f373b383aba29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textBox: {fileID: 528873243}
-  buttonOneText: {fileID: 1945987757}
-  buttonTwoText: {fileID: 1935850099}
+  cutscene: 2
 --- !u!4 &1001220766
 Transform:
   m_ObjectHideFlags: 0
@@ -603,7 +601,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -627,7 +625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1637289021
 RectTransform:
   m_ObjectHideFlags: 0
@@ -846,7 +844,7 @@ GameObject:
   - component: {fileID: 1935850100}
   - component: {fileID: 1935850099}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ButtonTwoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -980,7 +978,7 @@ GameObject:
   - component: {fileID: 1945987758}
   - component: {fileID: 1945987757}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ButtonOneText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

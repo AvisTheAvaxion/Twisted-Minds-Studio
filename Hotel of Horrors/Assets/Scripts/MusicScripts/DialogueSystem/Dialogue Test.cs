@@ -4,23 +4,33 @@ using UnityEngine;
 
 public class DialogueTest : MonoBehaviour
 {
-    [SerializeField] TMPro.TMP_Text textBox;
-    [SerializeField] TMPro.TMP_Text buttonOneText;
-    [SerializeField] TMPro.TMP_Text buttonTwoText;
+    [SerializeField] Dialogue.Dialog cutscene;
+
+    TMPro.TMP_Text textBox;
+    TMPro.TMP_Text buttonOneText;
+    TMPro.TMP_Text buttonTwoText;
     Dialogue dialogue = new Dialogue();
 
     string[] lines;
 
     bool inCutscene = false;
     bool isPicking = false;
-    [SerializeField] int currentLine = 0;
+    int currentLine = 0;
 
     PlayerChoice currentChoice = PlayerChoice.None;
+
+    private void Awake()
+    {
+        textBox = GameObject.Find("TextBox").GetComponent<TMPro.TMP_Text>();
+        buttonOneText = GameObject.Find("ButtonOneText").GetComponent<TMPro.TMP_Text>();
+        buttonTwoText = GameObject.Find("ButtonTwoText").GetComponent<TMPro.TMP_Text>();
+        ButtonSwitch(false);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCutScene("VarrenEncounter", 0);
+        StartCutScene(cutscene.ToString(), 0);
     }
 
     public void StartCutScene(string dialogueName, int line)
@@ -28,22 +38,24 @@ public class DialogueTest : MonoBehaviour
         lines = dialogue.getDialogue(dialogueName);
         currentLine = line;
         inCutscene = true;
+        OnDialogueUpdate();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Space)) || Input.GetKeyDown(KeyCode.Mouse0) && inCutscene && !isPicking)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0) && inCutscene && !isPicking))
         {
-            onDialogueUpdate();
+            OnDialogueUpdate();
         }
-        
     }
 
-    void onDialogueUpdate()
+    void OnDialogueUpdate()
     {
-        if (lines[currentLine].StartsWith("$"))
+        //While their are still lines of dialog left to read.
+        if (currentLine < lines.Length)
         {
+            //Parse the line for relevent information and do corresponding actions
             if (lines[currentLine].StartsWith("$Playsound"))
             {
                 string sound = ""; //ignore this line for now
@@ -52,8 +64,7 @@ public class DialogueTest : MonoBehaviour
             else if (lines[currentLine].StartsWith("$Prompt"))
             {
                 isPicking = true;
-                buttonOneText.transform.parent.gameObject.SetActive(true);
-                buttonTwoText.transform.parent.gameObject.SetActive(true);
+                ButtonSwitch(true);
                 string currentText = lines[currentLine].Replace("$Prompt", "");
                 string[] splitString = currentText.Split('|');
                 string promptText = splitString[0];
@@ -63,55 +74,86 @@ public class DialogueTest : MonoBehaviour
                 buttonOneText.text = bOneText;
                 buttonTwoText.text = bTwoText;
             }
-            else if(lines[currentLine].StartsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceOne)
+            else if (lines[currentLine].StartsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceOne)
             {
-                textBox.text = lines[currentLine];
+                string optionAText = lines[currentLine].Replace("$OptionA", "");
+                textBox.text = optionAText;
+            }
+            else if (lines[currentLine].StartsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceOne)
+            {
+                while (lines[currentLine].Contains("$OptionB"))
+                {
+                    currentLine++;
+                }
+                OnDialogueUpdate();
+                currentLine--;
             }
             else if (lines[currentLine].StartsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceTwo)
             {
-                textBox.text = lines[currentLine];
+                string optionBText = lines[currentLine].Replace("$OptionB", "");
+                textBox.text = optionBText;
+            }
+            else if (lines[currentLine].StartsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceTwo)
+            {
+                while (lines[currentLine].Contains("$OptionA"))
+                {
+                    currentLine++;
+                }
+                OnDialogueUpdate();
+                currentLine--;
             }
             else if (lines[currentLine].StartsWith("$Italic"))
             {
                 textBox.fontStyle = TMPro.FontStyles.Italic;
                 textBox.text = lines[currentLine];
             }
+            else
+            {
+                textBox.fontStyle = TMPro.FontStyles.Normal;
+                currentChoice = PlayerChoice.None;
+                textBox.text = lines[currentLine];
+            }
+            currentLine++;
         }
-        else
+        //When there are no more lines of dialog to read.
+        else if(currentLine > lines.Length)
         {
-            textBox.fontStyle = TMPro.FontStyles.Normal;
-            currentChoice = PlayerChoice.None;
-            textBox.text = lines[currentLine];
+            //This happens when the last line of dialog is on screen .
+            //Any cleaning up that should happen at the end of the cutscene should be here.
+            //e.g. closing the text box, turning general GUI back on, returning control to the player, etc.
         }
-        currentLine++;
     }
 
+    #region Button Behavior
     public void ButtonOneSelect()
     {
         currentChoice = PlayerChoice.ChoiceOne;
-        buttonOneText.transform.parent.gameObject.SetActive(false);
-        buttonTwoText.transform.parent.gameObject.SetActive(false);
-        onDialogueUpdate();
-        /*while (lines[currentLine].Contains("$OptionB"))
+        ButtonSwitch(false);
+        while (lines[currentLine].Contains("$OptionB"))
         {
             currentLine++;
-        }*/
+        }
+        OnDialogueUpdate();
         isPicking = false;
-        
     }
     public void ButtonTwoSelect()
     {
         currentChoice = PlayerChoice.ChoiceTwo;
-        buttonOneText.transform.parent.gameObject.SetActive(false);
-        buttonTwoText.transform.parent.gameObject.SetActive(false);
-        currentLine++;
+        ButtonSwitch(false);
         while (lines[currentLine].Contains("$OptionA"))
         {
             currentLine++;
         }
-        onDialogueUpdate();
+        OnDialogueUpdate();
         isPicking=false;
     }
+
+    void ButtonSwitch(bool isButtonOn)
+    {
+        buttonOneText.transform.parent.gameObject.SetActive(isButtonOn);
+        buttonTwoText.transform.parent.gameObject.SetActive(isButtonOn);
+    }
+    #endregion
 
     enum PlayerChoice
     {

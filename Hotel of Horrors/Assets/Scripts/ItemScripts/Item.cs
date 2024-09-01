@@ -22,6 +22,12 @@ public int currentAmount { get; private set; }
 
         id = item.id;
     }
+    public Item(ItemSave itemSave)
+    {
+        id = itemSave.id;
+        currentAmount = itemSave.currentAmount;
+        isFull = itemSave.isFull;
+    }
 
     public int AddAmount(int amount)
     {

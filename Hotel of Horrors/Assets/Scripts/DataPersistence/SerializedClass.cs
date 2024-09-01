@@ -17,7 +17,7 @@ public class SerializedClass
 
     //public Item[] itemsInventory;
     //public Weapon[] weaponsInventory;
-    //public List<MementoInfo> mementosInventory;
+    public List<MementoInfo> mementosInventory;
     //public List<Ability> abilitiesInventory;
 
     public int currentWeaponIndex;
@@ -81,12 +81,12 @@ public class SerializedClass
 
         bobs = new WeaponSave[playerInventory.GetWeapons().Length];
 
-        for (int i = 0; i < bills.Length; i++)
+        for (int i = 0; i < bobs.Length; i++)
         {
             bobs[i] = new WeaponSave();
             bobs[i].id = -1;
 
-            if (playerInventory.GetAbilities()[i] == null)
+            if (playerInventory.GetWeapons()[i] == null)
                 continue;
 
             bobs[i].id = playerInventory.GetWeapons()[i].id;
@@ -104,7 +104,7 @@ public class SerializedClass
         //weaponsInventory = playerInventory.GetWeapons();
         currentWeaponIndex = playerInventory.currentWeaponIndex;
 
-        //mementosInventory = playerInventory.GetMementos();
+        mementosInventory = playerInventory.GetMementos();
         currentMementoIndex = playerInventory.currentMementoIndex;
 
         //abilitiesInventory = playerInventory.GetAbilities();

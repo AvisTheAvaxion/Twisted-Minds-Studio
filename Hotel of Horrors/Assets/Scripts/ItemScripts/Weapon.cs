@@ -40,6 +40,16 @@ public class Weapon
         knockback = weapon.knockback;
         currentLevel = weapon.currentLevel;
     }
+    public Weapon(WeaponSave weaponSave)
+    {
+        id = weaponSave.id;
+        autoAttack = weaponSave.autoAttack;
+        attackSpeed = weaponSave.attackSpeed;
+        damage = weaponSave.damage;
+        deflectionStrength = weaponSave.deflectionStrength;
+        knockback = weaponSave.knockback;
+        currentLevel = weaponSave.currentLevel;
+    }
 
     public int GetUpgradeCost(Weapon otherWeapon)
     {

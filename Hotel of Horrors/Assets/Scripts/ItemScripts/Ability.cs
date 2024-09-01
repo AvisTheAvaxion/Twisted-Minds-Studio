@@ -42,6 +42,21 @@ public class Ability
         goThroughWalls = info.CanGoThroughWalls();
     }
 
+    public Ability(AbilitySave abilitySave)
+    {
+        id = abilitySave.id;
+        currentLevel = abilitySave.currentLevel;
+        cooldown = abilitySave.cooldown;
+        duration = abilitySave.duration;
+        damage = abilitySave.size;
+        range = abilitySave.range;
+
+        numberOfProjectiles = abilitySave.numberOfProjectiles;
+        deflectionResistance = abilitySave.deflectionResistance;
+        maxTargets = abilitySave.maxTargets;
+        goThroughWalls = abilitySave.goThroughWalls;
+    }
+
     public int GetUnlockEECost()
     {
         return GetInfo().GetUnlockEECost();

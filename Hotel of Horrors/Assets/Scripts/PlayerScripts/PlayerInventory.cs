@@ -365,27 +365,34 @@ public class PlayerInventory : MonoBehaviour
         currentAbilityIndex = serializedClass.currentAbilityIndex;
         currentMementoIndex = serializedClass.currentMementoIndex;
 
-        //for (int i = 0; i < serializedClass.weaponsInventory.Length; i++)
-        //{
-        //    if (serializedClass.weaponsInventory[i] != null)
-        //        AddWeapon(serializedClass.weaponsInventory[i]);
-        //}
+        for (int i = 0; i < serializedClass.bobs.Length; i++)
+        {
+            if (serializedClass.bobs[i].id != -1)
+                AddWeapon(new Weapon(serializedClass.bobs[i]));
+        }
+        for (int i = 0; i < serializedClass.joes.Length; i++)
+        {
+            if (serializedClass.joes[i].id != -1)
+                AddItem(new Item(serializedClass.joes[i]));
+        }
+        for (int i = 0; i < serializedClass.bills.Length; i++)
+        {
+            if (serializedClass.bills[i].id != -1)
+                AddPlayerAbility(new Ability(serializedClass.bills[i]));
+        }
+        for (int i = 0; i < serializedClass.mementosInventory.Count; i++)
+        {
+            AddMemento(serializedClass.mementosInventory[i]);
+        }
 
-        //print(serializedClass.itemsInventory[0].GetInfo().GetName());
-
-        //for (int i = 0; i < serializedClass.itemsInventory.Length; i++)
-        //{
-        //    if (serializedClass.itemsInventory[i] != null)
-        //        AddItem(serializedClass.itemsInventory[i]);
-        //}
-        //for (int i = 0; i < serializedClass.abilitiesInventory.Count; i++)
-        //{
-        //    AddPlayerAbility(serializedClass.abilitiesInventory[i]);
-        //}
-        //for (int i = 0; i < serializedClass.mementosInventory.Count; i++)
-        //{
-        //    AddMemento(serializedClass.mementosInventory[i]);
-        //}
+        if (currentItemIndex >= 0)
+            EquipItem(currentItemIndex);
+        if (currentWeaponIndex >= 0)
+            EquipWeapon(currentWeaponIndex);
+        if (currentAbilityIndex >= 0)
+            EquipPlayerAbility(currentAbilityIndex);
+        if (currentMementoIndex >= 0)
+            EquipMemento(currentMementoIndex);
 
         playerGUI.UpdateHotbarGUI();
         inventoryLoaded = true;

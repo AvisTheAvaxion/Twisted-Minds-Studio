@@ -6,9 +6,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Abilities", menuName = "Useables/Abilities", order = 3)]
 public class AbilityInfo : UseableInfo
 {
+    [System.Serializable]
+    public struct UpgradeInfo
+    {
+        public float percentageIncrease;
+        public int eeCost;
+    }
+
+
+    [SerializeField] int baseLevel = 1;
+    [SerializeField] int maxLevel = 5;
     [SerializeField] int unlockEECost = 200;
     [SerializeField] int unlockFloor = 1;
     [SerializeField] GameObject playerAbility;
+    [SerializeField] UpgradeInfo[] upgradeInfos;
 
     [Header("Ability Settings (Not all Settings apply to every Ability")]
     [SerializeField] float cooldown;
@@ -54,7 +65,7 @@ public class AbilityInfo : UseableInfo
     {
         return range;
     }
-    public float GetNumOfProjectiles()
+    public int GetNumOfProjectiles()
     {
         return numberOfProjectiles;
     }
@@ -77,5 +88,25 @@ public class AbilityInfo : UseableInfo
     public bool CanGoThroughWalls()
     {
         return goThroughWalls;
+    }
+    public int GetBaseLevel()
+    {
+        return baseLevel;
+    }
+    public int GetMaxLevel()
+    {
+        return maxLevel;
+    }
+    public int GetUnlockEECost()
+    {
+        return unlockEECost;
+    }
+    public int GetUnlockFloor()
+    {
+        return unlockFloor;
+    }
+    public UpgradeInfo GetUpgradeInfo(int index)
+    {
+        return (index < upgradeInfos.Length && index >= 0) ? upgradeInfos[index] : new UpgradeInfo();
     }
 }

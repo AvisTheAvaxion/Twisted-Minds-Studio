@@ -48,7 +48,7 @@ public class Weapon
             info.GetUpgradeInfo(currentLevel - 1).otherWeaponPercPerLevel * otherWeapon.currentLevel);
     }
 
-    public Weapon UpgradePreview(Weapon otherWeapon)
+    public virtual Weapon UpgradePreview(Weapon otherWeapon)
     {
         if (currentLevel >= info.GetMaxLevel()) return null;
 
@@ -65,7 +65,7 @@ public class Weapon
 
         return upgradedWeapon;
     }
-    public void Upgrade(Weapon otherWeapon)
+    public virtual void Upgrade(Weapon otherWeapon)
     {
         if (currentLevel >= info.GetMaxLevel()) return;
 

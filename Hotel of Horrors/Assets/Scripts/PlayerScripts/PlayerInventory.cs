@@ -23,6 +23,11 @@ public class PlayerInventory : MonoBehaviour
     public Ability CurrentAbility { get => GetAbility(currentAbilityIndex); }
     public MementoInfo CurrentMemento { get => GetMemento(currentMementoIndex); }
 
+    [SerializeField] ItemInfo[] possibleItemInfos;
+    [SerializeField] WeaponInfo[] possibleWeaponInfos;
+    [SerializeField] AbilityInfo[] possibleAbilityInfos;
+
+
     [Header("References")]
     [SerializeField] int itemInventorySize = 12;
     [SerializeField] int weaponInventorySize = 12;
@@ -38,6 +43,26 @@ public class PlayerInventory : MonoBehaviour
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
 
         actionController = GetComponent<ActionController>();
+
+        UsableDatabase.itemInfos = new ItemInfo[possibleItemInfos.Length];
+        UsableDatabase.abilityInfos = new AbilityInfo[possibleAbilityInfos.Length];
+        UsableDatabase.weaponInfos = new WeaponInfo[possibleWeaponInfos.Length];
+
+        for (int i = 0; i < possibleItemInfos.Length; i++)
+        {
+            UsableDatabase.itemInfos[i] = possibleItemInfos[i];
+            UsableDatabase.itemInfos[i].SetID(i);
+        }
+        for (int i = 0; i < possibleAbilityInfos.Length; i++)
+        {
+            UsableDatabase.abilityInfos[i] = possibleAbilityInfos[i];
+            UsableDatabase.abilityInfos[i].SetID(i);
+        }
+        for (int i = 0; i < possibleWeaponInfos.Length; i++)
+        {
+            UsableDatabase.weaponInfos[i] = possibleWeaponInfos[i];
+            UsableDatabase.weaponInfos[i].SetID(i);
+        }
 
         if (!inventoryLoaded)
         {
@@ -206,16 +231,16 @@ public class PlayerInventory : MonoBehaviour
             return false;
         }
     }
-    public bool AddPlayerAbility(Ability ability)
+    public int AddPlayerAbility(Ability ability)
     {
         if (!abilitiesInventory.Contains(ability))
         {
             abilitiesInventory.Add(ability);
-            return true;
+            return abilitiesInventory.Count - 1;
         }
         else
         {
-            return false;
+            return -1;
         }
     }
     #endregion
@@ -263,6 +288,15 @@ public class PlayerInventory : MonoBehaviour
                     currentItemIndex = -1;
             }
         }
+    }
+
+    public int HasAbility(string abilityName)
+    {
+        for (int i = 0; i < abilitiesInventory.Count; i++)
+        {
+            if (abilitiesInventory[i].GetInfo().GetName().Equals(abilityName)) return i;
+        }
+        return -1;
     }
 
     public Weapon[] GetWeapons()
@@ -359,7 +393,7 @@ public class PlayerInventory : MonoBehaviour
     }
 }
 
-[System.Serializable]
+/*[System.Serializable]
 public class Useable
 {
     protected UseableInfo info;
@@ -418,4 +452,4 @@ public class Item : Useable
     {
         return (ItemInfo)info;
     }
-}
+}*/

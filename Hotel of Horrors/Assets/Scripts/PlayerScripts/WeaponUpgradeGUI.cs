@@ -179,4 +179,13 @@ public class WeaponUpgradeGUI : MonoBehaviour
             playerGUI.UpdateEmotionalEnergy();
         }
     }
+
+    public void ClearUpgradeSlots()
+    {
+        ingredientIndices[0] = -1;
+        ingredientIndices[1] = -1;
+
+        upgradedWeapon = null;
+        upgradeEECost = 0;
+    }
 }

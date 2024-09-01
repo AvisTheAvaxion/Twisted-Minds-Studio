@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public abstract class UseableInfo : ScriptableObject
 {
+    public int id { get; private set; }
+
     [SerializeField] string useableName;
     [SerializeField, TextArea] string description;
     [SerializeField] int maxStackAmount = 1;
@@ -27,5 +29,10 @@ public abstract class UseableInfo : ScriptableObject
     public Sprite GetSprite()
     {
         return sprite;
+    }
+
+    public void SetID(int id)
+    {
+        this.id = id;
     }
 }

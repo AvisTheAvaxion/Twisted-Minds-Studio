@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Item
 {
-    protected int id;
-    public int currentAmount { get; private set; }
+    public int id { get; private set; }
+public int currentAmount { get; private set; }
     public bool isFull { get; private set; }
     public int CurrentAmount { get => currentAmount; }
     public bool IsFull { get => isFull; }

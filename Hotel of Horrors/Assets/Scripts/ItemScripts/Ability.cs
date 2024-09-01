@@ -27,6 +27,7 @@ public class Ability
 
     public Ability(AbilityInfo info)
     {
+        id = info.id;
         currentLevel = info.GetBaseLevel();
 
         cooldown = info.GetCooldown();

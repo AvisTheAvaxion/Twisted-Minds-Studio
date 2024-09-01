@@ -7,14 +7,17 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class SerializedClass
 {
+    public ItemSave[] joes;
+    public AbilitySave[] bills;
+
     public int level;
     public int maxLevelAchieved;
     public int emotionalEnergy;
 
-    public Item[] itemsInventory;
-    public Weapon[] weaponsInventory;
-    public List<MementoInfo> mementosInventory;
-    public List<Ability> abilitiesInventory;
+    //public Item[] itemsInventory;
+    //public Weapon[] weaponsInventory;
+    //public List<MementoInfo> mementosInventory;
+    //public List<Ability> abilitiesInventory;
 
     public int currentWeaponIndex;
     public int currentItemIndex;
@@ -25,22 +28,70 @@ public class SerializedClass
 
     public SerializedClass(PlayerInventory inventory)
     {
+
+
+
         level = SceneManager.GetActiveScene().buildIndex; 
         maxLevelAchieved = -1; //initalizing to -1 until evelator is implemented
 
+
         PlayerInventory playerInventory = inventory;
+
         emotionalEnergy = playerInventory.emotionalEnergy;
 
-        itemsInventory = playerInventory.GetItems();
+        joes = new ItemSave[playerInventory.GetItems().Length];
+
+        for(int i = 0; i < joes.Length; i++)
+        {
+            joes[i] = new ItemSave();
+            joes[i].id = -1;
+
+            if (playerInventory.GetItems()[i] == null)
+                continue;
+
+            
+            joes[i].id = playerInventory.GetItems()[i].id;
+            joes[i].currentAmount = playerInventory.GetItems()[i].currentAmount;
+            joes[i].isFull = playerInventory.GetItems()[i].isFull;
+        }
+
+        bills = new AbilitySave[playerInventory.GetAbilities().Count];
+
+        for (int i = 0; i < bills.Length; i++)
+        {
+            bills[i] = new AbilitySave();
+            bills[i].id = -1;
+
+            if (playerInventory.GetAbilities()[i] == null)
+                continue;
+
+            bills[i].id = playerInventory.GetAbilities()[i].id;
+
+            bills[i].currentLevel = playerInventory.GetAbilities()[i].currentLevel;
+
+            bills[i].cooldown = playerInventory.GetAbilities()[i].cooldown;
+            bills[i].duration = playerInventory.GetAbilities()[i].duration;
+            bills[i].damage = playerInventory.GetAbilities()[i].damage;
+            bills[i].size = playerInventory.GetAbilities()[i].size;
+            bills[i].range = playerInventory.GetAbilities()[i].range;
+
+            bills[i].numberOfProjectiles = playerInventory.GetAbilities()[i].numberOfProjectiles;
+            bills[i].deflectionResistance = playerInventory.GetAbilities()[i].deflectionResistance;
+            bills[i].maxTargets = playerInventory.GetAbilities()[i].maxTargets;
+            bills[i].goThroughWalls = playerInventory.GetAbilities()[i].goThroughWalls;
+
+        }
+
+
         currentItemIndex = playerInventory.currentItemIndex;
 
-        weaponsInventory = playerInventory.GetWeapons();
+        //weaponsInventory = playerInventory.GetWeapons();
         currentWeaponIndex = playerInventory.currentWeaponIndex;
 
-        mementosInventory = playerInventory.GetMementos();
+        //mementosInventory = playerInventory.GetMementos();
         currentMementoIndex = playerInventory.currentMementoIndex;
 
-        abilitiesInventory = playerInventory.GetAbilities();
+        //abilitiesInventory = playerInventory.GetAbilities();
         currentAbilityIndex = playerInventory.currentAbilityIndex;
 
         //quests = questManager.GetQuests();
@@ -52,4 +103,31 @@ public class SerializedClass
         inventory.LoadInventory(this);
 
     }
+}
+
+[System.Serializable]
+public class ItemSave{
+    public int id;
+    public int currentAmount;
+    public bool isFull;
+}
+
+[System.Serializable]
+public class AbilitySave
+{
+    public int id;
+
+    public int currentLevel;
+
+    public float cooldown;
+    public float duration;
+    public float damage;
+    public float size;
+    public float range;
+
+    public int numberOfProjectiles;
+    public float deflectionResistance;
+    public int maxTargets;
+    public bool goThroughWalls;
+
 }

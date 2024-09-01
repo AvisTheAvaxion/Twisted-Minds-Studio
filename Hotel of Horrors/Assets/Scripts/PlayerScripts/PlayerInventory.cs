@@ -360,10 +360,10 @@ public class PlayerInventory : MonoBehaviour
         emotionalEnergy = 0;
         AddEmotionalEnergy(serializedClass.emotionalEnergy);
 
-        //currentItemIndex = serializedClass.currentItemIndex;
-        //currentWeaponIndex = serializedClass.currentWeaponIndex;
-        //currentAbilityIndex = serializedClass.currentAbilityIndex;
-        ////currentMementoIndex = serializedClass.currentMementoIndex;
+        currentItemIndex = serializedClass.currentItemIndex;
+        currentWeaponIndex = serializedClass.currentWeaponIndex;
+        currentAbilityIndex = serializedClass.currentAbilityIndex;
+        currentMementoIndex = serializedClass.currentMementoIndex;
 
         //for (int i = 0; i < serializedClass.weaponsInventory.Length; i++)
         //{

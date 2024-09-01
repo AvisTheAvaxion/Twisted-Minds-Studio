@@ -43,11 +43,11 @@ public class MeleeSlash : MonoBehaviour
 
         this.weapon = weapon;
 
-        EffectInfo[] effectInfos = weapon.info.GetEffectsToInflict();
+        EffectInfo[] effectInfos = weapon.GetInfo().GetEffectsToInflict();
         Effect[] effects = new Effect[effectInfos.Length];
         for (int i = 0; i < effects.Length; i++)
         {
-            effects[i] = new Effect(effectInfos[i], weapon.info.GetChanceToInflictEffect());
+            effects[i] = new Effect(effectInfos[i], weapon.GetInfo().GetChanceToInflictEffect());
         }
 
         this.targetTag = targetTag;

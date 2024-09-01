@@ -123,14 +123,14 @@ public class WeaponUpgradeGUI : MonoBehaviour
             Weapon weapon1 = inventory.GetWeapon(ingredientIndices[0]);
             Weapon weapon2 = inventory.GetWeapon(ingredientIndices[1]);
 
-            if (weapon1.info.GetName() == weapon2.info.GetName() &&
+            if (weapon1.GetInfo().GetName() == weapon2.GetInfo().GetName() &&
                 weapon1.currentLevel >= weapon2.currentLevel)
             {
                 upgradedWeapon = weapon1.UpgradePreview(weapon2);
 
                 upgradeEECost = upgradedWeapon != null ? weapon1.GetUpgradeCost(weapon2) : 0;
             }
-            else if (weapon1.info.GetName() == weapon2.info.GetName() &&
+            else if (weapon1.GetInfo().GetName() == weapon2.GetInfo().GetName() &&
                 weapon1.currentLevel < weapon2.currentLevel)
             {
                 upgradedWeapon = weapon2.UpgradePreview(weapon1);

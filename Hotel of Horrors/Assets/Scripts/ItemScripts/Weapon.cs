@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Weapon
 {
+    public int id { get; private set; }
     public int currentLevel { get; private set; }
-    public WeaponInfo info { get; private set; }
 
     public bool autoAttack { get; private set; }
     public float attackSpeed { get; private set; }
@@ -16,12 +16,12 @@ public class Weapon
 
     public WeaponInfo GetInfo()
     {
-        return info;
+        return UsableDatabase.weaponInfos[id];
     }
 
     public Weapon(WeaponInfo info)
     {
-        this.info = info;
+        id = info.id;
         currentLevel = info.GetBaseLevel();
 
         autoAttack = info.IsAutoAttack();
@@ -32,7 +32,7 @@ public class Weapon
     }
     public Weapon(Weapon weapon)
     {
-        info = weapon.info;
+        id = weapon.id;
         autoAttack = weapon.autoAttack;
         attackSpeed = weapon.attackSpeed;
         damage = weapon.damage;
@@ -43,18 +43,18 @@ public class Weapon
 
     public int GetUpgradeCost(Weapon otherWeapon)
     {
-        return info.GetUpgradeInfo(currentLevel - 1).eeCost +
-            Mathf.RoundToInt(otherWeapon.info.GetUpgradeInfo(otherWeapon.currentLevel - 1).eeCost * 
-            info.GetUpgradeInfo(currentLevel - 1).otherWeaponPercPerLevel * otherWeapon.currentLevel);
+        return GetInfo().GetUpgradeInfo(currentLevel - 1).eeCost +
+            Mathf.RoundToInt(otherWeapon.GetInfo().GetUpgradeInfo(otherWeapon.currentLevel - 1).eeCost *
+            GetInfo().GetUpgradeInfo(currentLevel - 1).otherWeaponPercPerLevel * otherWeapon.currentLevel);
     }
 
     public virtual Weapon UpgradePreview(Weapon otherWeapon)
     {
-        if (currentLevel >= info.GetMaxLevel()) return null;
+        if (currentLevel >= GetInfo().GetMaxLevel()) return null;
 
         Weapon upgradedWeapon = new Weapon(this);
-        float percentageIncrease = 1 + upgradedWeapon.info.GetUpgradeInfo(upgradedWeapon.currentLevel - 1).percentageIncrease +
-            upgradedWeapon.info.GetUpgradeInfo(upgradedWeapon.currentLevel - 1).otherWeaponPercPerLevel * otherWeapon.currentLevel;
+        float percentageIncrease = 1 + upgradedWeapon.GetInfo().GetUpgradeInfo(upgradedWeapon.currentLevel - 1).percentageIncrease +
+            upgradedWeapon.GetInfo().GetUpgradeInfo(upgradedWeapon.currentLevel - 1).otherWeaponPercPerLevel * otherWeapon.currentLevel;
 
         upgradedWeapon.attackSpeed *= percentageIncrease;
         upgradedWeapon.damage = Mathf.RoundToInt(upgradedWeapon.damage * percentageIncrease);
@@ -67,10 +67,10 @@ public class Weapon
     }
     public virtual void Upgrade(Weapon otherWeapon)
     {
-        if (currentLevel >= info.GetMaxLevel()) return;
+        if (currentLevel >= GetInfo().GetMaxLevel()) return;
 
-        float percentageIncrease = 1 + info.GetUpgradeInfo(currentLevel - 1).percentageIncrease +
-            info.GetUpgradeInfo(currentLevel - 1).otherWeaponPercPerLevel * otherWeapon.currentLevel;
+        float percentageIncrease = 1 + GetInfo().GetUpgradeInfo(currentLevel - 1).percentageIncrease +
+            GetInfo().GetUpgradeInfo(currentLevel - 1).otherWeaponPercPerLevel * otherWeapon.currentLevel;
 
         attackSpeed *= percentageIncrease;
         damage = Mathf.RoundToInt(damage * percentageIncrease);

@@ -99,10 +99,10 @@ public class ItemToolTip : MonoBehaviour
 
             Weapon heldWeapon = weapon;
 
-            itemNameTxt.text = heldWeapon.info.GetName();
-            itemDescriptionTxt.text = heldWeapon.info.GetDescription();
+            itemNameTxt.text = heldWeapon.GetInfo().GetName();
+            itemDescriptionTxt.text = heldWeapon.GetInfo().GetDescription();
 
-            itemTypeTxt.text = $"{heldWeapon.info.GetWeaponMode()}";
+            itemTypeTxt.text = $"{heldWeapon.GetInfo().GetWeaponMode()}";
             itemMainStatTxt.text = $"Damage: {heldWeapon.damage}";
 
             itemStatsTxt = new TextMeshProUGUI[4];
@@ -114,12 +114,12 @@ public class ItemToolTip : MonoBehaviour
             itemStatsTxt[1].text = $"Knockback: {heldWeapon.knockback}";
             itemStatsTxt[2].text = $"Deflection Strength: {heldWeapon.deflectionStrength}";
 
-            EffectInfo[] heldWeaponEffects = heldWeapon.info.GetEffectsToInflict();
+            EffectInfo[] heldWeaponEffects = heldWeapon.GetInfo().GetEffectsToInflict();
             if (heldWeaponEffects.Length > 0)
             {
                 itemStatsTxt[3] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
 
-                itemStatsTxt[3].text = $"{heldWeapon.info.GetChanceToInflictEffect() * 100}% chance to inflict ";
+                itemStatsTxt[3].text = $"{heldWeapon.GetInfo().GetChanceToInflictEffect() * 100}% chance to inflict ";
                 for (int i = 0; i < heldWeaponEffects.Length - 1; i++)
                 {
                     itemStatsTxt[3].text += heldWeaponEffects[i].Name;

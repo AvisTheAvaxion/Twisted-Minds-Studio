@@ -9,6 +9,7 @@ public class SerializedClass
 {
     public ItemSave[] joes;
     public AbilitySave[] bills;
+    public WeaponSave[] bobs;
 
     public int level;
     public int maxLevelAchieved;
@@ -28,12 +29,8 @@ public class SerializedClass
 
     public SerializedClass(PlayerInventory inventory)
     {
-
-
-
         level = SceneManager.GetActiveScene().buildIndex; 
         maxLevelAchieved = -1; //initalizing to -1 until evelator is implemented
-
 
         PlayerInventory playerInventory = inventory;
 
@@ -80,6 +77,25 @@ public class SerializedClass
             bills[i].maxTargets = playerInventory.GetAbilities()[i].maxTargets;
             bills[i].goThroughWalls = playerInventory.GetAbilities()[i].goThroughWalls;
 
+        }
+
+        bobs = new WeaponSave[playerInventory.GetWeapons().Length];
+
+        for (int i = 0; i < bills.Length; i++)
+        {
+            bobs[i] = new WeaponSave();
+            bobs[i].id = -1;
+
+            if (playerInventory.GetAbilities()[i] == null)
+                continue;
+
+            bobs[i].id = playerInventory.GetWeapons()[i].id;
+            bobs[i].currentLevel = playerInventory.GetWeapons()[i].currentLevel;
+            bobs[i].autoAttack = playerInventory.GetWeapons()[i].autoAttack;
+            bobs[i].attackSpeed = playerInventory.GetWeapons()[i].attackSpeed;
+            bobs[i].damage = playerInventory.GetWeapons()[i].damage;
+            bobs[i].deflectionStrength = playerInventory.GetWeapons()[i].deflectionStrength;
+            bobs[i].knockback = playerInventory.GetWeapons()[i].knockback;
         }
 
 
@@ -130,4 +146,16 @@ public class AbilitySave
     public int maxTargets;
     public bool goThroughWalls;
 
+}
+
+[System.Serializable]
+public class WeaponSave
+{
+    public int id;
+    public int currentLevel;
+    public bool autoAttack;
+    public float attackSpeed;
+    public int damage;
+    public float deflectionStrength;
+    public float knockback;
 }

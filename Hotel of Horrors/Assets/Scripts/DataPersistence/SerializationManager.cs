@@ -11,7 +11,7 @@ public class SerializationManager : MonoBehaviour
 
     private void Start()
     {
-        saveFile = Application.persistentDataPath + "/savedata.json";
+        saveFile = Application.persistentDataPath + "/saveinformation.json";
         inventory = FindObjectOfType<PlayerInventory>();
         //quests = FindObjectOfType<QuestManager>();
     }
@@ -42,10 +42,6 @@ public class SerializationManager : MonoBehaviour
         string json = JsonUtility.ToJson(classToSave);
         print(json);
         File.WriteAllText(saveFile, json);
-
-
-        string[] linesSaved = File.ReadAllLines(saveFile);
-        print("Saved " + linesSaved.Length +"Lines to " + saveFile);
     }
 
     public void LoadData()

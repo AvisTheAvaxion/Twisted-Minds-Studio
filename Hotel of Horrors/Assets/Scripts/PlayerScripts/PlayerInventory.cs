@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[System.Serializable]
 public class PlayerInventory : MonoBehaviour
 {
     public int emotionalEnergy { get; private set; }
@@ -359,32 +360,32 @@ public class PlayerInventory : MonoBehaviour
         emotionalEnergy = 0;
         AddEmotionalEnergy(serializedClass.emotionalEnergy);
 
-        currentItemIndex = serializedClass.currentItemIndex;
-        currentWeaponIndex = serializedClass.currentWeaponIndex;
-        currentAbilityIndex = serializedClass.currentAbilityIndex;
-        //currentMementoIndex = serializedClass.currentMementoIndex;
+        //currentItemIndex = serializedClass.currentItemIndex;
+        //currentWeaponIndex = serializedClass.currentWeaponIndex;
+        //currentAbilityIndex = serializedClass.currentAbilityIndex;
+        ////currentMementoIndex = serializedClass.currentMementoIndex;
 
-        for (int i = 0; i < serializedClass.weaponsInventory.Length; i++)
-        {
-            if (serializedClass.weaponsInventory[i] != null)
-                AddWeapon(serializedClass.weaponsInventory[i]);
-        }
+        //for (int i = 0; i < serializedClass.weaponsInventory.Length; i++)
+        //{
+        //    if (serializedClass.weaponsInventory[i] != null)
+        //        AddWeapon(serializedClass.weaponsInventory[i]);
+        //}
 
-        print(serializedClass.itemsInventory[0].GetInfo().GetName());
+        //print(serializedClass.itemsInventory[0].GetInfo().GetName());
 
-        for (int i = 0; i < serializedClass.itemsInventory.Length; i++)
-        {
-            if (serializedClass.itemsInventory[i] != null)
-                AddItem(serializedClass.itemsInventory[i]);
-        }
-        for (int i = 0; i < serializedClass.abilitiesInventory.Count; i++)
-        {
-            AddPlayerAbility(serializedClass.abilitiesInventory[i]);
-        }
-        for (int i = 0; i < serializedClass.mementosInventory.Count; i++)
-        {
-            AddMemento(serializedClass.mementosInventory[i]);
-        }
+        //for (int i = 0; i < serializedClass.itemsInventory.Length; i++)
+        //{
+        //    if (serializedClass.itemsInventory[i] != null)
+        //        AddItem(serializedClass.itemsInventory[i]);
+        //}
+        //for (int i = 0; i < serializedClass.abilitiesInventory.Count; i++)
+        //{
+        //    AddPlayerAbility(serializedClass.abilitiesInventory[i]);
+        //}
+        //for (int i = 0; i < serializedClass.mementosInventory.Count; i++)
+        //{
+        //    AddMemento(serializedClass.mementosInventory[i]);
+        //}
 
         playerGUI.UpdateHotbarGUI();
         inventoryLoaded = true;

@@ -13,6 +13,13 @@ public class PlayerGUI : MonoBehaviour
     [SerializeField] Image freeSlotHotbarImage;
     [SerializeField] Image mementoHotbarImage;
 
+    [SerializeField] TextMeshProUGUI floorNumText;
+    [SerializeField] TextMeshProUGUI roomNameText;
+    [SerializeField] Transform effectsIconHolder;
+    [SerializeField] GameObject effectsIconPrefab;
+
+    [SerializeField] HeartsController heartsController;
+
     private void Start()
     {
         inventory = FindObjectOfType<PlayerInventory>();
@@ -63,5 +70,15 @@ public class PlayerGUI : MonoBehaviour
         {
             mementoHotbarImage.enabled = false;
         }
+    }
+
+    public GameObject CreateEffectIcon()
+    {
+        return Instantiate(effectsIconPrefab, effectsIconHolder);
+    }
+
+    public HeartsController GetHeartsController()
+    {
+        return heartsController;
     }
 }

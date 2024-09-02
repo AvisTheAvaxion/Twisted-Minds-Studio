@@ -11,7 +11,7 @@ public class ActionController : MonoBehaviour
     [SerializeField] Animator playerAnimator; //Animator that plays the base attack animations
     [SerializeField] PlayerMovement playerMovement; //Player movement reference to check whether dashing or not
     [SerializeField] CameraShake cameraShake;
-    [SerializeField] UIDisplayContainer uiDisplay;
+    //[SerializeField] UIDisplayContainer uiDisplay;
     [SerializeField] PlayerGUI playerGUI;
     [SerializeField] StatsController stats;
     [SerializeField] PlayerHealth playerHealth;
@@ -63,12 +63,14 @@ public class ActionController : MonoBehaviour
     PlayerInventory inventory;
 
     //Current weapon equipped in the inventory
-    Weapon currentWeapon;
+    //Weapon currentWeapon;
     WeaponAbility currentWeaponAbility;
 
     public PlayerAbility currentPlayerAbitlity;
 
     public SpecialAbility currentSpecialAbility;
+
+    public int attackNumber { get; private set; }
 
     public void ToggleAttackControls(bool toggle)
     {
@@ -81,8 +83,8 @@ public class ActionController : MonoBehaviour
         inventory = GetComponent<PlayerInventory>();
         playerGUI = FindObjectOfType<PlayerGUI>();
 
-        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
-        if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
+        //if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
+        //if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
 
         if (stats == null) stats = GetComponent<StatsController>();
 
@@ -92,51 +94,26 @@ public class ActionController : MonoBehaviour
 
         rangedCrosshair.SetActive(true);
         meleeCrosshair.SetActive(false);
-
-        /*if (currentAttackMode.Equals(AttackModes.Melee) || currentAttackMode.Equals(AttackModes.None))
-        {
-            rangedCrosshair.SetActive(false);
-            meleeCrosshair.SetActive(true);
-        }
-        else if (currentAttackMode.Equals(AttackModes.Ranged))
-        {
-            rangedCrosshair.SetActive(true);
-            meleeCrosshair.SetActive(false);
-        }*/
     }
 
     //Called by the inventory system to store reference to the current weapon
     public void EquipWeapon(Weapon weapon)
     {
-        currentWeapon = weapon;
 
-        currentAmmoCount = int.MaxValue;
-
-        if(currentWeapon != null)
+        if(inventory.CurrentWeapon != null)
         {
             weaponVisual.enabled = true;
-            weaponVisual.sprite = currentWeapon.GetInfo().GetSprite();
+            weaponVisual.sprite = inventory.CurrentWeapon.GetInfo().GetSprite();
 
-            currentAttackMode = currentWeapon.GetInfo().GetWeaponMode();
+            currentAttackMode = inventory.CurrentWeapon.GetInfo().GetWeaponMode();
 
             if (currentWeaponAbility != null) Destroy(currentWeaponAbility.gameObject);
 
-            /*if (weapon.GetWeaponAbility() != null)
+            if (weapon.GetInfo().GetWeaponAbility() != null)
             {
-                GameObject go = Instantiate(weapon.GetWeaponAbility(), transform.position + weapon.GetWeaponAbility().transform.localPosition, Quaternion.identity, transform);
+                GameObject go = Instantiate(weapon.GetInfo().GetWeaponAbility(), transform.position + inventory.CurrentWeapon.GetInfo().GetWeaponAbility().transform.localPosition, Quaternion.identity, transform);
                 WeaponAbility ability = go.GetComponent<WeaponAbility>();
                 if (ability != null) currentWeaponAbility = ability;
-            }*/
-
-            if(currentAttackMode == AttackModes.Ranged)
-            {
-                currentAmmoCount = currentWeapon.GetInfo().GetMaxAmmoCount();
-                if (uiDisplay.AmmoTextContainer) uiDisplay.AmmoTextContainer.SetActive(true);
-                if (uiDisplay.MaxAmmoText) uiDisplay.MaxAmmoText.text = currentAmmoCount.ToString();
-                if (uiDisplay.CurrentAmmoText) uiDisplay.CurrentAmmoText.text = currentAmmoCount.ToString();
-            } else
-            {
-                if (uiDisplay.AmmoTextContainer) uiDisplay.AmmoTextContainer.SetActive(false);
             }
         } 
         else
@@ -146,17 +123,6 @@ public class ActionController : MonoBehaviour
             weaponVisual.enabled = false;
             currentAttackMode = AttackModes.None;
         }
-
-       /* if (currentAttackMode.Equals(AttackModes.Melee) || currentAttackMode.Equals(AttackModes.None))
-        {
-            rangedCrosshair.SetActive(false);
-            meleeCrosshair.SetActive(true);
-        }
-        else if (currentAttackMode.Equals(AttackModes.Ranged))
-        {
-            rangedCrosshair.SetActive(true);
-            meleeCrosshair.SetActive(false);
-        }*/
     }
 
     public void UnequipPlayerAbility()
@@ -201,20 +167,20 @@ public class ActionController : MonoBehaviour
 
         if(isAttacking || (!isAttacking && attackButtonReleased == false)) attackButtonReleased = !inputValue.isPressed;
 
-        if (isAttacking && !attackButtonPressed && currentAttackMode == AttackModes.Ranged)
+        /*if (isAttacking && !attackButtonPressed && currentAttackMode == AttackModes.Ranged)
         {
             AttackEnd();
-        }
+        }*/
     }
     void OnAttackAbility(InputValue inputValue)
     {
-        if (disableAttackControls) return;
+        /*if (disableAttackControls) return;
 
         if (currentWeaponAbility != null && canDoWeaponAbility)
         {
             currentWeaponAbility.Use(this);
             StartCoroutine(WeaponAbilityCooldown(currentWeaponAbility.Cooldown));
-        }
+        }*/
     }
     void OnPrimaryAction(InputValue inputValue)
     {
@@ -232,7 +198,7 @@ public class ActionController : MonoBehaviour
 
         if (currentPlayerAbitlity != null && canDoPlayerAbility)
         {
-            currentPlayerAbitlity.Use(this);
+            currentPlayerAbitlity.Use(this, inventory.CurrentAbility);
             StartCoroutine(PlayerAbilityCooldown(currentPlayerAbitlity.Cooldown));
         }
         else if (inventory.CurrentItem != null)
@@ -255,7 +221,7 @@ public class ActionController : MonoBehaviour
         {
             if (attackButtonReleased && attackButtonPressed && !playerMovement.IsDashing)
             {
-                Attack();
+                StartCoroutine(Attack());
                 playerAudio.Play("Attack");
             }
             if(playerMovement.IsDashing)
@@ -263,70 +229,22 @@ public class ActionController : MonoBehaviour
                 attackButtonReleased = true;
             }
         }
-
-        if(currentAttackMode == AttackModes.Ranged)
-        {
-            Vector2 dir = (rangedCrosshair.transform.position - hand.position).normalized;
-            switch(playerMovement.Direction)
-            {
-                case "North":
-                    hand.rotation = Quaternion.FromToRotation(hand.up, dir) * hand.rotation;
-                    break;
-                case "South":
-                    hand.rotation = Quaternion.FromToRotation(-hand.up, dir) * hand.rotation;
-                    break;
-                case "East":
-                    hand.rotation = Quaternion.FromToRotation(hand.right, dir) * hand.rotation;
-                    break;
-                case "West":
-                    hand.rotation = Quaternion.FromToRotation(-hand.right, dir) * hand.rotation;
-                    break;
-            }
-
-
-            if (isAttacking)
-            {
-                playerAnimator.SetBool("Shooting1", true);
-                playerAnimator.SetLayerWeight(1, 1); //Enables the attack layer on the player animator
-
-                rangedFireTimer += Time.deltaTime;
-
-                if (currentWeapon != null)
-                    if (rangedFireTimer > 1 / currentWeapon.GetInfo().GetFireRate()) AttackEnd();
-                else
-                    if (rangedFireTimer > 0.4f) AttackEnd();
-            }
-        }
     }
 
     //Function to attack, it is seperated from OnAttack so auto attacking can be enabled
-    private void Attack()
+    private IEnumerator Attack()
     {
         transform.SendMessage("Attacked"); //Set player to attack mode
 
         isAttacking = true;
         attackButtonReleased = false;
-
-        if (currentAttackMode == AttackModes.Ranged)
-        {
-            rangedFireTimer = 0;
-
-            currentAmmoCount--;
-            if (uiDisplay.CurrentAmmoText) uiDisplay.CurrentAmmoText.text = currentAmmoCount.ToString();
-
-            playerAnimator.SetBool("Shooting1", true);
-            playerAnimator.SetLayerWeight(1, 1); //Enables the attack layer on the player animator
-
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnLocation.position, bulletSpawnLocation.rotation);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.AddForce(bulletSpawnLocation.up * bulletForce, ForceMode2D.Impulse);
-        }
-        else if (currentAttackMode == AttackModes.Melee && currentWeapon != null)
+        
+        /*if (currentWeapon != null)
         {
             if(currentWeapon.GetInfo().GetAttackType() == AttackType.Melee1)
             {
                 hand.transform.localRotation = Quaternion.identity;
-                playerAnimator.SetTrigger("MeleeAttack1");
+                //playerAnimator.SetTrigger("MeleeAttack1");
             } 
             else
             {
@@ -346,84 +264,82 @@ public class ActionController : MonoBehaviour
                         hand.rotation = Quaternion.FromToRotation(-hand.right, dir) * hand.rotation;
                         break;
                 }
-                playerAnimator.SetTrigger("MeleeAttack2");
+                //playerAnimator.SetTrigger("MeleeAttack2");
             }
-            playerAnimator.SetLayerWeight(1, 1); //Enables the attack layer on the player animator
+            //playerAnimator.SetLayerWeight(1, 1); //Enables the attack layer on the player animator
         }
         else
         {
-            playerAnimator.SetTrigger("MeleeAttack1");
-            playerAnimator.SetLayerWeight(1, 1); //Enables the attack layer on the player animator
+            //playerAnimator.SetTrigger("MeleeAttack1");
+            //playerAnimator.SetLayerWeight(1, 1); //Enables the attack layer on the player animator
+        }*/
+
+        yield return new WaitForSeconds(0.1f);
+
+        if(attackNumber == 2 && currentWeaponAbility != null)
+        {
+            currentWeaponAbility.Use(this, inventory.CurrentWeapon);
+            yield return new WaitForSeconds(inventory.CurrentWeapon.GetInfo().GetWeaponAbilityDuration());
+            AttackEnd();
+        } else
+        {
+            MeleeAttack();
         }
     }
 
     //Animation event to spawn the melee strike
     public void MeleeAttack()
     {
-        if(currentWeapon != null)
+        if(inventory.CurrentWeapon != null)
         {
             MeleeSlash meleeStrike = null;
-            if (currentWeapon.GetInfo().GetAttackType() == AttackType.Melee1)
+            if (inventory.CurrentWeapon.GetInfo().GetAttackType() == AttackType.Melee1)
             {
-                GameObject go = Instantiate(currentWeapon.GetInfo().GetWeaponStrike(), weaponStrike1SpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetInfo().GetRange(), weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
+                GameObject go = Instantiate(inventory.CurrentWeapon.GetInfo().GetWeaponStrike(attackNumber), 
+                    weaponStrike1SpawnPoint.position + weaponStrikeParent.up * inventory.CurrentWeapon.GetInfo().GetRange(), weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
                 meleeStrike = go.GetComponent<MeleeSlash>();
             } else
             {
-                GameObject go = Instantiate(currentWeapon.GetInfo().GetWeaponStrike(), weaponStrike2SpawnPoint.position + weaponStrikeParent.up * currentWeapon.GetInfo().GetRange(), weaponStrike2SpawnPoint.rotation, weaponStrikeParent);
+                GameObject go = Instantiate(inventory.CurrentWeapon.GetInfo().GetWeaponStrike(attackNumber), 
+                    weaponStrike1SpawnPoint.position + weaponStrikeParent.up * inventory.CurrentWeapon.GetInfo().GetRange(), weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
                 meleeStrike = go.GetComponent<MeleeSlash>();
             }
             if (meleeStrike)
             {
-                meleeStrike.Init(inventory.CurrentWeapon, "Enemy", cameraShake);
-                /*EffectInfo[] effectInfos = currentWeapon.GetInfo().GetEffectsToInflict();
-                Effect[] effects = new Effect[effectInfos.Length];
-                for (int i = 0; i < effects.Length; i++)
-                {
-                    effects[i] = new Effect(effectInfos[i], currentWeapon.GetInfo().GetChanceToInflictEffect());
-                }
-                meleeStrike.Init(currentWeapon.GetInfo().GetDamage(), currentWeapon.GetInfo().GetKnockback(), currentWeapon.GetInfo().GetDeflectionStrength(), "Enemy", cameraShake, effects);*/
+                meleeStrike.Init(this, inventory.CurrentWeapon, "Enemy", cameraShake);
             }
         } 
         else
         {
             GameObject go = Instantiate(defaultMeleeStrike, weaponStrike1SpawnPoint.position, weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
             MeleeSlash meleeStrike = go.GetComponent<MeleeSlash>();
-            if (meleeStrike) meleeStrike.Init(defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy", cameraShake);
+            if (meleeStrike) meleeStrike.Init(this, defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy", cameraShake);
         }
     }
 
     //End of an attack for melee (animation event) and ranged
     public void AttackEnd()
     {
-        playerAnimator.SetBool("Shooting1", false);
-        playerAnimator.SetLayerWeight(1, 0); //Disables the attack layer on the player animator
+        //playerAnimator.SetBool("Shooting1", false);
+        //playerAnimator.SetLayerWeight(1, 0); //Disables the attack layer on the player animator
 
         isAttacking = false;
+
+        attackNumber++;
+
+        attackNumber = attackNumber % 3;
 
         if (hand) hand.rotation = Quaternion.identity;
 
         canAttack = false;
-        if (currentWeapon != null)
+        if (inventory.CurrentWeapon != null)
         {
-            if (currentWeapon.GetInfo().GetWeaponMode() == AttackModes.Ranged && currentAmmoCount <= 0)
-                StartCoroutine(ReloadCooldown(currentWeapon.GetInfo().GetReloadTime()));
-            else
-                StartCoroutine(AttackCooldown(1 / (currentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed))));
+            StartCoroutine(AttackCooldown(1 / (inventory.CurrentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed))));
         }
         else
         {
             StartCoroutine(AttackCooldown(1 / defaultAttackSpeed));
         }
-
-    }
-
-    public void ChangeAttackMode(AttackModes currentMode)
-    {
-        currentAttackMode = currentMode;
-    }
-    public void SetAutoAttack(bool autoAttack)
-    {
-        this.autoAttack = autoAttack;
     }
 
     #region Cooldowns
@@ -435,47 +351,11 @@ public class ActionController : MonoBehaviour
 
         canAttack = true;
 
-        if (attackButtonPressed && (autoAttack || (currentWeapon != null && currentWeapon.GetInfo().IsAutoAttack())))
+        if (attackButtonPressed && (autoAttack || (inventory.CurrentWeapon != null && inventory.CurrentWeapon.GetInfo().IsAutoAttack())))
         {
-            Attack();
+            StartCoroutine(Attack());
         }
     }
-
-    IEnumerator ReloadCooldown(float reloadTime)
-    {
-        Weapon startWeapon = currentWeapon;
-
-        //playerAnimator.SetBool("Shooting1", false);
-        //playerAnimator.SetLayerWeight(1, 0); //Disables the attack layer on the player animator
-        //isAttacking = false;
-
-        float timer = 0;
-        canAttack = false;
-
-        if (uiDisplay.ReloadCircle) uiDisplay.ReloadCircle.gameObject.SetActive(true);
-
-        while (timer <= reloadTime)
-        {
-            timer += Time.deltaTime;
-            if (uiDisplay.ReloadCircle) uiDisplay.ReloadCircle.fillAmount = timer / reloadTime;
-            yield return null;
-        }
-
-        if (uiDisplay.ReloadCircle) uiDisplay.ReloadCircle.gameObject.SetActive(false);
-
-        canAttack = true;
-        if (startWeapon == currentWeapon)
-        {
-            currentAmmoCount = currentWeapon.GetInfo().GetMaxAmmoCount();
-            if (uiDisplay.CurrentAmmoText) uiDisplay.CurrentAmmoText.text = currentAmmoCount.ToString();
-
-            if (attackButtonPressed && (autoAttack || (currentWeapon != null && currentWeapon.GetInfo().IsAutoAttack())))
-            {
-                Attack();
-            }
-        }
-    }
-
     IEnumerator PlayerAbilityCooldown(float cooldown)
     {
         float timer = 0;
@@ -492,7 +372,6 @@ public class ActionController : MonoBehaviour
 
         canDoPlayerAbility = true;
     }
-
     IEnumerator WeaponAbilityCooldown(float cooldown)
     {
         float timer = 0;
@@ -508,7 +387,6 @@ public class ActionController : MonoBehaviour
 
         canDoWeaponAbility = true;
     }
-
     IEnumerator SpecialAbilityCooldown(float cooldown)
     {
         float timer = 0;

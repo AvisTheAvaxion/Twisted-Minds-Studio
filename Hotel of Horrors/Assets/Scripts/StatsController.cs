@@ -7,7 +7,7 @@ public class StatsController : MonoBehaviour
 {
     [SerializeField] bool debug;
     [Header("Player Specific Settings")]
-    [SerializeField] UIDisplayContainer uiDisplay;
+    [SerializeField] PlayerGUI playerGUI;
     [SerializeField] bool isPlayer = false;
     [Header("Settings")]
     [SerializeField] Stat health = new Stat();
@@ -20,8 +20,8 @@ public class StatsController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
-        if (uiDisplay == null) Debug.LogError($"UI display container script not assigned to {name} and not found in scene (located on canvas UI prefab");
+        if(isPlayer)
+            playerGUI = FindAnyObjectByType<PlayerGUI>();
 
         statsDictionary = new Dictionary<Stat.StatType, Stat>();
         statsDictionary.Add(health.Type, health);
@@ -178,7 +178,7 @@ public class StatsController : MonoBehaviour
             Effector newEffector = null;
             if (isPlayer)
             {
-                GameObject go = Instantiate(uiDisplay.EffectsIconPrefab, uiDisplay.EffectsIconHolder);
+                GameObject go = playerGUI.CreateEffectIcon();
                 EffectIcon effectIcon = go.GetComponent<EffectIcon>();
                 newEffector = new Effector(effect, effectIcon);
             } else

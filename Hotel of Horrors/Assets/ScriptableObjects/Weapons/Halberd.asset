@@ -18,19 +18,29 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 0708479175c4dbf43bfb640afe5218ed, type: 3}
   mode: 0
   type: 0
-  weaponAbilityName: 
-  weaponAbilityDescription: 
-  weaponAbilitySprite: {fileID: 0}
   weaponAbility: {fileID: 0}
+  weaponAbilityDuration: 0
   baseLevel: 1
   maxLevel: 3
   attackSpeed: 1
   autoAttack: 0
+  attacks:
+  - damagePercIncrease: 0
+    knockbackPercIncrease: 0
+    weaponStrike: {fileID: 8308924630415093721, guid: 249c10b6d22bb584aaf264aac288b6e5, type: 3}
+    overrideController: {fileID: 0}
+  - damagePercIncrease: 0
+    knockbackPercIncrease: 0
+    weaponStrike: {fileID: 8308924630415093721, guid: 249c10b6d22bb584aaf264aac288b6e5, type: 3}
+    overrideController: {fileID: 0}
+  - damagePercIncrease: 0
+    knockbackPercIncrease: 0
+    weaponStrike: {fileID: 8308924630415093721, guid: 249c10b6d22bb584aaf264aac288b6e5, type: 3}
+    overrideController: {fileID: 0}
   damage: 450
   deflectionStrength: 12
   knockback: 1
   range: 1
-  weaponStrike: {fileID: 8308924630415093721, guid: 249c10b6d22bb584aaf264aac288b6e5, type: 3}
   chanceToInflictEffect: 0
   effectsToInflict: []
   creationRandomFactor:
@@ -73,7 +83,3 @@ MonoBehaviour:
   - percentageIncrease: 0.2
     otherWeaponPercPerLevel: 0.1
     eeCost: 500
-  projectile: {fileID: 0}
-  fireRate: 0
-  maxAmmoCount: 0
-  reloadTime: 0

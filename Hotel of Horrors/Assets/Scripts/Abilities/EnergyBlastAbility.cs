@@ -18,9 +18,15 @@ public class EnergyBlastAbility : PlayerAbility
 
     }
 
-    public override void Use(ActionController controller)
+    public override void Use(ActionController controller, Ability ability)
     {
+        this.ability = ability;
         this.controller = controller;
+
+        cooldown = ability.cooldown;
+        duration = ability.duration;
+        maxRange = ability.range;
+
         StartCoroutine(Attack());
     }
 

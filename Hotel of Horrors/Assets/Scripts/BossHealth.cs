@@ -12,7 +12,7 @@ public class BossHealth : MonoBehaviour, IHealth
     [SerializeField] float timeBtwHeals = 5f;
     [SerializeField] float flashColorLength = 0.2f;
     [SerializeField] FlashColor flashColor;
-    [SerializeField] UIDisplayContainer uiDisplay;
+    [SerializeField] BossGUI bossGUI;
 
     bool canTakeDamage;
 
@@ -21,10 +21,9 @@ public class BossHealth : MonoBehaviour, IHealth
     {
         stats = GetComponent<StatsController>();
 
-        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
-        if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
+        if (bossGUI == null) bossGUI = FindObjectOfType<BossGUI>();
 
-        uiDisplay.Boss_healthBar.value = 1;
+        bossGUI.Boss_healthBar.value = 1;
         canTakeDamage = true;
     }
     private void Update()
@@ -53,7 +52,7 @@ public class BossHealth : MonoBehaviour, IHealth
 
         stats.TakeDamage(amount, effect);
 
-        uiDisplay.Boss_healthBar.value = stats.GetHealthValue01();
+        bossGUI.Boss_healthBar.value = stats.GetHealthValue01();
         if (flashColor != null) flashColor.Flash(flashColorLength);
 
         if (debug) print("Health: " + stats.GetHealthValue());
@@ -82,7 +81,7 @@ public class BossHealth : MonoBehaviour, IHealth
 
     public void UpdateHealth()
     {
-       uiDisplay.Boss_healthBar.value = stats.GetHealthValue01();
+       bossGUI.Boss_healthBar.value = stats.GetHealthValue01();
 
         if (stats.GetHealthValue() <= 0)
         {
@@ -93,11 +92,11 @@ public class BossHealth : MonoBehaviour, IHealth
 
     public void ShowHealthBar()
     {
-        uiDisplay.Boss_healthBar.gameObject.SetActive(true);
+        bossGUI.Boss_healthBar.gameObject.SetActive(true);
     }
     public void HideHealthBar()
     {
-        uiDisplay.Boss_healthBar.gameObject.SetActive(false);
+        bossGUI.Boss_healthBar.gameObject.SetActive(false);
     }
 
     public void Knockback(Vector3 dir, float strength)

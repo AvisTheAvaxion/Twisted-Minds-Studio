@@ -12,5 +12,5 @@ public abstract class WeaponAbility : MonoBehaviour
 
     protected ActionController controller;
 
-    public abstract void Use(ActionController controller);
+    public abstract void Use(ActionController controller, Weapon weapon);
 }

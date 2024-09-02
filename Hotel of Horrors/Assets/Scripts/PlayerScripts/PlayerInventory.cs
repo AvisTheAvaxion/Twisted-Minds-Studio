@@ -304,17 +304,14 @@ public class PlayerInventory : MonoBehaviour
     {
         return weaponsInventory;
     }
-
     public Item[] GetItems()
     {
         return itemsInventory;
     }
-
     public List<MementoInfo> GetMementos()
     {
         return mementosInventory;
     }
-
     public List<Ability> GetAbilities()
     {
         return abilitiesInventory;
@@ -400,64 +397,3 @@ public class PlayerInventory : MonoBehaviour
         return true;
     }
 }
-
-/*[System.Serializable]
-public class Useable
-{
-    protected UseableInfo info;
-    protected int currentAmount;
-
-    protected bool isFull;
-
-    public int CurrentAmount { get => currentAmount; }
-    public bool IsFull { get => isFull; }
-
-    public virtual UseableInfo GetInfo()
-    {
-        return info;
-    }
-
-    public Useable(UseableInfo item, int amount)
-    {
-        this.info = item;
-        currentAmount = amount;
-    }
-
-    public int AddAmount(int amount)
-    {
-        currentAmount += amount;
-        isFull = currentAmount >= info.GetMaxStackAmount();
-        if(isFull)
-        {
-            int amountOver = currentAmount - info.GetMaxStackAmount();
-            currentAmount = info.GetMaxStackAmount();
-            return amountOver;
-        } else
-            return 0;
-    }
-    public int RemoveAmount(int amount)
-    {
-        currentAmount -= amount;
-        isFull = false;
-        currentAmount = currentAmount < 0 ? 0 : currentAmount;
-        return currentAmount;
-    }
-
-    public void SetCurrentAmount(int amount)
-    {
-        currentAmount = amount;
-    }
-}
-
-[System.Serializable]
-public class Item : Useable
-{
-    public Item(ItemInfo item, int amount) : base(item, amount)
-    {
-    }
-
-    public ItemInfo GetInfo()
-    {
-        return (ItemInfo)info;
-    }
-}*/

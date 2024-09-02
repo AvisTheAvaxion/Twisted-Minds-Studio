@@ -13,16 +13,27 @@ public class MultiProjectile : MonoBehaviour
 
     Rigidbody2D[] rigidBodies;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Initialize();
-    }
-
-    private void Initialize()
+    public void Initialize()
     {
         if (projectiles == null || projectiles.Length == 0)
             projectiles = GetComponentsInChildren<Projectile>();
+
+        rigidBodies = new Rigidbody2D[projectiles.Length];
+        for (int i = 0; i < projectiles.Length; i++)
+        {
+            rigidBodies[i] = projectiles[i].GetComponent<Rigidbody2D>();
+        }
+    }
+
+    public void Initialize(Ability ability)
+    {
+        if (projectiles == null || projectiles.Length == 0)
+            projectiles = GetComponentsInChildren<Projectile>();
+
+        for (int i = 0; i < projectiles.Length; i++)
+        {
+            projectiles[i].Initialize(ability);
+        }
 
         rigidBodies = new Rigidbody2D[projectiles.Length];
         for (int i = 0; i < projectiles.Length; i++)

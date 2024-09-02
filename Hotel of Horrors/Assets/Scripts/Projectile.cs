@@ -17,6 +17,16 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         targetsHit = 0;
+    } 
+
+    public void Initialize(Ability ability)
+    {
+        damage = (int)ability.damage;
+        deflectionResistance = ability.deflectionResistance;
+        maxTargets = ability.maxTargets;
+        goThroughWalls = ability.goThroughWalls;
+        chanceToInflictEffect = ability.GetInfo().GetChanceToInflicEffects();
+        effectsToInflict = ability.GetInfo().GetEffectsToInflict();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

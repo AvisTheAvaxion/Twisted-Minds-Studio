@@ -9,9 +9,14 @@ public class EnergyArcAbility : PlayerAbility
     [SerializeField] float maxLifeTime = 10f;
     [SerializeField] GameObject arc;
 
-    public override void Use(ActionController controller)
+    public override void Use(ActionController controller, Ability ability)
     {
+        this.ability = ability;
         this.controller = controller;
+
+        cooldown = ability.cooldown;
+        duration = ability.duration;
+
         StartCoroutine(Attack());
     }
 
@@ -23,9 +28,11 @@ public class EnergyArcAbility : PlayerAbility
         transform.rotation = Quaternion.FromToRotation(transform.up, (controller.CrosshairPosition - (Vector2)transform.position).normalized) * transform.rotation;
         GameObject go = Instantiate(arc, spawnPoint.position, spawnPoint.rotation);
         MultiProjectile multi = go.GetComponent<MultiProjectile>();
-        if (multi) multi.Launch(launchForce, go.transform.up);
-        //Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
-        //if (rb) rb.AddForce(go.transform.up * launchForce, ForceMode2D.Impulse);
+        if (multi)
+        {
+            multi.Initialize(ability);
+            multi.Launch(launchForce, go.transform.up);
+        }
         controller.ShakeCamera(cameraShakeFrequency, duration, false);
         Destroy(go, maxLifeTime);
         isAttacking = false;

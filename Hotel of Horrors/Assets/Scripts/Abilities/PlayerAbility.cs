@@ -11,6 +11,7 @@ public abstract class PlayerAbility : MonoBehaviour
     public bool isAttacking { get; protected set; }
 
     protected ActionController controller;
+    protected Ability ability;
 
-    public abstract void Use(ActionController controller);
+    public abstract void Use(ActionController controller, Ability ability);
 }

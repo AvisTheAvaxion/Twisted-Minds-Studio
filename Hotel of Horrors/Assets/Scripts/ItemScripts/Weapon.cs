@@ -51,6 +51,15 @@ public class Weapon
         currentLevel = weaponSave.currentLevel;
     }
 
+    public float GetDamage(int attackNumber)
+    {
+        return (float)damage * (1f + GetInfo().GetAttack(attackNumber).damagePercIncrease);
+    }
+    public float GetKnockback(int attackNumber)
+    {
+        return (float)damage * (1f + GetInfo().GetAttack(attackNumber).knockbackPercIncrease);
+    }
+
     public int GetUpgradeCost(Weapon otherWeapon)
     {
         return GetInfo().GetUpgradeInfo(currentLevel - 1).eeCost +

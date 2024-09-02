@@ -14,7 +14,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [SerializeField] PlayerMovement movement;
     [SerializeField] CameraShake cameraShake;
     [SerializeField] FlashColor flashColor;
-    [SerializeField] UIDisplayContainer uiDisplay;
+    [SerializeField] PlayerGUI playerGUI;
     [SerializeField] float iFramesTime;
     [SerializeField] float stunTime;
     [SerializeField] float flashColorLength = 0.2f;
@@ -28,10 +28,10 @@ public class PlayerHealth : MonoBehaviour, IHealth
     {
         stats = GetComponent<StatsController>();
 
-        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
-        if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
+        playerGUI = FindObjectOfType<PlayerGUI>();
 
-        if (uiDisplay) heartsController = uiDisplay.HeartsController;
+
+        if (playerGUI) heartsController = playerGUI.GetHeartsController();
         if (heartsController) heartsController.Init(stats.GetHealth());
     }
 

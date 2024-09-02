@@ -19,13 +19,17 @@ public class MeleeSlash : MonoBehaviour
 
     CameraShake cameraShake;
 
+    ActionController actionController;
+
     Effect[] effects;
 
     [SerializeField] EnemyAudioManager enemyAudioManager;
 
-    public void Init(int damage, float knockback, float deflectionStrength, string targetTag, CameraShake cameraShake, Effect[] effects = null)
+    public void Init(ActionController actionController, int damage, float knockback, float deflectionStrength, string targetTag, CameraShake cameraShake, Effect[] effects = null)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+
+        this.actionController = actionController;
 
         this.damage = damage;
         this.knockback = knockback;
@@ -37,9 +41,11 @@ public class MeleeSlash : MonoBehaviour
 
         StartCoroutine(Animate());
     }
-    public void Init(Weapon weapon, string targetTag, CameraShake cameraShake)
+    public void Init(ActionController actionController, Weapon weapon, string targetTag, CameraShake cameraShake)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+
+        this.actionController = actionController;
 
         this.weapon = weapon;
 
@@ -62,11 +68,11 @@ public class MeleeSlash : MonoBehaviour
         {
             IHealth health = collision.GetComponent<IHealth>();
             if (health != null) {
-                if (health.TakeDamage(weapon != null ? weapon.damage : damage))
+                if (health.TakeDamage(weapon != null ? weapon.GetDamage(actionController.attackNumber) : damage))
                 {
                     enemyAudioManager.Damage();
 
-                    if ((weapon != null ? weapon.knockback : knockback) > 0)
+                    if ((weapon != null ? weapon.GetKnockback(actionController.attackNumber) : knockback) > 0)
                     {
                         Vector2 dir = (collision.transform.position - transform.position).normalized;
                         health.Knockback(dir, weapon != null ? weapon.knockback : knockback);
@@ -88,7 +94,7 @@ public class MeleeSlash : MonoBehaviour
             Lootable lootable = collision.gameObject.GetComponent<Lootable>();
             if (lootable != null)
             {
-                lootable.TakeDamage(weapon != null ? weapon.damage : damage);
+                lootable.TakeDamage(weapon != null ? weapon.GetDamage(actionController.attackNumber) : damage);
             }
         }
     }
@@ -110,5 +116,7 @@ public class MeleeSlash : MonoBehaviour
             }
         }
         Destroy(gameObject);
+
+        actionController.AttackEnd();
     }
 }

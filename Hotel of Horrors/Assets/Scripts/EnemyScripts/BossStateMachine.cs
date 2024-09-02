@@ -36,7 +36,6 @@ public abstract class BossStateMachine : MonoBehaviour
     protected BossHealth bossHealth;
 
     [SerializeField] protected bool debug;
-    [SerializeField] protected UIDisplayContainer uiDisplay;
     [SerializeField] protected CameraShake cameraShake;
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
@@ -73,9 +72,6 @@ public abstract class BossStateMachine : MonoBehaviour
 
         if (dialogueSystem != null)
             dialogueSystem.SubscribeToBoss(this);
-
-        if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
-        if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
 
         if (player == null)
             Debug.LogError("Player not found in scene");

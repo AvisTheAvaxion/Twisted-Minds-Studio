@@ -1679,7 +1679,7 @@ MonoBehaviour:
   - {fileID: -843237045, guid: e31d4bb896116374b9593c9f5afbd344, type: 3}
   - {fileID: -1383625013, guid: e31d4bb896116374b9593c9f5afbd344, type: 3}
   - {fileID: -1692015870, guid: e31d4bb896116374b9593c9f5afbd344, type: 3}
-  heartHealthValue: 20
+  heartHealthValue: 10
   heartContainer: {fileID: 1795897044157052862}
   heartPrefab: {fileID: 6615284709710797188, guid: 1b9b8876a963e3f4bb371fe531683472, type: 3}
 --- !u!1 &940144315965256161
@@ -9768,6 +9768,11 @@ MonoBehaviour:
   weaponHotbarImage: {fileID: 7775559427287809520}
   freeSlotHotbarImage: {fileID: 656401222696557476}
   mementoHotbarImage: {fileID: 553884352273154821}
+  floorNumText: {fileID: 3082451978738667836}
+  roomNameText: {fileID: 4480686623223821905}
+  effectsIconHolder: {fileID: 4481236986953251146}
+  effectsIconPrefab: {fileID: 204925238360676597, guid: 96ee0329e7d2ec24ba770350ab209697, type: 3}
+  heartsController: {fileID: 6709943506120489582}
 --- !u!114 &3630970173842223739
 MonoBehaviour:
   m_ObjectHideFlags: 0

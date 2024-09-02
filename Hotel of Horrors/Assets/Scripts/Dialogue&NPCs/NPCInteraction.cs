@@ -13,13 +13,13 @@ public class NPCInteraction : MonoBehaviour
 
     public event EventHandler OnPlayerTalk;
 
-    DialogueSystem dialogueSystem;
+    //DialogueSystem dialogueSystem;
 
     private void Awake()
     {
-        dialogueSystem = FindObjectOfType<DialogueSystem>();
+        /*dialogueSystem = FindObjectOfType<DialogueSystem>();
         dialogueSystem.OnDialogueFinish += DialogueSystem_OnDialogueFinish;
-        dialogueSystem.SubscribeToNPC(this);
+        dialogueSystem.SubscribeToNPC(this);*/
     }
 
     private void DialogueSystem_OnDialogueFinish(object sender, EventArgs e)

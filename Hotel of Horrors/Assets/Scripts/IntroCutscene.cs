@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IntroCutscene : MonoBehaviour
 {
-    [SerializeField] DialogueSystem dialogueSystem;
+    [SerializeField] DialogueManager dialogueSystem;
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] Animator varrenAnimator;
     [SerializeField] float varrenMoveSpeed = 0.8f;
@@ -38,7 +38,7 @@ public class IntroCutscene : MonoBehaviour
         }
         varrenAnimator.SetBool("isWalking", false);
 
-        dialogueSystem.StartDialogue(fileName, blockNum);
+        dialogueSystem.SetCutscene(Dialogue.Dialog.VarrenEncounter);
         yield return null;
         yield return new WaitUntil(() => Time.timeScale > 0.5f);
 

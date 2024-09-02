@@ -103,7 +103,7 @@ public class AI : MonoBehaviour
 
     public void MoveTowardsTarget()
     {
-        if (!canMove || target == null) return;
+        if (!canMove || target == null) { return; }
 
         Vector2 dirToTarget = (target.position - transform.position).normalized;
 
@@ -138,7 +138,7 @@ public class AI : MonoBehaviour
     }
     public bool MoveTowardsTarget(Vector3 targetPosition)
     {
-        if (!canMove) return false;
+        if (!canMove) {return false;}
 
         Vector2 vectorToTarget = targetPosition - transform.position;
         float distToTarget = vectorToTarget.magnitude;

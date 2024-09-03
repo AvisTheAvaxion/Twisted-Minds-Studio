@@ -10,12 +10,14 @@ public class ElevatorMenuManager : MonoBehaviour
     [SerializeField] GameObject loadMenu;
     [SerializeField] GameObject storeMenu;
     [SerializeField] GameObject savedText;
+    [SerializeField] GameObject loadText;
     [SerializeField] GameObject elevatorBackground;
     [SerializeField] GameObject mindRoomMenu;
     [SerializeField] Image fadeImage;
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] PlayerMovement player;
     [SerializeField] NewAudioManager audioManager;
+    [SerializeField] SerializationManager serializationManager;
 
     private void Start()
     {
@@ -38,9 +40,11 @@ public class ElevatorMenuManager : MonoBehaviour
 
     public void SwitchToLoad()
     {
-        mainMenu.SetActive(false);
-        loadMenu.SetActive(true);
-        storeMenu.SetActive(false);
+        loadText.SetActive(true);
+        serializationManager.LoadData();
+        //mainMenu.SetActive(false);
+        //loadMenu.SetActive(true);
+        //storeMenu.SetActive(false);
     }
 
     public void SaveGame()
@@ -48,7 +52,7 @@ public class ElevatorMenuManager : MonoBehaviour
         savedText.SetActive(true);
 
         //save game here
-
+        serializationManager.SaveData();
     }
 
     public void ReturnToPrevRoom()

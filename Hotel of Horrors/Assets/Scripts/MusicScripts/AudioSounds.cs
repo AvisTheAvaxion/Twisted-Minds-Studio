@@ -19,7 +19,7 @@ public class AudioSounds : MonoBehaviour
 
     public AudioClip getEffect(string name)
     {
-        foreach (AudioClip clip in music)
+        foreach (AudioClip clip in effects)
         {
             if (clip.name == name) return clip;
         }

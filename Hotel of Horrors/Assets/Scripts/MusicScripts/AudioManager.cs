@@ -15,9 +15,9 @@ public class AudioManager : MonoBehaviour
     private static List<int> ambientQueue = new List<int>();
 
     [SerializeField] AudioClip[] audioClips;
+    static float[] volumes = new float[3];
 
     private static bool updateVolume = false;
-    private static float[] volumes;
 
 
     // Start is called before the first frame update

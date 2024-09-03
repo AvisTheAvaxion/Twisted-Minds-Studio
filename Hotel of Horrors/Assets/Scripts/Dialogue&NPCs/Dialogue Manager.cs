@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour
 {
     [SerializeField] Dialogue.Dialog cutscene;
     [SerializeField] PlayerMovement movement;
+    [SerializeField] NewAudioManager AudioManager;
 
     GameObject canvas;
     TMPro.TMP_Text textBox;
@@ -41,7 +42,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
-        PlayerMovement movement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        //PlayerMovement movement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         canvas = GameObject.Find("CanvasDialogue");
         textBox = GameObject.Find("TextBox").GetComponent<TMPro.TMP_Text>();
         nameBox = GameObject.Find("NameBox").GetComponent<TMPro.TMP_Text>();

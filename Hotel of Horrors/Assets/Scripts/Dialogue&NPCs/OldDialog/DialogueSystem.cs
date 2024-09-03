@@ -10,6 +10,11 @@ using static Unity.Collections.AllocatorManager;
 
 public class DialogueSystem : MonoBehaviour
 {
+    /// <summary>
+    /// THIS SCRIPT IS MARKED FOR DELETETION!!!
+    /// Please update your scripts accordingly.
+    /// </summary>
+    /// 
     [Header("References")]
     [SerializeField] GameObject canvasPrefab;
     [SerializeField] GameObject choicePrefab;
@@ -39,7 +44,7 @@ public class DialogueSystem : MonoBehaviour
     public event EventHandler OnDialogueFinish;
     public int playerChoice = -1;
 
-
+    void Start() { Debug.Log("THIS SCRIPT IS MARKED FOR DELETETION, please update your scripts accordingly."); }
     private void BossMonster_OnBossDialogue(object sender, System.EventArgs e)
     {
         print("Boss Dialogue started");

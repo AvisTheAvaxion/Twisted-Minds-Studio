@@ -4,26 +4,37 @@ using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
 {
-    [SerializeField] private AudioSource MovementSource;
-    [SerializeField] private AudioSource AttackSource;
-    [SerializeField] private AudioSource DashSource;
-    [SerializeField] private AudioSource AbilitySource;
-    [SerializeField] private AudioSource DamageSource;
-
-    [SerializeField] private AudioClip[] AudioClips;
-
     [SerializeField] Animator animator;
+    [SerializeField] PlayerSounds sounds;
 
-    private Dictionary<string, int> audioDict = new Dictionary<string, int>();
+    [SerializeField] AudioSource DashSource;
+    [SerializeField] AudioSource DamageSource;
+    [SerializeField] AudioSource MovementSource;
+    [SerializeField] AudioSource AttackSource;
+    [SerializeField] AudioSource AbilitySource;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        CreateDict();
 
-    }
 
     private void Start()
+    {
+        UpdateVolume();
+        DashSource.clip = sounds.Dash();
+        DamageSource.clip = sounds.Damage();
+        MovementSource.clip = sounds.getWalkSound("Wood");
+    }
+
+    void Update()
+    {
+        Movement();
+    }
+
+    void UpdateWalkSurface(string surfaceName)
+    {
+        MovementSource.clip = sounds.getWalkSound(surfaceName);
+    }
+
+    //update the volume of all Audiosources depending on the player's settings
+    public void UpdateVolume()
     {
         float volume = PlayerPrefs.GetFloat("SFXVolume");
 
@@ -32,22 +43,27 @@ public class PlayerAudio : MonoBehaviour
         DashSource.volume = volume;
         AbilitySource.volume = volume;
         DamageSource.volume = volume;
-
-        AudioManager.Play("KarrenTheme");
     }
 
-    private void CreateDict()
+    public void Dash()
     {
-        audioDict.Add("WoodWalk", 0);
-        audioDict.Add("Dash", 1);
-        audioDict.Add("Attack", 2);
-        audioDict.Add("EnergyArcAbility", 3);
-        audioDict.Add("PlayerDamage", 4);
+        DashSource.Play();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Damage()
     {
+        DamageSource.Play();
+    }
+
+
+
+
+
+
+
+    void Movement()
+    {
+        //Sounds for when the player walks
         if (animator.GetBool("isWalking"))
         {
             if (!MovementSource.isPlaying)
@@ -62,54 +78,5 @@ public class PlayerAudio : MonoBehaviour
                 MovementSource.Stop();
             }
         }
-
-        //need to figure out attacking and abilities
-    }
-
-    public void Play(string name)
-    {
-        try
-        {
-            Play(audioDict[name]);
-        }
-        catch (KeyNotFoundException)
-        {
-            throw new AudioError("The specified track " + name + " could not be found");
-        }
-    }
-
-    public void Play(int id)
-    {
-        try
-        {
-            switch (id)
-            {
-                case 1:
-                    DashSource.Play();
-                    break;
-
-                case 2:
-                    AttackSource.Play();
-                    break;
-
-                case 3:
-                    AbilitySource.clip = AudioClips[1];
-                    AbilitySource.Play();
-                    break;
-
-                case 4:
-                    DamageSource.Play();
-                    break;
-            }
-        }
-        catch (KeyNotFoundException)
-        {
-            throw new AudioError("The specified track " + id + " could not be found");
-        }
-    }
-
-    public void PlayAbility(string Abilityname)
-    {
-        Play(Abilityname.Split("(Clone)")[0]);
     }
 }

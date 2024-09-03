@@ -521,7 +521,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 500463849900545150}
-  - component: {fileID: 8926150203793452754}
+  - component: {fileID: 8459575114444126981}
+  - component: {fileID: 1343267651104955899}
   m_Layer: 0
   m_Name: MusicBox
   m_TagString: Untagged
@@ -548,7 +549,7 @@ Transform:
   - {fileID: 440161793453655544}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8926150203793452754
+--- !u!114 &8459575114444126981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -557,18 +558,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 2662299539120044900}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e58ca72c476483b43b9bb641416c9f67, type: 3}
+  m_Script: {fileID: 11500000, guid: a6e49c020a788194686a8f0f17b6b1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 7693977996571068035}
-  soundEffectSource: {fileID: 306839182055275764}
+  effectSource: {fileID: 306839182055275764}
   ambientSource: {fileID: 3001658837465445364}
-  audioClips:
-  - {fileID: 8300000, guid: 229b83bdc3de08a44ac03f5777fc4c05, type: 3}
-  - {fileID: 8300000, guid: 8546be25c51e79c45910eef7d7b8fc99, type: 3}
-  - {fileID: 8300000, guid: f9323b1325f9b0443bbfe97e8e8fe72b, type: 3}
-  - {fileID: 8300000, guid: fe60615ff42877242a6079e7112990d2, type: 3}
-  - {fileID: 8300000, guid: 1d3db838fe1d15449ba1780ae49526d6, type: 3}
+  sounds: {fileID: 1343267651104955899}
+--- !u!114 &1343267651104955899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2662299539120044900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f2e3665ad5b6c0409be753c61b36a07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: []
+  effects: []
+  ambience: []
 --- !u!1 &6436958377807463556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,7 +1101,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 440161793453655544}
-  - component: {fileID: 1488565472923334902}
+  - component: {fileID: 3454278512102301056}
+  - component: {fileID: 3185577275813407823}
   m_Layer: 0
   m_Name: PlayerSource
   m_TagString: Untagged
@@ -1118,7 +1130,7 @@ Transform:
   - {fileID: 3154676392095713867}
   m_Father: {fileID: 500463849900545150}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1488565472923334902
+--- !u!114 &3454278512102301056
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1130,12 +1142,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad1ff45a1b3d554fad28d2b90ae374e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  sounds: {fileID: 3185577275813407823}
+  DashSource: {fileID: 8133196455947437776}
+  DamageSource: {fileID: 826895791449263302}
   MovementSource: {fileID: 2637001750703532110}
   AttackSource: {fileID: 5439225405787129954}
-  DashSource: {fileID: 8133196455947437776}
   AbilitySource: {fileID: 2099480320922156905}
-  DamageSource: {fileID: 0}
-  AudioClips:
-  - {fileID: 8300000, guid: 5c05ceaba7c80e744aa31dc1ab39843c, type: 3}
-  - {fileID: 8300000, guid: 02d9dc613d46d5445a01abe379dfe70c, type: 3}
-  animator: {fileID: 0}
+--- !u!114 &3185577275813407823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8029898755575641229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3995ca92a10b443ab667a90ea87c3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dash: {fileID: 0}
+  damage: {fileID: 0}
+  AttackSounds: []
+  AbilitySounds: []
+  MementoSounds: []
+  WalkSounds:
+  - {fileID: 8300000, guid: 37f46f30fd9886f47a6bbac65a53aab4, type: 3}

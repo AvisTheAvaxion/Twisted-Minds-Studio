@@ -16,6 +16,7 @@ public class RoomTraversal : MonoBehaviour
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] Image fadeImage;
     [SerializeField] GameObject elevatorCanvas;
+    [SerializeField] NewAudioManager audioManager;
 
     RoomManager roomManager;
 
@@ -66,7 +67,7 @@ public class RoomTraversal : MonoBehaviour
 
         playerMovement.canMove = false;
         //print("fading black");
-        AudioManager.Play("Door");
+        audioManager.PlayEffect("DoorOpen");
         // loop over 1 second - fade to black
         for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
         {

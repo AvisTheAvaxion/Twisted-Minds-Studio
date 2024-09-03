@@ -43,7 +43,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
             stats.TakeDamage(amount);
             //print("Health: " + currentHealth);
 
-            playerAudio.Play("PlayerDamage");
+            playerAudio.Damage();
 
             if (effect != null && Random.Range(0, 1f) <= effect.chanceToInflictEffect) stats.AddEffect(effect);
 

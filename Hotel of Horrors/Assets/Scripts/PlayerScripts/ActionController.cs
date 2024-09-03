@@ -222,7 +222,7 @@ public class ActionController : MonoBehaviour
             if (attackButtonReleased && attackButtonPressed && !playerMovement.IsDashing)
             {
                 StartCoroutine(Attack());
-                playerAudio.Play("Attack");
+                //playerAudio.Play("Attack");
             }
             if(playerMovement.IsDashing)
             {
@@ -360,7 +360,7 @@ public class ActionController : MonoBehaviour
     {
         float timer = 0;
         canDoPlayerAbility = false;
-        playerAudio.PlayAbility(currentPlayerAbitlity.ToString());
+        //playerAudio.PlayAbility(currentPlayerAbitlity.ToString());
 
         yield return new WaitUntil(() => !currentPlayerAbitlity.isAttacking);
 

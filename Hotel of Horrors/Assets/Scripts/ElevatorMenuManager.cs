@@ -15,6 +15,7 @@ public class ElevatorMenuManager : MonoBehaviour
     [SerializeField] Image fadeImage;
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] PlayerMovement player;
+    [SerializeField] NewAudioManager audioManager;
 
     private void Start()
     {
@@ -64,7 +65,7 @@ public class ElevatorMenuManager : MonoBehaviour
     IEnumerator GetFreshRoom()
     {
         print("fading black");
-        AudioManager.Play("Door");
+        audioManager.PlayEffect("DoorOpen");
        
         // loop over 1 second - fade to black
         for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)

@@ -26,6 +26,8 @@ public class DialogueSystem : MonoBehaviour
     TextMeshProUGUI nameText;
     List<GameObject> choices;
 
+    [SerializeField] NewAudioManager audioManager;
+
     //file that will be read. Should include the extentsion
     string fileToRead;
     //file should be blocked out into numbered sections
@@ -121,7 +123,7 @@ public class DialogueSystem : MonoBehaviour
         if (dialogueIndex < dialogueLines.Count)
         {
             UpdateVisuals(dialogueLines[dialogueIndex]);
-            AudioManager.Play("NextLine");
+            audioManager.PlayEffect("DialogueUpdate");
         }
         else
         {
@@ -191,7 +193,7 @@ public class DialogueSystem : MonoBehaviour
         else if(line is AudioCueLine audioLine)
         {
             Debug.Log("MMMUUUUSSSSSIIIIICCCCC");
-            AudioManager.Play(audioLine.GetSongName());
+            //AudioManager.Play(audioLine.GetSongName());
             Debug.Log(audioLine.GetSongName());
             AdvanceDialogue();
         }

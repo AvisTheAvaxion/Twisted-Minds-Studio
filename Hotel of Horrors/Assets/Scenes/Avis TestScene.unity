@@ -838,9 +838,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1001220766}
   - component: {fileID: 1001220767}
-  - component: {fileID: 1001220770}
-  - component: {fileID: 1001220769}
-  - component: {fileID: 1001220768}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -877,84 +874,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutscene: 3
-  movement: {fileID: 1001220768}
+  movement: {fileID: 0}
   AudioManager: {fileID: 592975473}
   characterAI: {fileID: 0}
---- !u!114 &1001220768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001220764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d6070cf5928c394282a77ecb0e84ef6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  forwardController: {fileID: 0}
-  backController: {fileID: 0}
-  leftController: {fileID: 0}
-  rightController: {fileID: 0}
-  player: {fileID: 0}
-  rb: {fileID: 0}
-  playerHealth: {fileID: 0}
-  stats: {fileID: 0}
-  afterImage: {fileID: 0}
-  playerAudio: {fileID: 0}
-  movementSpeed: 0
-  drag: 0
-  walkParticles: {fileID: 0}
-  canMove: 0
-  canDash: 0
-  dashCooldown: 0
-  dashDistance: 0
-  dashSpeed: 0
-  iFrameDistForDash: 0
-  dashPartcileSpawn: {fileID: 0}
-  dashParticles: []
---- !u!114 &1001220769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001220764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 660bd72752f382b4d9f066185f966aab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movement: {fileID: 0}
-  cameraShake: {fileID: 0}
-  flashColor: {fileID: 0}
-  playerGUI: {fileID: 0}
-  iFramesTime: 0
-  stunTime: 0
-  flashColorLength: 0.2
-  playerAudio: {fileID: 0}
---- !u!114 &1001220770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001220764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  playerGUI: {fileID: 0}
-  isPlayer: 0
-  health:
-    type: 0
-    defaultValue: 25
-    hasMax: 1
-    maxValue: 25
-  stats: []
 --- !u!1 &1003650486
 GameObject:
   m_ObjectHideFlags: 0

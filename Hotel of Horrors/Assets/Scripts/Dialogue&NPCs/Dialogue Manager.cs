@@ -70,7 +70,7 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0) && inCutscene && !isPicking && !characterMoving))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && inCutscene && !isPicking && !characterMoving)
         {
             OnDialogueUpdate();
         }

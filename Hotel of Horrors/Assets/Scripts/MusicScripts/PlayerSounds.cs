@@ -21,7 +21,8 @@ public class PlayerSounds : MonoBehaviour
                 return sound;
             }
         }
-        throw new AudioError($"Can't find an attack sound with the name {weaponName}");
+        //throw new AudioError($"Can't find an attack sound with the name {weaponName}");
+        return null;
     }
 
     public AudioClip getAbilitySound(string abilityName)
@@ -33,7 +34,8 @@ public class PlayerSounds : MonoBehaviour
                 return sound;
             }
         }
-        throw new AudioError($"Can't find an ability sound with the name {abilityName}");
+        //throw new AudioError($"Can't find an ability sound with the name {abilityName}");
+        return null;
     }
 
     public AudioClip getMementoSound(string mementoName)
@@ -45,7 +47,8 @@ public class PlayerSounds : MonoBehaviour
                 return sound;
             }
         }
-        throw new AudioError($"Can't find an attack sound with the name {mementoName}");
+        //throw new AudioError($"Can't find an attack sound with the name {mementoName}");
+        return null;
     }
 
     public AudioClip getWalkSound(string surface)
@@ -57,7 +60,8 @@ public class PlayerSounds : MonoBehaviour
                 return sound;
             }
         }
-        throw new AudioError($"Can't find an surface sound with the name {surface}");
+        //throw new AudioError($"Can't find an surface sound with the name {surface}");
+        return null;
     }
 
 

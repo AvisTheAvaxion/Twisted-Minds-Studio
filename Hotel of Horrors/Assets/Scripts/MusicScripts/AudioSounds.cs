@@ -14,7 +14,8 @@ public class AudioSounds : MonoBehaviour
         {
             if (clip.name == name) return clip;
         }
-        throw new AudioError($"Could not find a song with the name {name}!");
+        //throw new AudioError($"Could not find a song with the name {name}!");
+        return null;
     }
 
     public AudioClip getEffect(string name)
@@ -23,7 +24,8 @@ public class AudioSounds : MonoBehaviour
         {
             if (clip.name == name) return clip;
         }
-        throw new AudioError($"Could not find an effect with the name {name}!");
+        //throw new AudioError($"Could not find an effect with the name {name}!");
+        return null;
     }
 
     public AudioClip getAmbience(string name)
@@ -32,6 +34,7 @@ public class AudioSounds : MonoBehaviour
         {
             if (clip.name == name) return clip;
         }
-        throw new AudioError($"Could not find an ambience with the name {name}!");
+        //throw new AudioError($"Could not find an ambience with the name {name}!");
+        return null;
     }
 }

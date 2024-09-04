@@ -39,10 +39,8 @@ public class SerializationManager : MonoBehaviour
 
         SerializedClass classToSave = new SerializedClass(inventory);
 
-        //print(classToSave.itemsInventory[0].GetInfo().GetName());
-
         string json = JsonUtility.ToJson(classToSave);
-        print(json);
+        //print(json);
         File.WriteAllText(saveFile, json);
     }
 
@@ -56,7 +54,7 @@ public class SerializationManager : MonoBehaviour
         }
 
         string json = File.ReadAllText(saveFile);
-        print(json);
+        //print(json);
 
         SerializedClass classToLoad = new SerializedClass(inventory);
 
@@ -85,6 +83,8 @@ public class SerializationManager : MonoBehaviour
         #endif
     }
 
+    //method used to load the data at the start of the game
+    //i used a coroutine because the game didn't like doing it exactly at the start, so i gave it a slight delay
     IEnumerator StartLoading()
     {
         yield return new WaitForSeconds(.1f);

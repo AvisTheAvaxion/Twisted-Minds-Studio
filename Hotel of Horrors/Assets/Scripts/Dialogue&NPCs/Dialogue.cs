@@ -58,9 +58,9 @@ public class Dialogue
     string[] VarrenEncounter = new string[]
     {
         "Varren: Play some toons",
-        "$PlaySong|KarrenTheme1",
+        "$PlaySong|KarrenTheme",
         "Varren: Here i come",
-        "$PlayEffect|DoorOpen2",
+        "$PlayEffect|DoorOpen",
         "$Move(Varren,0,-48.32)",
         "Varren: Oh? And who might you be?|No one|AHHHHH$Prompt",
         "Protag: Who are you? Where did you come from?$OptionA",

@@ -13,6 +13,8 @@ public class SerializationManager : MonoBehaviour
     {
         saveFile = Application.persistentDataPath + "/saveinformation.json";
         inventory = FindObjectOfType<PlayerInventory>();
+
+        StartCoroutine(StartLoading());
         //quests = FindObjectOfType<QuestManager>();
     }
 
@@ -69,6 +71,7 @@ public class SerializationManager : MonoBehaviour
 
     private void Update()
     {
+        #if UNITY_EDITOR
         if(Input.GetKey(KeyCode.RightShift) && Input.GetKey(KeyCode.S))
         {
             print("Saving...");
@@ -79,5 +82,12 @@ public class SerializationManager : MonoBehaviour
             print("Loading...");
             LoadData();
         }
+        #endif
+    }
+
+    IEnumerator StartLoading()
+    {
+        yield return new WaitForSeconds(.1f);
+        LoadData();
     }
 }

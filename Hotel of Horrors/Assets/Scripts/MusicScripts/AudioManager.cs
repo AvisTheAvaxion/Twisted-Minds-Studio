@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NewAudioManager : MonoBehaviour
@@ -100,5 +101,13 @@ public class NewAudioManager : MonoBehaviour
             PlayerPrefs.GetFloat("AmbientVolume")
         };
     }
+
+    public void Pause()
+    {
+        bgmSource.Pause();
+        ambientSource.Pause();
+    }
+
+
 
 }

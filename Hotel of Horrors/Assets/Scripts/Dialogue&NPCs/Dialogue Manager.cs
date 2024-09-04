@@ -76,7 +76,7 @@ public class DialogueManager : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && inCutscene && !isPicking && !characterMoving)
         {
             OnDialogueUpdate();
-            AudioManager.PlayEffect("NextLine");
+            //AudioManager.PlayEffect("NextLine");
         }
         else if (characterMoving)
         {
@@ -95,7 +95,18 @@ public class DialogueManager : MonoBehaviour
                     string[] sound = lines[currentLine].Split("|");
                     AudioManager.PlayEffect(sound[1]);
                     currentLine++;
+                    OnDialogueUpdate();
+                    currentLine--;
+
                 }
+            else if (lines[currentLine].StartsWith("$PlaySong"))
+            {
+                string[] sound = lines[currentLine].Split("|");
+                AudioManager.PlaySong(sound[1]);
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
+            }
                 #region ChoiceDialog
                 else if (lines[currentLine].EndsWith("$Prompt"))
                 {

@@ -6815,7 +6815,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 843.2925, y: 474.3521}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6452376257488536329
 CanvasRenderer:
@@ -9713,25 +9713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da447213c00992c458aac5ea064501fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryUI: {fileID: 8152605050405645905}
-  weaponsContainer: {fileID: 1743158536826222679}
-  itemsContainer: {fileID: 8385800808111557900}
-  abilitiesContainer: {fileID: 4392656131937497488}
-  itemToolTip: {fileID: 8205462901843087154}
-  weaponHotbarImage: {fileID: 7775559427287809520}
-  weaponAbilityHotbarImage: {fileID: 2547380619217822929}
-  freeSlotHotbarImage: {fileID: 656401222696557476}
-  mementoHotbarImage: {fileID: 553884352273154821}
-  floorNumText: {fileID: 3082451978738667836}
-  roomNameText: {fileID: 4480686623223821905}
-  emotionalEnergyText: {fileID: 1415042353268652076}
-  effectsIconHolder: {fileID: 4481236986953251146}
-  effectsIconPrefab: {fileID: 204925238360676597, guid: 96ee0329e7d2ec24ba770350ab209697, type: 3}
-  heartsController: {fileID: 6709943506120489582}
-  ammoTextContainer: {fileID: 8629484259575846655}
-  currentAmmoText: {fileID: 5045014493663673718}
-  maxAmmoText: {fileID: 7830405820804740365}
-  reloadCircle: {fileID: 217729010525135336}
   boss_healthBar: {fileID: 5130957099826179531}
 --- !u!114 &4324737835944562023
 MonoBehaviour:
@@ -12789,6 +12770,7 @@ GameObject:
   - component: {fileID: 8645170636897028952}
   - component: {fileID: 1414076091178923051}
   - component: {fileID: 4024513639586632690}
+  - component: {fileID: 7688831577576714186}
   m_Layer: 5
   m_Name: Mind Room Menu
   m_TagString: Untagged
@@ -12880,6 +12862,20 @@ MonoBehaviour:
   selectedAbilityDescription: {fileID: 7482723189250584996}
   cooldownText: {fileID: 2396554519972888897}
   eeCostText: {fileID: 7016419573126219058}
+--- !u!114 &7688831577576714186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7238141845091300525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bd9f96c46f32bb45b7d550c7f549b20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformToMove: {fileID: 7072523568906078649}
+  driftAmount: {x: 20, y: 20}
 --- !u!1 &7322844350230967453
 GameObject:
   m_ObjectHideFlags: 0

@@ -76,9 +76,9 @@ SpriteRenderer:
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -493318921, guid: 40c13171b43c45d4a948e0fb3951a9fd, type: 3}
+  m_Sprite: {fileID: -969681551, guid: d03b7025f170b294e92e2590180d23c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.48, y: 0.48}
@@ -101,10 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6143300023033336772}
   sprites:
-  - {fileID: -493318921, guid: 40c13171b43c45d4a948e0fb3951a9fd, type: 3}
-  - {fileID: -1591243796, guid: 40c13171b43c45d4a948e0fb3951a9fd, type: 3}
-  - {fileID: 2030516310, guid: 40c13171b43c45d4a948e0fb3951a9fd, type: 3}
-  frameRate: 0.05
+  - {fileID: -969681551, guid: d03b7025f170b294e92e2590180d23c6, type: 3}
+  - {fileID: -1424537273, guid: d03b7025f170b294e92e2590180d23c6, type: 3}
+  - {fileID: 206397985, guid: d03b7025f170b294e92e2590180d23c6, type: 3}
+  frameRate: 12
   defaultTag: Enemy
   enemyAudioManager: {fileID: 2798982999630870243}
 --- !u!60 &8284666980901265937
@@ -143,7 +143,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.48, y: 0.48}
+    oldSize: {x: 0.96, y: 0.96}
     newSize: {x: 0.48, y: 0.48}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -151,16 +151,17 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.12358577, y: 0.108814314}
-      - {x: -0.089484274, y: 0.12036744}
-      - {x: -0.22516263, y: 0.0022723675}
-      - {x: -0.26369464, y: -0.15746145}
-      - {x: -0.20895651, y: -0.17354615}
-      - {x: -0.11659405, y: -0.08044477}
-      - {x: 0.1178762, y: -0.06784791}
-      - {x: 0.20512816, y: -0.18090409}
-      - {x: 0.25189734, y: -0.17317773}
-      - {x: 0.27015, y: -0.042388484}
+    - - {x: 0.26000345, y: 0.07795794}
+      - {x: 0.076165825, y: 0.12523952}
+      - {x: -0.11797728, y: 0.10458565}
+      - {x: -0.30087194, y: 0.007250905}
+      - {x: -0.3968643, y: -0.11198883}
+      - {x: -0.0627947, y: -0.27423543}
+      - {x: -0.02727294, y: -0.20549424}
+      - {x: 0.11625221, y: -0.19614547}
+      - {x: 0.19863209, y: -0.1987682}
+      - {x: 0.30711412, y: -0.1553135}
+      - {x: 0.40007168, y: -0.07486884}
   m_UseDelaunayMesh: 0
 --- !u!1001 &4745051401554770840
 PrefabInstance:

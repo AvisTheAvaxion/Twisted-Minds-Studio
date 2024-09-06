@@ -6,7 +6,7 @@ public class MeleeSlash : MonoBehaviour
 {
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Sprite[] sprites;
-    [SerializeField] float frameRate;
+    [SerializeField] int frameRate;
     [SerializeField] string defaultTag = "Enemy";
 
     Weapon weapon;
@@ -106,7 +106,7 @@ public class MeleeSlash : MonoBehaviour
 
     IEnumerator Animate()
     {
-        WaitForSeconds wait = new WaitForSeconds(frameRate);
+        WaitForSeconds wait = new WaitForSeconds(1f / frameRate);
         if (sprites.Length > 0)
         {
             for (int i = 0; i < sprites.Length; i++)

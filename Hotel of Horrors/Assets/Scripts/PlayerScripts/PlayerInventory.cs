@@ -136,13 +136,13 @@ public class PlayerInventory : MonoBehaviour
     public void EquipWeapon(int index)
     {
         Weapon weapon = GetWeapon(index);
-        actionController.EquipWeapon(weapon);
 
         if (weapon != null || index < 0)
         {
             currentWeaponIndex = index;
         }
 
+        actionController.EquipWeapon(weapon);
     }
     public void EquipItem(int index)
     {

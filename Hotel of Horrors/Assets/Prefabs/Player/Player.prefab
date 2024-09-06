@@ -187,6 +187,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1089444973903779873}
   - {fileID: 9158669448377762531}
   - {fileID: 5588528228249156210}
   - {fileID: 323412977324910918}
@@ -357,7 +358,7 @@ MonoBehaviour:
   playerHealth: {fileID: 5367254218961287942}
   stats: {fileID: 9195956232266042739}
   afterImage: {fileID: 625345098585316788}
-  playerAudio: {fileID: 3958856602650725404}
+  playerAudio: {fileID: 0}
   movementSpeed: 0.5
   drag: 0.705
   walkParticles: {fileID: 27261255123880283}
@@ -392,6 +393,7 @@ MonoBehaviour:
   playerGUI: {fileID: 0}
   stats: {fileID: 9195956232266042739}
   playerHealth: {fileID: 5367254218961287942}
+  meleeDirection: {fileID: 1089444973903779873}
   weaponStrikeParent: {fileID: 9158669448377762531}
   weaponStrike1SpawnPoint: {fileID: 3412874156805523533}
   weaponStrike2SpawnPoint: {fileID: 7306821455979691524}
@@ -407,7 +409,7 @@ MonoBehaviour:
   defaultKnockback: 2
   defaultAttackSpeed: 3
   defaultDeflectionStrength: 2
-  playerAudio: {fileID: 3958856602650725404}
+  playerAudio: {fileID: 0}
   currentPlayerAbitlity: {fileID: 0}
   currentSpecialAbility: {fileID: 0}
 --- !u!114 &5196756706972270376
@@ -469,11 +471,11 @@ MonoBehaviour:
   movement: {fileID: 3194915936490214647}
   cameraShake: {fileID: 7305724931220426512}
   flashColor: {fileID: 7325452528091289218}
-  uiDisplay: {fileID: 0}
+  playerGUI: {fileID: 0}
   iFramesTime: 0.7
   stunTime: 0.2
   flashColorLength: 0.2
-  playerAudio: {fileID: 3958856602650725404}
+  playerAudio: {fileID: 0}
 --- !u!114 &9195956232266042739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 1
-  uiDisplay: {fileID: 0}
+  playerGUI: {fileID: 0}
   isPlayer: 1
   health:
     type: 0
@@ -507,6 +509,38 @@ MonoBehaviour:
     defaultValue: 3
     hasMax: 0
     maxValue: 0
+--- !u!1 &2597693920358613910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1089444973903779873}
+  m_Layer: 0
+  m_Name: MeleeDirection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1089444973903779873
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2597693920358613910}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3412874156805523533}
+  m_Father: {fileID: 7498233101355432618}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2906325751302042129
 GameObject:
   m_ObjectHideFlags: 0
@@ -5600,12 +5634,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5378206539799092616}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.319, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.0012249097, w: 0.9999993}
+  m_LocalPosition: {x: -0.001, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9158669448377762531}
+  m_Father: {fileID: 1089444973903779873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5613375161932326911
 GameObject:
@@ -5790,7 +5824,6 @@ Transform:
   m_Children:
   - {fileID: 3324635528081489777}
   - {fileID: 6170973806305089133}
-  - {fileID: 3412874156805523533}
   m_Father: {fileID: 7498233101355432618}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.14}
 --- !u!114 &9084710572997100740
@@ -6443,17 +6476,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 500463849900545150, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
   m_PrefabInstance: {fileID: 2474971484506125546}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3958856602650725404 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1488565472923334902, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
-  m_PrefabInstance: {fileID: 2474971484506125546}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ad1ff45a1b3d554fad28d2b90ae374e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6929825845062245761
 PrefabInstance:
   m_ObjectHideFlags: 0

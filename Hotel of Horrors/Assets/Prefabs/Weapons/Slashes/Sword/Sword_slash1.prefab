@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7997659925485497351}
   - component: {fileID: 8284666980901265937}
   m_Layer: 0
-  m_Name: DefaultMelee2Strike01
+  m_Name: Sword_slash1
   m_TagString: MeleeStrike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4237462731032746196}
+  - {fileID: 7264209064153142290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6143300023033336772
@@ -55,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: ffa1135e73f981b49966fd9d12defd07, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,9 +76,9 @@ SpriteRenderer:
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -910859807, guid: 34c85b1bd83920848aaff1936f22b98b, type: 3}
+  m_Sprite: {fileID: -551012064, guid: cd60eefbe7bc57b47816cb3a813655af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.48, y: 0.48}
@@ -101,12 +101,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6143300023033336772}
   sprites:
-  - {fileID: -910859807, guid: 34c85b1bd83920848aaff1936f22b98b, type: 3}
-  - {fileID: 616096907, guid: 34c85b1bd83920848aaff1936f22b98b, type: 3}
-  - {fileID: -1660198360, guid: 34c85b1bd83920848aaff1936f22b98b, type: 3}
+  - {fileID: -1886496721, guid: cd60eefbe7bc57b47816cb3a813655af, type: 3}
+  - {fileID: -551012064, guid: cd60eefbe7bc57b47816cb3a813655af, type: 3}
+  - {fileID: 756749462, guid: cd60eefbe7bc57b47816cb3a813655af, type: 3}
   frameRate: 12
   defaultTag: Enemy
-  enemyAudioManager: {fileID: 8707189236244576805}
+  enemyAudioManager: {fileID: 2798982999630870243}
 --- !u!60 &8284666980901265937
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -143,7 +143,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.48, y: 0.48}
+    oldSize: {x: 0.96, y: 0.96}
     newSize: {x: 0.48, y: 0.48}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -151,18 +151,19 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.029714681, y: 0.2553448}
-      - {x: -0.028811455, y: 0.2543054}
-      - {x: -0.05459194, y: 0.15567136}
-      - {x: -0.09312391, y: -0.033826277}
-      - {x: -0.13111214, y: -0.22735031}
-      - {x: -0.092553884, y: -0.2647527}
-      - {x: 0.09955987, y: -0.2601692}
-      - {x: 0.13415244, y: -0.22669488}
-      - {x: 0.08934009, y: -0.023212925}
-      - {x: 0.056078076, y: 0.15107758}
+    - - {x: 0.25671142, y: 0.053267673}
+      - {x: 0.07451978, y: 0.103841335}
+      - {x: -0.11797728, y: 0.086479545}
+      - {x: -0.2877038, y: 0.00066685677}
+      - {x: -0.3968643, y: -0.11198883}
+      - {x: -0.12040536, y: -0.24954516}
+      - {x: -0.06842342, y: -0.17257388}
+      - {x: 0.09485397, y: -0.10890657}
+      - {x: 0.24307457, y: -0.13128132}
+      - {x: 0.3120522, y: -0.1553135}
+      - {x: 0.40007168, y: -0.07486884}
   m_UseDelaunayMesh: 0
---- !u!1001 &2294607464249210718
+--- !u!1001 &4745051401554770840
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -219,15 +220,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
---- !u!4 &4237462731032746196 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2672438551020400522, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
-  m_PrefabInstance: {fileID: 2294607464249210718}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8707189236244576805 stripped
+--- !u!114 &2798982999630870243 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7425929110926314875, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
-  m_PrefabInstance: {fileID: 2294607464249210718}
+  m_PrefabInstance: {fileID: 4745051401554770840}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -235,3 +231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084d8268e5a021c4e8219329cf778cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7264209064153142290 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2672438551020400522, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
+  m_PrefabInstance: {fileID: 4745051401554770840}
+  m_PrefabAsset: {fileID: 0}

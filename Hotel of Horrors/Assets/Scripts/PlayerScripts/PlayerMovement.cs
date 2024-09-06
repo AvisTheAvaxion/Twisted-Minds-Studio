@@ -324,6 +324,12 @@ public class PlayerMovement : MonoBehaviour
             AnimateMovement();
     }
 
+    public void MeleeLunge(Vector2 dir, float strength)
+    {
+        rb.velocity = Vector2.zero;
+        rb.AddForce(dir * strength, ForceMode2D.Impulse);
+    }
+
     public void EmitWalkParticles()
     {
         if (walkParticles != null)

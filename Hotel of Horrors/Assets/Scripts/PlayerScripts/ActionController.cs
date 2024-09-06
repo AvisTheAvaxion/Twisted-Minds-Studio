@@ -15,6 +15,7 @@ public class ActionController : MonoBehaviour
     [SerializeField] PlayerGUI playerGUI;
     [SerializeField] StatsController stats;
     [SerializeField] PlayerHealth playerHealth;
+    [SerializeField] Transform meleeDirection;
     [SerializeField] Transform weaponStrikeParent; //The parent to spawn the weapon strike into
     [SerializeField] Transform weaponStrike1SpawnPoint; //The point to spawn the weapon strike
     [SerializeField] Transform weaponStrike2SpawnPoint; //The point to spawn the weapon strike
@@ -56,9 +57,6 @@ public class ActionController : MonoBehaviour
     bool canDoPlayerAbility = true;
     bool canDoWeaponAbility = true;
     bool canDoSpecialAbility = true;
-
-    float currentAmmoCount;
-    float rangedFireTimer;
 
     PlayerInventory inventory;
 
@@ -102,10 +100,12 @@ public class ActionController : MonoBehaviour
 
         if(inventory.CurrentWeapon != null)
         {
-            weaponVisual.enabled = true;
-            weaponVisual.sprite = inventory.CurrentWeapon.GetInfo().GetSprite();
+            //weaponVisual.enabled = true;
+            //weaponVisual.sprite = inventory.CurrentWeapon.GetInfo().GetSprite();
 
             currentAttackMode = inventory.CurrentWeapon.GetInfo().GetWeaponMode();
+
+            attackNumber = 0;
 
             if (currentWeaponAbility != null) Destroy(currentWeaponAbility.gameObject);
 
@@ -163,9 +163,20 @@ public class ActionController : MonoBehaviour
     {
         if (disableAttackControls) return;
 
-        attackButtonPressed = inputValue.isPressed;
+        if(isAttacking)
+        {
+            if(inputValue.isPressed)
+                attackButtonPressed = inputValue.isPressed;
+        }
+        else
+        {
+            attackButtonPressed = inputValue.isPressed;
+        }
 
-        if(isAttacking || (!isAttacking && attackButtonReleased == false)) attackButtonReleased = !inputValue.isPressed;
+        if (isAttacking || (!isAttacking && attackButtonReleased == false))
+        {
+            attackButtonReleased = !inputValue.isPressed;
+        }
 
         /*if (isAttacking && !attackButtonPressed && currentAttackMode == AttackModes.Ranged)
         {
@@ -219,6 +230,8 @@ public class ActionController : MonoBehaviour
     {
         if (canAttack && !isAttacking)
         {
+            SetMeleeDirection();
+
             if (attackButtonReleased && attackButtonPressed && !playerMovement.IsDashing)
             {
                 StartCoroutine(Attack());
@@ -231,6 +244,22 @@ public class ActionController : MonoBehaviour
         }
     }
 
+    void SetMeleeDirection()
+    {
+        var dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+        float angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+
+        float absAngle = Mathf.Abs(angle);
+        float step = 45;
+
+        float low = absAngle - absAngle % step;
+        float high = low + step;
+
+        float steppedAngle = (absAngle - low < high - absAngle ? low : high) * Mathf.Sign(angle);
+
+        meleeDirection.rotation = Quaternion.AngleAxis(steppedAngle, -Vector3.forward);
+    }
+
     //Function to attack, it is seperated from OnAttack so auto attacking can be enabled
     private IEnumerator Attack()
     {
@@ -238,7 +267,10 @@ public class ActionController : MonoBehaviour
 
         isAttacking = true;
         attackButtonReleased = false;
-        
+
+        if(inventory.CurrentWeapon == null || !inventory.CurrentWeapon.GetInfo().IsAutoAttack())
+            attackButtonPressed = false;
+
         /*if (currentWeapon != null)
         {
             if(currentWeapon.GetInfo().GetAttackType() == AttackType.Melee1)
@@ -296,22 +328,25 @@ public class ActionController : MonoBehaviour
             if (inventory.CurrentWeapon.GetInfo().GetAttackType() == AttackType.Melee1)
             {
                 GameObject go = Instantiate(inventory.CurrentWeapon.GetInfo().GetWeaponStrike(attackNumber), 
-                    weaponStrike1SpawnPoint.position + weaponStrikeParent.up * inventory.CurrentWeapon.GetInfo().GetRange(), weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
+                    weaponStrike1SpawnPoint.position + weaponStrikeParent.up * inventory.CurrentWeapon.GetInfo().GetRange(), weaponStrike1SpawnPoint.rotation, meleeDirection);
                 meleeStrike = go.GetComponent<MeleeSlash>();
             } else
             {
                 GameObject go = Instantiate(inventory.CurrentWeapon.GetInfo().GetWeaponStrike(attackNumber), 
-                    weaponStrike1SpawnPoint.position + weaponStrikeParent.up * inventory.CurrentWeapon.GetInfo().GetRange(), weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
+                    weaponStrike1SpawnPoint.position + weaponStrikeParent.up * inventory.CurrentWeapon.GetInfo().GetRange(), weaponStrike1SpawnPoint.rotation, meleeDirection);
                 meleeStrike = go.GetComponent<MeleeSlash>();
             }
             if (meleeStrike)
             {
                 meleeStrike.Init(this, inventory.CurrentWeapon, "Enemy", cameraShake);
+
+                playerMovement.MeleeLunge(meleeDirection.up, 0.4f);
+                playerMovement.canMove = false;
             }
         } 
         else
         {
-            GameObject go = Instantiate(defaultMeleeStrike, weaponStrike1SpawnPoint.position, weaponStrike1SpawnPoint.rotation, weaponStrikeParent);
+            GameObject go = Instantiate(defaultMeleeStrike, weaponStrike1SpawnPoint.position, weaponStrike1SpawnPoint.rotation, meleeDirection);
             MeleeSlash meleeStrike = go.GetComponent<MeleeSlash>();
             if (meleeStrike) meleeStrike.Init(this, defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy", cameraShake);
         }
@@ -325,16 +360,26 @@ public class ActionController : MonoBehaviour
 
         isAttacking = false;
 
+        playerMovement.canMove = true;
+
         attackNumber++;
 
         attackNumber = attackNumber % 3;
 
-        if (hand) hand.rotation = Quaternion.identity;
+        if (!attackButtonPressed || playerMovement.IsDashing)
+        {
+            attackNumber = 0;
+        }
 
-        canAttack = false;
+        //if (hand) hand.rotation = Quaternion.identity;
+
         if (inventory.CurrentWeapon != null)
         {
-            StartCoroutine(AttackCooldown(1 / (inventory.CurrentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed))));
+            if (attackNumber == 0)
+            {
+                attackButtonPressed = false;
+                StartCoroutine(AttackCooldown(1 / (inventory.CurrentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed))));
+            }
         }
         else
         {

@@ -55,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9ff52a3c6a7e49746b2cda1bf69713e3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: 447d690840723f1478fe148e4a36576d, type: 2}
-  defaultMaterial: {fileID: 0}
+  defaultMaterial: {fileID: 2100000, guid: 9ff52a3c6a7e49746b2cda1bf69713e3, type: 2}
   spriteRenderers:
   - {fileID: 2162674519699983020}
 --- !u!1 &6505461316401321766
@@ -5072,6 +5072,7 @@ GameObject:
   - component: {fileID: 5095426524737206994}
   - component: {fileID: 7160162389670505612}
   - component: {fileID: 8998228072204108313}
+  - component: {fileID: 8653801525172797726}
   m_Layer: 10
   m_Name: TorsoMonster
   m_TagString: Enemy
@@ -5226,6 +5227,7 @@ MonoBehaviour:
     maxCount: 1
     weight: 0.2
   emotionalEnergyPrefab: {fileID: 98322870789914543, guid: 88afadea5fb2250408442fb5baf50973, type: 3}
+  enemyVisuals: {fileID: 8653801525172797726}
   enemyAudioManager: {fileID: 1229601363505676949}
 --- !u!114 &5557790185517936632
 MonoBehaviour:
@@ -5339,6 +5341,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.24051261, y: 0.14006662}
   m_EdgeRadius: 0
+--- !u!114 &8653801525172797726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8739289154397693608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41dfcc348bd6b834689a6d4497018dea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpriteRends:
+  - {fileID: 2162674519699983020}
+  dissolveRate: 0.35
+  frameRate: 30
 --- !u!1001 &8511337938052272110
 PrefabInstance:
   m_ObjectHideFlags: 0

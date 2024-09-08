@@ -46,13 +46,11 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
     public bool TakeDamage(float amount, Effect effect = null)
     {
-        if (!canTakeDamage) return false;
+        if (!canTakeDamage || enemyMovement.CurrentState == EnemyStateMachine.States.Death) return false;
 
         stats.TakeDamage(amount, effect);
 
         if(debug) print("Health: " + stats.GetHealthValue());
-
-        if (flashColor != null) flashColor.Flash(flashColorLength);
 
         if (stats.GetHealthValue() <= 0)
         {
@@ -60,6 +58,8 @@ public class EnemyHealth : MonoBehaviour, IHealth
             //Destroy(gameObject);
         } else
         {
+            if (flashColor != null) flashColor.Flash(flashColorLength);
+
             canTakeDamage = false;
             StartCoroutine(IFrame());
         }
@@ -68,7 +68,7 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
     public bool TakeDamage(float amount, float stunLength, Effect effect = null)
     {
-        throw new System.NotImplementedException();
+        return true;
     }
 
     public StatsController.Effector InflictEffect(Effect effect)

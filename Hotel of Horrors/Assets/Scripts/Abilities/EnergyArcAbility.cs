@@ -34,7 +34,7 @@ public class EnergyArcAbility : PlayerAbility
             multi.Launch(launchForce, go.transform.up);
         }
         controller.ShakeCamera(cameraShakeFrequency, duration, false);
-        Destroy(go, maxLifeTime);
+        //Destroy(go, maxLifeTime);
         isAttacking = false;
     }
 }

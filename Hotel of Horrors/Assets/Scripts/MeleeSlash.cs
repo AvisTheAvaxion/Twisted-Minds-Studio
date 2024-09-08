@@ -5,6 +5,7 @@ using UnityEngine;
 public class MeleeSlash : MonoBehaviour
 {
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] Collider2D collider;
     [SerializeField] Sprite[] sprites;
     [SerializeField] int frameRate;
     [SerializeField] string defaultTag = "Enemy";
@@ -39,6 +40,9 @@ public class MeleeSlash : MonoBehaviour
 
         this.effects = effects;
 
+        if (collider == null) collider = GetComponent<Collider2D>();
+        collider.enabled = false;
+
         StartCoroutine(Animate());
     }
     public void Init(ActionController actionController, Weapon weapon, string targetTag, CameraShake cameraShake)
@@ -58,6 +62,9 @@ public class MeleeSlash : MonoBehaviour
 
         this.targetTag = targetTag;
         this.cameraShake = cameraShake;
+
+        if (collider == null) collider = GetComponent<Collider2D>();
+        collider.enabled = false;
 
         StartCoroutine(Animate());
     }
@@ -111,6 +118,9 @@ public class MeleeSlash : MonoBehaviour
         {
             for (int i = 0; i < sprites.Length; i++)
             {
+                if (i > 0) collider.enabled = true;
+                if (i >= sprites.Length - 1) collider.enabled = false;
+
                 spriteRenderer.sprite = sprites[i];
                 yield return wait;
             }

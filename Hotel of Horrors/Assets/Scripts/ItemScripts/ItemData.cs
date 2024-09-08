@@ -8,9 +8,14 @@ public class ItemData : MonoBehaviour
     [SerializeField] UseableInfo thisItemData;
     [SerializeField] int count = 1;
     [SerializeField] float activationTime = 0.7f;
+    [SerializeField] int defaultLayer;
+    [SerializeField] int collectableLayer;
 
-    private void Start()
+    private void Awake()
     {
+        print(gameObject.layer);
+        gameObject.layer = defaultLayer;
+        //customRB.Initialize(0.2f, )
         Invoke("ActivateCollider", activationTime);
     }
 
@@ -32,6 +37,12 @@ public class ItemData : MonoBehaviour
 
     void ActivateCollider()
     {
-        GetComponent<Collider2D>().enabled = true;
+        gameObject.layer = collectableLayer;
+        //GetComponent<Collider2D>().enabled = true;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+
     }
 }

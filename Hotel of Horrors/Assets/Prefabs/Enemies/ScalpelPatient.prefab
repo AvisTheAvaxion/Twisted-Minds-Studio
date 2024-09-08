@@ -86,7 +86,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: ce495dafe5060eb46a4ea9f3efccb938, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: 447d690840723f1478fe148e4a36576d, type: 2}
-  defaultMaterial: {fileID: 0}
+  defaultMaterial: {fileID: 2100000, guid: ce495dafe5060eb46a4ea9f3efccb938, type: 2}
   spriteRenderers:
   - {fileID: 9004313259983520654}
 --- !u!1 &5345440206862015689
@@ -5073,6 +5073,7 @@ GameObject:
   - component: {fileID: 6802117315420560503}
   - component: {fileID: 1022842952698779654}
   - component: {fileID: 2892289427171861916}
+  - component: {fileID: 6297455237483238175}
   m_Layer: 10
   m_Name: ScalpelPatient
   m_TagString: Enemy
@@ -5227,6 +5228,7 @@ MonoBehaviour:
     maxCount: 1
     weight: 0.05
   emotionalEnergyPrefab: {fileID: 98322870789914543, guid: 88afadea5fb2250408442fb5baf50973, type: 3}
+  enemyVisuals: {fileID: 6297455237483238175}
   enemyAudioManager: {fileID: 1438359901115324106}
 --- !u!114 &8624140693439099872
 MonoBehaviour:
@@ -5364,6 +5366,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6297455237483238175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6865958303660939511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41dfcc348bd6b834689a6d4497018dea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpriteRends:
+  - {fileID: 9004313259983520654}
+  dissolveRate: 0.35
+  frameRate: 30
 --- !u!1001 &8428530249479478193
 PrefabInstance:
   m_ObjectHideFlags: 0

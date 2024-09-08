@@ -391,10 +391,18 @@ public class ActionController : MonoBehaviour
     IEnumerator AttackCooldown(float waitTime)
     {
         canAttack = false;
-        
-        yield return new WaitForSeconds(waitTime);
+        if (playerGUI != null) playerGUI.UpdateWeaponCooldown(1);
+
+        float timer = 0;
+        while (timer <= waitTime)
+        {
+            timer += Time.deltaTime;
+            if (playerGUI != null) playerGUI.UpdateWeaponCooldown(1 - timer / waitTime);
+            yield return null;
+        }
 
         canAttack = true;
+        if (playerGUI != null) playerGUI.UpdateWeaponCooldown(0);
 
         if (attackButtonPressed && (autoAttack || (inventory.CurrentWeapon != null && inventory.CurrentWeapon.GetInfo().IsAutoAttack())))
         {
@@ -409,13 +417,17 @@ public class ActionController : MonoBehaviour
 
         yield return new WaitUntil(() => !currentPlayerAbitlity.isAttacking);
 
+        if (playerGUI != null) playerGUI.UpdateFreeSlotCooldown(1);
+
         while (timer <= cooldown)
         {
             timer += Time.deltaTime;
+            if (playerGUI != null) playerGUI.UpdateFreeSlotCooldown(1 - timer / cooldown);
             yield return null;
         }
 
         canDoPlayerAbility = true;
+        if (playerGUI != null) playerGUI.UpdateFreeSlotCooldown(0);
     }
     IEnumerator WeaponAbilityCooldown(float cooldown)
     {
@@ -439,13 +451,17 @@ public class ActionController : MonoBehaviour
 
         yield return new WaitUntil(() => !currentSpecialAbility.isAttacking);
 
+        if (playerGUI != null) playerGUI.UpdateMementoCooldown(1);
+
         while (timer <= cooldown)
         {
             timer += Time.deltaTime;
+            if (playerGUI != null) playerGUI.UpdateMementoCooldown(1 - timer / cooldown);
             yield return null;
         }
 
         canDoSpecialAbility = true;
+        if (playerGUI != null) playerGUI.UpdateMementoCooldown(0);
     }
     #endregion
 

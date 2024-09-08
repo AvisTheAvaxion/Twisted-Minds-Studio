@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 7658846945465679254}
   - component: {fileID: 8782799246031793936}
   - component: {fileID: 9185083075097073886}
+  - component: {fileID: 5065963669029145473}
   - component: {fileID: 6135375503073666452}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EmotionalEnergy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +95,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 98322870789914543}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -159,6 +160,39 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5065963669029145473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98322870789914543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f330210a14b5ae34b96fe5188080dfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHeight: 0.5
+  drag: 15
+  bounciness: 0.1
+  maxNumberOfBounces: 3
+  contactFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  onStart: 0
+  endAsTrigger: 1
+  freeze: 0
 --- !u!114 &6135375503073666452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,3 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8ee758724c28e4da656a32c45393b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activationTime: 0.7
+  defaultLayer: 12
+  collectableLayer: 0

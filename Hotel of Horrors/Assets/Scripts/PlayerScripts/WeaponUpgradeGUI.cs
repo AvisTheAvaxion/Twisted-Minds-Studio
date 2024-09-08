@@ -177,6 +177,7 @@ public class WeaponUpgradeGUI : MonoBehaviour
 
             UpdateGUI();
             playerGUI.UpdateEmotionalEnergy();
+            playerGUI.UpdateHotbarGUI();
         }
     }
 

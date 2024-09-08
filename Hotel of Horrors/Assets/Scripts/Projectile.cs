@@ -10,13 +10,21 @@ public class Projectile : MonoBehaviour
     [SerializeField] [Range(0,1)] float chanceToInflictEffect;
     [SerializeField] EffectInfo[] effectsToInflict;
     [SerializeField] int maxTargets = 1;
+    [SerializeField] int maxWallBounces = 1;
     [SerializeField] bool goThroughWalls = false;
 
+    Rigidbody2D rb;
+
     int targetsHit = 0;
+
+    int wallBounces = 0;
 
     private void Start()
     {
         targetsHit = 0;
+        wallBounces = 0;
+
+        rb = GetComponent<Rigidbody2D>();
     } 
 
     public void Initialize(Ability ability)
@@ -33,7 +41,15 @@ public class Projectile : MonoBehaviour
     {
         if(collision.tag.Equals("Wall") && !goThroughWalls)
         {
-            Destroy(gameObject);
+            if (wallBounces < maxWallBounces)
+            {
+                Vector2 closestPoint = collision.ClosestPoint(transform.position);
+                Vector2 normal = ((Vector2)transform.position - closestPoint).normalized;
+                rb.velocity = Vector2.Reflect(rb.velocity, normal);
+
+                wallBounces++;
+            } else
+                Destroy(gameObject);
         }
         else if(collision.tag.Equals("MeleeStrike"))
         {

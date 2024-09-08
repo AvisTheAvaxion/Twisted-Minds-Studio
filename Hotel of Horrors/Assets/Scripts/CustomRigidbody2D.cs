@@ -18,6 +18,7 @@ public class CustomRigidbody2D : MonoBehaviour
     [SerializeField] int maxNumberOfBounces = 3;
     [SerializeField] ContactFilter2D contactFilter;
     [SerializeField] bool onStart;
+    [SerializeField] bool endAsTrigger = false;
 
     int numberOfBounces = 0;
 
@@ -177,7 +178,7 @@ public class CustomRigidbody2D : MonoBehaviour
                     {
                         for (int i = 0; i < colliders.Length; i++)
                         {
-                            colliders[i].isTrigger = false;
+                            colliders[i].isTrigger = endAsTrigger;
                         }
                     }
 
@@ -238,6 +239,8 @@ public class CustomRigidbody2D : MonoBehaviour
             Vector2 normal = (updatedPosition - closestPointOnOtherCollider).normalized;
             Vector2 newVel = rb.velocity;
 
+            //print($"{name}: {normal}");
+
             newVel.y -= upVelocity;
             if (Mathf.Sign(normal.x) != Mathf.Sign(newVel.x))
                 newVel.x *= Mathf.Abs(normal.x) * bounciness * -1;
@@ -269,6 +272,7 @@ public class CustomRigidbody2D : MonoBehaviour
         }
         if (activeCollider == null) return;*/
         Vector2 updatedPosition = (Vector2)transform.position - new Vector2(0, height);
+        //collision.
         Vector2 closestPointOnOtherCollider = collision.ClosestPoint(updatedPosition);
         //Vector2 closestPointOnActiveCollider = activeCollider.ClosestPoint(closestPointOnOtherCollider);
 

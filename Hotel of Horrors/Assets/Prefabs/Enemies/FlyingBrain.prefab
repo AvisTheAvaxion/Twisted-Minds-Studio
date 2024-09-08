@@ -87,7 +87,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 3b1c9f5dd944902468268b510f7f9a31, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: 447d690840723f1478fe148e4a36576d, type: 2}
-  defaultMaterial: {fileID: 0}
+  defaultMaterial: {fileID: 2100000, guid: 3b1c9f5dd944902468268b510f7f9a31, type: 2}
   spriteRenderers:
   - {fileID: 7621195629991446159}
   - {fileID: 3816594382241254047}
@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 5834758641980206469}
   - component: {fileID: 2626282256757693886}
   - component: {fileID: 6071954231053187924}
+  - component: {fileID: 4891665340419228868}
   m_Layer: 10
   m_Name: FlyingBrain
   m_TagString: Enemy
@@ -350,6 +351,7 @@ MonoBehaviour:
     maxCount: 1
     weight: 0.2
   emotionalEnergyPrefab: {fileID: 98322870789914543, guid: 88afadea5fb2250408442fb5baf50973, type: 3}
+  enemyVisuals: {fileID: 4891665340419228868}
   enemyAudioManager: {fileID: 3615001534087251428}
 --- !u!114 &6513521994882905555
 MonoBehaviour:
@@ -487,6 +489,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &4891665340419228868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7728880389295436849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41dfcc348bd6b834689a6d4497018dea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpriteRends:
+  - {fileID: 7621195629991446159}
+  - {fileID: 3816594382241254047}
+  dissolveRate: 0.35
+  frameRate: 30
 --- !u!1 &8278585616756773676
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,7 +558,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 3b1c9f5dd944902468268b510f7f9a31, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

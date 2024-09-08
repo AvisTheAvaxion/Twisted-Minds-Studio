@@ -17,7 +17,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     public enum States
     {
-        Idle, Dialogue, Patrolling, Fighting, Death, Searching
+        Idle, Dialogue, Patrolling, Fighting, Death, Searching, Stun
     }
 
     [SerializeField] bool debug;
@@ -37,11 +37,13 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected ParticleSystem moveParticles;
 
     protected States currentState = States.Idle;
+    public States CurrentState { get => currentState; }
 
     [Header("Settings")]
     [SerializeField] Attacks.AttackModes attackType = Attacks.AttackModes.Melee;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected int emotionalEnergyWorth = 50;
+    [SerializeField] protected float stunLength = 0.5f;
 
     [Header("Patrol Settings")]
     [SerializeField] protected float patrolRadius;
@@ -72,10 +74,13 @@ public class EnemyStateMachine : MonoBehaviour
 
     [Header("Death Settings")]
     [SerializeField] protected float dropRadius = 0.5f;
+    [SerializeField] protected float upwardsVelocity = 0.2f;
+    [SerializeField] protected float startHeight = 0.2f;
     [SerializeField] protected int minDropAmount, maxDropAmount;
     [SerializeField] protected GameObject itemHolderPrefab;
     [SerializeField] protected ItemDrop[] itemDrops;
     [SerializeField] protected GameObject emotionalEnergyPrefab;
+    [SerializeField] protected EnemyVisuals enemyVisuals;
     public static event EventHandler OnEnemyDeath;
     
     protected bool canMove;
@@ -88,9 +93,13 @@ public class EnemyStateMachine : MonoBehaviour
     protected GameObject target;
     protected Vector3 lastTargetPos;
 
+    protected float stunTimer;
+
     protected Transform currentRoom;
 
     protected Vector2 startPos;
+
+    protected bool death;
 
     [Header("Audio Settings")]
     [SerializeField] EnemyAudioManager enemyAudioManager;
@@ -111,6 +120,7 @@ public class EnemyStateMachine : MonoBehaviour
         startPos = transform.position;
 
         canAttack = true;
+        death = false;
 
         StartCoroutine(WaitBeforeMoving(pauseMin, pauseMax));
     }
@@ -142,6 +152,9 @@ public class EnemyStateMachine : MonoBehaviour
             case States.Searching:
                 Search();
                 break;
+            case States.Stun:
+                Stun();
+                break;
         }
     }
 
@@ -160,13 +173,30 @@ public class EnemyStateMachine : MonoBehaviour
     }
     protected virtual void Death() 
     {
-        OnEnemyDeath?.Invoke(this, EventArgs.Empty);
-        SpawnItemDrops();
-        enemyAudioManager.Die();
-        Destroy(gameObject);
+        if (!death)
+        {
+            death = true;
+
+            rb.velocity = Vector2.zero;
+
+            OnEnemyDeath?.Invoke(this, EventArgs.Empty);
+            enemyAudioManager.Die();
+
+            animator.enabled = false;
+
+            if (enemyVisuals)
+            {
+                enemyVisuals.StartDissolve();
+            }
+            else
+            {
+                OnSpawnItemDrops();
+                Destroy(gameObject);
+            }
+        }
     }
 
-    protected virtual void SpawnItemDrops()
+    protected virtual void OnSpawnItemDrops()
     {
         if (itemDrops == null || itemDrops.Length == 0) return;
 
@@ -192,8 +222,12 @@ public class EnemyStateMachine : MonoBehaviour
                 GameObject go = Instantiate(itemHolderPrefab, transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.forward));
                 ItemData data = go.GetComponent<ItemData>();
                 if (data) data.SetItemData(itemDrops[e].item, Random.Range(itemDrops[e].minCount, itemDrops[e].maxCount + 1));
-                Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
-                if(rb) rb.AddForce(GetRandomDir() * dropRadius, ForceMode2D.Impulse);
+                CustomRigidbody2D rb = go.GetComponent<CustomRigidbody2D>();
+                if (rb) 
+                {
+                    rb.Initialize(startHeight, Random.Range(0f, upwardsVelocity));
+                    rb.AddForce(GetRandomDir() * dropRadius * 2, ForceMode2D.Impulse); 
+                }
             }
         }
 
@@ -205,8 +239,12 @@ public class EnemyStateMachine : MonoBehaviour
             GameObject go = Instantiate(emotionalEnergyPrefab, transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.forward));
             EmotionalEnergy data = go.GetComponent<EmotionalEnergy>();
             if (data) data.SetEmotionalEnergy(ee);
-            Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
-            if (rb) rb.AddForce(GetRandomDir() * dropRadius * 2, ForceMode2D.Impulse);
+            CustomRigidbody2D rb = go.GetComponent<CustomRigidbody2D>();
+            if (rb)
+            {
+                rb.Initialize(startHeight, Random.Range(0f, upwardsVelocity));
+                rb.AddForce(GetRandomDir() * dropRadius * 3, ForceMode2D.Impulse);
+            }
 
             currentEE -= ee;
         }
@@ -341,6 +379,16 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
+    protected virtual void Stun()
+    {
+        stunTimer += Time.deltaTime;
+
+        if(stunTimer > stunLength)
+        {
+            currentState = States.Fighting;
+        }
+    }
+
     #region Melee Attack
     public virtual void MeleeAttackStart()
     {
@@ -418,6 +466,13 @@ public class EnemyStateMachine : MonoBehaviour
 
     public void Knockback(Vector2 dir, float strength)
     {
+        if(currentState != States.Death) 
+        { 
+            stunTimer = 0;
+            currentState = States.Stun;
+            if (hasWalkCycle && animator != null) animator.SetBool("isWalking", false);
+        }
+
         navigation.PauseMovement(0.5f);
         rb.AddForce(dir * strength, ForceMode2D.Impulse);
     }
@@ -433,7 +488,7 @@ public class EnemyStateMachine : MonoBehaviour
     //Attack cooldown
     protected IEnumerator WaitBeforeAttacking(float minWait, float maxWait)
     {
-        //canAttack = false;
+        canAttack = false;
         yield return new WaitForSeconds(Random.Range(minWait, maxWait));
         canAttack = true;
     }
@@ -510,6 +565,8 @@ public class EnemyStateMachine : MonoBehaviour
     //Animation Event
     public void EmitMoveParticles()
     {
+        if (currentState == States.Death) return;
+
         if (moveParticles) moveParticles.Stop();
         if (moveParticles) moveParticles.Play();
     }
@@ -558,9 +615,13 @@ public class EnemyStateMachine : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, aggroRadius);
 
             Gizmos.color = Color.blue;
-            float distToPlayer = GetDistanceToPlayer();
-            Vector2 dirToPlayer = GetDirToPlayer();
-            Gizmos.DrawLine(rayCastOrigin.position, rayCastOrigin.position + (Vector3)(dirToPlayer * distToPlayer));
+
+            if (target != null)
+            {
+                float distToPlayer = GetDistanceToPlayer();
+                Vector2 dirToPlayer = GetDirToPlayer();
+                Gizmos.DrawLine(rayCastOrigin.position, rayCastOrigin.position + (Vector3)(dirToPlayer * distToPlayer));
+            }
         }
     }
 }

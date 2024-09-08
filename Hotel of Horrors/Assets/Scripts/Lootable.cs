@@ -9,6 +9,8 @@ public class Lootable : MonoBehaviour
     [Header("Drop Settings")]
     [SerializeField] protected float dropRadius = 0.5f;
     [SerializeField] protected float destroyedLaunchForce = 10f;
+    [SerializeField] protected float startHeight = 0.2f;
+    [SerializeField] protected float upwardsVelocity = 1f;
     [SerializeField] protected int minDropAmount;
     [SerializeField] protected int maxDropAmount;
     [SerializeField] protected GameObject itemHolder;
@@ -58,8 +60,12 @@ public class Lootable : MonoBehaviour
                 GameObject go = Instantiate(itemHolder, transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.forward));
                 ItemData data = go.GetComponent<ItemData>();
                 if (data) data.SetItemData(itemDrops[e].item, Random.Range(itemDrops[e].minCount, itemDrops[e].maxCount + 1));
-                Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
-                if (rb) rb.AddForce(GetRandomDir() * dropRadius, ForceMode2D.Impulse);
+                CustomRigidbody2D rb = go.GetComponent<CustomRigidbody2D>();
+                if (rb) 
+                {
+                    rb.Initialize(startHeight, Random.Range(0f, upwardsVelocity));
+                    rb.AddForce(GetRandomDir() * dropRadius, ForceMode2D.Impulse); 
+                }
             }
         }
 

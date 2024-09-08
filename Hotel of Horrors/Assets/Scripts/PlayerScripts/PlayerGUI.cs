@@ -12,6 +12,9 @@ public class PlayerGUI : MonoBehaviour
     [SerializeField] Image weaponHotbarImage;
     [SerializeField] Image freeSlotHotbarImage;
     [SerializeField] Image mementoHotbarImage;
+    [SerializeField] Image weaponCooldownImage;
+    [SerializeField] Image freeSlotCooldownImage;
+    [SerializeField] Image mementoCooldownImage;
 
     [SerializeField] TextMeshProUGUI floorNumText;
     [SerializeField] TextMeshProUGUI roomNameText;
@@ -23,11 +26,15 @@ public class PlayerGUI : MonoBehaviour
     private void Start()
     {
         inventory = FindObjectOfType<PlayerInventory>();
+
+        weaponCooldownImage.fillAmount = 0;
+        freeSlotCooldownImage.fillAmount = 0;
+        mementoCooldownImage.fillAmount = 0;
     }
 
     private void Update()
     {
-        //UpdateEmotionalEnergy();
+        
     }
 
     public void UpdateEmotionalEnergy()
@@ -70,6 +77,19 @@ public class PlayerGUI : MonoBehaviour
         {
             mementoHotbarImage.enabled = false;
         }
+    }
+
+    public void UpdateWeaponCooldown(float t)
+    {
+        weaponCooldownImage.fillAmount = t;
+    }
+    public void UpdateFreeSlotCooldown(float t)
+    {
+        freeSlotCooldownImage.fillAmount = t;
+    }
+    public void UpdateMementoCooldown(float t)
+    {
+        mementoCooldownImage.fillAmount = t;
     }
 
     public GameObject CreateEffectIcon()

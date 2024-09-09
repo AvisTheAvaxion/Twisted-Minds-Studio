@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cbb3aab32dc6e4940a6e9c0e3c73971a
+guid: 3ef4d38657c37c942a45263a19d26c49
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MC_ThreeQuarter_Walking_0
+      name: EmotionalEnergy_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bba56f369a6539341ac3cbb3ddada6a2
-      internalID: 278824878
+      spriteID: 75d12ac16805f854f8a4bc07e0b34cd2
+      internalID: 1350690496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MC_ThreeQuarter_Walking_1
+      name: EmotionalEnergy_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 32
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0827aba7aa31e84bb3bcd268c8f2348
-      internalID: -348738970
+      spriteID: 07ecd6c1fcc41a8428dc1ee23ebc23f2
+      internalID: -933225762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MC_ThreeQuarter_Walking_2
+      name: EmotionalEnergy_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ecf8565ce292b447af86e941b5117fc
+      internalID: -739138579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EmotionalEnergy_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebc9609dc57abf34dbf209967979da69
-      internalID: -1187487276
+      spriteID: 610811af7c58506459770a9f41d204c5
+      internalID: -1275950652
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MC_ThreeQuarter_Walking_3
+      name: EmotionalEnergy_4
       rect:
         serializedVersion: 2
-        x: 144
+        x: 128
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,8 +221,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ba1a45332d223c46b12b2e7063ebcc5
-      internalID: 450352237
+      spriteID: df97ccb7464ed0e468bc18544225a0f1
+      internalID: 1449294391
       vertices: []
       indices: 
       edges: []
@@ -217,10 +238,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MC_ThreeQuarter_Walking_0: 278824878
-      MC_ThreeQuarter_Walking_1: -348738970
-      MC_ThreeQuarter_Walking_2: -1187487276
-      MC_ThreeQuarter_Walking_3: 450352237
+      EmotionalEnergy_0: 1350690496
+      EmotionalEnergy_1: -933225762
+      EmotionalEnergy_2: -739138579
+      EmotionalEnergy_3: -1275950652
+      EmotionalEnergy_4: 1449294391
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

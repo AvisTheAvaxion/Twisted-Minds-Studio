@@ -236,7 +236,7 @@ public class EnemyStateMachine : MonoBehaviour
         {
             int ee = Mathf.Clamp(Random.Range(EmotionalEnergy.minEmotionalEnergyPickup, EmotionalEnergy.maxEmotionalEnergyPickup + 1), 0, currentEE);
 
-            GameObject go = Instantiate(emotionalEnergyPrefab, transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.forward));
+            GameObject go = Instantiate(emotionalEnergyPrefab, transform.position, emotionalEnergyPrefab.transform.rotation);
             EmotionalEnergy data = go.GetComponent<EmotionalEnergy>();
             if (data) data.SetEmotionalEnergy(ee);
             CustomRigidbody2D rb = go.GetComponent<CustomRigidbody2D>();

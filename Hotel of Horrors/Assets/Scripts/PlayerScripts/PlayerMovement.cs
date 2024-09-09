@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AnimatorOverrideController backController;
     [SerializeField] AnimatorOverrideController leftController;
     [SerializeField] AnimatorOverrideController rightController;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     [Header ("Object References")]
     [SerializeField] GameObject player;
@@ -93,25 +94,36 @@ public class PlayerMovement : MonoBehaviour
                 {
                     //back
                     direction = "North";
-                    animator.runtimeAnimatorController = backController;
+                    //animator.runtimeAnimatorController = backController;
                 }
                 else if (angle <= -45 && angle > -135 && !direction.Equals("West"))
                 {
                     //left
                     direction = "West";
-                    animator.runtimeAnimatorController = leftController;
+                    //animator.runtimeAnimatorController = leftController;
                 }
                 else if (angle <= -135 || angle > 135 && !direction.Equals("South"))
                 {
                     //forward
                     direction = "South";
-                    animator.runtimeAnimatorController = forwardController;
+                    //animator.runtimeAnimatorController = forwardController;
                 }
                 else if (angle <= 135 && angle > 45 && !direction.Equals("East"))
                 {
                     //right
                     direction = "East";
-                    animator.runtimeAnimatorController = rightController;
+                    //animator.runtimeAnimatorController = rightController;
+                }
+
+                if(angle >= 0 && angle <= 180)
+                {
+                    direction = "East";
+                    spriteRenderer.flipX = true;
+                }
+                else
+                {
+                    direction = "West";
+                    spriteRenderer.flipX = false;
                 }
             }
 
@@ -195,22 +207,25 @@ public class PlayerMovement : MonoBehaviour
         if (movementVector.y >= 0.1f)
         {
             direction = "North";
-            animator.runtimeAnimatorController = backController;
+            //animator.runtimeAnimatorController = backController;
         }
         else if (movementVector.y <= -0.1f)
         {
             direction = "South";
-            animator.runtimeAnimatorController = forwardController;
+            //animator.runtimeAnimatorController = forwardController;
         }
-        else if (movementVector.x <= -0.1f)
+        
+        if (movementVector.x <= -0.1f)
         {
             direction = "West";
-            animator.runtimeAnimatorController = leftController;
+            spriteRenderer.flipX = false;
+            //animator.runtimeAnimatorController = leftController;
         }
         else if (movementVector.x >= 0.1f)
         {
             direction = "East";
-            animator.runtimeAnimatorController = rightController;
+            spriteRenderer.flipX = true;
+            //animator.runtimeAnimatorController = rightController;
         }
 
         if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)

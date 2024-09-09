@@ -84,8 +84,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Walk (Front)
-  m_Speed: 2
+  m_Name: Walk
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 3804899147706445007}
@@ -98,7 +98,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1a881a2532d839640823997d37b8f473, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4410baf9f7074ad40922518cfd9e578b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -364,7 +364,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5dbc1f40e430e89499597c59eb400692, type: 2}
+  m_Motion: {fileID: 7400000, guid: aec239a0b7d5238459c74a73c7cd9da9, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -510,10 +510,10 @@ AnimatorStateMachine:
     m_Position: {x: 330, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6538068427281770625}
-    m_Position: {x: 690, y: 180, z: 0}
+    m_Position: {x: 640, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5674708708352460011}
-    m_Position: {x: 530, y: 20, z: 0}
+    m_Position: {x: 490, y: 20, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 4286901021598360715}
@@ -632,7 +632,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dash (Front)
+  m_Name: Dash
   m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
@@ -647,7 +647,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 274a3ff94033cbf46963d4838dc0626b, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4790c90fd46c67e41992d08716b1ecb9, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

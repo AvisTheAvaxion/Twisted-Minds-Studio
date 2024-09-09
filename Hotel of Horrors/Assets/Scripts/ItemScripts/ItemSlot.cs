@@ -51,7 +51,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             amountText.enabled = true;
             itemImage.color = slotFilledColor;
             amountText.text = item.CurrentAmount.ToString();
-            itemImage.sprite = item.GetInfo().GetSprite();
+            itemImage.sprite = item.GetInfo().GetDisplaySprite();
         }
         else
         {
@@ -69,7 +69,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             amountText.enabled = true;
             itemImage.color = slotFilledColor;
             amountText.text = item.CurrentAmount.ToString();
-            itemImage.sprite = item.GetInfo().GetSprite();
+            itemImage.sprite = item.GetInfo().GetDisplaySprite();
         }
         else
         {
@@ -84,7 +84,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             amountText.enabled = false;
             itemImage.color = slotFilledColor;
-            itemImage.sprite = weapon.GetInfo().GetSprite();
+            itemImage.sprite = weapon.GetInfo().GetDisplaySprite();
         }
         else
         {
@@ -101,7 +101,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
             amountText.enabled = false;
             itemImage.color = slotFilledColor;
-            itemImage.sprite = weapon.GetInfo().GetSprite();
+            itemImage.sprite = weapon.GetInfo().GetDisplaySprite();
         }
         else
         {
@@ -117,7 +117,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             amountText.enabled = false;
             itemImage.color = slotFilledColor;
-            itemImage.sprite = ability.GetInfo().GetSprite();
+            itemImage.sprite = ability.GetInfo().GetDisplaySprite();
         }
         else
         {
@@ -134,7 +134,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
             amountText.enabled = false;
             itemImage.color = slotFilledColor;
-            itemImage.sprite = ability.GetInfo().GetSprite();
+            itemImage.sprite = ability.GetInfo().GetDisplaySprite();
         }
         else
         {

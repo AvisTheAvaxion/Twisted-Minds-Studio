@@ -11,6 +11,7 @@ public abstract class UseableInfo : ScriptableObject
     [SerializeField, TextArea] string description;
     [SerializeField] int maxStackAmount = 1;
     [SerializeField] Sprite sprite;
+    [SerializeField] Sprite displaySprite;
 
     public abstract void Use();
 
@@ -29,6 +30,10 @@ public abstract class UseableInfo : ScriptableObject
     public Sprite GetSprite()
     {
         return sprite;
+    }
+    public Sprite GetDisplaySprite()
+    {
+        return displaySprite;
     }
 
     public void SetID(int id)

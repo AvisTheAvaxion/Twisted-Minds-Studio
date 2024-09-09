@@ -16,6 +16,7 @@ MonoBehaviour:
   description: This is a dagger
   maxStackAmount: 1
   sprite: {fileID: 21300000, guid: f229bd9bdc051724cae82f17a91914e1, type: 3}
+  displaySprite: {fileID: 21300000, guid: 14e2f51592d912348b6bc62984359a83, type: 3}
   mode: 0
   type: 0
   weaponAbility: {fileID: 0}
@@ -23,7 +24,7 @@ MonoBehaviour:
   baseLevel: 1
   maxLevel: 0
   attackSpeed: 0.2
-  autoAttack: 1
+  autoAttack: 0
   attacks:
   - damagePercIncrease: 0
     knockbackPercIncrease: 0

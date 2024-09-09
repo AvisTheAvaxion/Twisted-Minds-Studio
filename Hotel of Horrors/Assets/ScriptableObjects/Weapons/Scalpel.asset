@@ -16,6 +16,7 @@ MonoBehaviour:
   description: 
   maxStackAmount: 1
   sprite: {fileID: 21300000, guid: 4e882dbeb9c95b049bc3ad1af13f432f, type: 3}
+  displaySprite: {fileID: 21300000, guid: ae501e71924859e46aaacd7a9d8b5332, type: 3}
   mode: 0
   type: 0
   weaponAbility: {fileID: 0}
@@ -23,7 +24,7 @@ MonoBehaviour:
   baseLevel: 1
   maxLevel: 3
   attackSpeed: 0.3
-  autoAttack: 1
+  autoAttack: 0
   attacks:
   - damagePercIncrease: 0
     knockbackPercIncrease: 0

@@ -47,7 +47,7 @@ public class PlayerGUI : MonoBehaviour
         if(inventory.CurrentWeapon != null)
         {
             weaponHotbarImage.enabled = true;
-            weaponHotbarImage.sprite = inventory.CurrentWeapon.GetInfo().GetSprite();
+            weaponHotbarImage.sprite = inventory.CurrentWeapon.GetInfo().GetDisplaySprite();
         } else
         {
             weaponHotbarImage.enabled = false;
@@ -56,7 +56,7 @@ public class PlayerGUI : MonoBehaviour
         if (inventory.CurrentItem != null)
         {
             freeSlotHotbarImage.enabled = true;
-            freeSlotHotbarImage.sprite = inventory.CurrentItem.GetInfo().GetSprite();
+            freeSlotHotbarImage.sprite = inventory.CurrentItem.GetInfo().GetDisplaySprite();
         }
         else
         {
@@ -66,13 +66,13 @@ public class PlayerGUI : MonoBehaviour
         if (inventory.CurrentAbility != null)
         {
             freeSlotHotbarImage.enabled = true;
-            freeSlotHotbarImage.sprite = inventory.CurrentAbility.GetInfo().GetSprite();
+            freeSlotHotbarImage.sprite = inventory.CurrentAbility.GetInfo().GetDisplaySprite();
         }
 
         if(inventory.CurrentMemento != null)
         {
             mementoHotbarImage.enabled = true;
-            mementoHotbarImage.sprite = inventory.CurrentMemento.GetSprite();
+            mementoHotbarImage.sprite = inventory.CurrentMemento.GetDisplaySprite();
         } else
         {
             mementoHotbarImage.enabled = false;

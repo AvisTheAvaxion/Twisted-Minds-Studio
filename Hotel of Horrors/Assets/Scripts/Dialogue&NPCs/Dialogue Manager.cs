@@ -10,6 +10,7 @@ public class DialogueManager : MonoBehaviour
 {
     [SerializeField] Dialogue.Dialog cutscene;
     [SerializeField] PlayerMovement movement;
+    [SerializeField] PlayerInventory inventory;
     [SerializeField] NewAudioManager AudioManager;
     [SerializeField] Image ProfilePic;
     [SerializeField] List<Sprite> CharacterPics;
@@ -90,15 +91,16 @@ public class DialogueManager : MonoBehaviour
         if (currentLine < lines.Length)
         {
             //Parse the line for relevent information and do corresponding actions
+            #region Audio Functions
             if (lines[currentLine].StartsWith("$PlayEffect"))
-                {
-                    string[] sound = lines[currentLine].Split("|");
-                    AudioManager.PlayEffect(sound[1]);
-                    currentLine++;
-                    OnDialogueUpdate();
-                    currentLine--;
+            {
+                string[] sound = lines[currentLine].Split("|");
+                AudioManager.PlayEffect(sound[1]);
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
 
-                }
+            }
             else if (lines[currentLine].StartsWith("$PlaySong"))
             {
                 string[] sound = lines[currentLine].Split("|");
@@ -107,101 +109,147 @@ public class DialogueManager : MonoBehaviour
                 OnDialogueUpdate();
                 currentLine--;
             }
-                #region ChoiceDialog
-                else if (lines[currentLine].EndsWith("$Prompt"))
-                {
-                    isPicking = true;
-                    ButtonSwitch(true);
-                    string startString = lines[currentLine].Replace("$Prompt", "");
-                    string[] splitString = startString.Split('|');
-                    string promptText = splitString[0];
-                    string bOneText = splitString[1];
-                    string bTwoText = splitString[2];
-                    string outputName = promptText.Split(':')[0];
-                    string outputText = promptText.Split(":")[1];
-                    textBox.text = outputText;
-                    nameBox.text = outputName;
-                    buttonOneText.text = bOneText;
-                    buttonTwoText.text = bTwoText;
+            #endregion
+            #region ChoiceDialog
+            else if (lines[currentLine].EndsWith("$Prompt"))
+            {
+                isPicking = true;
+                ButtonSwitch(true);
+                string startString = lines[currentLine].Replace("$Prompt", "");
+                string[] splitString = startString.Split('|');
+                string promptText = splitString[0];
+                string bOneText = splitString[1];
+                string bTwoText = splitString[2];
+                string outputName = promptText.Split(':')[0];
+                string outputText = promptText.Split(":")[1];
+                textBox.text = outputText;
+                nameBox.text = outputName;
+                buttonOneText.text = bOneText;
+                buttonTwoText.text = bTwoText;
 
-                    UpdateImage();
+                UpdateImage();
 
             }
             else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceOne)
-                {
-                    string optionAText = lines[currentLine].Replace("$OptionA", "");
-                    string outputText = optionAText.Split(":")[1];
-                    string outputName = optionAText.Split(':')[0];
-                    textBox.text = outputText;
-                    nameBox.text = outputName;
+            {
+                string optionAText = lines[currentLine].Replace("$OptionA", "");
+                string outputText = optionAText.Split(":")[1];
+                string outputName = optionAText.Split(':')[0];
+                textBox.text = outputText;
+                nameBox.text = outputName;
 
-                    UpdateImage();
+                UpdateImage();
             }
             else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceOne)
+            {
+                while (lines[currentLine].Contains("$OptionB"))
                 {
-                    while (lines[currentLine].Contains("$OptionB"))
-                    {
-                        currentLine++;
-                    }
-                    OnDialogueUpdate();
-                    currentLine--;
+                    currentLine++;
                 }
-                else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceTwo)
-                {
-                    string optionBText = lines[currentLine].Replace("$OptionB", "");
-                    string outputText = optionBText.Split(":")[1];
-                    string optionBName = optionBText.Split(':')[0];
-                    textBox.text = outputText;
-                    nameBox.text = optionBName;
+                OnDialogueUpdate();
+                currentLine--;
+            }
+            else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceTwo)
+            {
+                string optionBText = lines[currentLine].Replace("$OptionB", "");
+                string outputText = optionBText.Split(":")[1];
+                string optionBName = optionBText.Split(':')[0];
+                textBox.text = outputText;
+                nameBox.text = optionBName;
 
-                    UpdateImage();
-                }
-                else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceTwo)
+                UpdateImage();
+            }
+            else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceTwo)
+            {
+                while (lines[currentLine].Contains("$OptionA"))
                 {
-                    while (lines[currentLine].Contains("$OptionA"))
-                    {
-                        currentLine++;
-                    }
-                    OnDialogueUpdate();
-                    currentLine--;
+                    currentLine++;
                 }
-                #endregion
-
+                OnDialogueUpdate();
+                currentLine--;
+            }
+            #endregion
+            #region Cutscene Functions
             else if (lines[currentLine].EndsWith("$Move") || lines[currentLine].StartsWith("$Move"))
-                {
-                    int moveStartIndex = lines[currentLine].IndexOf('(');
-                    int moveEndIndex = lines[currentLine].IndexOf(')');
-                    string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
-                    string[] splitString = moveInfo.Split(',');
-                    Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
-                    SetMoveCharacterInfo(splitString[0], 3, target);
-                }
-                else if (lines[currentLine].EndsWith("$Spin") || lines[currentLine].StartsWith("$Spin"))
-                {
+            {
+                int moveStartIndex = lines[currentLine].IndexOf('(');
+                int moveEndIndex = lines[currentLine].IndexOf(')');
+                string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
+                string[] splitString = moveInfo.Split(',');
+                Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
+                SetMoveCharacterInfo(splitString[0], 3, target);
+            }
+            else if (lines[currentLine].EndsWith("$Kill") || lines[currentLine].StartsWith("$Kill"))
+            {
+                int killStartIndex = lines[currentLine].IndexOf('(');
+                int killEndIndex = lines[currentLine].IndexOf(')');
+                string killInfo = lines[currentLine].Substring(killStartIndex + 1, killEndIndex - killStartIndex - 1);
+                Destroy(GameObject.Find(killInfo));
 
-                }
-                else if (lines[currentLine].EndsWith("$Give") || lines[currentLine].StartsWith("$Give"))
+            }
+            #endregion
+            //We gonna get rid of this is no use is found this week ;/
+            else if (lines[currentLine].EndsWith("$Spin") || lines[currentLine].StartsWith("$Spin"))
+            {
+
+            }
+            #region Invetory Functions
+            else if (lines[currentLine].EndsWith("$GiveWeapon") || lines[currentLine].StartsWith("$GiveWeapon"))
+            {
+                WeaponInfo desiredWeaponInfo = new WeaponInfo();
+
+                int giveStartIndex = lines[currentLine].IndexOf('(');
+                int giveEndIndex = lines[currentLine].IndexOf(')');
+                string giveInfo = lines[currentLine].Substring(giveStartIndex + 1, giveEndIndex - giveStartIndex - 1);
+
+                foreach (WeaponInfo weapon in UsableDatabase.weaponInfos)
                 {
-
+                    if(weapon.GetName() == giveInfo)
+                    {
+                        desiredWeaponInfo = weapon;
+                        break;
+                    }
                 }
-                else if (lines[currentLine].EndsWith("$Kill") || lines[currentLine].StartsWith("$Kill"))
+                if (desiredWeaponInfo != null)
                 {
-                    int killStartIndex = lines[currentLine].IndexOf('(');
-                    int killEndIndex = lines[currentLine].IndexOf(')');
-                    string killInfo = lines[currentLine].Substring(killStartIndex + 1, killEndIndex - killStartIndex - 1);
-                    Destroy(GameObject.Find(killInfo));
-
+                    Weapon desiredWeapon = new Weapon(desiredWeaponInfo);
+                    inventory.AddWeapon(desiredWeapon);
                 }
-                else
+            }
+            else if (lines[currentLine].EndsWith("$GiveItem") || lines[currentLine].StartsWith("$GiveItem"))
+            {
+                ItemInfo desiredItemInfo = new ItemInfo();
+
+                int giveStartIndex = lines[currentLine].IndexOf('(');
+                int giveEndIndex = lines[currentLine].IndexOf(')');
+                string giveInfo = lines[currentLine].Substring(giveStartIndex + 1, giveEndIndex - giveStartIndex - 1);
+                string[] splitString = giveInfo.Split(',');
+
+                foreach (ItemInfo weapon in UsableDatabase.itemInfos)
                 {
-                    textBox.fontStyle = TMPro.FontStyles.Normal;
-                    currentChoice = PlayerChoice.None;
-                    nameBox.text = lines[currentLine].Split(':')[0];
-                    textBox.text = lines[currentLine].Split(':')[1];
-
-                    UpdateImage();
-
+                    if (weapon.GetName() == splitString[0])
+                    {
+                        desiredItemInfo = weapon;
+                        break;
+                    }
                 }
+                if (desiredItemInfo != null)
+                {
+                    Item desiredItem = new Item(desiredItemInfo, Int32.Parse(splitString[1]));
+                    inventory.AddItem(desiredItem);
+                }
+            }
+            #endregion
+            
+            else
+            {
+                textBox.fontStyle = TMPro.FontStyles.Normal;
+                currentChoice = PlayerChoice.None;
+                nameBox.text = lines[currentLine].Split(':')[0];
+                textBox.text = lines[currentLine].Split(':')[1];
+
+                UpdateImage();
+            }
         }
         //When there are no more lines of dialog to read.
         else if(currentLine > lines.Length)
@@ -281,6 +329,17 @@ public class DialogueManager : MonoBehaviour
     {
         canvas.SetActive(isCanvasOn);
     }
+
+    void UpdateImage()
+    {
+        foreach (Sprite sprite in CharacterPics)
+        {
+            if (sprite.name == nameBox.text)
+            {
+                ProfilePic.sprite = sprite;
+            }
+        }
+    }
     #endregion]
 
     public PlayerChoice GetPlayerChoice()
@@ -292,17 +351,6 @@ public class DialogueManager : MonoBehaviour
     {
         cutscene = newDialog;
         StartCutScene(cutscene.ToString(), 0);
-    }
-
-    void UpdateImage()
-    {
-        foreach (Sprite sprite in CharacterPics)
-        {
-            if (sprite.name == nameBox.text)
-            {
-                ProfilePic.sprite = sprite;
-            }
-        }
     }
 }
 

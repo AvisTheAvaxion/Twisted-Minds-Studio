@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] PlayerMovement movement;
     [SerializeField] PlayerInventory inventory;
     [SerializeField] NewAudioManager AudioManager;
+    [SerializeField] PlayerAudio playerAudio;
     [SerializeField] Image ProfilePic;
     [SerializeField] List<Sprite> CharacterPics;
 
@@ -77,7 +77,6 @@ public class DialogueManager : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && inCutscene && !isPicking && !characterMoving)
         {
             OnDialogueUpdate();
-            //AudioManager.PlayEffect("NextLine");
         }
         else if (characterMoving)
         {
@@ -109,6 +108,21 @@ public class DialogueManager : MonoBehaviour
                 OnDialogueUpdate();
                 currentLine--;
             }
+            else if (lines[currentLine].StartsWith("$Pause"))
+            {
+                AudioManager.Pause();
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
+            }
+            else if (lines[currentLine].StartsWith("$Resume"))
+            {
+                AudioManager.Play();
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
+            }
+
             #endregion
             #region ChoiceDialog
             else if (lines[currentLine].EndsWith("$Prompt"))
@@ -127,6 +141,7 @@ public class DialogueManager : MonoBehaviour
                 buttonOneText.text = bOneText;
                 buttonTwoText.text = bTwoText;
 
+                playerAudio.NextLine(currentLine);
                 UpdateImage();
 
             }
@@ -138,6 +153,7 @@ public class DialogueManager : MonoBehaviour
                 textBox.text = outputText;
                 nameBox.text = outputName;
 
+                playerAudio.NextLine(currentLine);
                 UpdateImage();
             }
             else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceOne)
@@ -157,6 +173,7 @@ public class DialogueManager : MonoBehaviour
                 textBox.text = outputText;
                 nameBox.text = optionBName;
 
+                playerAudio.NextLine(currentLine);
                 UpdateImage();
             }
             else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceTwo)
@@ -248,6 +265,7 @@ public class DialogueManager : MonoBehaviour
                 nameBox.text = lines[currentLine].Split(':')[0];
                 textBox.text = lines[currentLine].Split(':')[1];
 
+                playerAudio.NextLine(currentLine);
                 UpdateImage();
             }
         }
@@ -296,7 +314,6 @@ public class DialogueManager : MonoBehaviour
     #region GUI Behavior
     public void ButtonOneSelect()
     {
-        AudioManager.PlayEffect("NextLine");
         currentChoice = PlayerChoice.ChoiceOne;
         ButtonSwitch(false);
         while (lines[currentLine].Contains("$OptionB"))
@@ -308,7 +325,6 @@ public class DialogueManager : MonoBehaviour
     }
     public void ButtonTwoSelect()
     {
-        AudioManager.PlayEffect("NextLine");
         currentChoice = PlayerChoice.ChoiceTwo;
         ButtonSwitch(false);
         while (lines[currentLine].Contains("$OptionA"))

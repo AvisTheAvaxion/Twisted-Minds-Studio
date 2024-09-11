@@ -6,6 +6,7 @@ public class PlayerSounds : MonoBehaviour
 {
     [SerializeField] AudioClip dash;
     [SerializeField] AudioClip damage;
+    [SerializeField] AudioClip nextLine;
 
     [SerializeField] List<AudioClip> AttackSounds;
     [SerializeField] List<AudioClip> AbilitySounds;
@@ -73,5 +74,10 @@ public class PlayerSounds : MonoBehaviour
     public AudioClip Damage()
     {
         return damage;
+    }
+
+    public AudioClip NextLine()
+    {
+        return nextLine;
     }
 }

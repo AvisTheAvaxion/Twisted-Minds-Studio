@@ -108,6 +108,12 @@ public class NewAudioManager : MonoBehaviour
         ambientSource.Pause();
     }
 
+    public void Play()
+    {
+        bgmSource.Play();
+        ambientSource.Play();
+    }
+
 
 
 }

@@ -57,10 +57,14 @@ public class Dialogue
 
     string[] VarrenEncounter = new string[]
     {
+        /*
         "Varren: Play some toons",
         "$PlaySong|KarrenTheme",
         "Varren: Here i come",
         "$PlayEffect|DoorOpen",
+        "coming: hai",
+        */
+        "$PlaySong|StienTheme",
         "$Move(Varren,0,-48.32)",
         "Varren: Oh? And who might you be?|No one|AHHHHH$Prompt",
         "Protag: Who are you? Where did you come from?$OptionA",
@@ -84,6 +88,7 @@ public class Dialogue
         "Protag: Maybe you missed a spot?",
         "Varren: No.",
         "Protag: Maybe there is a hidden room?",
+        "$Pause",
         "Varren: <b>NO!!!</b>",
         "Varren: <i>(Sigh)</i>",
         "Varren: <i>(stubborn little ****)</i>",
@@ -95,6 +100,7 @@ public class Dialogue
         "Varren: <b>And Ever.</b>",
         "Varren: <b><u>And Ever...</b></u>",
         "Varren: ...",
+        "$Resume",
         "Varren: Since we're stuck here why don't you go ahead and tell me what it is you've done to end up here?",
         "Protag: I really don't remember. There has to be some sort of mix-up here. I'm going to find whoever put us here and prove that there is a way out.",
         "Varren: There's no convincing you is there kid?|Well just giving up and just sitting here isn't going to accomplish anything.|There's no way I can stay in this stinky place$Prompt",

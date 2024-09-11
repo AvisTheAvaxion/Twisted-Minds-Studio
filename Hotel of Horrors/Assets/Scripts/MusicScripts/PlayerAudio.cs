@@ -12,7 +12,9 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] AudioSource MovementSource;
     [SerializeField] AudioSource AttackSource;
     [SerializeField] AudioSource AbilitySource;
+    [SerializeField] AudioSource NextLineSource;
 
+    int i = 0;
 
 
     private void Start()
@@ -55,6 +57,11 @@ public class PlayerAudio : MonoBehaviour
         DamageSource.Play();
     }
 
+    public void NextLine(int currentLine)
+    {
+        if (currentLine == 0) { return; }
+        NextLineSource.Play();
+    }
 
 
 

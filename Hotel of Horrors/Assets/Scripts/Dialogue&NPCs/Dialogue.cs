@@ -1,7 +1,11 @@
+using Pathfinding.Ionic.Zlib;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.InputManagerEntry;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class Dialogue
 {
@@ -17,7 +21,11 @@ public class Dialogue
                 return FirstMonster;
             case "VarrenEncounter":
                 return VarrenEncounter;
-                
+            case "CombatEncounter":
+                return CombatTutorial;
+            case "DrHarrisQuest":
+                return DrHarrisQuest;
+
         }
         return null;
     }
@@ -28,6 +36,12 @@ public class Dialogue
         SameRoomAgain,
         FirstMonster,
         VarrenEncounter,
+        CombatTutorial,
+        DrHarrisQuest,
+        DrHarrisQuest2,
+        DrHarrisQuest3,
+        DrHarrisQuest4,
+        DrHarrisQuest5,
     }
 
     #region Floor 1 Dialog
@@ -115,97 +129,106 @@ public class Dialogue
         "$Move(Varren,-4,-48.32)",
         "$Kill(Varren)"
     };
+
+    string[] CombatTutorial = new string[]
+    {
+        //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
+        "Protag: A monster!",
+        "Protag: This is a good time to try testing my dagger",
+        //Protag charges at the cleaning lady, who dodges the attack
+        "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
+        "Protag: You can talk?",
+        "Monster: Why wouldn't I be able to? My name is Samantha, and yours?[1Protag1][2What's it matter to you2]",
+        "Samantha: Well it's certainly nice to meet you Protag, but please do try to refrain from attacking me for no reason",
+        "Samantha: One finds it helps to make friends",
+    };
+
+
+    //(The player must defeat enemies using the scalpel, as enemies take bleeding DOT, the blood bag fills up with blood,
+    //and once the bag is 100% full, the player can meet with the doctor again)
+
+    string[] DrHarrisQuest = new string[]
+    {
+        //The player enters the outpatient room, Doctor Dr. Harris is standing inside with a clipboard
+        "Dr. Harris: There you are! You must be my new assistant!",
+        "Protag: Assistant?",
+        "Dr. Harris: Yes. Come along now, we have a lot to do. We need to get everything ready for the surgery.",
+        "Protag: Surgery?",
+        "Dr. Harris: Did the nurse not tell you anything? I'm afraid the good doctor's son won't make it if we aren't on schedule.",
+        "Dr. Harris: Let's see here, first off we need bandages and antiseptic, I'll handle that, you just collect some rootweed and numblumbitantrilia.",
+        "Protag: Rootfeet and numblubi... what?",
+        "Dr. Harris: Rootweed, and.. forget it. You should be able to find some from defeating monsters.",
+        "Dr. Harris: Come find me when you've got at least 20 pieces of each, don't keep me waiting.",
+        "Dr. Harris: Todaloo!",
+        //Dr. Harris walks off into a different room
+    };
+
     /*
-
-//- Combat tutorial
-
-//See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
-2|Protag: A monster!
-2|Protag: This is a good time to try testing my dagger
-//Protag charges at the cleaning lady, who dodges the attack
-2|Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that
-2|Protag: You can talk?
-2#|Monster: Why wouldn't I be able to? My name is Samantha, and yours?[1Protag1][2What's it matter to you2]
-2a|Samantha: Well it's certainly nice to meet you Protag, but please do try to refrain from attacking me for no reason
-2b|Samantha: One finds it helps to make friends
+    //Player after killing several enemies and collecting only emotional energy
+    4|Protag: None of these monsters seem to be leaving anything besides this goop. Is this what he wants?
 
 
-
-
-
-//- Side Quest
-//The player enters the outpatient room, Doctor Dr. Harris is standing inside with a clipboard
-3|Dr. Harris: There you are! You must be my new assistant!
-3|Protag: Assistant?
-3|Dr. Harris: Yes. Come along now, we have a lot to do. We need to get everything ready for the surgery.
-3|Protag: Surgery?
-3|Dr. Harris: Did the nurse not tell you anything? I'm afraid the good doctor's son won't make it if we aren't on schedule.
-3|Dr. Harris: Let's see here, first off we need bandages and antiseptic, I'll handle that, you just collect some rootweed and numblumbitantrilia.
-3|Protag: Rootfeet and numblubi... what?
-3|Dr. Harris: Rootweed, and.. forget it. You should be able to find some from defeating monsters.
-3|Dr. Harris: Come find me when you've got at least 20 pieces of each, don't keep me waiting.
-3|Dr. Harris: Todaloo!
-//Dr. Harris walks off into a different room
-
-
-//Player after killing several enemies and collecting only emotional energy
-4|Protag: None of these monsters seem to be leaving anything besides this goop. Is this what he wants?
-
-
-//Player after killing several more enemies
-5|Protag: Still nothing but goop.
-
-
-//After collecting enough emotional energy (the goop), the player walks into a room where the doctor is
-6|Dr. Harris: Ah! Just in time. I was wondering what was taking you so long.
-6|Protag: I couldn't find anything but this goop.
-6|Dr. Harris: Such a hard worker too! This should be more than enough. Keep this up and I'll be sure to let the doctor know to give you a bonus.
-6|As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads
-6|Protag: How did you do that?
-6|Dr. Harris: Do what?
-6|Protag: The goop! It turned into what we needed!
-6|Dr. Harris: Goop? I appreciate your hard work, but please make sure you are getting enough rest.
-6|Dr. Harris: If you would like I can talk to the doctor about prescribing you some sleep medications. We can't have you making mistakes on the job now, can we?
-6|Dr. Harris: The next thing on the list is rimblenut, I'll do that one, and O- Blood.
-6|Dr. Harris: For this one, you'll need something to collect the blood in, so let's see here.
-//Dr. Harris digs through his bag, which holds a collection of perfectly normal medical instruments and the most bizarre of ingredients before pulling out a scalpel)
-
-6|Dr. Harris: Ah, here we are. This should make it easier. When you encounter the monsters, use this scalpel. Severing the arteries should make collecting the blood we need a breeze.
-6|Dr. Harris:$give("Scapel")
-6|Dr. Harris:$give("BloodBag")
-6|Dr. Harris: As usual, come and find me when you're done.
-6|Protag: Wait!
-6|Dr. Harris: Sorry, no time for questions, we're on a tight schedule here.
-6|Dr. Harris: Todaloo!
-//(Dr. Harris leaves the room)
-
-
-(The player must defeat enemies using the scalpel, as enemies take bleeding DOT, the blood bag fills up with blood, and once the bag is 100% full, the player can meet with the doctor again)
-
-
-//(Protag enters a room with Dr. Dr. Harris)
-7|Dr. Harris: Ah just on time, I knew we could count on you!
-(Protag hands the doctor the blood bag and the scalpel)
-7|Dr. Harris: You can keep the scalpel, never know when you might need it
-Protag: So, what happened to the doctor's son?
-Dr. Harris: It was tragic, really. The poor boy only had 30 yards left to go, when he went down hard.
-Protag: What do you mean?
-Dr. Harris: A broken leg, a sprained wrist, and a concussion, just one week before the finals.
-Dr. Harris: But no matter, once we've got this cure finished he'll be back up and at it in no time, even better than he was before.
-Dr. Harris: Now for the final ingredient, well not really an ingredient, but we need his jersey. You should be able to find it in the good doctor's office.
-Dr. Harris: In the meantime, I shall start preparing the ingredients so that the doctor can do his work.
-Dr. Harris: Todaloo!
-
-
-(Protag finds his way to the doctor's office (outpatient tileset room) inside they can grab the jersey and possibly have a file with a list of some of the doctor's other patients including the experiments he did on them)
-
-
-
-
-(Protag finds Dr Dr. Harris after grabbing the jersey)
-Dr. Harris: Ah, the jersey.
-Dr. Harris: This should be all for now, I've prepared the ingredients for the doctor and he should be able to cure his son now. Thank you for all of your help, I shall let the doctor how helpful you've been.
-Dr. Harris: Todaloo!
+    //Player after killing several more enemies
+    5|Protag: Still nothing but goop.
     */
+
+    string[] DrHarrisQuest2 = new string[]
+    {
+        //After collecting enough emotional energy (the goop), the player walks into a room where the doctor is
+        "Dr. Harris: Ah! Just in time. I was wondering what was taking you so long.",
+        "Protag: I couldn't find anything but this goop.",
+        "Dr. Harris: Such a hard worker too! This should be more than enough. Keep this up and I'll be sure to let the doctor know to give you a bonus.",
+        "As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads",
+        "Protag: How did you do that?",
+        "Dr. Harris: Do what?",
+        "Protag: The goop! It turned into what we needed!",
+        "Dr. Harris: Goop? I appreciate your hard work, but please make sure you are getting enough rest.",
+        "Dr. Harris: If you would like I can talk to the doctor about prescribing you some sleep medications. We can't have you making mistakes on the job now, can we?",
+        "Dr. Harris: The next thing on the list is rimblenut, I'll do that one, and O- Blood.",
+        "Dr. Harris: For this one, you'll need something to collect the blood in, so let's see here.",
+        //Dr. Harris digs through his bag, which holds a collection of perfectly normal medical instruments and the most bizarre of ingredients before pulling out a scalpel)
+
+    };
+
+    string[] DrHarrisQuest3 = new string[]
+    {
+        "Dr. Harris: Ah, here we are. This should make it easier. When you encounter the monsters, use this scalpel. Severing the arteries should make collecting the blood we need a breeze.",
+        "$Give(Scapel)",
+        "$Give(BloodBag)",
+        "Dr. Harris: As usual, come and find me when you're done.",
+        "Protag: Wait!",
+        "Dr. Harris: Sorry, no time for questions, we're on a tight schedule here.",
+        "Dr. Harris: Todaloo!",
+        //(Dr. Harris leaves the room)
+    };
+
+    string[] DrHarrisQuest4 = new string[]
+    {
+        //(Protag enters a room with Dr. Dr. Harris)
+        "Dr. Harris: Ah just on time, I knew we could count on you!",
+        "(Protag hands the doctor the blood bag and the scalpel)",
+        "Dr. Harris: You can keep the scalpel, never know when you might need it",
+        "Protag: So, what happened to the doctor's son?",
+        "Dr. Harris: It was tragic, really. The poor boy only had 30 yards left to go, when he went down hard.",
+        "Protag: What do you mean?",
+        "Dr. Harris: A broken leg, a sprained wrist, and a concussion, just one week before the finals.",
+        "Dr. Harris: But no matter, once we've got this cure finished he'll be back up and at it in no time, even better than he was before.",
+        "Dr. Harris: Now for the final ingredient, well not really an ingredient, but we need his jersey. You should be able to find it in the good doctor's office.",
+        "Dr. Harris: In the meantime, I shall start preparing the ingredients so that the doctor can do his work.",
+        "Dr. Harris: Todaloo!",
+    };
+
+    //    (Protag finds his way to the doctor's office (outpatient tileset room) inside they can grab the jersey
+    //    and possibly have a file with a list of some of the doctor's other patients including the experiments he did on them)
+
+    string[] DrHarrisQuest5 = new string[]
+    {
+        //(Protag finds Dr Dr. Harris after grabbing the jersey)
+        "Dr. Harris: Ah, the jersey.",
+        "Dr. Harris: This should be all for now, I've prepared the ingredients for the doctor and he should be able to cure his son now. Thank you for all of your help, I shall let the doctor how helpful you've been.",
+        "Dr. Harris: Todaloo!",
+    };
+    
+
     #endregion
 }

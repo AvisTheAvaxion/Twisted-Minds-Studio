@@ -22,6 +22,10 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [Header("Item Slot Settings")]
     [SerializeField] TextMeshProUGUI amountText;
+    [SerializeField] GameObject selectedImage;
+    [SerializeField] Image backgroundImage;
+    [SerializeField] Sprite equippedSprite;
+    [SerializeField] Sprite normalSprite;
     [SerializeField] ItemSlotType slotType = ItemSlotType.ItemSlot;
 
     public ItemSlotType SlotType { get => slotType; }
@@ -41,17 +45,23 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         itemImage = GetComponent<Image>();
         amountText = GetComponentInChildren<TextMeshProUGUI>();
 
+        selectedImage.SetActive(false);
+        backgroundImage.sprite = normalSprite;
+
         itemIndex = -1;
     }
 
-    public void UpdateImage(Item item)
+    public void UpdateImage(Item item, bool equipped)
     {
+        backgroundImage.sprite = normalSprite;
         if (item != null)
         {
             amountText.enabled = true;
             itemImage.color = slotFilledColor;
             amountText.text = item.CurrentAmount.ToString();
             itemImage.sprite = item.GetInfo().GetDisplaySprite();
+
+            if(equipped) backgroundImage.sprite = equippedSprite;
         }
         else
         {
@@ -78,13 +88,16 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             amountText.enabled = false;
         }
     }
-    public void UpdateImage(Weapon weapon)
+    public void UpdateImage(Weapon weapon, bool equipped)
     {
+        backgroundImage.sprite = normalSprite;
         if (weapon != null)
         {
             amountText.enabled = false;
             itemImage.color = slotFilledColor;
             itemImage.sprite = weapon.GetInfo().GetDisplaySprite();
+
+            if (equipped) backgroundImage.sprite = equippedSprite;
         }
         else
         {
@@ -111,13 +124,16 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
-    public void UpdateImage(Ability ability)
+    public void UpdateImage(Ability ability, bool equipped)
     {
+        backgroundImage.sprite = normalSprite;
         if (ability != null)
         {
             amountText.enabled = false;
             itemImage.color = slotFilledColor;
             itemImage.sprite = ability.GetInfo().GetDisplaySprite();
+
+            if (equipped) backgroundImage.sprite = equippedSprite;
         }
         else
         {
@@ -143,6 +159,11 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             amountText.enabled = false;
         }
     }
+    public void SelectImage(bool selected)
+    {
+        selectedImage.SetActive(selected);
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         switch(slotType)
@@ -157,12 +178,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 weaponUpgradeGUI.UpdateWeaponToolTip(transform.parent.GetSiblingIndex(), slotType, transform.position);
                 break;
             case ItemSlotType.ItemSlot:
+                SelectImage(true);
                 inventoryGUI.UpdateItemToolTip(transform.parent.GetSiblingIndex(), false, transform.position);
                 break;
             case ItemSlotType.FreeEquipSlot:
                 inventoryGUI.UpdateItemToolTip(transform.parent.GetSiblingIndex(), true, transform.position);
                 break;
             case ItemSlotType.WeaponSlot:
+                SelectImage(true);
                 inventoryGUI.UpdateWeaponToolTip(transform.parent.GetSiblingIndex(), false, transform.position);
                 break;
             case ItemSlotType.WeaponEquipSlot:
@@ -186,12 +209,12 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     weaponUpgradeGUI.ConfirmUpgrade();
                     break;
                 case ItemSlotType.ItemSlot:
-                    inventoryGUI.EquipItem(transform.parent.GetSiblingIndex());
+                    inventoryGUI.SetSelectedItem(transform.parent.GetSiblingIndex());
                     break;
                 case ItemSlotType.FreeEquipSlot:
                     break;
                 case ItemSlotType.WeaponSlot:
-                    inventoryGUI.EquipWeapon(transform.parent.GetSiblingIndex());
+                    inventoryGUI.SetSelectedWeapon(transform.parent.GetSiblingIndex());
                     break;
                 case ItemSlotType.WeaponEquipSlot:
                     break;
@@ -211,14 +234,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 case ItemSlotType.ItemSlot:
                     break;
                 case ItemSlotType.FreeEquipSlot:
-                    inventoryGUI.EquipItem(-1);
-                    inventoryGUI.DisableToolTip();
+                    ///inventoryGUI.EquipItem(-1);
+                    //inventoryGUI.DisableToolTip();
                     break;
                 case ItemSlotType.WeaponSlot:
                     break;
                 case ItemSlotType.WeaponEquipSlot:
-                    inventoryGUI.EquipWeapon(-1);
-                    inventoryGUI.DisableToolTip();
+                    //inventoryGUI.EquipWeapon(-1);
+                    //inventoryGUI.DisableToolTip();
                     break;
             }
         }
@@ -238,12 +261,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 weaponUpgradeGUI.DisableToolTip();
                 break;
             case ItemSlotType.ItemSlot:
+                if (transform.parent.GetSiblingIndex() != inventoryGUI.selectedItemIndex) SelectImage(false);
                 inventoryGUI.DisableToolTip();
                 break;
             case ItemSlotType.FreeEquipSlot:
                 inventoryGUI.DisableToolTip();
                 break;
             case ItemSlotType.WeaponSlot:
+                if(transform.parent.GetSiblingIndex() != inventoryGUI.selectedWeaponIndex) SelectImage(false);
                 inventoryGUI.DisableToolTip();
                 break;
             case ItemSlotType.WeaponEquipSlot:

@@ -58,16 +58,16 @@ public class WeaponUpgradeGUI : MonoBehaviour
         for (int i = 0; i < weaponSlots.Length; i++)
         {
             Weapon weapon = inventory.GetWeapon(i);
-            weaponSlots[i].UpdateImage(weapon);
+            weaponSlots[i].UpdateImage(weapon, false);
         }
 
         for (int i = 0; i < ingredientIndices.Length; i++)
         {
             Weapon weapon = inventory.GetWeapon(ingredientIndices[i]);
-            ingredientSlots[i].UpdateImage(weapon);
+            ingredientSlots[i].UpdateImage(weapon, false);
         }
 
-        upgradeSlot.UpdateImage(upgradedWeapon);
+        upgradeSlot.UpdateImage(upgradedWeapon, false);
 
         if(upgradedWeapon != null)
         {

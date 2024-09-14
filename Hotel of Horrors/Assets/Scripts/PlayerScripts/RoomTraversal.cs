@@ -41,15 +41,15 @@ public class RoomTraversal : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject obj = collision.gameObject;
-        if (obj.tag.Equals("Door") || obj.tag.Equals("WestDoor") || obj.tag.Equals("EastDoor") || obj.tag.Equals("NorthDoor") || obj.tag.Equals("SouthDoor"))
-        {
-            if (collision.IsTouching(GetComponent<Collider2D>())) //this is very bad quick fix for demo vid
-                StartCoroutine(FadeImageOut(obj));
+        if ((obj.tag.Equals("Door") || obj.tag.Equals("WestDoor") || obj.tag.Equals("EastDoor") || obj.tag.Equals("NorthDoor") || obj.tag.Equals("SouthDoor")) && !obj.GetComponent<Door>().locked)
+        { 
+            StartCoroutine(FadeImageOut(obj));
         }
     }
+
 
     IEnumerator FadeImageOut(GameObject obj)
     {
@@ -123,6 +123,8 @@ public class RoomTraversal : MonoBehaviour
                 animator.runtimeAnimatorController = leftController;
                 break;
         }
+
+        print(roomManager.GetCurrentRoom());
 
         //print("fading clear");
         // loop over 1 second backwards - fade to clear

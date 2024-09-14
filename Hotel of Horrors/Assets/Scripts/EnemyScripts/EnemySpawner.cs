@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField, Description("The amount of monsters that will spawn every wave.")] int spawnPerWave;
     PolygonCollider2D spawnArea;
     Queue<GameObject> queue;
+    RoomManager roomManager;
 
     public bool isActiviated;
     // Start is called before the first frame update
@@ -17,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
     {
         queue = new Queue<GameObject>(enemyQueue);
         spawnArea = GetComponent<PolygonCollider2D>();
+        roomManager = FindObjectOfType<RoomManager>();
     }
 
     void Update()
@@ -54,6 +56,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if (queue.Count > 0)
             {
+                roomManager.AddEnemy();
                 Instantiate(queue.Dequeue(), GetRandomPosition(spawnBound), Quaternion.identity);
             }
             else

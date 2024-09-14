@@ -13,7 +13,9 @@ public class RoomManager : MonoBehaviour
     List<GameObject> southDoors = new List<GameObject>();
     List<GameObject> westDoors = new List<GameObject>();
 
+    string currentRoom = "";
     int roomsTraversed = 0;
+    int enemiesToKill = 0;
     
 
     private void Start()
@@ -43,18 +45,22 @@ public class RoomManager : MonoBehaviour
         {
             case Door.DoorLocations.North:
                 door = southDoors[Random.Range(0, southDoors.Count)];
+                currentRoom = door.GetComponent<Door>().associatedRoom;
                 southDoors.Remove(door);
                 return door;
             case Door.DoorLocations.South:
                 door = northDoors[Random.Range(0, northDoors.Count)];
+                currentRoom = door.GetComponent<Door>().associatedRoom;
                 northDoors.Remove(door);
                 return door;
             case Door.DoorLocations.East:
                 door = westDoors[Random.Range(0, westDoors.Count)];
+                currentRoom = door.GetComponent<Door>().associatedRoom;
                 westDoors.Remove(door);
                 return door;
             case Door.DoorLocations.West:
                 door = eastDoors[Random.Range(0, eastDoors.Count)];
+                currentRoom = door.GetComponent<Door>().associatedRoom;
                 eastDoors.Remove(door);
                 return door;
         }
@@ -126,4 +132,41 @@ public class RoomManager : MonoBehaviour
         }
     }
 
+    public void AddEnemy()
+    {
+        if(enemiesToKill <= 0)
+        {
+            enemiesToKill = 0;
+
+            Door[] allDoors = FindObjectsOfType<Door>();
+
+            foreach (Door d in allDoors)
+            {
+                d.locked = true;
+            }
+            
+        }
+
+        enemiesToKill++;
+    }
+
+    public void KillEnemy()
+    {
+        enemiesToKill--;
+        
+        if(enemiesToKill <= 0)
+        {
+            Door[] allDoors = FindObjectsOfType<Door>();
+
+            foreach (Door d in allDoors)
+            {
+                d.locked = false;
+            }
+        }
+    }
+
+    public string GetCurrentRoom()
+    {
+        return currentRoom;
+    }
 }

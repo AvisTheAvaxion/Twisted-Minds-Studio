@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Door : MonoBehaviour
 {
-       
+    public bool locked = false;
+    public string associatedRoom;
 
     public enum DoorLocations
     {

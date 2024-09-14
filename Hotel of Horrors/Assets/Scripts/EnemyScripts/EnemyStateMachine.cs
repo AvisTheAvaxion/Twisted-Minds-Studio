@@ -179,6 +179,8 @@ public class EnemyStateMachine : MonoBehaviour
 
             rb.velocity = Vector2.zero;
 
+            FindObjectOfType<RoomManager>().KillEnemy();
+
             OnEnemyDeath?.Invoke(this, EventArgs.Empty);
             enemyAudioManager.Die();
 

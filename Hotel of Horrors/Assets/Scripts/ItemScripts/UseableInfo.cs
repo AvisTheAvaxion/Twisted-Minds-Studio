@@ -15,11 +15,11 @@ public abstract class UseableInfo : ScriptableObject
 
     public abstract void Use();
 
-    public string GetName()
+    public virtual string GetName()
     {
         return useableName;
     }
-    public string GetDescription()
+    public virtual string GetDescription()
     {
         return description;
     }

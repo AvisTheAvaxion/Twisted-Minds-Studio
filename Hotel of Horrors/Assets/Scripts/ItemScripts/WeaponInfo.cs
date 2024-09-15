@@ -71,6 +71,56 @@ public class WeaponInfo : UseableInfo
         return weaponAbilitySprite;
     }*/
 
+    /*public override string GetDescription()
+    {
+        string[] words = base.GetDescription().Split(' ');
+
+        string description = "";
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (words[i].StartsWith('$')) 
+            {
+                string keyword = words[i].ToLower();
+                string newWord = words[i].ToLower();
+                
+                if(keyword.Contains("damage"))
+                {
+                    keyword = "damage";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", damage));
+                }
+                else if (keyword.Contains("deflectionstrength"))
+                {
+                    keyword = "deflectionstrength";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", deflectionStrength));
+                }
+                else if (keyword.Contains("knockback")) 
+                {
+                    keyword = "knockback";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", knockback));
+                }
+                else if(keyword.Contains("attackspeed"))
+                {
+                    keyword = "attackspeed";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", attackSpeed));
+                }
+                else if(keyword.Contains("range"))
+                {
+                    keyword = "range";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", range));
+                }
+
+                description += newWord + " ";
+            }
+            else
+            {
+                description += words[i] + " ";
+            }
+        }
+
+        return description;
+    }*/
+
     public int GetDamage()
     {
         return damage;
@@ -135,6 +185,15 @@ public class WeaponInfo : UseableInfo
     public Attack GetAttack(int index)
     {
         return (index >= 0 && index < attacks.Length) ? attacks[index] : new Attack();
+    }
+    public string GetEffectsDescription()
+    {
+        string str = "";
+        for (int i = 0; i < effectsToInflict.Length; i++)
+        {
+            str += $"<b>{string.Format("{0:0}", chanceToInflictEffect * 100)}%</b> chance to inflict " + effectsToInflict[i].ToString();
+        }
+        return str;
     }
 }
 

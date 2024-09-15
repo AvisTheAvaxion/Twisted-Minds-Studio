@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7997659925485497351}
   - component: {fileID: 8284666980901265937}
   m_Layer: 0
-  m_Name: Sword_slash1
+  m_Name: dagger_slash1
   m_TagString: MeleeStrike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7264209064153142290}
+  - {fileID: 355331402312778816}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6143300023033336772
@@ -55,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ffa1135e73f981b49966fd9d12defd07, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -790739984, guid: cd60eefbe7bc57b47816cb3a813655af, type: 3}
+  m_Sprite: {fileID: -241297394, guid: 4537ab5517fb3a442bf3ccc3208b9eaf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,12 +102,12 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6143300023033336772}
   collider: {fileID: 0}
   sprites:
-  - {fileID: -790739984, guid: cd60eefbe7bc57b47816cb3a813655af, type: 3}
-  - {fileID: 673217917, guid: cd60eefbe7bc57b47816cb3a813655af, type: 3}
-  - {fileID: -328152212, guid: cd60eefbe7bc57b47816cb3a813655af, type: 3}
+  - {fileID: 580201295, guid: 4537ab5517fb3a442bf3ccc3208b9eaf, type: 3}
+  - {fileID: -241297394, guid: 4537ab5517fb3a442bf3ccc3208b9eaf, type: 3}
+  - {fileID: 1030374566, guid: 4537ab5517fb3a442bf3ccc3208b9eaf, type: 3}
   frameRate: 12
   defaultTag: Enemy
-  enemyAudioManager: {fileID: 2798982999630870243}
+  enemyAudioManager: {fileID: 5113344359566845617}
 --- !u!60 &8284666980901265937
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -152,19 +152,18 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.25671142, y: 0.053267673}
-      - {x: 0.07451978, y: 0.103841335}
-      - {x: -0.11797728, y: 0.086479545}
-      - {x: -0.2877038, y: 0.00066685677}
-      - {x: -0.3968643, y: -0.11198883}
-      - {x: -0.12040536, y: -0.24954516}
-      - {x: -0.06842342, y: -0.17257388}
-      - {x: 0.09485397, y: -0.10890657}
-      - {x: 0.24307457, y: -0.13128132}
-      - {x: 0.3120522, y: -0.1553135}
-      - {x: 0.40007168, y: -0.07486884}
+    - - {x: 0.08003765, y: 0.108817056}
+      - {x: 0.036352277, y: 0.11856499}
+      - {x: -0.0018744767, y: 0.08494301}
+      - {x: -0.016467154, y: 0.010233641}
+      - {x: -0.015891448, y: -0.1734478}
+      - {x: -0.0101032555, y: -0.3180092}
+      - {x: 0.11890766, y: -0.3173272}
+      - {x: 0.120875984, y: -0.18185502}
+      - {x: 0.1215155, y: -0.11030103}
+      - {x: 0.122017846, y: 0.0044919997}
   m_UseDelaunayMesh: 0
---- !u!1001 &4745051401554770840
+--- !u!1001 &2447720368631475146
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -221,10 +220,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
---- !u!114 &2798982999630870243 stripped
+--- !u!4 &355331402312778816 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2672438551020400522, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
+  m_PrefabInstance: {fileID: 2447720368631475146}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5113344359566845617 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7425929110926314875, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
-  m_PrefabInstance: {fileID: 4745051401554770840}
+  m_PrefabInstance: {fileID: 2447720368631475146}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -232,8 +236,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084d8268e5a021c4e8219329cf778cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &7264209064153142290 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2672438551020400522, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
-  m_PrefabInstance: {fileID: 4745051401554770840}
-  m_PrefabAsset: {fileID: 0}

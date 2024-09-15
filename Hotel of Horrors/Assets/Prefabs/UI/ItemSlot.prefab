@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7129131999981820198}
   - component: {fileID: 3398362066450323283}
   - component: {fileID: 5765289792102666186}
+  - component: {fileID: 4543325440711999106}
   m_Layer: 5
   m_Name: Selected
   m_TagString: Untagged
@@ -75,6 +76,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &4543325440711999106
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162787448971906850}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1336975356899274935
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,8 +118,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7129131999981820198}
   - {fileID: 4784148278471512708}
+  - {fileID: 7129131999981820198}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

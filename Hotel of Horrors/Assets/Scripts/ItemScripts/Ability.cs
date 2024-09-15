@@ -93,4 +93,77 @@ public class Ability
 
         return true;
     }
+
+    public virtual string GetName()
+    {
+        string baseName = GetInfo().GetName();
+
+        string level = "";
+        for (int i = 0; i < currentLevel; i++)
+        {
+            level += "I";
+        }
+
+        return baseName + " " + level;
+    }
+
+    public virtual string GetDescription()
+    {
+        string[] words = GetInfo().GetDescription().Split(' ');
+
+        string description = "";
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (words[i].StartsWith('$'))
+            {
+                string keyword = words[i].ToLower();
+                string newWord = words[i].ToLower();
+
+                if (keyword.Contains("damage"))
+                {
+                    keyword = "damage";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", damage));
+                }
+                else if (keyword.Contains("duration"))
+                {
+                    keyword = "duration";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", duration));
+                }
+                else if (keyword.Contains("size"))
+                {
+                    keyword = "size";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", size));
+                }
+                else if (keyword.Contains("range"))
+                {
+                    keyword = "range";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", range));
+                }
+                else if (keyword.Contains("deflectionresistance"))
+                {
+                    keyword = "deflectionresistance";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", deflectionResistance));
+                }
+                else if (keyword.Contains("maxtargets"))
+                {
+                    keyword = "maxtargets";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", maxTargets));
+                }
+                else if (keyword.Contains("numberofprojectiles"))
+                {
+                    keyword = "numberofprojectiles";
+                    newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", numberOfProjectiles));
+                }
+
+                description += newWord + " ";
+            }
+            else
+            {
+                description += words[i] + " ";
+            }
+        }
+
+        return description;
+    }
 }

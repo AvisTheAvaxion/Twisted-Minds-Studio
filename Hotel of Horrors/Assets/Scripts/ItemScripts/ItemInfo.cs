@@ -17,4 +17,14 @@ public class ItemInfo : UseableInfo
     {
         Debug.Log($"Item {GetName()} Used");
     }
+
+    public string GetEffectsDescription()
+    {
+        string str = "";
+        for (int i = 0; i < effects.Length; i++)
+        {
+            str += effects[i].ToString();
+        }
+        return str;
+    }
 }

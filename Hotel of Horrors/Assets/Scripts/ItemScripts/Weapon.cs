@@ -23,7 +23,6 @@ public class Weapon
     {
         id = info.id;
         currentLevel = info.GetBaseLevel();
-
         autoAttack = info.IsAutoAttack();
         attackSpeed = info.GetAttackSpeed() * info.CreationRandomFactor();
         damage = Mathf.RoundToInt(info.GetDamage() * info.CreationRandomFactor());
@@ -97,5 +96,62 @@ public class Weapon
         knockback *= percentageIncrease;
 
         currentLevel++;
+    }
+
+    public virtual string GetName()
+    {
+        string baseName = GetInfo().GetName();
+
+        return baseName + $" Lv. {currentLevel}";
+    }
+
+    public virtual string GetDescription()
+    {
+        string[] words = GetInfo().GetDescription().Split(' ');
+
+        string description = "";
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (words[i].StartsWith('$'))
+            {
+                string keyword = words[i].ToLower();
+                string newWord = words[i].ToLower();
+
+                if (keyword.Contains("damage"))
+                {
+                    keyword = "damage";
+                    newWord = newWord.Replace("$" + keyword, $"<b>{string.Format("{0:0.0}", damage)}</b>");
+                }
+                else if (keyword.Contains("deflectionstrength"))
+                {
+                    keyword = "deflectionstrength";
+                    newWord = newWord.Replace("$" + keyword, $"<b>{string.Format("{0:0.0}", deflectionStrength)}</b>");
+                }
+                else if (keyword.Contains("knockback"))
+                {
+                    keyword = "knockback";
+                    newWord = newWord.Replace("$" + keyword, $"<b>{string.Format("{0:0.0}", knockback)}</b>");
+                }
+                else if (keyword.Contains("attackspeed"))
+                {
+                    keyword = "attackspeed";
+                    newWord = newWord.Replace("$" + keyword, $"<b>{string.Format("{0:0.0}", attackSpeed)}</b>");
+                }
+                else if (keyword.Contains("range"))
+                {
+                    //keyword = "range";
+                    //newWord = newWord.Replace("$" + keyword, string.Format("{0:0.0}", range));
+                }
+
+                description += newWord + " ";
+            }
+            else
+            {
+                description += words[i] + " ";
+            }
+        }
+
+        return description;
     }
 }

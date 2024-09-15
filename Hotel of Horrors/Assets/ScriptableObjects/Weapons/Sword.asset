@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   useableName: Sword
-  description: Boring
+  description: "A boring old sword dealing $damage damage per hit. \nAttack Speed:
+    $attackspeed \nKnockback: $knockback \nDeflection Strength: $deflectionstrength "
   maxStackAmount: 1
   sprite: {fileID: 21300000, guid: af8e4e7afb78c31439f641874f9268a2, type: 3}
   displaySprite: {fileID: 21300000, guid: c39be1abcbffe1a4084f5d21a7a2bb07, type: 3}
@@ -23,7 +24,7 @@ MonoBehaviour:
   weaponAbilityDuration: 0
   baseLevel: 1
   maxLevel: 3
-  attackSpeed: 0.6
+  attackSpeed: 4
   autoAttack: 0
   attacks:
   - damagePercIncrease: 0

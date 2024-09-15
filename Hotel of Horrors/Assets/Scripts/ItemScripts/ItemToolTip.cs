@@ -20,7 +20,9 @@ public class ItemToolTip : MonoBehaviour
     {
         if (item != null)
         {
-            ResetTertiaryItemStats();
+            itemNameTxt.text = item.GetName();
+            itemDescriptionTxt.text = item.GetDescription();
+            /*ResetTertiaryItemStats();
 
             ItemInfo heldItem = item.GetInfo();
 
@@ -87,7 +89,7 @@ public class ItemToolTip : MonoBehaviour
                         itemMainStatTxt.text = str;
                     }
                 }
-            }
+            }*/
         }
     }
 
@@ -95,48 +97,95 @@ public class ItemToolTip : MonoBehaviour
     {
         if (weapon != null)
         {
-            ResetTertiaryItemStats();
+            itemNameTxt.text = weapon.GetName();
+            itemDescriptionTxt.text = weapon.GetDescription();
+            /* ResetTertiaryItemStats();
 
-            Weapon heldWeapon = weapon;
+             Weapon heldWeapon = weapon;
 
-            itemNameTxt.text = heldWeapon.GetInfo().GetName();
-            itemDescriptionTxt.text = heldWeapon.GetInfo().GetDescription();
+             itemNameTxt.text = heldWeapon.GetInfo().GetName();
+             itemDescriptionTxt.text = heldWeapon.GetInfo().GetDescription();
 
-            itemTypeTxt.text = $"{heldWeapon.GetInfo().GetWeaponMode()}";
-            itemMainStatTxt.text = $"Damage: {heldWeapon.damage}";
+             itemTypeTxt.text = $"{heldWeapon.GetInfo().GetWeaponMode()}";
+             itemMainStatTxt.text = $"Damage: {heldWeapon.damage}";
 
-            itemStatsTxt = new TextMeshProUGUI[4];
-            for (int i = 0; i < 3; i++)
-            {
-                itemStatsTxt[i] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
-            }
-            itemStatsTxt[0].text = $"Attack Speed: {heldWeapon.attackSpeed}";
-            itemStatsTxt[1].text = $"Knockback: {heldWeapon.knockback}";
-            itemStatsTxt[2].text = $"Deflection Strength: {heldWeapon.deflectionStrength}";
+             itemStatsTxt = new TextMeshProUGUI[4];
+             for (int i = 0; i < 3; i++)
+             {
+                 itemStatsTxt[i] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
+             }
+             itemStatsTxt[0].text = $"Attack Speed: {heldWeapon.attackSpeed}";
+             itemStatsTxt[1].text = $"Knockback: {heldWeapon.knockback}";
+             itemStatsTxt[2].text = $"Deflection Strength: {heldWeapon.deflectionStrength}";
 
-            EffectInfo[] heldWeaponEffects = heldWeapon.GetInfo().GetEffectsToInflict();
-            if (heldWeaponEffects.Length > 0)
-            {
-                itemStatsTxt[3] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
+             EffectInfo[] heldWeaponEffects = heldWeapon.GetInfo().GetEffectsToInflict();
+             if (heldWeaponEffects.Length > 0)
+             {
+                 itemStatsTxt[3] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
 
-                itemStatsTxt[3].text = $"{heldWeapon.GetInfo().GetChanceToInflictEffect() * 100}% chance to inflict ";
-                for (int i = 0; i < heldWeaponEffects.Length - 1; i++)
-                {
-                    itemStatsTxt[3].text += heldWeaponEffects[i].Name;
-                    if (heldWeaponEffects.Length > 2 && i < heldWeaponEffects.Length)
-                        itemStatsTxt[3].text += ", ";
-                }
-                if (heldWeaponEffects.Length > 1)
-                    itemStatsTxt[3].text += $"and {heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
-                else
-                    itemStatsTxt[3].text += $"{heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
-            }
+                 itemStatsTxt[3].text = $"{heldWeapon.GetInfo().GetChanceToInflictEffect() * 100}% chance to inflict ";
+                 for (int i = 0; i < heldWeaponEffects.Length - 1; i++)
+                 {
+                     itemStatsTxt[3].text += heldWeaponEffects[i].Name;
+                     if (heldWeaponEffects.Length > 2 && i < heldWeaponEffects.Length)
+                         itemStatsTxt[3].text += ", ";
+                 }
+                 if (heldWeaponEffects.Length > 1)
+                     itemStatsTxt[3].text += $"and {heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
+                 else
+                     itemStatsTxt[3].text += $"{heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
+             }*/
         } 
+    }
+
+    public void AssignAbility(Ability ability)
+    {
+        if (ability != null)
+        {
+            itemNameTxt.text = ability.GetName();
+            itemDescriptionTxt.text = ability.GetDescription();
+            /* ResetTertiaryItemStats();
+
+             Weapon heldWeapon = weapon;
+
+             itemNameTxt.text = heldWeapon.GetInfo().GetName();
+             itemDescriptionTxt.text = heldWeapon.GetInfo().GetDescription();
+
+             itemTypeTxt.text = $"{heldWeapon.GetInfo().GetWeaponMode()}";
+             itemMainStatTxt.text = $"Damage: {heldWeapon.damage}";
+
+             itemStatsTxt = new TextMeshProUGUI[4];
+             for (int i = 0; i < 3; i++)
+             {
+                 itemStatsTxt[i] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
+             }
+             itemStatsTxt[0].text = $"Attack Speed: {heldWeapon.attackSpeed}";
+             itemStatsTxt[1].text = $"Knockback: {heldWeapon.knockback}";
+             itemStatsTxt[2].text = $"Deflection Strength: {heldWeapon.deflectionStrength}";
+
+             EffectInfo[] heldWeaponEffects = heldWeapon.GetInfo().GetEffectsToInflict();
+             if (heldWeaponEffects.Length > 0)
+             {
+                 itemStatsTxt[3] = Instantiate(itemStatTxtPrefab, itemStatsListParent).GetComponent<TextMeshProUGUI>();
+
+                 itemStatsTxt[3].text = $"{heldWeapon.GetInfo().GetChanceToInflictEffect() * 100}% chance to inflict ";
+                 for (int i = 0; i < heldWeaponEffects.Length - 1; i++)
+                 {
+                     itemStatsTxt[3].text += heldWeaponEffects[i].Name;
+                     if (heldWeaponEffects.Length > 2 && i < heldWeaponEffects.Length)
+                         itemStatsTxt[3].text += ", ";
+                 }
+                 if (heldWeaponEffects.Length > 1)
+                     itemStatsTxt[3].text += $"and {heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
+                 else
+                     itemStatsTxt[3].text += $"{heldWeaponEffects[heldWeaponEffects.Length - 1].Name}";
+             }*/
+        }
     }
 
     void ResetTertiaryItemStats()
     {
-        if (itemStatsTxt != null)
+        /*if (itemStatsTxt != null)
         {
             for (int i = 0; i < itemStatsTxt.Length; i++)
             {
@@ -145,6 +194,6 @@ public class ItemToolTip : MonoBehaviour
                 itemStatsTxt[i] = null;
             }
         }
-        itemStatsTxt = null;
+        itemStatsTxt = null;*/
     }
 }

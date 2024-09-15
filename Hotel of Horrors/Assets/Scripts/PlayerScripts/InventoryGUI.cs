@@ -15,7 +15,7 @@ public class InventoryGUI : MonoBehaviour
     [SerializeField] GameObject weaponsContainer;
     [SerializeField] GameObject itemsContainer;
     [SerializeField] GameObject abilitiesContainer;
-    [SerializeField] GameObject abilitySlotPrefab;
+    [SerializeField] GameObject itemSlotPrefab;
     [SerializeField] ItemToolTip itemToolTip;
     [SerializeField] InventoryTab[] tabs;
     [SerializeField] Image backgroundImage;
@@ -35,7 +35,7 @@ public class InventoryGUI : MonoBehaviour
 
     ItemSlot[] itemSlots;
     ItemSlot[] weaponSlots;
-    List<AbilitySlot> abilitySlots;
+    List<ItemSlot> abilitySlots;
 
     public int tab { get; private set; }
 
@@ -50,8 +50,8 @@ public class InventoryGUI : MonoBehaviour
     {
         inventory = FindObjectOfType<PlayerInventory>();
 
-        abilitySlots = new List<AbilitySlot>();
-        abilitySlots = abilitiesContainer.GetComponentsInChildren<AbilitySlot>().ToList<AbilitySlot>();
+        abilitySlots = new List<ItemSlot>();
+        abilitySlots = abilitiesContainer.GetComponentsInChildren<ItemSlot>().ToList<ItemSlot>();
         itemSlots = itemsContainer.GetComponentsInChildren<ItemSlot>();
         weaponSlots = weaponsContainer.GetComponentsInChildren<ItemSlot>();
 
@@ -102,7 +102,7 @@ public class InventoryGUI : MonoBehaviour
 
         if(tab == 0)
         {
-            if (selectedWeaponIndex >= 0)
+            if (selectedWeaponIndex >= 0 && inventory.GetWeapon(selectedWeaponIndex) != null)
             {
                 weaponSlots[selectedWeaponIndex].SelectImage(true);
                 equipButton.SetActive(true);
@@ -118,7 +118,7 @@ public class InventoryGUI : MonoBehaviour
         }
         else if (tab == 1)
         {
-            if (selectedItemIndex >= 0)
+            if (selectedItemIndex >= 0 && inventory.GetItem(selectedItemIndex) != null)
             {
                 itemSlots[selectedItemIndex].SelectImage(true);
                 equipButton.SetActive(true);
@@ -136,6 +136,20 @@ public class InventoryGUI : MonoBehaviour
         {
             //if (selectedAbilityIndex >= 0)
             //    ab[selectedItemIndex].SelectImage(true);
+
+            if (selectedAbilityIndex >= 0 && inventory.GetAbility(selectedAbilityIndex) != null)
+            {
+                abilitySlots[selectedAbilityIndex].SelectImage(true);
+                equipButton.SetActive(true);
+                if (selectedAbilityIndex == inventory.currentAbilityIndex)
+                    equipButtonText.text = "Unequip";
+                else
+                    equipButtonText.text = "Equip";
+            }
+            else
+            {
+                equipButton.SetActive(false);
+            }
         }
 
         //weaponSlot.UpdateImage(inventory.CurrentWeapon, inventory.currentWeaponIndex);
@@ -151,12 +165,17 @@ public class InventoryGUI : MonoBehaviour
         {
             if(i >= abilitySlots.Count)
             {
-                GameObject go = Instantiate(abilitySlotPrefab, abilitiesContainer.transform);
-                AbilitySlot newSlot = go.GetComponent<AbilitySlot>();
-                if (newSlot) abilitySlots.Add(newSlot);
+                GameObject go = Instantiate(itemSlotPrefab, abilitiesContainer.transform);
+                ItemSlot newSlot = go.GetComponentInChildren<ItemSlot>();
+                if (newSlot) 
+                {
+                    newSlot.SetSlotType(ItemSlot.ItemSlotType.AbilitySlot);
+                    newSlot.Init();
+                    abilitySlots.Add(newSlot); 
+                }
             }
 
-            abilitySlots[i].UpdateImage(inventory.GetAbility(i));
+            abilitySlots[i].UpdateImage(inventory.GetAbility(i), i == inventory.currentAbilityIndex);
         }
     }
 
@@ -297,6 +316,25 @@ public class InventoryGUI : MonoBehaviour
             itemToolTip.gameObject.SetActive(true);
         }
     }
+    public void UpdateAbilityToolTip(int index, bool equippedSlot, Vector2 position)
+    {
+        Ability ability = null;
+        if (equippedSlot)
+        {
+            ability = inventory.CurrentAbility;
+        }
+        else
+        {
+            ability = inventory.GetAbility(index);
+        }
+
+        if (ability != null)
+        {
+            itemToolTip.AssignAbility(ability);
+            itemToolTip.transform.position = position + new Vector2(50f, 50f);
+            itemToolTip.gameObject.SetActive(true);
+        }
+    }
     public void DisableToolTip()
     {
         itemToolTip.gameObject.SetActive(false);
@@ -316,6 +354,7 @@ public class InventoryGUI : MonoBehaviour
             }
 
             inventoryUI.SetActive(false);
+            itemToolTip.gameObject.SetActive(false);
             Cursor.visible = false;
         }
         else
@@ -343,9 +382,10 @@ public class InventoryGUI : MonoBehaviour
         Item item = inventory.GetItem(selectedItem);
         if (item != null)
         {
-            selectedItemName.text = item.GetInfo().GetName();
-            selectedItemDesc.text = item.GetInfo().GetDescription();
+            selectedItemName.text = item.GetName();
+            selectedItemDesc.text = item.GetDescription();
             selectedItemImage.sprite = item.GetInfo().GetDisplaySprite();
+            selectedItemEffects.text = item.GetInfo().GetEffectsDescription();
             selectedItemImage.enabled = true;
 
             UpdateGUI();
@@ -369,8 +409,9 @@ public class InventoryGUI : MonoBehaviour
         Weapon weapon = inventory.GetWeapon(selectedWeapon);
         if (weapon != null)
         {
-            selectedItemName.text = weapon.GetInfo().GetName();
-            selectedItemDesc.text = weapon.GetInfo().GetDescription();
+            selectedItemName.text = weapon.GetName();
+            selectedItemDesc.text = weapon.GetDescription();
+            selectedItemEffects.text = weapon.GetInfo().GetEffectsDescription();
             selectedItemImage.sprite = weapon.GetInfo().GetDisplaySprite();
             selectedItemImage.enabled = true;
 
@@ -392,8 +433,8 @@ public class InventoryGUI : MonoBehaviour
         Ability ability = inventory.GetAbility(selectedAbility);
         if (ability != null)
         {
-            selectedItemName.text = ability.GetInfo().GetName();
-            selectedItemDesc.text = ability.GetInfo().GetDescription();
+            selectedItemName.text = ability.GetName();
+            selectedItemDesc.text = ability.GetDescription();
             selectedAbilityCooldown.text = $"{ability.GetInfo().GetCooldown()}s";
             selectedItemImage.sprite = ability.GetInfo().GetDisplaySprite();
             selectedItemImage.enabled = true;
@@ -410,6 +451,7 @@ public class InventoryGUI : MonoBehaviour
         selectedItemName.text = "Fist";
         selectedItemDesc.text = "Just your fist. Not very strong dealing only 1 damage per hit and a very short range.";
         selectedAbilityCooldown.text = "";
+        selectedItemEffects.text = "";
         selectedItemImage.sprite = defaultSelectedSprite;
         selectedItemImage.enabled = true;
 

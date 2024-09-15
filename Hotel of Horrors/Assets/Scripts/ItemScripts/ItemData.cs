@@ -13,7 +13,6 @@ public class ItemData : MonoBehaviour
 
     private void Awake()
     {
-        print(gameObject.layer);
         gameObject.layer = defaultLayer;
         //customRB.Initialize(0.2f, )
         Invoke("ActivateCollider", activationTime);

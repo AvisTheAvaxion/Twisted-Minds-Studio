@@ -11,7 +11,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public enum ItemSlotType
     {
-        WeaponSlot, ItemSlot, WeaponEquipSlot, FreeEquipSlot, WeaponUpgradeInventorySlot, WeaponUpgradeIngredientSlot, WeaponUpgradeSlot
+        WeaponSlot, ItemSlot, WeaponEquipSlot, FreeEquipSlot, WeaponUpgradeInventorySlot, WeaponUpgradeIngredientSlot, WeaponUpgradeSlot, AbilitySlot
     }
 
     public int itemIndex { get; private set; }
@@ -29,6 +29,10 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] ItemSlotType slotType = ItemSlotType.ItemSlot;
 
     public ItemSlotType SlotType { get => slotType; }
+    public void SetSlotType(ItemSlotType type)
+    {
+        slotType = type;
+    }
 
     InventoryGUI inventoryGUI;
     WeaponUpgradeGUI weaponUpgradeGUI;
@@ -191,6 +195,10 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             case ItemSlotType.WeaponEquipSlot:
                 inventoryGUI.UpdateWeaponToolTip(transform.parent.GetSiblingIndex(), true, transform.position);
                 break;
+            case ItemSlotType.AbilitySlot:
+                SelectImage(true);
+                inventoryGUI.UpdateAbilityToolTip(transform.parent.GetSiblingIndex(), false, transform.position);
+                break;
         }
     }
 
@@ -217,6 +225,9 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     inventoryGUI.SetSelectedWeapon(transform.parent.GetSiblingIndex());
                     break;
                 case ItemSlotType.WeaponEquipSlot:
+                    break;
+                case ItemSlotType.AbilitySlot:
+                    inventoryGUI.SetSelectedAbility(transform.parent.GetSiblingIndex());
                     break;
             }
         }
@@ -272,6 +283,10 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 inventoryGUI.DisableToolTip();
                 break;
             case ItemSlotType.WeaponEquipSlot:
+                inventoryGUI.DisableToolTip();
+                break;
+            case ItemSlotType.AbilitySlot:
+                if (transform.parent.GetSiblingIndex() != inventoryGUI.selectedAbilityIndex) SelectImage(false);
                 inventoryGUI.DisableToolTip();
                 break;
         }

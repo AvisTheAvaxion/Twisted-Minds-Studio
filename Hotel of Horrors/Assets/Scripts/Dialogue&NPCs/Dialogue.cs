@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using static UnityEngine.InputManagerEntry;
 using static UnityEngine.Rendering.DebugUI.Table;
 
@@ -25,6 +26,8 @@ public class Dialogue
                 return CombatTutorial;
             case "DrHarrisQuest":
                 return DrHarrisQuest;
+            case "SteinIntro":
+                return SteinIntro;
 
         }
         return null;
@@ -42,6 +45,7 @@ public class Dialogue
         DrHarrisQuest3,
         DrHarrisQuest4,
         DrHarrisQuest5,
+        SteinIntro,
     }
 
     #region Floor 1 Dialog
@@ -227,6 +231,26 @@ public class Dialogue
         "Dr. Harris: Ah, the jersey.",
         "Dr. Harris: This should be all for now, I've prepared the ingredients for the doctor and he should be able to cure his son now. Thank you for all of your help, I shall let the doctor how helpful you've been.",
         "Dr. Harris: Todaloo!",
+    };
+
+
+    string[] SteinIntro = new string[]
+    {
+        "Dr. Frank N. Stein: ...",
+        "Dr. Frank N. Stein: Ah! You're here. And not a moment too soon.",
+        "Dr. Frank N. Stein: You have my thanks. Dr. Harris let me know how usefull you've been.",
+        "Dr. Frank N. Stein: Thanks to your efforts, the surgery was a sucess!",
+        "Dr. Frank N. Stein: Behold the results of my work! He's even better than before!",
+        ":Protag: Eww. Gross.",
+        ":Dr. Frank N. Stein: DIE!",
+
+        "Frank: Behold, this is what it means to go further beyond!!!",
+        "Protag: Shoit, he is gonna wreck your shit! What are you gonna do!? [1Shoot him with a gun1][2Watch like an idiot2]",
+        "Protag: *Bang* Get owned idiot",
+        "Protag: Frank: Damn, im dead",
+        "Protag: Pretty colors",
+        "Frank: You're fucked.",
+        "Frank: Die",
     };
     
 

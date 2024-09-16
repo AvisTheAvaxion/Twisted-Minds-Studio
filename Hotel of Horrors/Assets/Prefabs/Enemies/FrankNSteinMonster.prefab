@@ -98,13 +98,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  uiDisplay: {fileID: 0}
   cameraShake: {fileID: 0}
   flipToRotate: 1
   transformToFlip: {fileID: 2881490729553979416}
-  dialogueSystem: {fileID: 0}
-  introBlock: 0
-  npcFile: F0D.txt
+  DialogueManager: {fileID: 0}
+  cutscene: 10
   stages:
   - stage: 1
     healthThresholdToNextStage: 75
@@ -176,7 +174,7 @@ MonoBehaviour:
   timeBtwHeals: 5
   flashColorLength: 0.2
   flashColor: {fileID: 4898962650481716471}
-  uiDisplay: {fileID: 0}
+  bossGUI: {fileID: 0}
 --- !u!114 &3269821355269556102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  uiDisplay: {fileID: 0}
+  playerGUI: {fileID: 0}
   isPlayer: 0
   health:
     type: 0

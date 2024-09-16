@@ -40,10 +40,10 @@ public abstract class BossStateMachine : MonoBehaviour
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
     [Header("Dialogue Settings")]
-    [SerializeField] protected DialogueSystem dialogueSystem;
-    //[SerializeField] protected int npcBlock = 2;
-    [SerializeField] protected int introBlock = 0;
-    [SerializeField] protected string npcFile = "F0D.txt";
+    [SerializeField] DialogueManager DialogueManager;
+    [SerializeField] Dialogue.Dialog cutscene;
+
+
 
     [Header("Boss Stages")]
     [SerializeField] protected Stage[] stages;
@@ -67,11 +67,6 @@ public abstract class BossStateMachine : MonoBehaviour
 
         if (cameraShake == null) cameraShake = FindObjectOfType<CameraShake>();
 
-        if (dialogueSystem == null)
-            dialogueSystem = FindObjectOfType<DialogueSystem>();
-
-        if (dialogueSystem != null)
-            dialogueSystem.SubscribeToBoss(this);
 
         if (player == null)
             Debug.LogError("Player not found in scene");
@@ -113,16 +108,11 @@ public abstract class BossStateMachine : MonoBehaviour
         {
             if (bossFightStarted)
             {
-                NPCArgs bossArg = new NPCArgs(stages[currentStageIndex].dialogueBlock, npcFile);
-                OnBossDialogue?.Invoke(this, bossArg);
-
-                dialogueSystem.OnDialogueFinish += DialogueEnd;
+                Debug.Log("Doing the first thing");
             } else
             {
-                NPCArgs bossArg = new NPCArgs(introBlock, npcFile);
-                OnBossDialogue?.Invoke(this, bossArg);
+                DialogueManager.SetCutscene(cutscene);
 
-                dialogueSystem.OnDialogueFinish += DialogueEnd;
             }
         }
     }

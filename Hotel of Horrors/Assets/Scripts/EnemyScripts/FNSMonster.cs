@@ -295,12 +295,12 @@ public class FNSMonster : BossStateMachine
             } else
             {
                 currentState = States.Death;
-                dialogueSystem.UnsubscribeToBoss(this);
+                //dialogueSystem.UnsubscribeToBoss(this);
             }
 
             dialogueSegmentStarted = false;
 
-            dialogueSystem.OnDialogueFinish -= DialogueEnd;
+            //dialogueSystem.OnDialogueFinish -= DialogueEnd;
 
         } else
         {
@@ -311,7 +311,7 @@ public class FNSMonster : BossStateMachine
 
             dialogueSegmentStarted = false;
 
-            dialogueSystem.OnDialogueFinish -= DialogueEnd;
+            //dialogueSystem.OnDialogueFinish -= DialogueEnd;
         }
     }
 

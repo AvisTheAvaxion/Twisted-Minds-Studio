@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using Pathfinding;
 using System;
 using System.Collections;
@@ -367,6 +368,13 @@ public class DialogueManager : MonoBehaviour
     {
         cutscene = newDialog;
         StartCutScene(cutscene.ToString(), 0);
+    }
+
+    public void SkipCutscene()
+    {
+        CanvasSwitch(false);
+        movement.TogglePlayerControls(true);
+        inCutscene = false;
     }
 }
 

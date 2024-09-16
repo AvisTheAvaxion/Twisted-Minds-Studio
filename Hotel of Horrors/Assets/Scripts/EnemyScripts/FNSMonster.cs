@@ -75,7 +75,7 @@ public class FNSMonster : BossStateMachine
         }
         else
         {
-
+            if (!base.DialogueManager.getInCutscene()) { base.currentState = States.Fighting; }
         }
     }
 

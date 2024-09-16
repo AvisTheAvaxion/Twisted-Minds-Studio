@@ -14,7 +14,6 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] AudioSource AbilitySource;
     [SerializeField] AudioSource NextLineSource;
 
-    int i = 0;
 
 
     private void Start()

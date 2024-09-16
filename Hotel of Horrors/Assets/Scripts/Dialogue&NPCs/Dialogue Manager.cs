@@ -372,9 +372,18 @@ public class DialogueManager : MonoBehaviour
 
     public void SkipCutscene()
     {
+        Debug.Log(lines[currentLine - 1].ToString());
+        if (lines[currentLine - 1].EndsWith("$Prompt")) { ButtonOneSelect(); }
+        buttonOneText.gameObject.transform.parent.gameObject.SetActive(false);
+        buttonTwoText.gameObject.transform.parent.gameObject.SetActive(false);
         CanvasSwitch(false);
         movement.TogglePlayerControls(true);
         inCutscene = false;
+    }
+
+    public bool getInCutscene()
+    {
+        return inCutscene;
     }
 }
 

@@ -40,7 +40,7 @@ public abstract class BossStateMachine : MonoBehaviour
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
     [Header("Dialogue Settings")]
-    [SerializeField] DialogueManager DialogueManager;
+    [SerializeField] protected DialogueManager DialogueManager;
     [SerializeField] Dialogue.Dialog cutscene;
 
 

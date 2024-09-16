@@ -94726,6 +94726,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3258707720381061101, guid: 17aef9d978e1e0f48985e08295a7605e, type: 3}
+      propertyPath: DialogueManager
+      value: 
+      objectReference: {fileID: 353064289}
+    - target: {fileID: 3258707720381061101, guid: 17aef9d978e1e0f48985e08295a7605e, type: 3}
       propertyPath: stages.Array.data[1].dialogueBlock
       value: 4
       objectReference: {fileID: 0}
@@ -96506,6 +96510,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6713255940373088603, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 353064289}
+    - target: {fileID: 6713255940373088603, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SkipCutscene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6713255940373088603, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DialogueManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6713255940373088603, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7681128722188852296, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -96521,6 +96541,14 @@ PrefabInstance:
     - target: {fileID: 7681128722188852296, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8566852882093526935, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 352.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8566852882093526935, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 161.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

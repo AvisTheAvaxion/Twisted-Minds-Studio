@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    [Header("Plug-in Variables")]
     [SerializeField] Dialogue.Dialog cutscene;
     [SerializeField] PlayerMovement movement;
     [SerializeField] PlayerInventory inventory;
@@ -17,6 +18,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] List<Sprite> CharacterPics;
 
     GameObject canvas;
+    GameObject uiCanvas;
     TMPro.TMP_Text textBox;
     TMPro.TMP_Text nameBox;
     TMPro.TMP_Text buttonOneText;
@@ -30,8 +32,9 @@ public class DialogueManager : MonoBehaviour
     
     int currentLine = 0;
 
+    [Header("AI Variables")]
     #region AIVariables
-    [SerializeField] AI characterAI;
+    AI characterAI;
     Vector2 targetPosition;
     bool characterMoving = false;
     Rigidbody2D characterRB2D;
@@ -49,6 +52,7 @@ public class DialogueManager : MonoBehaviour
     {
         //PlayerMovement movement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         canvas = GameObject.Find("CanvasDialogue");
+        uiCanvas = GameObject.Find("CanvasInventory");
         textBox = GameObject.Find("TextBox").GetComponent<TMPro.TMP_Text>();
         nameBox = GameObject.Find("NameBox").GetComponent<TMPro.TMP_Text>();
         buttonOneText = GameObject.Find("ButtonOneText").GetComponent<TMPro.TMP_Text>();
@@ -66,6 +70,7 @@ public class DialogueManager : MonoBehaviour
     {
         movement.TogglePlayerControls(false);
         CanvasSwitch(true);
+        uiCanvas.SetActive(false);
         lines = dialogue.getDialogue(dialogueName);
         currentLine = line;
         inCutscene = true;
@@ -274,6 +279,7 @@ public class DialogueManager : MonoBehaviour
         else if(currentLine > lines.Length)
         {
             CanvasSwitch(false);
+            uiCanvas.SetActive(true);
             movement.TogglePlayerControls(true);
             inCutscene = false;
         }

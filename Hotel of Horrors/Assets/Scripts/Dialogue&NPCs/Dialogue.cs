@@ -49,6 +49,7 @@ public class Dialogue
     }
 
     #region Floor 1 Dialog
+    #region Tutorial
     string[] WakeUpTutorial = new string[]
     {
         "Protag: Ughhh",
@@ -146,8 +147,8 @@ public class Dialogue
         "Samantha: Well it's certainly nice to meet you Protag, but please do try to refrain from attacking me for no reason",
         "Samantha: One finds it helps to make friends",
     };
-
-
+    #endregion
+    #region Side Quest
     //(The player must defeat enemies using the scalpel, as enemies take bleeding DOT, the blood bag fills up with blood,
     //and once the bag is 100% full, the player can meet with the doctor again)
 
@@ -232,8 +233,8 @@ public class Dialogue
         "Dr. Harris: This should be all for now, I've prepared the ingredients for the doctor and he should be able to cure his son now. Thank you for all of your help, I shall let the doctor how helpful you've been.",
         "Dr. Harris: Todaloo!",
     };
-
-
+    #endregion
+    #region Boss Fight
     string[] SteinIntro = new string[]
     {
         "Dr. Frank N. Stein: ...",
@@ -241,18 +242,10 @@ public class Dialogue
         "Dr. Frank N. Stein: You have my thanks. Dr. Harris let me know how usefull you've been.",
         "Dr. Frank N. Stein: Thanks to your efforts, the surgery was a sucess!",
         "Dr. Frank N. Stein: Behold the results of my work! He's even better than before!",
-        ":Protag: Eww. Gross.",
-        ":Dr. Frank N. Stein: DIE!",
-
-        "Frank: Behold, this is what it means to go further beyond!!!",
-        "Protag: Shoit, he is gonna wreck your shit! What are you gonna do!? [1Shoot him with a gun1][2Watch like an idiot2]",
-        "Protag: *Bang* Get owned idiot",
-        "Protag: Frank: Damn, im dead",
-        "Protag: Pretty colors",
-        "Frank: You're fucked.",
-        "Frank: Die",
+        "Protag: Eww. Gross.",
+        "Dr. Frank N. Stein: DIE!",
     };
-    
+    #endregion
 
     #endregion
 }

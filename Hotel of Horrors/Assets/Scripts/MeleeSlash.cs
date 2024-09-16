@@ -4,11 +4,33 @@ using UnityEngine;
 
 public class MeleeSlash : MonoBehaviour
 {
+    [System.Serializable]
+    public struct FrameSorting
+    {
+        public int[] frameLayers;
+
+        public FrameSorting(int[] frameLayersIn)
+        {
+            this.frameLayers = frameLayersIn;
+        }
+    }
+
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Collider2D collider;
     [SerializeField] Sprite[] sprites;
     [SerializeField] int frameRate;
     [SerializeField] string defaultTag = "Enemy";
+    [SerializeField] bool faceUp = false;
+    [SerializeField] FrameSorting[] frameSorting = new FrameSorting[] { 
+        new FrameSorting(new int[] { 2, 2, 2 }), //0
+        new FrameSorting(new int[] { 2, 2, 2 }), //1
+        new FrameSorting(new int[] { 2, 2, 2 }), //2
+        new FrameSorting(new int[] { 0, 0, 0 }), //3
+        new FrameSorting(new int[] { 0, 0, 0 }), //4
+        new FrameSorting(new int[] { 0, 0, 0 }), //5
+        new FrameSorting(new int[] { 2, 2, 2 }), //6
+        new FrameSorting(new int[] { 2, 2, 2 })  //7
+    };
 
     Weapon weapon;
 
@@ -26,7 +48,9 @@ public class MeleeSlash : MonoBehaviour
 
     [SerializeField] EnemyAudioManager enemyAudioManager;
 
-    public void Init(ActionController actionController, int damage, float knockback, float deflectionStrength, string targetTag, CameraShake cameraShake, Effect[] effects = null)
+    int sortingID;
+
+    public void Init(ActionController actionController, int damage, float knockback, float deflectionStrength, string targetTag, CameraShake cameraShake, int sortingIDIn, Effect[] effects = null)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -38,6 +62,8 @@ public class MeleeSlash : MonoBehaviour
         this.targetTag = targetTag;
         this.cameraShake = cameraShake;
 
+        sortingID = sortingIDIn;
+
         this.effects = effects;
 
         if (collider == null) collider = GetComponent<Collider2D>();
@@ -45,7 +71,7 @@ public class MeleeSlash : MonoBehaviour
 
         StartCoroutine(Animate());
     }
-    public void Init(ActionController actionController, Weapon weapon, string targetTag, CameraShake cameraShake)
+    public void Init(ActionController actionController, Weapon weapon, string targetTag, CameraShake cameraShake, int sortingIDIn)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -62,6 +88,8 @@ public class MeleeSlash : MonoBehaviour
 
         this.targetTag = targetTag;
         this.cameraShake = cameraShake;
+
+        sortingID = sortingIDIn;
 
         if (collider == null) collider = GetComponent<Collider2D>();
         collider.enabled = false;
@@ -113,11 +141,18 @@ public class MeleeSlash : MonoBehaviour
 
     IEnumerator Animate()
     {
+        /*if (faceUp)
+        {
+            print(transform.eulerAngles);
+            transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+        }*/
+
         WaitForSeconds wait = new WaitForSeconds(1f / frameRate);
         if (sprites.Length > 0)
         {
             for (int i = 0; i < sprites.Length; i++)
             {
+                spriteRenderer.sortingOrder = frameSorting[sortingID].frameLayers[i];
                 if (i > 0) collider.enabled = true;
                 if (i >= sprites.Length - 1) collider.enabled = false;
 

@@ -25,10 +25,7 @@ public class ActionController : MonoBehaviour
     //Note: the weapon strike effect will be what detects a collision and does damage and be unique to each weapon
 
     [Header("Ranged")]
-    [SerializeField] GameObject bulletPrefab;
-    [SerializeField] Transform bulletSpawnLocation;
     [SerializeField] GameObject rangedCrosshair;
-    [SerializeField] float bulletForce = 20f;
 
     [Header("Melee")]
     [SerializeField] GameObject meleeCrosshair;
@@ -53,6 +50,7 @@ public class ActionController : MonoBehaviour
     bool disableAttackControls = false;
 
     bool canAttack;
+    int meleeDir;
 
     bool canDoPlayerAbility = true;
     bool canDoWeaponAbility = true;
@@ -250,12 +248,15 @@ public class ActionController : MonoBehaviour
         float angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
 
         float absAngle = Mathf.Abs(angle);
+        //if (absAngle < 0) absAngle = 180 + absAngle;
         float step = 45;
 
         float low = absAngle - absAngle % step;
         float high = low + step;
 
         float steppedAngle = (absAngle - low < high - absAngle ? low : high) * Mathf.Sign(angle);
+
+        meleeDir = Mathf.RoundToInt((steppedAngle + 180) / step) % 8;
 
         meleeDirection.rotation = Quaternion.AngleAxis(steppedAngle, -Vector3.forward);
     }
@@ -338,7 +339,7 @@ public class ActionController : MonoBehaviour
             }
             if (meleeStrike)
             {
-                meleeStrike.Init(this, inventory.CurrentWeapon, "Enemy", cameraShake);
+                meleeStrike.Init(this, inventory.CurrentWeapon, "Enemy", cameraShake, meleeDir);
 
                 playerMovement.MeleeLunge(meleeDirection.up, 0.4f);
                 playerMovement.canMove = false;
@@ -348,7 +349,7 @@ public class ActionController : MonoBehaviour
         {
             GameObject go = Instantiate(defaultMeleeStrike, weaponStrike1SpawnPoint.position, weaponStrike1SpawnPoint.rotation, meleeDirection);
             MeleeSlash meleeStrike = go.GetComponent<MeleeSlash>();
-            if (meleeStrike) meleeStrike.Init(this, defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy", cameraShake);
+            if (meleeStrike) meleeStrike.Init(this, defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy", cameraShake, meleeDir);
         }
     }
 

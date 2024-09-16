@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7997659925485497351}
   - component: {fileID: 8284666980901265937}
   m_Layer: 0
-  m_Name: dagger_slash1
+  m_Name: hammer_slash1
   m_TagString: MeleeStrike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 0dd803e525a6d0148947b7d67d860668, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -241297394, guid: 4537ab5517fb3a442bf3ccc3208b9eaf, type: 3}
+  m_Sprite: {fileID: -1120172537, guid: ab80ec6a9e8ef5c428266cfa95f9527e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,11 +102,21 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6143300023033336772}
   collider: {fileID: 0}
   sprites:
-  - {fileID: 580201295, guid: 4537ab5517fb3a442bf3ccc3208b9eaf, type: 3}
-  - {fileID: -241297394, guid: 4537ab5517fb3a442bf3ccc3208b9eaf, type: 3}
-  - {fileID: 1030374566, guid: 4537ab5517fb3a442bf3ccc3208b9eaf, type: 3}
-  frameRate: 12
+  - {fileID: -239115830, guid: ab80ec6a9e8ef5c428266cfa95f9527e, type: 3}
+  - {fileID: -1120172537, guid: ab80ec6a9e8ef5c428266cfa95f9527e, type: 3}
+  - {fileID: -462254674, guid: ab80ec6a9e8ef5c428266cfa95f9527e, type: 3}
+  frameRate: 10
   defaultTag: Enemy
+  faceUp: 1
+  frameSorting:
+  - frameLayers: 02000000020000000200000002000000
+  - frameLayers: 02000000020000000200000002000000
+  - frameLayers: 02000000020000000200000002000000
+  - frameLayers: 00000000000000000000000000000000
+  - frameLayers: 00000000000000000000000000000000
+  - frameLayers: 00000000000000000000000000000000
+  - frameLayers: 02000000020000000200000002000000
+  - frameLayers: 02000000020000000200000002000000
   enemyAudioManager: {fileID: 5113344359566845617}
 --- !u!60 &8284666980901265937
 PolygonCollider2D:
@@ -140,10 +150,10 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.49}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 0.96, y: 0.96}
     newSize: {x: 0.96, y: 0.96}
     adaptiveTilingThreshold: 0.5
@@ -152,16 +162,16 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.08003765, y: 0.108817056}
-      - {x: 0.036352277, y: 0.11856499}
-      - {x: -0.0018744767, y: 0.08494301}
-      - {x: -0.016467154, y: 0.010233641}
-      - {x: -0.015891448, y: -0.1734478}
-      - {x: -0.0101032555, y: -0.3180092}
-      - {x: 0.11890766, y: -0.3173272}
-      - {x: 0.120875984, y: -0.18185502}
-      - {x: 0.1215155, y: -0.11030103}
-      - {x: 0.122017846, y: 0.0044919997}
+    - - {x: 0.36043453, y: -0.0775252}
+      - {x: 0.1910404, y: 0.04622829}
+      - {x: -0.06488606, y: 0.06379241}
+      - {x: -0.2378662, y: -0.006280422}
+      - {x: -0.3250699, y: -0.12042779}
+      - {x: -0.22212756, y: -0.16695315}
+      - {x: -0.15949559, y: -0.09969753}
+      - {x: -0.050430983, y: -0.028983176}
+      - {x: 0.12705116, y: -0.0221169}
+      - {x: 0.33894324, y: -0.10022384}
   m_UseDelaunayMesh: 0
 --- !u!1001 &2447720368631475146
 PrefabInstance:

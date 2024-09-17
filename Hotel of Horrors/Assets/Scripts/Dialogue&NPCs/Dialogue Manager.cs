@@ -408,8 +408,6 @@ public class DialogueManager : MonoBehaviour
 
         myEmote = nameBox.text + myEmote;
 
-        Debug.Log(myEmote);
-
 
         foreach (Sprite sprite in CharacterPics)
         {

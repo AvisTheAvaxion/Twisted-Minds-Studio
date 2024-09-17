@@ -39,6 +39,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] float skipTimer = 5f;
     [SerializeField] bool InstaSkip;
 
+    [SerializeField] Dictionary<string, string> emotions = new Dictionary<string, string>();
+
     [Header("AI Variables")]
     #region AIVariables
     AI characterAI;
@@ -240,9 +242,21 @@ public class DialogueManager : MonoBehaviour
             }
             #endregion
             //We gonna get rid of this is no use is found this week ;/
-            else if (lines[currentLine].EndsWith("$Spin") || lines[currentLine].StartsWith("$Spin"))
+            else if (lines[currentLine].EndsWith("$Shake") || lines[currentLine].StartsWith("$Shake"))
             {
 
+            }
+            else if (lines[currentLine].StartsWith("$Emote"))
+            {
+                try
+                {
+                    emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
+                }
+                catch(ArgumentException)
+                {
+                    emotions.Remove(lines[currentLine].Split("|")[1]);
+                    emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
+                }
             }
             #region Invetory Functions
             else if (lines[currentLine].EndsWith("$GiveWeapon") || lines[currentLine].StartsWith("$GiveWeapon"))
@@ -383,9 +397,20 @@ public class DialogueManager : MonoBehaviour
 
     void UpdateImage()
     {
+        string myEmote = "";
+
+        emotions.TryGetValue(nameBox.text, out myEmote);
+
+        if (myEmote == null) { myEmote = "Neutral"; }
+
+        myEmote = nameBox.text + myEmote;
+
+        Debug.Log(myEmote);
+
+
         foreach (Sprite sprite in CharacterPics)
         {
-            if (sprite.name == nameBox.text)
+            if (sprite.name == myEmote)
             {
                 ProfilePic.sprite = sprite;
             }

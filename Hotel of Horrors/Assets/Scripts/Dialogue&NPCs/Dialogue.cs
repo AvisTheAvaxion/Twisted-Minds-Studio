@@ -129,9 +129,10 @@ public class Dialogue
         "System: You got a Dagger!",
         "$Resume",
         "Varren: You can't die here, but you still can feel pain. Let's see how far you get before you give up.",
-        "Protag: Well, I guess I should get moving.",
          //"Varren: (disappears into smoke)",
+        "Varren: Cya later kiddo",
         "$Move(Varren,-4,-48.32)",
+        "Protag: Well, I guess I should get moving.",
         "$Kill(Varren)"
     };
 

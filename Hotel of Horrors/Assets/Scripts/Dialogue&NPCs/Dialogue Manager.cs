@@ -3,6 +3,7 @@ using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,12 +26,18 @@ public class DialogueManager : MonoBehaviour
     TMPro.TMP_Text buttonTwoText;
     Dialogue dialogue = new Dialogue();
 
+    bool skipCutscene = false;
+
     string[] lines;
 
     bool inCutscene = false;
     bool isPicking = false;
-    
+
     int currentLine = 0;
+
+    [SerializeField] float skipCooldown = 5f;
+    [SerializeField] float skipTimer = 5f;
+    [SerializeField] bool InstaSkip;
 
     [Header("AI Variables")]
     #region AIVariables
@@ -80,6 +87,9 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L)) { InstaSkip = !InstaSkip; }
+
+
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && inCutscene && !isPicking && !characterMoving)
         {
             OnDialogueUpdate();
@@ -88,6 +98,21 @@ public class DialogueManager : MonoBehaviour
         {
             MoveCharacter();
         }
+        else if (skipCutscene)
+        {
+            if (InstaSkip & !isPicking) { OnDialogueUpdate(); }
+
+            else
+            {
+                skipTimer = skipTimer - Time.deltaTime;
+                if ((skipTimer < 0) && (!isPicking))
+                {
+                    OnDialogueUpdate();
+                    skipTimer = skipCooldown;
+                }
+            }
+        }
+        
     }
 
     void OnDialogueUpdate()
@@ -200,6 +225,7 @@ public class DialogueManager : MonoBehaviour
                 string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
                 string[] splitString = moveInfo.Split(',');
                 Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
+                playerAudio.NextLine(currentLine);
                 SetMoveCharacterInfo(splitString[0], 3, target);
             }
             else if (lines[currentLine].EndsWith("$Kill") || lines[currentLine].StartsWith("$Kill"))
@@ -208,7 +234,9 @@ public class DialogueManager : MonoBehaviour
                 int killEndIndex = lines[currentLine].IndexOf(')');
                 string killInfo = lines[currentLine].Substring(killStartIndex + 1, killEndIndex - killStartIndex - 1);
                 Destroy(GameObject.Find(killInfo));
-
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
             }
             #endregion
             //We gonna get rid of this is no use is found this week ;/
@@ -227,7 +255,7 @@ public class DialogueManager : MonoBehaviour
 
                 foreach (WeaponInfo weapon in UsableDatabase.weaponInfos)
                 {
-                    if(weapon.GetName() == giveInfo)
+                    if (weapon.GetName() == giveInfo)
                     {
                         desiredWeaponInfo = weapon;
                         break;
@@ -263,7 +291,7 @@ public class DialogueManager : MonoBehaviour
                 }
             }
             #endregion
-            
+
             else
             {
                 textBox.fontStyle = TMPro.FontStyles.Normal;
@@ -276,7 +304,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
         //When there are no more lines of dialog to read.
-        else if(currentLine > lines.Length)
+        else if (currentLine > lines.Length-1)
         {
             CanvasSwitch(false);
             uiCanvas.SetActive(true);
@@ -339,7 +367,7 @@ public class DialogueManager : MonoBehaviour
             currentLine++;
         }
         OnDialogueUpdate();
-        isPicking=false;
+        isPicking = false;
     }
 
     void ButtonSwitch(bool isButtonOn)
@@ -378,13 +406,8 @@ public class DialogueManager : MonoBehaviour
 
     public void SkipCutscene()
     {
-        Debug.Log(lines[currentLine - 1].ToString());
-        if (lines[currentLine - 1].EndsWith("$Prompt")) { ButtonOneSelect(); }
-        buttonOneText.gameObject.transform.parent.gameObject.SetActive(false);
-        buttonTwoText.gameObject.transform.parent.gameObject.SetActive(false);
-        CanvasSwitch(false);
-        movement.TogglePlayerControls(true);
-        inCutscene = false;
+        skipCutscene = true;
+        isPicking = false;
     }
 
     public bool getInCutscene()

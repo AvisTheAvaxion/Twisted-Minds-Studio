@@ -257,6 +257,9 @@ public class DialogueManager : MonoBehaviour
                     emotions.Remove(lines[currentLine].Split("|")[1]);
                     emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
                 }
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
             }
             #region Invetory Functions
             else if (lines[currentLine].EndsWith("$GiveWeapon") || lines[currentLine].StartsWith("$GiveWeapon"))

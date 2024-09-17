@@ -205,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5566431202147579643, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
       propertyPath: CharacterPics.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5566431202147579643, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
       propertyPath: CharacterPics.Array.data[0]
@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: CharacterPics.Array.data[3]
       value: 
       objectReference: {fileID: 21300000, guid: f8987c4bdb7779544a70ad4bd1803551, type: 3}
+    - target: {fileID: 5566431202147579643, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
+      propertyPath: CharacterPics.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: 169ec55e8cc6230409e1af42ad866606, type: 3}
     - target: {fileID: 7042842034925127218, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
       propertyPath: m_Name
       value: Dialogue System

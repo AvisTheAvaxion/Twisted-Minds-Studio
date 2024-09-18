@@ -35,6 +35,7 @@ public class Dialogue
 
     public enum Dialog
     {
+        None,
         WakeUpTutorial,
         SameRoomAgain,
         FirstMonster,

@@ -6,7 +6,11 @@ using UnityEngine;
 public class NPCBehavior : MonoBehaviour
 {
     [Header("State Fields")]
-    [SerializeField] public bool isInteractable;
-    [SerializeField] public string fileName;
-    [SerializeField] public int flag;
+    [SerializeField] Dialogue.Dialog npcDialog = Dialogue.Dialog.None;
+
+
+    public Dialogue.Dialog GetNPCDialog()
+    {
+        return npcDialog;
+    }
 }

@@ -201,7 +201,7 @@ PrefabInstance:
       objectReference: {fileID: 1624864695}
     - target: {fileID: 5566431202147579643, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
       propertyPath: skipCooldown
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5566431202147579643, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
       propertyPath: CharacterPics.Array.size
@@ -18452,6 +18452,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2051084465}
     m_Modifications:
+    - target: {fileID: 306839182055275764, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 500463849900545150, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -18512,6 +18516,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MusicBox
       objectReference: {fileID: 0}
+    - target: {fileID: 3001658837465445364, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3185577275813407823, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
       propertyPath: dash
       value: 
@@ -18531,6 +18539,10 @@ PrefabInstance:
     - target: {fileID: 6260596644393144800, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7693977996571068035, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
+      propertyPath: m_Volume
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

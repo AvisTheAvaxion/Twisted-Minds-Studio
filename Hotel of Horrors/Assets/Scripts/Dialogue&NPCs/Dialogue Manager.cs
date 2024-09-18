@@ -36,7 +36,7 @@ public class DialogueManager : MonoBehaviour
     int currentLine = 0;
 
     [SerializeField] float skipCooldown = 5f;
-    [SerializeField] float skipTimer = 5f;
+    float skipTimer = 5f;
     [SerializeField] bool InstaSkip;
 
     [SerializeField] Dictionary<string, string> emotions = new Dictionary<string, string>();
@@ -56,12 +56,13 @@ public class DialogueManager : MonoBehaviour
     }
 
     PlayerChoice currentChoice = PlayerChoice.None;
+    PlayerChoice lastChoice = PlayerChoice.None;
 
     private void Awake()
     {
         //PlayerMovement movement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         canvas = GameObject.Find("CanvasDialogue");
-        uiCanvas = GameObject.Find("CanvasInventory");
+        uiCanvas = GameObject.Find("Player UI");
         textBox = GameObject.Find("TextBox").GetComponent<TMPro.TMP_Text>();
         nameBox = GameObject.Find("NameBox").GetComponent<TMPro.TMP_Text>();
         buttonOneText = GameObject.Find("ButtonOneText").GetComponent<TMPro.TMP_Text>();
@@ -180,17 +181,18 @@ public class DialogueManager : MonoBehaviour
             }
             else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceOne)
             {
+                lastChoice = PlayerChoice.ChoiceOne;
                 string optionAText = lines[currentLine].Replace("$OptionA", "");
                 string outputText = optionAText.Split(":")[1];
                 string outputName = optionAText.Split(':')[0];
                 textBox.text = outputText;
                 nameBox.text = outputName;
-
                 playerAudio.NextLine(currentLine);
                 UpdateImage();
             }
             else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceOne)
             {
+                lastChoice = PlayerChoice.ChoiceOne;
                 while (lines[currentLine].Contains("$OptionB"))
                 {
                     currentLine++;
@@ -200,6 +202,7 @@ public class DialogueManager : MonoBehaviour
             }
             else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceTwo)
             {
+                lastChoice = PlayerChoice.ChoiceTwo;
                 string optionBText = lines[currentLine].Replace("$OptionB", "");
                 string outputText = optionBText.Split(":")[1];
                 string optionBName = optionBText.Split(':')[0];
@@ -211,6 +214,7 @@ public class DialogueManager : MonoBehaviour
             }
             else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceTwo)
             {
+                lastChoice = PlayerChoice.ChoiceTwo;
                 while (lines[currentLine].Contains("$OptionA"))
                 {
                     currentLine++;
@@ -241,11 +245,6 @@ public class DialogueManager : MonoBehaviour
                 currentLine--;
             }
             #endregion
-            //We gonna get rid of this is no use is found this week ;/
-            else if (lines[currentLine].EndsWith("$Shake") || lines[currentLine].StartsWith("$Shake"))
-            {
-
-            }
             else if (lines[currentLine].StartsWith("$Emote"))
             {
                 try
@@ -327,6 +326,8 @@ public class DialogueManager : MonoBehaviour
             uiCanvas.SetActive(true);
             movement.TogglePlayerControls(true);
             inCutscene = false;
+            skipCutscene = false;
+            currentLine = 0;
         }
         currentLine++;
     }
@@ -422,6 +423,11 @@ public class DialogueManager : MonoBehaviour
     public PlayerChoice GetPlayerChoice()
     {
         return currentChoice;
+    }
+
+    public PlayerChoice GetLastPlayerChoice()
+    {
+        return lastChoice;
     }
 
     public void SetCutscene(Dialogue.Dialog newDialog)

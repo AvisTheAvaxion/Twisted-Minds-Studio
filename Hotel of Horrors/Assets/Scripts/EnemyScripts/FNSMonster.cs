@@ -281,8 +281,7 @@ public class FNSMonster : BossStateMachine
     {
         if (bossFightStarted)
         {
-            IntArgs intArgs = (IntArgs)args;
-            int choiceMade = intArgs.GetHeldInteger();
+            int choiceMade = (int)FindObjectOfType<DialogueManager>().GetLastPlayerChoice();
 
             if (!isDying)
             {
@@ -295,12 +294,9 @@ public class FNSMonster : BossStateMachine
             } else
             {
                 currentState = States.Death;
-                //dialogueSystem.UnsubscribeToBoss(this);
             }
 
             dialogueSegmentStarted = false;
-
-            //dialogueSystem.OnDialogueFinish -= DialogueEnd;
 
         } else
         {
@@ -310,8 +306,6 @@ public class FNSMonster : BossStateMachine
             bossHealth.ShowHealthBar();
 
             dialogueSegmentStarted = false;
-
-            //dialogueSystem.OnDialogueFinish -= DialogueEnd;
         }
     }
 
@@ -336,4 +330,6 @@ public class FNSMonster : BossStateMachine
     {
         if (cameraShake != null) cameraShake.ShakeCamera(chargeCameraShake);
     }
+
+    
 }

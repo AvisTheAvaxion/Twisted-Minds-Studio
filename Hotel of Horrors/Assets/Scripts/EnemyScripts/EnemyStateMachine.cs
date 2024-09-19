@@ -177,7 +177,7 @@ public class EnemyStateMachine : MonoBehaviour
         {
             death = true;
 
-            rb.velocity = Vector2.zero;
+            //rb.velocity = Vector2.zero;
 
             FindObjectOfType<RoomManager>().KillEnemy();
 
@@ -188,7 +188,7 @@ public class EnemyStateMachine : MonoBehaviour
 
             if (enemyVisuals)
             {
-                enemyVisuals.StartDissolve();
+                enemyVisuals.StartDissolve(0.3f);
             }
             else
             {
@@ -595,7 +595,7 @@ public class EnemyStateMachine : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Do damage and knockback to player for touching the monster
-        if (collision.gameObject.tag.Equals("Player"))
+        if (currentState == States.Fighting && collision.gameObject.tag.Equals("Player"))
         {
             PlayerMovement playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
             IHealth health = collision.gameObject.GetComponent<IHealth>();

@@ -59,6 +59,11 @@ public class WeaponUpgradeGUI : MonoBehaviour
         {
             Weapon weapon = inventory.GetWeapon(i);
             weaponSlots[i].UpdateImage(weapon, false);
+
+            if(i != ingredientIndices[0] && i != ingredientIndices[1])
+            {
+                weaponSlots[i].SelectImage(false);
+            }
         }
 
         for (int i = 0; i < ingredientIndices.Length; i++)

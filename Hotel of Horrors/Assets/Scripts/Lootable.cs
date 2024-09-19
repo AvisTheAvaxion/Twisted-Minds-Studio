@@ -13,6 +13,7 @@ public class Lootable : MonoBehaviour
     [SerializeField] protected float upwardsVelocity = 1f;
     [SerializeField] protected int minDropAmount;
     [SerializeField] protected int maxDropAmount;
+    [SerializeField] protected AnimationCurve dropAmountChance;
     [SerializeField] protected GameObject itemHolder;
     [SerializeField] protected ItemDrop[] itemDrops;
 
@@ -37,7 +38,7 @@ public class Lootable : MonoBehaviour
     {
         if (itemDrops == null || itemDrops.Length == 0) return;
 
-        int dropAmount = Random.Range(minDropAmount, maxDropAmount + 1);
+        int dropAmount = Mathf.RoundToInt(Mathf.Lerp(minDropAmount, maxDropAmount, dropAmountChance.Evaluate(Random.Range(0, 1f))));
         float weightTotal = 0;
         for (int i = 0; i < itemDrops.Length; i++)
         {

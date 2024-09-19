@@ -52,14 +52,14 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
         if(debug) print("Health: " + stats.GetHealthValue());
 
+        if (flashColor != null) flashColor.Flash(flashColorLength);
+
         if (stats.GetHealthValue() <= 0)
         {
             transform.SendMessage("OnDeath");
             //Destroy(gameObject);
         } else
         {
-            if (flashColor != null) flashColor.Flash(flashColorLength);
-
             canTakeDamage = false;
             StartCoroutine(IFrame());
         }

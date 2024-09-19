@@ -19,12 +19,12 @@ public class EnemyVisuals : MonoBehaviour
         }
     }
 
-    public void StartDissolve()
+    public void StartDissolve(float initialWait)
     {
-        StartCoroutine(Dissolve());
+        StartCoroutine(Dissolve(initialWait));
     }
 
-    IEnumerator Dissolve()
+    IEnumerator Dissolve(float initialWait)
     {
         WaitForSeconds wait = new WaitForSeconds(1f / frameRate);
         float t = 0;

@@ -173,6 +173,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         switch(slotType)
         {
             case ItemSlotType.WeaponUpgradeInventorySlot:
+                SelectImage(true);
                 weaponUpgradeGUI.UpdateWeaponToolTip(transform.parent.GetSiblingIndex(), slotType, transform.position);
                 break;
             case ItemSlotType.WeaponUpgradeIngredientSlot:
@@ -209,7 +210,15 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             switch (slotType)
             {
                 case ItemSlotType.WeaponUpgradeInventorySlot:
-                    weaponUpgradeGUI.SetUpgradeIngredientSlot(transform.parent.GetSiblingIndex());
+                    if(transform.parent.GetSiblingIndex() == weaponUpgradeGUI.ingredientIndices[0])
+                    {
+                        weaponUpgradeGUI.UnSetUpgradeIngredienSlot(0);
+                    }
+                    else if (transform.parent.GetSiblingIndex() == weaponUpgradeGUI.ingredientIndices[1])
+                    {
+                        weaponUpgradeGUI.UnSetUpgradeIngredienSlot(1);
+                    } else 
+                        weaponUpgradeGUI.SetUpgradeIngredientSlot(transform.parent.GetSiblingIndex());
                     break;
                 case ItemSlotType.WeaponUpgradeIngredientSlot:
                     break;
@@ -263,6 +272,8 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         switch (slotType)
         {
             case ItemSlotType.WeaponUpgradeInventorySlot:
+                if (transform.parent.GetSiblingIndex() != weaponUpgradeGUI.ingredientIndices[0] && 
+                    transform.parent.GetSiblingIndex() != weaponUpgradeGUI.ingredientIndices[1]) SelectImage(false);
                 weaponUpgradeGUI.DisableToolTip();
                 break;
             case ItemSlotType.WeaponUpgradeIngredientSlot:

@@ -1,12 +1,3 @@
-using Pathfinding.Ionic.Zlib;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEngine;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
-using static UnityEngine.InputManagerEntry;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class Dialogue
 {

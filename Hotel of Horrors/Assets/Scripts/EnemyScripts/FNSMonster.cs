@@ -37,6 +37,7 @@ public class FNSMonster : BossStateMachine
     [SerializeField] Animator animator;
     [SerializeField] AfterImage afterImage;
     [SerializeField] BasicShooter shooter;
+    [SerializeField] AI ai;
 
     [Header("Attack Settings")]
     [SerializeField] AttackSettings normalAttackSettings;
@@ -154,7 +155,10 @@ public class FNSMonster : BossStateMachine
         
         animator.SetBool("isWalking", true);
 
-        rb.velocity = moveDir * currentSettings.walkSpeed * Time.deltaTime * 10;
+        ai.SetTarget(player.transform);
+        ai.MoveTowardsTarget();
+
+        //rb.velocity = moveDir * currentSettings.walkSpeed * Time.deltaTime * 10;
 
         if (afterImage == null) 
             CheckToRotate(moveDir, null);

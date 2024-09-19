@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
 using System;
 
-[RequireComponent(typeof(AILerp), typeof(AI))]
+[RequireComponent(typeof(AI))]
 public class LittleStein : MonoBehaviour
 {
     public enum FaceDirection
@@ -24,7 +23,6 @@ public class LittleStein : MonoBehaviour
     [SerializeField] bool flipToRotate;
     [SerializeField] Transform transformToFlip;
 
-    AILerp navigation;
     AI combatAI;
 
     Rigidbody2D rb;
@@ -60,16 +58,16 @@ public class LittleStein : MonoBehaviour
     void Start()
     {
         combatAI = GetComponent<AI>();
-        navigation = GetComponent<AILerp>();
+        //navigation = GetComponent<AILerp>();
         rb = GetComponent<Rigidbody2D>();
 
         combatAI.SetCanMove(false);
         combatAI.SetSpeed(moveSpeed / 10f);
 
-        navigation.canSearch = false;
-        navigation.canMove = false;
+        //navigation.canSearch = false;
+        //navigation.canMove = false;
 
-        navigation.speed = moveSpeed / 10f;
+        //navigation.speed = moveSpeed / 10f;
 
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
@@ -172,9 +170,9 @@ public class LittleStein : MonoBehaviour
 
         if(distToPlayer > maxDistanceFromPlayer)
         {
-            navigation.destination = player.position;
+            //navigation.destination = player.position;
 
-            if (!navigation.canSearch)
+            /*if (!navigation.canSearch)
             {
                 if (animator) animator.SetBool("isWalking", true);
 
@@ -183,7 +181,7 @@ public class LittleStein : MonoBehaviour
                 navigation.canMove = true;
 
                 navigation.SearchPath();
-            }
+            }*/
         }
         else
         {
@@ -200,8 +198,8 @@ public class LittleStein : MonoBehaviour
             }
 
             combatAI.SetCanMove(true);
-            navigation.canSearch = false;
-            navigation.canMove = false;
+            //navigation.canSearch = false;
+            //navigation.canMove = false;
             bool moving = combatAI.MoveTowardsTarget((Vector2)player.position - dirToPlayer * followRadius);
             if (moving)
             {

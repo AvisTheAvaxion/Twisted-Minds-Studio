@@ -12,6 +12,7 @@ public class RoomManager : MonoBehaviour
     List<GameObject> eastDoors = new List<GameObject>();
     List<GameObject> southDoors = new List<GameObject>();
     List<GameObject> westDoors = new List<GameObject>();
+    ElevatorMenuManager elevator;
 
     string currentRoom = "";
     int roomsTraversed = 0;
@@ -21,6 +22,7 @@ public class RoomManager : MonoBehaviour
     private void Start()
     {
         GetAllDoors();
+        elevator = FindObjectOfType<ElevatorMenuManager>();
     }
 
     public void IncrementRoomsTraversed()
@@ -29,6 +31,7 @@ public class RoomManager : MonoBehaviour
         if(roomsTraversed >= doorsToReset)
         {
             roomsTraversed = 0;
+            elevator.ResetShop();
             GetAllDoors();
         }
     }

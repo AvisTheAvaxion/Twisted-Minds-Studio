@@ -22,13 +22,17 @@ public class ElevatorMenuManager : MonoBehaviour
     [SerializeField] SerializationManager serializationManager;
     [Header("Shop Items")]
     [SerializeField] protected ShopItem[] shopItems;
+    protected ShopItem[] itemsForSale;
+    int shopSize = 4;
+    List<int> badIndexes = new List<int>();
     [SerializeField] Button[] itemButtons;
 
     private void Start()
     {
         elevatorBackground.SetActive(false);
+        itemsForSale = new ShopItem[5];
 
-        
+        ResetShop();
     }
 
     #region navigation
@@ -45,17 +49,19 @@ public class ElevatorMenuManager : MonoBehaviour
         loadMenu.SetActive(false);
         storeMenu.SetActive(true);
 
+        
+
         for (int i = 0; i < itemButtons.Length; i++)
         {
-            if (i >= shopItems.Length)
+            if (i >= shopSize)
             {
                 itemButtons[i].gameObject.SetActive(false);
                 continue;
             }
 
 
-            itemButtons[i].GetComponent<Image>().sprite = shopItems[i].itemSold.GetSprite();
-            itemButtons[i].GetComponentInChildren<TMP_Text>().text = shopItems[i].itemSold.GetName() + " - " + shopItems[i].cost + "EE (" + shopItems[i].quantityAvailable + " left)";
+            itemButtons[i].GetComponent<Image>().sprite = itemsForSale[i].itemSold.GetSprite();
+            itemButtons[i].GetComponentInChildren<TMP_Text>().text = itemsForSale[i].itemSold.GetName() + " - " + itemsForSale[i].cost + "EE (" + itemsForSale[i].quantityAvailable + " left)";
         }
     }
 
@@ -120,17 +126,52 @@ public class ElevatorMenuManager : MonoBehaviour
     {
         PlayerInventory inventory = player.GetComponent<PlayerInventory>();
 
-        if (shopItems[itemIndex].quantityAvailable >= 1 && inventory.emotionalEnergy >= shopItems[itemIndex].cost)
+        if (itemsForSale[itemIndex].quantityAvailable >= 1 && inventory.emotionalEnergy >= itemsForSale[itemIndex].cost)
         {
             
 
-            inventory.AddItem(new Item(shopItems[itemIndex].itemSold, 1));
-            inventory.SubtractEmotionialEnergy(shopItems[itemIndex].cost);
-            shopItems[itemIndex].quantityAvailable--;
+            inventory.AddItem(new Item(itemsForSale[itemIndex].itemSold, 1));
+            inventory.SubtractEmotionialEnergy(itemsForSale[itemIndex].cost);
+            itemsForSale[itemIndex].quantityAvailable--;
 
-            itemButtons[itemIndex].GetComponentInChildren<TMP_Text>().text = shopItems[itemIndex].itemSold.GetName() + " - " + shopItems[itemIndex].cost + "EE (" + shopItems[itemIndex].quantityAvailable + " left)";
+            itemButtons[itemIndex].GetComponentInChildren<TMP_Text>().text = itemsForSale[itemIndex].itemSold.GetName() + " - " + itemsForSale[itemIndex].cost + "EE (" + itemsForSale[itemIndex].quantityAvailable + " left)";
         }
 
+    }
+
+    public void ResetShop()
+    {
+        int maxToSell = 5;
+        if (shopItems.Length < 5)
+            maxToSell = shopItems.Length;
+
+        Random.seed = (int)System.DateTime.Now.Millisecond;
+
+        for (int i = 0; i < 10; i++)
+        {
+            shopSize = Random.Range(2, maxToSell + 1);
+            print(shopSize);
+        }
+        print("final shop size " + shopSize);
+        badIndexes.Clear();
+        
+
+        for (int i = 0; i < shopSize; i++)
+        {
+            itemsForSale[i] = shopItems[getShopIndex()];
+            itemsForSale[i].quantityAvailable = itemsForSale[i].defaultQuantity;
+        }
+    }
+
+    int getShopIndex()
+    {
+        int index = Random.Range(0, shopItems.Length);
+
+        if (badIndexes.Contains(index))
+            return getShopIndex();
+
+        badIndexes.Add(index);
+        return index;
     }
 
     #endregion
@@ -143,4 +184,5 @@ public struct ShopItem
     public ItemInfo itemSold;
     public int cost;
     public int quantityAvailable;
+    public int defaultQuantity;
 }

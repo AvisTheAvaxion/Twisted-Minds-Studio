@@ -6,21 +6,24 @@ using UnityEngine;
 
 public class QuestSystem : MonoBehaviour
 {
-    int floor;
-    int objectiveNum;
+    [SerializeField] int floor;
+    [SerializeField] int objectiveNum;
 
     QuestType currentObjective;
 
 
-    [SerializeField] Objectives Objectives;
+    Objectives objectives;
 
-
-    
+    private void Awake()
+    {
+        objectives = new Objectives();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerPrefs.HasKey("idkWhatWeAreSavingThisAs"))
+        LoadObjective();
+        /*if (PlayerPrefs.HasKey("idkWhatWeAreSavingThisAs"))
             //This might be it's own function
             //depending on how Ben is doing data persistancy with multiple save files
         {
@@ -36,7 +39,7 @@ public class QuestSystem : MonoBehaviour
                 objectiveNum = 0;
             }
             LoadObjective();
-        }
+        }*/
     }
 
 
@@ -50,9 +53,50 @@ public class QuestSystem : MonoBehaviour
 
     void LoadObjective()
     {
-
+        switch (floor)
+        {
+            case 0:
+                string quest = objectives.getFloor(floor)[objectiveNum];
+                Debug.Log(quest);
+                currentObjective = ParseQuestString(quest);
+                Debug.Log(currentObjective);
+                break;
+        }
     }
 
+    QuestType ParseQuestString(string questString)
+    {
+        QuestType type = null;
+        string[] parts = questString.Split('|');
+        switch (parts[0])
+        {
+            case "FindObject":
+                type = new FindObject();
+                break;
+            case "FindMultiple":
+                type = new FindMultiple();
+                break;
+            case "Talk":
+                type = new Talk();
+                break;
+            case "Kill":
+                type = new Kill();
+                break;
+            case "KillSpecific":
+                type = new KillSpecific();
+                break;
+            case "Collect":
+                type = new Collect();
+                break;
+            case "Traverse":
+                type = new Traverse();
+                break;
+            case "SetCutsene":
+
+                break;
+        }
+        return type;
+    }
 
     public enum QuestEventType
     {

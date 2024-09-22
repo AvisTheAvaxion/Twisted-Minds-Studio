@@ -2464,49 +2464,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78396926cbbfc4ac3b48fc5fc34a87d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 1
-  data:
-    dataString: UEsDBBQAAAgIAACYn+tXUdzjfwIAADkFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzoWxzad7ax1CekjChHZy8UXYa6xBljySHCAZ/ntXsoxdemJ5+/X27cpfhAldQ2ak2iiWP8scyPcRsTb5NuqdT3CmByl27BO6mHeWm9IGURfzRg2TiIc2TcsKjGLZD3HgNjhAsBGskKpa5wdIpDYa4YJyDehS0thsgdDXiJzxZxzblAta0dJan2jFweiKZgbCgOpDo9VkEU9XUx8/DpeTeRivYp81nk7C5Xw5nYfL9ThYuBKNyDitasjtPH2lWTyJfBU0ZzMXK3BcHxZMopklIDln2tMl5lI7ORJa6waHxYCcURzfcQwncwRKYIfSWK7D9Nei0GC8OopeHphCHdu65Kdsxa2oPrYMPyhvbKcwjhyxtujzf/5x6NyFktVT1zcMbA9Tsuz4Ri8Z1Wag/hB+GFB3Qp0oP9I9h/cSxIvcKNmIHJ1GNTa10RA99H9voyUlZMceb6negU3dK98tu1u1neHqpj8nnFV7J/6sBXZcOsXdhYDC9fxCwu5+tC+BqGXxR8Nvehgemnc8MqUNuvyUwtLby0bZULJ2mtlpGpNIJcDBnnQNgnJz2WIZc7/CO9+g7Z3nkdon5Zt7X/dS7lIc3McHwZ1rK0+3ZelSnp5Bl6+N4UxAT9o6XlCnRArRXthQky5t16iCZoO0Q8Pyf0+L7DOMWNBFFK4gptPFOA4hyKZFQWkYh0sIiLs9JnBOyrctUS8Pbk30xQXeWfelGW0Urd2154qeNuyzkgPJmSjkLlMA4rWtcCMOCpvg08zXOUOBdmAME27f5CslXGZHyNNbodRNuj4bRdO+Skpq9iGNRVKSuE9LSix8u+Wtgg8GJ9u8K3Yl179QSwMEFAAACAgAAJif67OIA2ptAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tFJScmJyqlmimZGhRaplorGZrqVhqkGycVpaYqKhpaF5qoFSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAJif61dR3ON/AgAAOQUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAJif67OIA2ptAAAAeAAAAAkAJAAAAAAAAAAAAAAAzAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAACEAwAAAAA=
-    upgradeData: 
-    file_cachedStartup: {fileID: 0}
-    data_cachedStartup: 
-    cacheStartup: 0
-  showNavGraphs: 0
-  showUnwalkableNodes: 1
-  debugMode: 0
-  debugFloor: 0
-  debugRoof: 1
-  manualDebugFloorRoof: 0
-  showSearchTree: 0
-  unwalkableNodeDebugSize: 0.3
-  logPathResults: 1
-  maxNearestNodeDistance: 100
-  scanOnStartup: 1
-  fullGetNearestSearch: 0
-  prioritizeGraphs: 0
-  prioritizeGraphsLimit: 1
-  colorSettings:
-    _SolidColor: {r: 0.11764706, g: 0.4, b: 0.7882353, a: 0.9}
-    _UnwalkableNode: {r: 1, g: 0, b: 0, a: 0.5}
-    _BoundsHandles: {r: 0.29, g: 0.454, b: 0.741, a: 0.9}
-    _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: 0.5}
-    _ConnectionHighLerp: {r: 1, g: 0, b: 0, a: 0.5}
-    _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
-    _AreaColors:
-    - {r: 0, g: 0, b: 0, a: 0}
-  tagNames: []
-  heuristic: 2
-  heuristicScale: 1
-  threadCount: 1
-  maxFrameTime: 1
-  batchGraphUpdates: 0
-  graphUpdateBatchingInterval: 0.2
-  euclideanEmbedding:
-    mode: 0
-    seed: 0
-    pivotPointRoot: {fileID: 0}
-    spreadOutCount: 1
-  showGraphs: 1
 --- !u!4 &185990577
 Transform:
   m_ObjectHideFlags: 0
@@ -14023,6 +13980,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorsToReset: 5
+  elevatorDoor: {fileID: 1872481007}
+  mindRoomDoor: {fileID: 1610261472}
+  mindRoomPercentGain: 0.1
+  elevatorRoomPercentGain: 0.1
 --- !u!4 &365589117
 Transform:
   m_ObjectHideFlags: 0
@@ -42640,7 +42601,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985726696}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1827c2ee0cad0944a95b87c8e3ddcced, type: 3}
   m_Name: 
@@ -42658,15 +42619,22 @@ MonoBehaviour:
   audioManager: {fileID: 0}
   serializationManager: {fileID: 365589118}
   shopItems:
-  - itemSold: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
+  - itemSold: {fileID: 11400000, guid: ac3ab661bcdfda444b86dd893de0156d, type: 2}
     cost: 50
     quantityAvailable: 5
+    defaultQuantity: 5
+  - itemSold: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
+    cost: 100
+    quantityAvailable: 3
+    defaultQuantity: 3
   - itemSold: {fileID: 11400000, guid: e2383470b62dff64cabe2394330c307f, type: 2}
     cost: 150
     quantityAvailable: 3
+    defaultQuantity: 3
   - itemSold: {fileID: 11400000, guid: 478c776851dc9004ab6ab5cddae20f28, type: 2}
     cost: 200
     quantityAvailable: 3
+    defaultQuantity: 3
   itemButtons:
   - {fileID: 169981128}
   - {fileID: 1681471152}
@@ -79162,7 +79130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1610261473
 Transform:
   m_ObjectHideFlags: 0
@@ -79172,7 +79140,7 @@ Transform:
   m_GameObject: {fileID: 1610261472}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.109, y: -46.768635, z: 0}
+  m_LocalPosition: {x: -16.69, y: -52.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -85627,6 +85595,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4094848050660363272, guid: b29c081c5bd7ae74988c1b6d37f130e5, type: 3}
   m_PrefabInstance: {fileID: 1861164108}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1872481007 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4362122701357270301, guid: 26a74dd3e1a49eb409325a8cce7aad69, type: 3}
+  m_PrefabInstance: {fileID: 752629486}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1892489517
 GameObject:
@@ -96677,7 +96650,7 @@ Transform:
   m_GameObject: {fileID: 6425188514682871254}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.24000168, y: -2.6399994, z: 0}
+  m_LocalPosition: {x: 0.24000168, y: -0.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

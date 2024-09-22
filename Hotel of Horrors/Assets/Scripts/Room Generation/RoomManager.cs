@@ -6,18 +6,25 @@ using UnityEngine.UI;
 public class RoomManager : MonoBehaviour
 {
     [SerializeField] int doorsToReset;
-
+    [SerializeField] GameObject elevatorDoor;
+    [SerializeField] GameObject mindRoomDoor;
 
     List<GameObject> northDoors = new List<GameObject>();
     List<GameObject> eastDoors = new List<GameObject>();
     List<GameObject> southDoors = new List<GameObject>();
     List<GameObject> westDoors = new List<GameObject>();
+
     ElevatorMenuManager elevator;
 
     string currentRoom = "";
     int roomsTraversed = 0;
     int enemiesToKill = 0;
-    
+
+    float mindRoomChance = 0;
+    float elevatorRoomChance = 0;
+
+    [SerializeField][Range(0,1)] float mindRoomPercentGain;
+    [SerializeField] [Range(0, 1)] float elevatorRoomPercentGain;
 
     private void Start()
     {
@@ -28,6 +35,11 @@ public class RoomManager : MonoBehaviour
     public void IncrementRoomsTraversed()
     {
         roomsTraversed++;
+        print("rooms traversed " + roomsTraversed);
+        mindRoomChance += mindRoomPercentGain;
+        print("Mind room chance " + mindRoomChance);
+        elevatorRoomChance += elevatorRoomPercentGain;
+
         if(roomsTraversed >= doorsToReset)
         {
             roomsTraversed = 0;
@@ -42,6 +54,20 @@ public class RoomManager : MonoBehaviour
     public GameObject GetNextRoom(Door.DoorLocations orientation)
     {
         IncrementRoomsTraversed();
+        float random = Random.value;
+        //attempt to get either mind or elevator room
+        if (mindRoomChance > random)
+        {
+            print("pitty mind room " + random);
+            mindRoomChance = 0;
+            return mindRoomDoor;
+        }
+        if (elevatorRoomChance > Random.value)
+        {
+            print("pitty elevator room");
+            elevatorRoomChance = 0;
+            return elevatorDoor;
+        }
 
         GameObject door;
         switch (orientation)

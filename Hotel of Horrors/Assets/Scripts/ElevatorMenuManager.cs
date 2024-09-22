@@ -95,7 +95,7 @@ public class ElevatorMenuManager : MonoBehaviour
 
     IEnumerator GetFreshRoom()
     {
-        print("fading black");
+
         //audioManager.PlayEffect("DoorOpen");
        
         // loop over 1 second - fade to black
@@ -107,7 +107,6 @@ public class ElevatorMenuManager : MonoBehaviour
         }
 
 
-        print("fading clear");
         // loop over 1 second backwards - fade to clear
         for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)
         {
@@ -150,9 +149,7 @@ public class ElevatorMenuManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             shopSize = Random.Range(2, maxToSell + 1);
-            print(shopSize);
         }
-        print("final shop size " + shopSize);
         badIndexes.Clear();
         
 

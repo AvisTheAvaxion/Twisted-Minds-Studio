@@ -151,7 +151,7 @@ public class RoomTraversal : MonoBehaviour
                 print("Going to elevator");
                 elevatorCanvas.SetActive(true);
                 Cursor.visible = true;
-                return new Vector3(0f, -48.5f, 0f);
+                return new Vector3(-4.3f, -48.5f, 0f);
             case "Boss Room Door":
                 return GameObject.Find("Boss Room Spawn").transform.position;
             case "Mind Room Door":

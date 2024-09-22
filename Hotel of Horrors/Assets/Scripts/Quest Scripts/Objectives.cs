@@ -27,7 +27,7 @@ public class Objectives
 
     //Test for the tutorial floor
     string[] Floor0 = new string[] {
-        "Talk|Protag|WakeUpTutorial",
+        "SetCutscene|WakeUpTutorial",
         "Traverse|Room2",
         "SetCutscene|VarrenEncounter",
         "Traverse|Room3",

@@ -22,9 +22,9 @@ public class FindObject : QuestType
 
 public class FindMultiple : QuestType
 {
-    public FindMultiple()
+    public FindMultiple(string[] objs)
     {
-        
+        objects = objs;
     }
 
     string[] objects;
@@ -45,7 +45,11 @@ public class FindMultiple : QuestType
 
 public class Talk : QuestType
 {
-
+    public Talk(GameObject npc, Dialogue.Dialog dialog)
+    {
+        this.npc = npc;
+        this.dialouge = dialog;
+    }
     GameObject npc;
     Dialogue.Dialog dialouge;
 
@@ -57,6 +61,11 @@ public class Talk : QuestType
 
 public class Kill : QuestType
 {
+    public Kill(int amountKilled, int total)
+    {
+        this.total = total;
+        this.amountKilled = amountKilled;
+    }
     int amountKilled;
     int total;
 
@@ -68,6 +77,12 @@ public class Kill : QuestType
 
 public class KillSpecific : QuestType
 {
+    public KillSpecific(int amoundKilled, int total, string enemyName)
+    {
+        this.amountKilled=amoundKilled;
+        this.total = total;
+        this.enemyName = enemyName;
+    }
     int amountKilled;
     int total;
     string enemyName;
@@ -79,6 +94,11 @@ public class KillSpecific : QuestType
 
 public class Collect : QuestType
 {
+    public Collect(int amountCollected, int total)
+    {
+        this.amountCollected = amountCollected;
+        this.total = total;
+    }
     int amountCollected;
     int total;
 
@@ -90,6 +110,10 @@ public class Collect : QuestType
 
 public class Traverse : QuestType
 {
+    public Traverse(string room)
+    {
+        roomName = room;
+    }
     string roomName;
 
     public string ToSaveString()

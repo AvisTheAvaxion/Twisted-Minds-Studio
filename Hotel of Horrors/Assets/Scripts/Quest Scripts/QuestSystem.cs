@@ -79,22 +79,37 @@ public class QuestSystem : MonoBehaviour
                 type = new FindObject(parts[1]);
                 break;
             case "FindMultiple":
-                type = new FindMultiple();
+                List<string> objs = new List<string>();
+                int index = 0;
+                foreach(var part in parts)
+                {
+                    if (index == 0)
+                    {
+                        continue;
+                    }
+                    objs.Add(part);
+                    index++;
+                }
+                string[] objsArray = objs.ToArray();
+                type = new FindMultiple(objsArray);
                 break;
             case "Talk":
-                type = new Talk();
+                GameObject npc = GameObject.Find(parts[1]);
+                Dialogue.Dialog talkDialog;
+                Enum.TryParse(parts[2], out talkDialog);
+                type = new Talk(npc, talkDialog);
                 break;
             case "Kill":
-                type = new Kill();
+                type = new Kill(Int32.Parse(parts[1]), Int32.Parse(parts[2]));
                 break;
             case "KillSpecific":
-                type = new KillSpecific();
+                type = new KillSpecific(Int32.Parse(parts[1]), Int32.Parse(parts[2]), parts[3]);
                 break;
             case "Collect":
-                type = new Collect();
+                type = new Collect(Int32.Parse(parts[1]), Int32.Parse(parts[2]));
                 break;
             case "Traverse":
-                type = new Traverse();
+                type = new Traverse(parts[1]);
                 break;
             case "SetCutsene":
                 Dialogue.Dialog dialog;

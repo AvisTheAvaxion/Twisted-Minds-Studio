@@ -51,21 +51,25 @@ public class QuestSystem : MonoBehaviour
     {
         switch (EventType)
         {
-
+            case QuestEventType.RoomEnter:
+                break;
+            case QuestEventType.EnemyDeath:
+                break;
+            case QuestEventType.NpcInteraction:
+                break;
+            case QuestEventType.ItemObtained:
+                break;
+            case QuestEventType.EnergyCollected:
+                break;
         }
     }
 
     void LoadObjective()
     {
-        switch (floor)
-        {
-            case 0:
-                string quest = objectives.getFloor(floor)[objectiveNum];
-                Debug.Log(quest);
-                currentObjective = ParseQuestString(quest);
-                Debug.Log(currentObjective);
-                break;
-        }
+        string quest = objectives.getFloor(floor)[objectiveNum];
+        Debug.Log(quest);
+        currentObjective = ParseQuestString(quest);
+        Debug.Log(currentObjective);
     }
 
     QuestType ParseQuestString(string questString)
@@ -128,5 +132,4 @@ public class QuestSystem : MonoBehaviour
         ItemObtained = 3,
         EnergyCollected = 4
     }
-
 }

@@ -7,6 +7,11 @@ interface QuestType
 
 public class FindObject : QuestType
 {
+    public FindObject(string objName)
+    {
+        objectName = objName;
+    }
+
     string objectName;
 
     public string ToSaveString()
@@ -17,24 +22,30 @@ public class FindObject : QuestType
 
 public class FindMultiple : QuestType
 {
-        string[] objects;
-
-        public string ToSaveString()
-        {
-            string s = "";
-
-            foreach (string s1 in objects)
-            {
-                s += s1;
-                s += "|";
-            }
-
-            return $"FindMultiple|{s}";
-        }
+    public FindMultiple()
+    {
+        
     }
+
+    string[] objects;
+
+    public string ToSaveString()
+    {
+        string s = "";
+
+        foreach (string s1 in objects)
+        {
+            s += s1;
+            s += "|";
+        }
+
+        return $"FindMultiple|{s}";
+    }
+}
 
 public class Talk : QuestType
 {
+
     GameObject npc;
     Dialogue.Dialog dialouge;
 

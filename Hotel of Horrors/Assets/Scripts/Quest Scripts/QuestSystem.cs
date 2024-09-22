@@ -10,13 +10,17 @@ public class QuestSystem : MonoBehaviour
     [SerializeField] int objectiveNum;
 
     QuestType currentObjective;
-
-
     Objectives objectives;
+
+    DialogueManager dialogueManager;
 
     private void Awake()
     {
         objectives = new Objectives();
+        if (FindObjectOfType<DialogueManager>())
+        {
+            dialogueManager = FindObjectOfType<DialogueManager>();
+        }
     }
 
     // Start is called before the first frame update
@@ -68,10 +72,11 @@ public class QuestSystem : MonoBehaviour
     {
         QuestType type = null;
         string[] parts = questString.Split('|');
+        Debug.Log(Dialogue.Dialog.SameRoomAgain);
         switch (parts[0])
         {
             case "FindObject":
-                type = new FindObject();
+                type = new FindObject(parts[1]);
                 break;
             case "FindMultiple":
                 type = new FindMultiple();
@@ -92,7 +97,9 @@ public class QuestSystem : MonoBehaviour
                 type = new Traverse();
                 break;
             case "SetCutsene":
-
+                Dialogue.Dialog dialog;
+                Enum.TryParse(parts[1], true, out dialog);
+                dialogueManager.SetCutscene(dialog);
                 break;
         }
         return type;

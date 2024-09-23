@@ -80,7 +80,8 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected ItemDrop[] itemDrops;
     [SerializeField] protected GameObject emotionalEnergyPrefab;
     [SerializeField] protected EnemyVisuals enemyVisuals;
-    public static event EventHandler OnEnemyDeath;
+    public event EventHandler OnEnemyDeath;
+    string enemyName;
     
     protected bool canMove;
     protected bool canAttack;
@@ -106,6 +107,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void Start()
     {
+        enemyName = gameObject.name;
         target = GameObject.Find("Player");
         if(target == null) Debug.LogError("Player not detected");
 
@@ -180,7 +182,7 @@ public class EnemyStateMachine : MonoBehaviour
 
             FindObjectOfType<RoomManager>().KillEnemy();
 
-            OnEnemyDeath?.Invoke(this, EventArgs.Empty);
+            OnEnemyDeath?.Invoke(enemyName, EventArgs.Empty);
             enemyAudioManager.Die();
 
             animator.enabled = false;

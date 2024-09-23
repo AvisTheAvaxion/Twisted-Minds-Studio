@@ -19,7 +19,7 @@ public class KillStep : QuestStep
         this.RequiredAmount = requiredAmo;
     }
 
-    public override void Init()
+    /*public override void Init()
     {
         base.Init();
         EnemyStateMachine.OnEnemyDeath += EnemyDied;
@@ -33,5 +33,5 @@ public class KillStep : QuestStep
             this.CurrentAmount++;
             Evaluate();
         }
-    }
+    }*/
 }

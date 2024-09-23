@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,11 +12,18 @@ public class EnemySpawner : MonoBehaviour
     PolygonCollider2D spawnArea;
     Queue<GameObject> queue;
     RoomManager roomManager;
-
+    QuestSystem questSys;
+    [SerializeField] List<GameObject> spawnedMonsters;
     public bool isActiviated;
-    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        questSys = FindObjectOfType<QuestSystem>();
+    }
+
     void Start()
     {
+        spawnedMonsters = new List<GameObject>();
         queue = new Queue<GameObject>(enemyQueue);
         spawnArea = GetComponent<PolygonCollider2D>();
         roomManager = FindObjectOfType<RoomManager>();
@@ -26,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
         ActivateSpawning(isActiviated);
     }
 
+    #region Enemy Spawning
     void ActivateSpawning(bool isActive)
     {
         if(isActive)
@@ -57,7 +66,8 @@ public class EnemySpawner : MonoBehaviour
             if (queue.Count > 0)
             {
                 roomManager.AddEnemy();
-                Instantiate(queue.Dequeue(), GetRandomPosition(spawnBound), Quaternion.identity);
+                GameObject monster = Instantiate(queue.Dequeue(), GetRandomPosition(spawnBound), Quaternion.identity);
+                monster.GetComponent<EnemyStateMachine>().OnEnemyDeath += EnemyDeathDetected;
             }
             else
             {
@@ -72,7 +82,7 @@ public class EnemySpawner : MonoBehaviour
         //Loop that gets random positions until a position in the Spawnbounds is found
         while (true)
         {
-            Vector2 randomSpawn = new Vector2(Random.Range(bound.min.x, bound.max.x), Random.Range(bound.min.y, bound.max.y));
+            Vector2 randomSpawn = new Vector2(UnityEngine.Random.Range(bound.min.x, bound.max.x), UnityEngine.Random.Range(bound.min.y, bound.max.y));
             //End loop if valid pos
             if (spawnArea.OverlapPoint(randomSpawn))
             {
@@ -84,5 +94,12 @@ public class EnemySpawner : MonoBehaviour
                 continue;
             }
         }
+    }
+    #endregion
+
+    void EnemyDeathDetected(object sender, EventArgs e)
+    {
+        string enemyName = (string) sender;
+        questSys.QuestEvent(QuestSystem.QuestEventType.EnemyDeath, enemyName);
     }
 }

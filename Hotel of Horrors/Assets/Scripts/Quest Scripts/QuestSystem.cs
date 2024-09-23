@@ -13,7 +13,6 @@ public class QuestSystem : MonoBehaviour
     Objectives objectives;
 
     DialogueManager dialogueManager;
-
     private void Awake()
     {
         objectives = new Objectives();
@@ -66,10 +65,9 @@ public class QuestSystem : MonoBehaviour
 
     void LoadObjective()
     {
-        string quest = objectives.getFloor(floor)[objectiveNum];
-        Debug.Log(quest);
+        string quest = objectives.getObjective(floor, objectiveNum);
         currentObjective = ParseQuestString(quest);
-        Debug.Log(currentObjective);
+        Debug.Log("Current Obj: " + currentObjective.ToSaveString());
     }
 
     QuestType ParseQuestString(string questString)

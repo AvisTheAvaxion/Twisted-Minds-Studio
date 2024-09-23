@@ -3,12 +3,12 @@ using UnityEngine.InputSystem.HID;
 
 public class Objectives
 {
-    public string[] getFloor(int floorNum)
+    public string getObjective(int floorNum, int objectiveNum)
     {
         switch (floorNum)
         {
             case 0:
-                return Floor0;
+                return Floor0[objectiveNum];
 
         }
         return null;

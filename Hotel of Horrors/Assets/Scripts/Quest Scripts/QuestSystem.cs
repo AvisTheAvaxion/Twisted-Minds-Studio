@@ -13,13 +13,14 @@ public class QuestSystem : MonoBehaviour
     Objectives objectives;
 
     DialogueManager dialogueManager;
+    PlayerInventory inventory;
     private void Awake()
     {
         objectives = new Objectives();
-        if (FindObjectOfType<DialogueManager>())
-        {
-            dialogueManager = FindObjectOfType<DialogueManager>();
-        }
+        dialogueManager = FindObjectOfType<DialogueManager>();
+        inventory = FindObjectOfType<PlayerInventory>();
+        inventory.OnItemCollect += ItemPickUpDetected;
+        inventory.OnEnergyCollect += EnergyPickUpDetected;
     }
 
     // Start is called before the first frame update
@@ -130,4 +131,16 @@ public class QuestSystem : MonoBehaviour
         ItemObtained = 3,
         EnergyCollected = 4
     }
+
+    #region Inventory Event Detectors
+    void ItemPickUpDetected(object sender, EventArgs e)
+    {
+        QuestEvent(QuestEventType.ItemObtained, (string)sender);
+    }
+
+    void EnergyPickUpDetected(object sender, EventArgs e)
+    {
+        QuestEvent(QuestEventType.EnergyCollected, (string)sender);
+    }
+    #endregion
 }

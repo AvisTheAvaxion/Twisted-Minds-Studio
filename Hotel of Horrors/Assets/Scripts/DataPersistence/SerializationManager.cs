@@ -7,7 +7,6 @@ public class SerializationManager : MonoBehaviour
 {
     string saveFile;
     PlayerInventory inventory;
-    QuestManager quests;
 
     private void Start()
     {

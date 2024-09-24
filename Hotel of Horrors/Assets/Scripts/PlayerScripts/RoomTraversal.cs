@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System;
 
 public class RoomTraversal : MonoBehaviour
 {
@@ -19,8 +20,15 @@ public class RoomTraversal : MonoBehaviour
     [SerializeField] NewAudioManager audioManager;
 
     RoomManager roomManager;
+    QuestSystem questSys;
 
     [SerializeField] float doorTransitionLength = 0.5f;
+
+    private void Awake()
+    {
+        questSys = FindObjectOfType<QuestSystem>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -125,6 +133,7 @@ public class RoomTraversal : MonoBehaviour
         }
 
         print(roomManager.GetCurrentRoom());
+        questSys.QuestEvent(QuestSystem.QuestEventType.RoomEnter, roomManager.GetCurrentRoom());
 
         //print("fading clear");
         // loop over 1 second backwards - fade to clear

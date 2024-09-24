@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 using UnityEngine.InputSystem;
 
 [System.Serializable]
@@ -38,7 +39,8 @@ public class PlayerInventory : MonoBehaviour
     ActionController actionController;
 
     bool inventoryLoaded = false;
-
+    public event EventHandler OnItemCollect;
+    public event EventHandler OnEnergyCollect;
     private void Awake()
     {
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
@@ -89,6 +91,7 @@ public class PlayerInventory : MonoBehaviour
             bool remove = true;
             UseableInfo useable = data.GetItemData();
             int count = data.GetCount();
+            OnItemCollect?.Invoke(useable.name, EventArgs.Empty);
             if (useable.GetType() == typeof(ItemInfo))
             {
                 Item newItem = new Item((ItemInfo)useable, count);
@@ -109,6 +112,7 @@ public class PlayerInventory : MonoBehaviour
             EmotionalEnergy energy = collision.GetComponent<EmotionalEnergy>();
             if(energy)
             {
+                OnEnergyCollect?.Invoke(energy.emotionalEnergy, EventArgs.Empty);
                 AddEmotionalEnergy(energy.emotionalEnergy);
                 Destroy(collision.gameObject);
             }

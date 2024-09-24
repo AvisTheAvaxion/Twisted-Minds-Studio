@@ -13,13 +13,13 @@ public class Projectile : MonoBehaviour
     [SerializeField] int maxWallBounces = 1;
     [SerializeField] bool goThroughWalls = false;
 
-    Rigidbody2D rb;
+    protected Rigidbody2D rb;
 
     int targetsHit = 0;
 
     int wallBounces = 0;
 
-    private void Start()
+    protected virtual void Start()
     {
         targetsHit = 0;
         wallBounces = 0;
@@ -37,6 +37,11 @@ public class Projectile : MonoBehaviour
         effectsToInflict = ability.GetInfo().GetEffectsToInflict();
     }
 
+    protected virtual void DestroySelf()
+    {
+        Destroy(gameObject);
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag.Equals("Wall") && !goThroughWalls)
@@ -50,8 +55,9 @@ public class Projectile : MonoBehaviour
                 transform.rotation = Quaternion.FromToRotation(transform.up, rb.velocity.normalized) * transform.rotation;
 
                 wallBounces++;
-            } else
-                Destroy(gameObject);
+            }
+            else
+                DestroySelf();
         }
         else if(collision.tag.Equals("MeleeStrike"))
         {
@@ -88,7 +94,7 @@ public class Projectile : MonoBehaviour
 
                         targetsHit++;
                         if (targetsHit >= maxTargets)
-                            Destroy(gameObject);
+                            DestroySelf();
                     }
                 }
                 else
@@ -99,7 +105,7 @@ public class Projectile : MonoBehaviour
                         lootable.TakeDamage(damage);
                         targetsHit++;
                         if(targetsHit >= maxTargets)
-                            Destroy(gameObject);
+                            DestroySelf();
                     }
                 }
             }

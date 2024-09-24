@@ -12,6 +12,7 @@ public class BasicShooter : MonoBehaviour
     [SerializeField] Transform bulletSpawnPoint;
     [SerializeField] float startingDistance = 0.1f;
     [SerializeField] float bulletForce = 20f;
+    [SerializeField] [Range(-180, 180)] int bulletAngleOffset = 0;
     [SerializeField] int burstCount = 3;
     [SerializeField] int projectilesPerBurst;
     [SerializeField] [Range(0, 359)] float angleSpread;
@@ -81,13 +82,18 @@ public class BasicShooter : MonoBehaviour
                     Vector2 pos = FindBulletSpawnPos(currentAngle);
                     GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
 
-
-                    //var dir = newBullet.transform.position - GameObject.Find("Player").transform.position;
-                    //var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
                     //newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);
-                    newBullet.transform.rotation = Quaternion.FromToRotation(newBullet.transform.up, (pos - (Vector2)bulletSpawnPoint.position).normalized) * newBullet.transform.rotation;
+                    Vector2 dir = (pos - (Vector2)transform.position).normalized;
+                    Vector2 rotatedDir = Quaternion.AngleAxis(bulletAngleOffset, Vector3.forward) * dir;
+                    newBullet.transform.rotation = Quaternion.FromToRotation(newBullet.transform.up, rotatedDir) * newBullet.transform.rotation;
 
                     newBullet.GetComponent<Rigidbody2D>().AddForce(newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
+
+                    Projectile proj = newBullet.GetComponent<Projectile>();
+                    if(proj != null && proj is ProjectileBoomerang)
+                    {
+                        (proj as ProjectileBoomerang).Initialize(target.position);
+                    }
 
                     currentAngle += angleStep;
 
@@ -178,8 +184,13 @@ public class BasicShooter : MonoBehaviour
         for (int j = 0; j < projectilesPerBurst; j++)
         {
             Vector2 pos = FindBulletSpawnPos(currentAngleDebug);
+            Vector2 dir = (pos - (Vector2)transform.position).normalized;
 
-            Gizmos.DrawWireSphere(pos, 0.1f);
+            Vector2 rotatedDir = Quaternion.AngleAxis(bulletAngleOffset, Vector3.forward) * dir;
+
+            Gizmos.DrawWireSphere((Vector2)transform.position + dir * startingDistance, 0.1f);
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere((Vector2)transform.position + rotatedDir * startingDistance, 0.1f);
             //var dir = newBullet.transform.position - GameObject.Find("Player").transform.position;
             //var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
 

@@ -369,11 +369,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  debugTargetPos: {x: 1, y: 1}
+  debugTargetPos: {x: 0, y: 1}
   bulletPrefab: {fileID: 6622512885369241516, guid: 78cd5532a59aaa74ba0275dc34f93c95, type: 3}
   bulletSpawnPoint: {fileID: 5574785889938037912}
   startingDistance: 0.1
   bulletForce: 4
+  bulletAngleOffset: 90
   burstCount: 1
   projectilesPerBurst: 1
   angleSpread: 0

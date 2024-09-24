@@ -27,6 +27,7 @@ public class AI : MonoBehaviour
     [SerializeField] float orbitRadius = 1f;
     [SerializeField] float orbitRadiusThickness = 0.2f;
     [SerializeField] float minDistanceThreshold = 0.05f;
+    [SerializeField] float biasThreshold = 1.1f;
     float orbitOffset;
     [Header("Weight Settings")]
     [SerializeField][Range(4, 24)] int numOfWeights = 16;
@@ -37,6 +38,7 @@ public class AI : MonoBehaviour
     [SerializeField] float noObstacleDesire = 0.3f;
     [SerializeField] string comradeTag = "Enemy";
     [SerializeField] LayerMask obstacleMask;
+    [SerializeField] LayerMask wallMask;
     [Header("Path Obstruction Settings")]
     [Tooltip("Weight value to identity a path obstruction")]
     [SerializeField] float obstructionDetectionThreshold = 0.1f;
@@ -46,8 +48,12 @@ public class AI : MonoBehaviour
     [SerializeField] float minObstructionChangeDir = -0.8f;
     Weight[] weights;
 
+    Weight[] longRange_Weights;
+
     Vector2 newDir;
     Vector2 currentDir;
+
+    public Vector2 CurrentDir { get => currentDir; }
 
     bool canMove = true;
 
@@ -75,12 +81,15 @@ public class AI : MonoBehaviour
         float angle = 0;
         float dAngle = 360f / numOfWeights;
         weights = new Weight[numOfWeights];
+        longRange_Weights = new Weight[numOfWeights];
         for (int i = 0; i < numOfWeights; i++)
         {
             float x = Mathf.Cos(angle * Mathf.Deg2Rad);
             float y = Mathf.Sin(angle * Mathf.Deg2Rad);
             weights[i].weight = 0;
             weights[i].dir = new Vector2(x, y).normalized;
+            longRange_Weights[i].weight = 0;
+            longRange_Weights[i].dir = weights[i].dir;
 
             angle += dAngle;
         }
@@ -89,10 +98,10 @@ public class AI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       /* if (canMove)
+        if (canMove)
         {
-            OrbitAroundTarget();
-        }*/
+           // OrbitAroundTarget();
+        }
     }
 
     private void Move()
@@ -177,7 +186,7 @@ public class AI : MonoBehaviour
             }
         }
 
-        PathObstruction(largestWeight, largestWeightIndex);
+        //PathObstruction(largestWeight, largestWeightIndex);
 
         Move();
 
@@ -198,6 +207,11 @@ public class AI : MonoBehaviour
             isOrbiting = false;
         else if (distToTarget <= orbitRadius + orbitOffset)
             isOrbiting = true;
+
+        //bool hasDirectPath = CheckForDirectPath(dirToTarget, distToTarget);
+
+        //if (!hasDirectPath)
+        //    dirToTarget = IndirectMoveTowardsTarget(dirToTarget, distToTarget);
 
         float largestWeight = 0;
         //Set baseline weight based off dot product to desire direction
@@ -232,7 +246,7 @@ public class AI : MonoBehaviour
             }
         }
 
-        PathObstruction(largestWeight, largestWeightIndex);
+        //PathObstruction(largestWeight, largestWeightIndex);
 
         Move();
     }
@@ -323,6 +337,117 @@ public class AI : MonoBehaviour
         }
     }
 
+    private bool CheckForDirectPath(Vector2 dir, float dist)
+    {
+        return Physics2D.Raycast((Vector2)transform.position + centerOffset, dir, dist, wallMask).collider == null;
+    }
+
+    private Vector2 IndirectMoveTowardsTarget(Vector2 dirToTarget, float distToTarget)
+    {
+        for (int i = 0; i < numOfWeights; i++)
+        {
+            longRange_Weights[i].weight = 0;
+        }
+
+        RaycastHit2D[] hitInfos = new RaycastHit2D[numOfWeights];
+
+        //distToTarget *= 1.5f;
+        for (int i = 0; i < numOfWeights; i++)
+        {
+            RaycastHit2D hitInfo = Physics2D.Raycast((Vector2)transform.position + centerOffset + longRange_Weights[i].dir * objectRadius, longRange_Weights[i].dir, 9999f, wallMask);
+            hitInfos[i] = hitInfo;
+
+            float w = Vector2.Dot(longRange_Weights[i].dir, dirToTarget);
+
+            float shapedw = 1 - Mathf.Abs(w);
+
+            if (hitInfo.collider != null && hitInfo.distance <= distToTarget)
+            {
+                float distToWall = hitInfo.distance;
+                float distFromWallToTarget = distToWall * w;
+
+                float negativeWeight = (distToTarget - distFromWallToTarget) * -1;
+
+                longRange_Weights[i].weight += negativeWeight;
+                longRange_Weights[(i + 1) % numOfWeights].weight += negativeWeight / 2f;
+                longRange_Weights[(i + 2) % numOfWeights].weight += negativeWeight / 3;
+                longRange_Weights[(i - 1) >= 0 ? i - 1 : i - 1 + numOfWeights].weight += negativeWeight / 2f;
+                longRange_Weights[(i - 2) >= 0 ? i - 2 : i - 2 + numOfWeights].weight += negativeWeight / 3f;
+                //print($"{i}: {longRange_Weights[i].weight}");
+            }
+            else
+            {
+                float distToWall = distToTarget;
+                float distFromWallToTarget = distToWall * w;
+
+                longRange_Weights[i].weight += distToTarget * 2 - (distToTarget - distFromWallToTarget);
+            }
+
+            if(shapedw > 0.2f || w < -0.2f)
+            {
+                Vector2 newRayOrigin = (Vector2)transform.position + centerOffset + longRange_Weights[i].dir * (objectRadius + hitInfo.distance);
+                Vector2 newVectorToTarget = (Vector2)target.position - newRayOrigin;
+                float newDistToTarget = newVectorToTarget.magnitude;
+                Vector2 newDirToTarget = newVectorToTarget.normalized;
+
+                RaycastHit2D newHitInfo = Physics2D.Raycast(newRayOrigin, newDirToTarget, newDistToTarget, wallMask);
+                if(newHitInfo.collider != null)
+                {
+
+                } else
+                {
+                    longRange_Weights[i].weight += (distToTarget * 2) - newDistToTarget;// * Mathf.Max(0.2f, shapedw);
+                }
+            }
+
+            //float w2 = Vector2.Dot(longRange_Weights[i].dir, currentDir);
+            //longRange_Weights[i].weight += w2 * desireKeepSameDir;
+            /*if (hitInfos.Length > 0)
+            {
+                RaycastHit2D hitInfo = hitInfos[hitInfos.Length - 1];
+
+                //Find closest wall that isnt self
+                for (int j = 0; j < hitInfos.Length; j++)
+                {
+                    if (hitInfos[j].collider != null && hitInfos[j].collider.gameObject.name != name && hitInfos[j].distance < hitInfo.distance)
+                        hitInfo = hitInfos[j];
+                }
+
+
+                float distToWall = hitInfo.distance;
+            }*/
+        }
+
+        float largestWeight = longRange_Weights[0].weight;
+        int largestWeightIndex = 0;
+        float secondLargestWeight = longRange_Weights[1].weight;
+        int secondLargestWeightIndex = 1;
+        Vector2 newDir = longRange_Weights[0].dir;
+        for (int i = 1; i < numOfWeights; i++)
+        {
+            if (longRange_Weights[i].weight > largestWeight)
+            {
+                secondLargestWeight = largestWeight;
+                secondLargestWeightIndex = largestWeightIndex;
+                largestWeight = longRange_Weights[i].weight;
+                largestWeightIndex = i;
+            }
+            else if (longRange_Weights[i].weight > secondLargestWeight)
+            {
+                secondLargestWeight = longRange_Weights[i].weight;
+                secondLargestWeightIndex = i;
+            }
+        }
+        newDir = longRange_Weights[largestWeightIndex].dir;
+
+        if(Mathf.Abs(largestWeight - secondLargestWeight) < biasThreshold)
+        {
+            newDir = longRange_Weights[secondLargestWeightIndex].dir;
+        }
+
+        return newDir;
+    }
+
     Coroutine pauseMovement;
     public void PauseMovement(float length)
     {
@@ -357,6 +482,20 @@ public class AI : MonoBehaviour
                 Gizmos.color = Color.red;
             }
             Gizmos.DrawLine((Vector2)transform.position + centerOffset +  weights[i].dir * objectRadius, (Vector2)transform.position + weights[i].dir * objectRadius + weights[i].dir * Mathf.Abs(weights[i].weight));
+        }
+
+        if (longRange_Weights == null) return;
+        for (int i = 0; i < numOfWeights; i++)
+        {
+            if (longRange_Weights[i].weight >= 0)
+            {
+                Gizmos.color = Color.cyan;
+            }
+            else
+            {
+                Gizmos.color = Color.magenta;
+            }
+            Gizmos.DrawLine((Vector2)transform.position + centerOffset + longRange_Weights[i].dir * objectRadius, (Vector2)transform.position + longRange_Weights[i].dir * objectRadius + longRange_Weights[i].dir * Mathf.Abs(longRange_Weights[i].weight));
         }
     }
 }

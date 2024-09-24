@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     } 
 
-    public void Initialize(Ability ability)
+    public virtual void Initialize(Ability ability)
     {
         damage = (int)ability.damage;
         deflectionResistance = ability.deflectionResistance;
@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour
         effectsToInflict = ability.GetInfo().GetEffectsToInflict();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag.Equals("Wall") && !goThroughWalls)
         {
@@ -46,6 +46,8 @@ public class Projectile : MonoBehaviour
                 Vector2 closestPoint = collision.ClosestPoint(transform.position);
                 Vector2 normal = ((Vector2)transform.position - closestPoint).normalized;
                 rb.velocity = Vector2.Reflect(rb.velocity, normal);
+
+                transform.rotation = Quaternion.FromToRotation(transform.up, rb.velocity.normalized) * transform.rotation;
 
                 wallBounces++;
             } else
@@ -104,7 +106,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    protected virtual void OnTriggerStay2D(Collider2D collision)
     {
         if ((this.tag.Equals("PlayerBullet") && !collision.gameObject.tag.Equals("Player")) || (this.tag.Equals("EnemyBullet") && !collision.gameObject.tag.Equals("Enemy")))
         {

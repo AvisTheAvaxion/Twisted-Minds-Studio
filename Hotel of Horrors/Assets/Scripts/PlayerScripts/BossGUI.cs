@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class BossGUI : MonoBehaviour
 {
-    [SerializeField] Slider boss_healthBar;
+    [SerializeField] Slider healthBar;
 
-    public Slider Boss_healthBar { get => boss_healthBar;}
+    public Slider HealthBar { get => healthBar;}
 }

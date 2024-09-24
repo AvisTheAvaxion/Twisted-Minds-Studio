@@ -11,8 +11,11 @@ public class BossHealth : MonoBehaviour, IHealth
     [SerializeField] bool healOverTime = false;
     [SerializeField] float timeBtwHeals = 5f;
     [SerializeField] float flashColorLength = 0.2f;
+    [SerializeField] float stunLength = 0.05f;
     [SerializeField] FlashColor flashColor;
     [SerializeField] BossGUI bossGUI;
+
+    BossStateMachine boss;
 
     bool canTakeDamage;
 
@@ -20,10 +23,11 @@ public class BossHealth : MonoBehaviour, IHealth
     private void Start()
     {
         stats = GetComponent<StatsController>();
+        boss = GetComponent<BossStateMachine>();
 
         if (bossGUI == null) bossGUI = FindObjectOfType<BossGUI>();
 
-        bossGUI.Boss_healthBar.value = 1;
+        bossGUI.HealthBar.value = 1;
         canTakeDamage = true;
     }
     private void Update()
@@ -52,7 +56,7 @@ public class BossHealth : MonoBehaviour, IHealth
 
         stats.TakeDamage(amount, effect);
 
-        bossGUI.Boss_healthBar.value = stats.GetHealthValue01();
+        bossGUI.HealthBar.value = stats.GetHealthValue01();
         if (flashColor != null) flashColor.Flash(flashColorLength);
 
         if (debug) print("Health: " + stats.GetHealthValue());
@@ -64,6 +68,7 @@ public class BossHealth : MonoBehaviour, IHealth
         }else
         {
             canTakeDamage = false;
+            boss.Stun(stunLength, false);
             StartCoroutine(IFrame());
         }
         return true;
@@ -81,7 +86,7 @@ public class BossHealth : MonoBehaviour, IHealth
 
     public void UpdateHealth()
     {
-       bossGUI.Boss_healthBar.value = stats.GetHealthValue01();
+       bossGUI.HealthBar.value = stats.GetHealthValue01();
 
         if (stats.GetHealthValue() <= 0)
         {
@@ -92,11 +97,11 @@ public class BossHealth : MonoBehaviour, IHealth
 
     public void ShowHealthBar()
     {
-        bossGUI.Boss_healthBar.gameObject.SetActive(true);
+        bossGUI.HealthBar.gameObject.SetActive(true);
     }
     public void HideHealthBar()
     {
-        bossGUI.Boss_healthBar.gameObject.SetActive(false);
+        bossGUI.HealthBar.gameObject.SetActive(false);
     }
 
     public void Knockback(Vector3 dir, float strength)

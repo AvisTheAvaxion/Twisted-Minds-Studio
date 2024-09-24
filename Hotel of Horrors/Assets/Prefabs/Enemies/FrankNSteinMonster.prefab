@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2478667019519226445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4212907708367582751}
+  m_Layer: 0
+  m_Name: RaycastOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4212907708367582751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2478667019519226445}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0017795563, y: -0.37, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7280812617262320566}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7780868464515115505
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,6 +47,8 @@ GameObject:
   - component: {fileID: 3269821355269556102}
   - component: {fileID: 7819676505427196098}
   - component: {fileID: 838116091748070659}
+  - component: {fileID: 5626351737342466862}
+  - component: {fileID: 306599759693898172}
   m_Layer: 10
   m_Name: FrankNSteinMonster
   m_TagString: Enemy
@@ -38,6 +71,7 @@ Transform:
   m_Children:
   - {fileID: 127552630613924693}
   - {fileID: 2881490729553979416}
+  - {fileID: 4212907708367582751}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3622643437465758043
@@ -73,10 +107,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c15647212fe424db2439547f5944fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 1
   bulletPrefab: {fileID: 6622512885369241516, guid: 8e9a8ef0294f8804a999aa3a3ea86be4, type: 3}
-  bulletSpawnPoint: {fileID: 0}
-  startingDistance: 0.01
-  bulletForce: 3.5
+  bulletSpawnPoint: {fileID: 4212907708367582751}
+  startingDistance: 0.16
+  bulletForce: 2.5
   burstCount: 1
   projectilesPerBurst: 12
   angleSpread: 359
@@ -102,24 +137,28 @@ MonoBehaviour:
   flipToRotate: 1
   transformToFlip: {fileID: 2881490729553979416}
   DialogueManager: {fileID: 0}
-  cutscene: 11
+  openCutscene: 11
   stages:
   - stage: 1
-    healthThresholdToNextStage: 75
-    dialogueBlock: 2
+    healthThresholdToNextStage: 150
+    attackSequence: 000000000000000001000000
+    cutscene: 0
     correctChoice: 2
   - stage: 2
     healthThresholdToNextStage: 0
-    dialogueBlock: 0
+    attackSequence: 00000000010000000000000001000000
+    cutscene: 0
     correctChoice: 0
   animator: {fileID: 3622643437465758043}
   afterImage: {fileID: 7322350937174340592}
   shooter: {fileID: 2170412016194764509}
+  ai: {fileID: 0}
+  raycastOrigin: {fileID: 4212907708367582751}
   normalAttackSettings:
-    walkSpeed: 40
+    walkSpeed: 0.8
     normalKnockback: 3
     normalContactDamage: 1
-    chargeSpeed: 150
+    chargeSpeed: 75
     chargeLength: 3
     chargeDamage: 10
     chargeKnockback: 8
@@ -128,6 +167,7 @@ MonoBehaviour:
     chargeMaxAttackRange: 2
     chargeCooldownMin: 5
     chargeCooldownMax: 8
+    cancelStunLength: 5
     slamMinAttackRange: 3
     slamDamage: 8
     slamRadius: 1.25
@@ -135,10 +175,10 @@ MonoBehaviour:
     slamCooldownMin: 2
     slamCooldownMax: 3
   enragedAttackSettings:
-    walkSpeed: 60
+    walkSpeed: 1.1
     normalKnockback: 5
     normalContactDamage: 3
-    chargeSpeed: 300
+    chargeSpeed: 125
     chargeLength: 5
     chargeDamage: 12
     chargeKnockback: 12
@@ -147,15 +187,20 @@ MonoBehaviour:
     chargeMaxAttackRange: 1.5
     chargeCooldownMin: 3
     chargeCooldownMax: 6
+    cancelStunLength: 3
     slamMinAttackRange: 4
     slamDamage: 10
     slamRadius: 1.5
     slamKnockback: 8
     slamCooldownMin: 1
     slamCooldownMax: 2
-  chargeCameraShake: 0.65
+  chargeCameraShake: 0.4
+  chargeCancelCamShake: 2
   slamCameraShake: 0.9
-  walkingCameraShake: 0.4
+  walkingCameraShake: 0.2
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 2112
 --- !u!114 &2001969177248108262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,10 +214,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  iFrameTime: 0.5
+  iFrameTime: 0.3
   healOverTime: 0
   timeBtwHeals: 5
   flashColorLength: 0.2
+  stunLength: 0.4
   flashColor: {fileID: 4898962650481716471}
   bossGUI: {fileID: 0}
 --- !u!114 &3269821355269556102
@@ -194,7 +240,7 @@ MonoBehaviour:
     type: 0
     defaultValue: 150
     hasMax: 1
-    maxValue: 500
+    maxValue: 300
   stats: []
 --- !u!61 &7819676505427196098
 BoxCollider2D:
@@ -268,6 +314,54 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5626351737342466862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780868464515115505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04822df9f773d3459508bb93808d18d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  currentDirSmoothing: 0.5
+  objectRadius: 0.35
+  centerOffset: {x: 0, y: -0.22}
+  speed: 2
+  orbitRadius: 1
+  orbitRadiusThickness: 0.2
+  minDistanceThreshold: 0.35
+  biasThreshold: 1.1
+  numOfWeights: 16
+  visualizeWeights: 1
+  obstacleDistanceSensitivity: 1
+  desireKeepSameDir: 0.1
+  noObstacleDesire: 0.3
+  comradeTag: Enemy
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 10304
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 2112
+  obstructionDetectionThreshold: 0.1
+  maxObstructionChangeDir: 0
+  minObstructionChangeDir: -0.8
+--- !u!210 &306599759693898172
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780868464515115505}
+  m_Enabled: 1
+  m_SortingLayerID: 860863201
+  m_SortingLayer: 2
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
 --- !u!1 &8544854332397373729
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,8 +476,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -463,7 +565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7826697520106895558, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7826697520106895558, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_NormalDirection

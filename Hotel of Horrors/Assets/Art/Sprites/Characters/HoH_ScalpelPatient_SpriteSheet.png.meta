@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -127,7 +127,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
+        y: 144
         width: 48
         height: 48
       alignment: 0
@@ -137,8 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2c92eadb7c48db41880b1b3405feda2
-      internalID: -1589651451
+      spriteID: 3d10eb4813cb8284ca9914eb64d4461a
+      internalID: -126629060
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 48
+        y: 144
         width: 48
         height: 48
       alignment: 0
@@ -158,8 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 299db3e4455e4eb4c8c8b4e290b088d5
-      internalID: 1311641259
+      spriteID: fcb45c5ae5daf6346a0989d6cc8684cf
+      internalID: 1701032799
       vertices: []
       indices: 
       edges: []
@@ -169,6 +169,90 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
+        y: 144
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39744b0e48194e94b9251e2dee23688f
+      internalID: 1084728754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_ScalpelPatient_SpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34bfbdd91af4ae04b8ce05f39b2ffa48
+      internalID: -1750654344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_ScalpelPatient_SpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1994b3fb4c56c0f4da7af134f48e6540
+      internalID: 1008875015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_ScalpelPatient_SpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40745f81795da594696d6ec9a15d6431
+      internalID: 711618183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_ScalpelPatient_SpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 48
         width: 48
         height: 48
@@ -179,14 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67bface24adc7bc41add0099bfaa9efe
-      internalID: 484990956
+      spriteID: 0fcf73ba0d631b34e88637bcf2b62733
+      internalID: 132646201
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HoH_ScalpelPatient_SpriteSheet_3
+      name: HoH_ScalpelPatient_SpriteSheet_7
       rect:
         serializedVersion: 2
         x: 0
@@ -200,14 +284,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 092eb1ab96ef9dd49bb66444243b1690
-      internalID: 1477549678
+      spriteID: b6a9f1b3d938f5442851e9ee786b7377
+      internalID: 1460947503
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HoH_ScalpelPatient_SpriteSheet_4
+      name: HoH_ScalpelPatient_SpriteSheet_8
       rect:
         serializedVersion: 2
         x: 48
@@ -221,29 +305,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c0ec9a7dbbfc8d479d47397cdfe073f
-      internalID: 1974812636
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HoH_ScalpelPatient_SpriteSheet_5
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dbf2349bfe161ce4e9f3c8f38b710e74
-      internalID: 448951256
+      spriteID: fdf098b1a23629d438e06cbd9b1ca67c
+      internalID: 551649751
       vertices: []
       indices: 
       edges: []
@@ -259,12 +322,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      HoH_ScalpelPatient_SpriteSheet_0: -1589651451
-      HoH_ScalpelPatient_SpriteSheet_1: 1311641259
-      HoH_ScalpelPatient_SpriteSheet_2: 484990956
-      HoH_ScalpelPatient_SpriteSheet_3: 1477549678
-      HoH_ScalpelPatient_SpriteSheet_4: 1974812636
-      HoH_ScalpelPatient_SpriteSheet_5: 448951256
+      HoH_ScalpelPatient_SpriteSheet_0: -126629060
+      HoH_ScalpelPatient_SpriteSheet_1: 1701032799
+      HoH_ScalpelPatient_SpriteSheet_2: 1084728754
+      HoH_ScalpelPatient_SpriteSheet_3: -1750654344
+      HoH_ScalpelPatient_SpriteSheet_4: 1008875015
+      HoH_ScalpelPatient_SpriteSheet_5: 711618183
+      HoH_ScalpelPatient_SpriteSheet_6: 132646201
+      HoH_ScalpelPatient_SpriteSheet_7: 1460947503
+      HoH_ScalpelPatient_SpriteSheet_8: 551649751
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

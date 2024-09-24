@@ -32,6 +32,17 @@ public class CameraShake : MonoBehaviour
 
         shakeCoroutine = StartCoroutine(Shake(frequency, 0.5f, 0.2f));
     }
+    public void ShakeCamera(float frequency, float length, bool interruptable = true)
+    {
+        if (shakeCoroutine != null && this.interruptable == false && interruptable == true) return;
+
+        this.interruptable = interruptable;
+
+        if (shakeCoroutine != null)
+            StopCoroutine(shakeCoroutine);
+
+        shakeCoroutine = StartCoroutine(Shake(frequency, 0.5f, length));
+    }
 
     IEnumerator Shake(float frequency, float smoothing, float length)
     {

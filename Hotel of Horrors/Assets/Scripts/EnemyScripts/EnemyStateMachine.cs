@@ -43,6 +43,7 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected int emotionalEnergyWorth = 50;
     [SerializeField] protected float stunLength = 0.5f;
+    protected float currentStunLength;
 
     [Header("Patrol Settings")]
     [SerializeField] protected float patrolRadius;
@@ -69,7 +70,7 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected BasicShooter shooter;
     [SerializeField] protected float range = 2;
     [SerializeField] protected bool canMoveAndShoot = true;
-    [SerializeField] LayerMask wallsLayerMask;
+    [SerializeField] protected LayerMask wallsLayerMask;
 
     [Header("Death Settings")]
     [SerializeField] protected float dropRadius = 0.5f;
@@ -102,7 +103,7 @@ public class EnemyStateMachine : MonoBehaviour
     protected bool death;
 
     [Header("Audio Settings")]
-    [SerializeField] EnemyAudioManager enemyAudioManager;
+    [SerializeField] protected EnemyAudioManager enemyAudioManager;
 
 
     private void Start()
@@ -122,6 +123,8 @@ public class EnemyStateMachine : MonoBehaviour
 
         canAttack = true;
         death = false;
+
+        currentStunLength = stunLength;
 
         StartCoroutine(WaitBeforeMoving(pauseMin, pauseMax));
     }
@@ -386,8 +389,9 @@ public class EnemyStateMachine : MonoBehaviour
     {
         stunTimer += Time.deltaTime;
 
-        if(stunTimer > stunLength)
+        if(stunTimer > currentStunLength)
         {
+            currentStunLength = stunLength;
             currentState = States.Fighting;
         }
     }
@@ -467,7 +471,7 @@ public class EnemyStateMachine : MonoBehaviour
     }
     #endregion
 
-    public void Knockback(Vector2 dir, float strength)
+    public virtual void Knockback(Vector2 dir, float strength)
     {
         if(currentState != States.Death) 
         { 

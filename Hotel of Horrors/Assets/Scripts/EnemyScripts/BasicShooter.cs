@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class BasicShooter : MonoBehaviour
 {
+    [SerializeField] bool debug;
+    [SerializeField] Vector2 debugTargetPos = new Vector2(1, 1);
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform bulletSpawnPoint;
     [SerializeField] float startingDistance = 0.1f;
@@ -82,9 +84,10 @@ public class BasicShooter : MonoBehaviour
 
                     //var dir = newBullet.transform.position - GameObject.Find("Player").transform.position;
                     //var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
-                    newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);
+                    //newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);
+                    newBullet.transform.rotation = Quaternion.FromToRotation(newBullet.transform.up, (pos - (Vector2)bulletSpawnPoint.position).normalized) * newBullet.transform.rotation;
 
-                    newBullet.GetComponent<Rigidbody2D>().AddForce(-newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
+                    newBullet.GetComponent<Rigidbody2D>().AddForce(newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
 
                     currentAngle += angleStep;
 
@@ -116,7 +119,7 @@ public class BasicShooter : MonoBehaviour
     private void TargetConeOfInfluence(out float startAngle, out float currentAngle, out float angleStep, out float endAngle)
     {
         var dir = (bulletSpawnPoint.position - target.position).normalized;
-        var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 180;
 
         startAngle = angle;
         endAngle = angle;
@@ -130,6 +133,58 @@ public class BasicShooter : MonoBehaviour
             startAngle = angle - halfAngleSpread;
             endAngle = angle + halfAngleSpread;
             currentAngle = startAngle;
+        }
+    }
+    private void TargetConeOfInfluence(Vector3 targetPos, out float startAngle, out float currentAngle, out float angleStep, out float endAngle)
+    {
+        var dir = (bulletSpawnPoint.position - targetPos).normalized;
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 180;
+
+        startAngle = angle;
+        endAngle = angle;
+        currentAngle = angle;
+        float halfAngleSpread = 0f;
+        angleStep = 0;
+        if (angleSpread != 0)
+        {
+            angleStep = angleSpread / (projectilesPerBurst - 1);
+            halfAngleSpread = angleSpread / 2f;
+            startAngle = angle - halfAngleSpread;
+            endAngle = angle + halfAngleSpread;
+            currentAngle = startAngle;
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!debug) return;
+
+        float startAngleDebug;
+        float currentAngleDebug;
+        float angleStepDebug;
+        float endAngleDebug;
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(bulletSpawnPoint.position, 0.05f);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(debugTargetPos, 0.05f);
+        Gizmos.color = Color.white;
+
+        if (target != null)
+            TargetConeOfInfluence(out startAngleDebug, out currentAngleDebug, out angleStepDebug, out endAngleDebug);
+        else
+            TargetConeOfInfluence(debugTargetPos, out startAngleDebug, out currentAngleDebug, out angleStepDebug, out endAngleDebug);
+
+        for (int j = 0; j < projectilesPerBurst; j++)
+        {
+            Vector2 pos = FindBulletSpawnPos(currentAngleDebug);
+
+            Gizmos.DrawWireSphere(pos, 0.1f);
+            //var dir = newBullet.transform.position - GameObject.Find("Player").transform.position;
+            //var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+
+            currentAngleDebug += angleStepDebug;
+
         }
     }
 }

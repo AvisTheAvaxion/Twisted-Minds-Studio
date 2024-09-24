@@ -107,7 +107,7 @@ SpriteRenderer:
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1311641259, guid: 2117ba494e995154cab4dc5804b1efa1, type: 3}
+  m_Sprite: {fileID: 1701032799, guid: 2117ba494e995154cab4dc5804b1efa1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5179,6 +5179,7 @@ MonoBehaviour:
   attackType: 1
   moveSpeed: 8
   emotionalEnergyWorth: 50
+  stunLength: 0.5
   patrolRadius: 1
   patrolTime: 3
   pauseMin: 1
@@ -5203,6 +5204,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   dropRadius: 0.25
+  upwardsVelocity: 0.2
+  startHeight: 0.2
   minDropAmount: 0
   maxDropAmount: 3
   itemHolderPrefab: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
@@ -5242,13 +5245,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c15647212fe424db2439547f5944fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 1
+  debugTargetPos: {x: -0.65, y: -0.45}
   bulletPrefab: {fileID: 6622512885369241516, guid: 588c1e117abbeeb4f91abf5ddbb1181a, type: 3}
   bulletSpawnPoint: {fileID: 8152782113685284496}
-  startingDistance: 0.1
+  startingDistance: 0.16
   bulletForce: 3
   burstCount: 1
-  projectilesPerBurst: 1
-  angleSpread: 0
+  projectilesPerBurst: 3
+  angleSpread: 90
   timeBetweenBursts: 1
   timeBetweenShots: 0.3
   stagger: 0

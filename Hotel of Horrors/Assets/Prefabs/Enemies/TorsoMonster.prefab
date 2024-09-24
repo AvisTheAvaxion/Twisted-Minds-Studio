@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -691472893, guid: fdd7b4bd224f58b4fb29a456cfcb4bf2, type: 3}
+  m_Sprite: {fileID: -536021628, guid: fdd7b4bd224f58b4fb29a456cfcb4bf2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5178,6 +5178,7 @@ MonoBehaviour:
   attackType: 0
   moveSpeed: 10
   emotionalEnergyWorth: 50
+  stunLength: 0.5
   patrolRadius: 1
   patrolTime: 3
   pauseMin: 2
@@ -5202,6 +5203,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   dropRadius: 0.5
+  upwardsVelocity: 0.2
+  startHeight: 0.2
   minDropAmount: 0
   maxDropAmount: 2
   itemHolderPrefab: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}

@@ -203,9 +203,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb77d061a93ea124996c17aefe14edfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 8
+  damage: 5
   deflectionResistance: 0
   chanceToInflictEffect: 1
   effectsToInflict: []
   maxTargets: 1
+  maxWallBounces: 1
   goThroughWalls: 0

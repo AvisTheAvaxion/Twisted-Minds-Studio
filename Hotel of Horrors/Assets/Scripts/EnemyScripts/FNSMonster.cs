@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(AI))]
 public class FNSMonster : BossStateMachine
 {
     [System.Serializable]
@@ -23,6 +24,7 @@ public class FNSMonster : BossStateMachine
         public float chargeMaxAttackRange;
         public float chargeCooldownMin;
         public float chargeCooldownMax;
+        public float cancelStunLength;
 
         [Header("Slam Settings")]
         public float slamMinAttackRange;
@@ -38,23 +40,31 @@ public class FNSMonster : BossStateMachine
     [SerializeField] AfterImage afterImage;
     [SerializeField] BasicShooter shooter;
     [SerializeField] AI ai;
+    [SerializeField] Transform raycastOrigin;
 
     [Header("Attack Settings")]
     [SerializeField] AttackSettings normalAttackSettings;
     [SerializeField] AttackSettings enragedAttackSettings;
     [SerializeField] float chargeCameraShake = 0.65f;
+    [SerializeField] float chargeCancelCamShake = 0.8f;
     [SerializeField] float slamCameraShake = 0.9f;
     [SerializeField] float walkingCameraShake = 0.4f;
+    [SerializeField] LayerMask wallMask;
 
     AttackSettings currentSettings;
 
     Vector2 moveDir;
     bool isCharging;
 
+    Vector2 playerPos;
+    bool routing = false;
+    bool arrived = false;
     
     protected override void Init()
     {
         Disenrage();
+
+        ai = GetComponent<AI>();
 
         currentStageIndex = 0;
     }
@@ -62,27 +72,11 @@ public class FNSMonster : BossStateMachine
 
     protected override void Death()
     {
-        //dialogueSystem.UnsubscribeToBoss(this);
-    }
-
-    protected override void Dialogue()
-    {
-        rb.velocity = Vector3.zero;
-
-        if (!dialogueSegmentStarted)
-        {
-            base.Dialogue();
-            dialogueSegmentStarted = true;
-        }
-        else
-        {
-            if (!base.DialogueManager.getInCutscene()) { base.currentState = States.Fighting; }
-        }
     }
 
     protected override void Fight()
     {
-        if(!isAttacking)
+        if(!isAttacking && canAttack)
             Move();
 
         switch(stages[currentStageIndex].stage)
@@ -97,24 +91,32 @@ public class FNSMonster : BossStateMachine
 
         if(bossHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThresholdToNextStage)
         {
-            currentState = States.Dialogue;
+            OnDialogueStart(stages[currentStageIndex].cutscene);
             Disenrage();
         }
     }
 
     void Fight_Stage1()
     {
-        if (isAttacking || onCooldown)
+        if (isAttacking || onCooldown || !canAttack)
             return;
 
         float distToPlayer = GetDistanceToPlayer();
 
         if (debug) print(distToPlayer);
 
-        if(distToPlayer <= currentSettings.slamMinAttackRange)
+        if(stages[currentStageIndex].attackSequence[currentAttack] == 0 && distToPlayer <= currentSettings.slamMinAttackRange)
         {
             SlamBegin();
+            currentAttack++;
         }
+        else if(stages[currentStageIndex].attackSequence[currentAttack] == 1 && distToPlayer <= currentSettings.chargeMaxAttackRange)
+        {
+            Charge();
+            currentAttack++;
+        }
+
+        currentAttack = currentAttack % stages[currentStageIndex].attackSequence.Length;
     }
 
     void Fight_Stage2()
@@ -142,7 +144,7 @@ public class FNSMonster : BossStateMachine
         float distToPlayer = GetDistanceToPlayer();
         if(distToPlayer <= 3.5f)
         {
-            currentState = States.Dialogue;
+            OnDialogueStart(openCutscene);
         }
 
         if (bossFightStarted)
@@ -151,19 +153,29 @@ public class FNSMonster : BossStateMachine
 
     void Move()
     {
-        moveDir = GetDirTowardsPlayer();
-        
         animator.SetBool("isWalking", true);
 
-        ai.SetTarget(player.transform);
-        ai.MoveTowardsTarget();
+        if(RaycastPlayer(raycastOrigin.position, GetDistanceToPlayer(), wallMask).collider != null)
+        {
+            if(!routing || arrived)
+            {
+                playerPos = player.transform.position;
+            }
+            routing = true;
+        }
+        else
+        {
+            routing = false;
+            playerPos = player.transform.position;
+        }
 
-        //rb.velocity = moveDir * currentSettings.walkSpeed * Time.deltaTime * 10;
+        ai.SetSpeed(currentSettings.walkSpeed);
+        arrived = !ai.MoveTowardsTarget(playerPos);
 
         if (afterImage == null) 
-            CheckToRotate(moveDir, null);
+            CheckToRotate(ai.CurrentDir, null);
         else
-            CheckToRotate(moveDir);
+            CheckToRotate(ai.CurrentDir);
     }
 
     void Charge()
@@ -173,15 +185,18 @@ public class FNSMonster : BossStateMachine
         animator.SetBool("isWalking", false);
         StartCoroutine(ChargeSequence());
     }
+    bool cancelCharge;
     IEnumerator ChargeSequence()
     {
         isCharging = true;
+        cancelCharge = false;
+
         moveDir = GetDirTowardsPlayer();
         float timer = 0;
 
         if(afterImage) afterImage.StartEffect();
 
-        while(timer < currentSettings.chargeLength)
+        while(!cancelCharge && timer < currentSettings.chargeLength)
         {
             moveDir = Vector2.Lerp(moveDir, GetDirTowardsPlayer(), currentSettings.chargeSensitivity * Time.deltaTime * 10);
             rb.velocity = moveDir * currentSettings.chargeSpeed * Time.deltaTime * 10;
@@ -204,6 +219,12 @@ public class FNSMonster : BossStateMachine
         isCharging = false;
 
         rb.velocity = Vector3.zero;
+
+        if(cancelCharge)
+        {
+            if (cameraShake != null) cameraShake.ShakeCamera(chargeCancelCamShake, 0.6f, false);
+            Stun(currentSettings.cancelStunLength, true);
+        }
 
         StartCoroutine(WaitBeforeAttack(currentSettings.chargeCooldownMin, currentSettings.chargeCooldownMax));
     }
@@ -262,7 +283,14 @@ public class FNSMonster : BossStateMachine
         //Do damage and knockback to player for touching the monster
         //If charging, do even more damage and knockback
 
-        if (collision.gameObject.tag.Equals("Player"))
+        if (isCharging && collision.gameObject.tag.Equals("Wall"))
+        {
+            cancelCharge = true;
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (currentState == States.Fighting && collision.gameObject.tag.Equals("Player"))
         {
             PlayerMovement playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
             IHealth health = collision.gameObject.GetComponent<IHealth>();
@@ -270,18 +298,18 @@ public class FNSMonster : BossStateMachine
 
             if (isCharging)
             {
-                health.TakeDamage(currentSettings.chargeDamage, currentSettings.chargeStun);
-                health.Knockback(dir, currentSettings.chargeKnockback);
+                if(health.TakeDamage(currentSettings.chargeDamage, currentSettings.chargeStun))
+                    health.Knockback(dir, currentSettings.chargeKnockback);
             }
-            else
+            else if (!isAttacking)
             {
-                health.TakeDamage(currentSettings.normalContactDamage);
-                health.Knockback(dir, currentSettings.normalKnockback);
+                if(health.TakeDamage(currentSettings.normalContactDamage))
+                    health.Knockback(dir, currentSettings.normalKnockback);
             }
         }
     }
 
-    protected override void DialogueEnd(object sender, EventArgs args)
+    protected override void OnDialogueEnd()
     {
         if (bossFightStarted)
         {
@@ -293,8 +321,11 @@ public class FNSMonster : BossStateMachine
                 {
                     Enrage();
                 }
+                currentAttack = 0;
                 currentStageIndex++;
-                currentState = States.Fighting;
+
+                Stun(1f, true);
+                //currentState = States.Fighting;
             } else
             {
                 currentState = States.Death;
@@ -304,18 +335,19 @@ public class FNSMonster : BossStateMachine
 
         } else
         {
-            currentState = States.Idle;
+            Stun(1f, true);
             bossFightStarted = true;
 
             bossHealth.ShowHealthBar();
 
-            dialogueSegmentStarted = false;
+            //dialogueSegmentStarted = false;
         }
     }
 
     protected override IEnumerator DeathSequence()
     {
         rb.velocity = Vector2.zero;
+        animator.SetBool("isWalking", false);
 
         currentState = States.Dialogue;
         yield return null;
@@ -324,6 +356,25 @@ public class FNSMonster : BossStateMachine
 
         bossHealth.HideHealthBar();
         SceneManager.LoadScene("EndDemo");
+    }
+
+    Coroutine stunCoroutine;
+    protected IEnumerator BossStun(float stunLength)
+    {
+        canAttack = false;
+
+        rb.velocity = Vector2.zero;
+        animator.SetBool("isWalking", false);
+
+        yield return new WaitForSeconds(stunLength);
+
+        if (currentState == States.Stun)
+        {
+            canAttack = true;
+            currentState = States.Fighting;
+        }
+
+        stunCoroutine = null;
     }
 
     public void WalkCameraShake()
@@ -335,5 +386,26 @@ public class FNSMonster : BossStateMachine
         if (cameraShake != null) cameraShake.ShakeCamera(chargeCameraShake);
     }
 
-    
+    public override void Stun(float stunLength, bool overrideCurrent)
+    {
+        if (overrideCurrent && stunCoroutine != null) StopCoroutine(stunCoroutine);
+        if(overrideCurrent || stunCoroutine == null)
+        {
+            currentState = States.Stun;
+            stunCoroutine = StartCoroutine(BossStun(stunLength));
+        }
+    }
+
+    protected override IEnumerator DialogueStart(Dialogue.Dialog cutscene)
+    {
+        yield return new WaitForSeconds(1f);
+        DialogueManager.SetCutscene(cutscene);
+        currentState = States.Dialogue;
+    }
+
+    protected override IEnumerator DialogueEnd()
+    {
+        yield return new WaitForSeconds(1f);
+        OnDialogueEnd();
+    }
 }

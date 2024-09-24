@@ -15,7 +15,7 @@ public abstract class BossStateMachine : MonoBehaviour
 
     public enum States
     {
-        Idle, Dialogue, Fighting, Death
+        Idle, Dialogue, Fighting, Death, Stun, DialogueStart, DialogueEnd
     }
 
     protected States currentState = States.Idle;
@@ -29,7 +29,8 @@ public abstract class BossStateMachine : MonoBehaviour
     {
         public int stage;
         public int healthThresholdToNextStage;
-        public int dialogueBlock;
+        public int[] attackSequence;
+        public Dialogue.Dialog cutscene;
         public int correctChoice;
     }
 
@@ -41,7 +42,7 @@ public abstract class BossStateMachine : MonoBehaviour
     [SerializeField] Transform transformToFlip;
     [Header("Dialogue Settings")]
     [SerializeField] protected DialogueManager DialogueManager;
-    [SerializeField] Dialogue.Dialog cutscene;
+    [SerializeField] protected Dialogue.Dialog openCutscene;
 
 
 
@@ -50,7 +51,10 @@ public abstract class BossStateMachine : MonoBehaviour
 
     protected int currentStageIndex;
 
+    protected int currentAttack;
+
     protected bool onCooldown = false;
+    protected bool canAttack = true;
     protected bool isAttacking = false;
 
     protected bool bossFightStarted = false;
@@ -102,21 +106,25 @@ public abstract class BossStateMachine : MonoBehaviour
 
     protected abstract void Fight();
     protected abstract void Idle();
+    protected void OnDialogueStart(Dialogue.Dialog cutscene)
+    {
+        currentState = States.DialogueStart;
+        StartCoroutine(DialogueStart(cutscene));
+    }
+    protected abstract IEnumerator DialogueStart(Dialogue.Dialog cutscene);
     protected virtual void Dialogue()
     {
-        if (!dialogueSegmentStarted)
-        {
-            if (bossFightStarted)
-            {
-                Debug.Log("Doing the first thing");
-            } else
-            {
-                DialogueManager.SetCutscene(cutscene);
+        rb.velocity = Vector3.zero;
 
-            }
+        if (!DialogueManager.getInCutscene()) 
+        { 
+            currentState = States.DialogueEnd;
+            StartCoroutine(DialogueEnd());
         }
     }
-    protected abstract void DialogueEnd(object sender, System.EventArgs args);
+    protected abstract IEnumerator DialogueEnd();
+    protected abstract void OnDialogueEnd();
+    public abstract void Stun(float stunLength, bool overrideCurrent);
     protected abstract void Death();
     protected abstract IEnumerator DeathSequence();
     protected virtual void OnDeath()
@@ -221,6 +229,11 @@ public abstract class BossStateMachine : MonoBehaviour
     protected Vector2 GetRandomDir()
     {
         return UnityEngine.Random.insideUnitCircle; //Get a random position around a unit circle.
+    }
+    protected RaycastHit2D RaycastPlayer(Vector2 origin, float distance, LayerMask layerMask)
+    {
+        Vector2 dir = GetDirTowardsPlayer();
+        return Physics2D.Raycast(origin, dir, distance, layerMask);
     }
     #endregion
 

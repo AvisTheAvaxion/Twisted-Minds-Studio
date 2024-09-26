@@ -26,6 +26,8 @@ AnimationClip:
       value: {fileID: -1483985480, guid: 6b3ad8dfbcd0a8b48b6f9b20331a5c38, type: 3}
     - time: 0.5
       value: {fileID: -467902147, guid: 6b3ad8dfbcd0a8b48b6f9b20331a5c38, type: 3}
+    - time: 0.75
+      value: {fileID: 1496785457, guid: 6b3ad8dfbcd0a8b48b6f9b20331a5c38, type: 3}
     attribute: m_Sprite
     path: HoH_FlyingCandy_Spritesheet_0
     classID: 212
@@ -51,12 +53,13 @@ AnimationClip:
     - {fileID: 1496785457, guid: 6b3ad8dfbcd0a8b48b6f9b20331a5c38, type: 3}
     - {fileID: -1483985480, guid: 6b3ad8dfbcd0a8b48b6f9b20331a5c38, type: 3}
     - {fileID: -467902147, guid: 6b3ad8dfbcd0a8b48b6f9b20331a5c38, type: 3}
+    - {fileID: 1496785457, guid: 6b3ad8dfbcd0a8b48b6f9b20331a5c38, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.51666665
+    m_StopTime: 0.76666665
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -75,4 +78,18 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.33333334
+    functionName: RangedAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.75
+    functionName: RangedAttackEnd
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

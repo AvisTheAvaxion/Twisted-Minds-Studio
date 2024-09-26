@@ -22,14 +22,17 @@ public class ProjectileSplit : Projectile
     {
         float startAngle, currentAngle, angleStep, endAngle;
         TargetConeOfInfluence(out startAngle, out currentAngle, out angleStep, out endAngle);
+        float angleOffset = Random.Range(0f, 90f);
         for (int i = 0; i < numOfChildProj; i++)
         {
-            Vector2 pos = FindBulletSpawnPos(currentAngle);
+            Vector2 pos = FindBulletSpawnPos(currentAngle + angleOffset);
             GameObject newBullet = Instantiate(projetilesToSpawn.gameObject, pos, Quaternion.identity);
 
             newBullet.transform.rotation = Quaternion.FromToRotation(newBullet.transform.up, (pos - (Vector2)transform.position).normalized) * newBullet.transform.rotation;
 
             newBullet.GetComponent<Rigidbody2D>().AddForce(newBullet.transform.up * childLaunchForce, ForceMode2D.Impulse);
+
+            currentAngle += angleStep;
         }
         base.DestroySelf();
     }
@@ -63,5 +66,18 @@ public class ProjectileSplit : Projectile
         Vector2 pos = new Vector2(x, y);
 
         return pos;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        float startAngle, currentAngle, angleStep, endAngle;
+        TargetConeOfInfluence(out startAngle, out currentAngle, out angleStep, out endAngle);
+        for (int i = 0; i < numOfChildProj; i++)
+        {
+            Vector2 pos = FindBulletSpawnPos(currentAngle);
+            Gizmos.DrawWireSphere(pos, 0.05f);
+
+            currentAngle += angleStep;
+        }
     }
 }

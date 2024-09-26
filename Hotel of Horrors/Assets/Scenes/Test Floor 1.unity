@@ -14023,7 +14023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee6d03fbf58c9346a1c97ac5d086c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allQuest: []
 --- !u!114 &373043776 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3454278512102301056, guid: 1aa8aa38efdfa6a4499c5e3f2fc935e4, type: 3}
@@ -18645,6 +18644,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4094848050660363272, guid: b29c081c5bd7ae74988c1b6d37f130e5, type: 3}
   m_PrefabInstance: {fileID: 494455253}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &497381660
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7223365897552134600, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223365897552134600, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -48.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223365897552134600, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223365897552134600, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223365897552134600, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223365897552134600, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223365897552134600, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223365897552134600, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223365897552134600, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223365897552134600, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044792319657179407, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
+      propertyPath: m_Name
+      value: FlyingCandy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 750118d1a53a1e64587460a6f8598013, type: 3}
 --- !u!1001 &503758398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74173,7 +74229,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floor: 0
   objectiveNum: 1
-  testInt: 0
 --- !u!4 &1486941132
 Transform:
   m_ObjectHideFlags: 0
@@ -96503,6 +96558,7 @@ MonoBehaviour:
   orbitRadius: 1
   orbitRadiusThickness: 0.2
   minDistanceThreshold: 0.05
+  biasThreshold: 1.1
   numOfWeights: 16
   visualizeWeights: 1
   obstacleDistanceSensitivity: 1
@@ -96510,6 +96566,9 @@ MonoBehaviour:
   noObstacleDesire: 0.3
   comradeTag: Enemy
   obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  wallMask:
     serializedVersion: 2
     m_Bits: 0
   obstructionDetectionThreshold: 0.1
@@ -96766,3 +96825,4 @@ SceneRoots:
   - {fileID: 19744203}
   - {fileID: 823711739}
   - {fileID: 1486941132}
+  - {fileID: 497381660}

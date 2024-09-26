@@ -16,7 +16,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     public enum States
     {
-        Idle, Dialogue, Patrolling, Fighting, Death, Searching, Stun
+        Idle, Dialogue, Patrolling, Fighting, Death, Searching, Stun, Dash
     }
 
     [SerializeField] bool debug;
@@ -24,7 +24,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
-    [SerializeField] Transform rayCastOrigin;
+    [SerializeField] protected Transform rayCastOrigin;
 
     protected AI navigation;
 
@@ -126,7 +126,12 @@ public class EnemyStateMachine : MonoBehaviour
 
         currentStunLength = stunLength;
 
+        Initialize();
+
         StartCoroutine(WaitBeforeMoving(pauseMin, pauseMax));
+    }
+    protected virtual void Initialize()
+    {
     }
 
     private void Update()
@@ -158,6 +163,9 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
             case States.Stun:
                 Stun();
+                break;
+            case States.Dash:
+                Dash();
                 break;
         }
     }
@@ -306,6 +314,9 @@ public class EnemyStateMachine : MonoBehaviour
 
             if (debug) print("Switch to Fighting State");
         }
+    }
+    protected virtual void Dash()
+    {
     }
 
     protected virtual void Fight()

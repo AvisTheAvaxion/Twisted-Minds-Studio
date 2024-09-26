@@ -46,6 +46,7 @@ public class EnemyStateMachine : MonoBehaviour
     protected float currentStunLength;
 
     [Header("Patrol Settings")]
+    [SerializeField] bool movesOnPatrol = true;
     [SerializeField] protected float patrolRadius;
     [SerializeField] protected float patrolTime = 3f;
     [SerializeField] protected float pauseMin, pauseMax;
@@ -56,6 +57,7 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected float contactKnockback;
     [SerializeField] protected float attackCooldownMin, attackCooldownMax;
     [SerializeField] protected float maxDistanceToNavigate = 3f;
+    [SerializeField] protected bool contWalkRightAfterAttack;
 
     [Header("Melee Fight Settings")]
     [SerializeField] protected Transform meleeAttackPoint;
@@ -271,7 +273,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     protected virtual void Patrol()
     {
-        if(canMove)
+        if(canMove && movesOnPatrol)
         {
             if (!patrolling)
             {
@@ -404,6 +406,11 @@ public class EnemyStateMachine : MonoBehaviour
         {
             currentStunLength = stunLength;
             currentState = States.Fighting;
+
+            if (contWalkRightAfterAttack)
+            {
+                if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
+            }
         }
     }
 
@@ -447,6 +454,11 @@ public class EnemyStateMachine : MonoBehaviour
 
         if (debug) print("End Melee Attack");
 
+        if(contWalkRightAfterAttack)
+        {
+            if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
+        }
+
         StartCoroutine(WaitBeforeAttacking(attackCooldownMin, attackCooldownMax));
     }
     #endregion
@@ -477,6 +489,11 @@ public class EnemyStateMachine : MonoBehaviour
         canMove = true;
 
         if (debug) print("End Ranged Attack");
+
+        if (contWalkRightAfterAttack)
+        {
+            if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
+        }
 
         StartCoroutine(WaitBeforeAttacking(attackCooldownMin, attackCooldownMax));
     }

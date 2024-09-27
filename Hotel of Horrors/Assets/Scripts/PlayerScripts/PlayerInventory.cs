@@ -112,7 +112,7 @@ public class PlayerInventory : MonoBehaviour
             EmotionalEnergy energy = collision.GetComponent<EmotionalEnergy>();
             if(energy)
             {
-                OnEnergyCollect?.Invoke(energy.emotionalEnergy, EventArgs.Empty);
+                OnEnergyCollect?.Invoke(energy.emotionalEnergy.ToString(), EventArgs.Empty);
                 AddEmotionalEnergy(energy.emotionalEnergy);
                 Destroy(collision.gameObject);
             }

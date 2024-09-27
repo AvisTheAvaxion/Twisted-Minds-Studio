@@ -505,6 +505,7 @@ public class EnemyStateMachine : MonoBehaviour
         { 
             stunTimer = 0;
             currentState = States.Stun;
+            if (animator != null) animator.SetTrigger("Hit");
             if (hasWalkCycle && animator != null) animator.SetBool("isWalking", false);
         }
 

@@ -303,6 +303,7 @@ MonoBehaviour:
   moveSpeed: 12
   emotionalEnergyWorth: 50
   stunLength: 0.5
+  movesOnPatrol: 1
   patrolRadius: 1
   patrolTime: 3
   pauseMin: 1
@@ -313,6 +314,7 @@ MonoBehaviour:
   attackCooldownMin: 1
   attackCooldownMax: 2
   maxDistanceToNavigate: 3
+  contWalkRightAfterAttack: 0
   meleeAttackPoint: {fileID: 0}
   meleeRange: 0.5
   meleeRadius: 0
@@ -368,13 +370,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c15647212fe424db2439547f5944fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
-  debugTargetPos: {x: 0, y: 1}
+  debug: 1
+  debugTargetPos: {x: 1, y: 0}
   bulletPrefab: {fileID: 6622512885369241516, guid: 78cd5532a59aaa74ba0275dc34f93c95, type: 3}
   bulletSpawnPoint: {fileID: 5574785889938037912}
   startingDistance: 0.1
   bulletForce: 4
-  bulletAngleOffset: 90
+  bulletAngleOffset: 0
   burstCount: 1
   projectilesPerBurst: 1
   angleSpread: 0

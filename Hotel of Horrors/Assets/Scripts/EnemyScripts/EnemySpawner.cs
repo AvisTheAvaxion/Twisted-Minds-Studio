@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField, Description("The amount of monsters that will spawn every wave.")] int spawnPerWave;
     PolygonCollider2D spawnArea;
     Queue<GameObject> queue;
-    RoomManager roomManager;
+    Floor floor;
     QuestSystem questSys;
     [SerializeField] List<GameObject> spawnedMonsters;
     public bool isActiviated;
@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
         spawnedMonsters = new List<GameObject>();
         queue = new Queue<GameObject>(enemyQueue);
         spawnArea = GetComponent<PolygonCollider2D>();
-        roomManager = FindObjectOfType<RoomManager>();
+        floor = FindObjectOfType<Floor>();
     }
 
     void Update()
@@ -65,7 +65,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if (queue.Count > 0)
             {
-                roomManager.AddEnemy();
+                floor.AddEnemy();
                 GameObject monster = Instantiate(queue.Dequeue(), GetRandomPosition(spawnBound), Quaternion.identity);
                 monster.GetComponent<EnemyStateMachine>().OnEnemyDeath += EnemyDeathDetected;
             }

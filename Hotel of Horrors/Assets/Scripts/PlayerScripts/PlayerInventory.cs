@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
 public class PlayerInventory : MonoBehaviour
 {
     public int emotionalEnergy { get; private set; }
+    public int emotionalEnergyGained { get; set; }
 
     Weapon[] weaponsInventory;
     Item[] itemsInventory;
@@ -360,6 +361,8 @@ public class PlayerInventory : MonoBehaviour
 
         emotionalEnergy = 0;
         AddEmotionalEnergy(serializedClass.emotionalEnergy);
+
+        emotionalEnergyGained = serializedClass.emotionalEnergyGained;
 
         currentItemIndex = serializedClass.currentItemIndex;
         currentWeaponIndex = serializedClass.currentWeaponIndex;

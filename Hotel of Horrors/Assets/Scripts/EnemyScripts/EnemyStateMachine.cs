@@ -193,7 +193,7 @@ public class EnemyStateMachine : MonoBehaviour
 
             //rb.velocity = Vector2.zero;
 
-            FindObjectOfType<RoomManager>().KillEnemy();
+            FindObjectOfType<Floor>().KillEnemy();
 
             OnEnemyDeath?.Invoke(enemyName, EventArgs.Empty);
             enemyAudioManager.Die();

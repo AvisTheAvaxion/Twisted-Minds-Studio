@@ -3,83 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(BoxCollider2D))]
-public class Door : MonoBehaviour
+public class DirectDoor : MonoBehaviour
 {
     Floor floor;
     public bool locked = false;
-    public bool elevatorDoor = false;
     public Room associatedRoom;
-    [HideInInspector] public Transform spawnLocation;
-    [HideInInspector] public Door linkedDoor;
+    public Transform spawnLocation;
 
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] Image fadeImage;
 
 
-    public enum DoorLocations
+    public enum DoorOrientations
     {
         North, East, South, West, Special
     }
 
-    public DoorLocations doorLocation;
-    DoorLocations targetOrientation;
+    public DoorOrientations doorLocation;
+    DoorOrientations targetOrientation;
 
     private void Start()
     {
         floor = FindObjectOfType<Floor>();
-        spawnLocation = GetComponentInChildren<Transform>();
         associatedRoom = GetComponentInParent<Room>();
         fadeImage = GameObject.Find("Fade to Black Image").GetComponent<Image>();
 
         switch (doorLocation)
         {
-            case DoorLocations.North:
-                targetOrientation = DoorLocations.South;
+            case DoorOrientations.North:
+                targetOrientation = DoorOrientations.South;
                 break;
-            case DoorLocations.East:
-                targetOrientation = DoorLocations.West;
+            case DoorOrientations.East:
+                targetOrientation = DoorOrientations.West;
                 break;
-            case DoorLocations.South:
-                targetOrientation = DoorLocations.North;
+            case DoorOrientations.South:
+                targetOrientation = DoorOrientations.North;
                 break;
-            case DoorLocations.West:
-                targetOrientation = DoorLocations.East;
+            case DoorOrientations.West:
+                targetOrientation = DoorOrientations.East;
                 break;
             default:
-                targetOrientation = DoorLocations.North;
+                targetOrientation = DoorOrientations.North;
                 break;
         }
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
         if (collision.gameObject.tag.Equals("Player"))
         {
-            GameObject player = collision.gameObject;
-            if ((player.GetComponent<PlayerMovement>().Direction.Equals("North") && doorLocation.Equals(DoorLocations.North)) ||
-                (player.GetComponent<PlayerMovement>().Direction.Equals("East") && doorLocation.Equals(DoorLocations.East)) ||
-                (player.GetComponent<PlayerMovement>().Direction.Equals("South") && doorLocation.Equals(DoorLocations.South)) ||
-                (player.GetComponent<PlayerMovement>().Direction.Equals("West") && doorLocation.Equals(DoorLocations.West)))
-            {
-                
-                if (elevatorDoor)
-                {
-                    //take player to elevator room menu without moving them
-
-                }
-                else
-                {
-                    //if the door already does not have a link, give it one 
-                    if (linkedDoor == null)
-                    {
-                        //make the floor run the logic for getting the next room
-                        linkedDoor = floor.getDoorLink(targetOrientation);
-                    }
-
-                    StartCoroutine(TeleportPlayer(player));
-                }
-            }
+            StartCoroutine(TeleportPlayer(collision.gameObject));
         }
     }
 
@@ -89,10 +63,10 @@ public class Door : MonoBehaviour
         player.GetComponent<Animator>().SetBool("isWalking", false);
 
         player.GetComponent<PlayerMovement>().canMove = false;
+        //print("fading black");
+        player.GetComponent<NewAudioManager>().PlayEffect("DoorOpen");
 
-        //player.GetComponent<NewAudioManager>().PlayEffect("DoorOpen");
-
-        //fade to black
+        // loop over 1 second - fade to black
         for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
         {
             // set color with i as alpha
@@ -101,9 +75,9 @@ public class Door : MonoBehaviour
         }
 
         //takes the player to the next door
-        player.transform.position = linkedDoor.spawnLocation.position;
+        player.transform.position = spawnLocation.position;
 
-        //fade to clear
+        // loop over 1 second backwards - fade to clear
         for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)
         {
             // set color with i as alpha

@@ -14,6 +14,7 @@ public class SerializedClass
     public int level;
     public int maxLevelAchieved;
     public int emotionalEnergy;
+    public int emotionalEnergyGained;
 
     //public Item[] itemsInventory;
     //public Weapon[] weaponsInventory;
@@ -35,6 +36,7 @@ public class SerializedClass
         PlayerInventory playerInventory = inventory;
 
         emotionalEnergy = playerInventory.emotionalEnergy;
+        emotionalEnergyGained = playerInventory.emotionalEnergyGained;
 
         joes = new ItemSave[playerInventory.GetItems().Length];
 

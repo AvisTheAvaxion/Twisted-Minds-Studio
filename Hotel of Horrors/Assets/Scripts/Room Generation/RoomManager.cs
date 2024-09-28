@@ -74,22 +74,22 @@ public class RoomManager : MonoBehaviour
         {
             case Door.DoorLocations.North:
                 door = southDoors[Random.Range(0, southDoors.Count)];
-                currentRoom = door.GetComponent<Door>().associatedRoom;
+                currentRoom = door.GetComponent<Door>().associatedRoom.roomName;
                 southDoors.Remove(door);
                 return door;
             case Door.DoorLocations.South:
                 door = northDoors[Random.Range(0, northDoors.Count)];
-                currentRoom = door.GetComponent<Door>().associatedRoom;
+                currentRoom = door.GetComponent<Door>().associatedRoom.roomName;
                 northDoors.Remove(door);
                 return door;
             case Door.DoorLocations.East:
                 door = westDoors[Random.Range(0, westDoors.Count)];
-                currentRoom = door.GetComponent<Door>().associatedRoom;
+                currentRoom = door.GetComponent<Door>().associatedRoom.roomName;
                 westDoors.Remove(door);
                 return door;
             case Door.DoorLocations.West:
                 door = eastDoors[Random.Range(0, eastDoors.Count)];
-                currentRoom = door.GetComponent<Door>().associatedRoom;
+                currentRoom = door.GetComponent<Door>().associatedRoom.roomName;
                 eastDoors.Remove(door);
                 return door;
         }
@@ -129,7 +129,7 @@ public class RoomManager : MonoBehaviour
         foreach (GameObject theDoor in doors)
         {
             Door door = theDoor.GetComponent<Door>();
-            if (door) door.assignedDoor = null;
+            if (door) door.linkedDoor = null;
             westDoors.Add(theDoor);
         }
 
@@ -138,7 +138,7 @@ public class RoomManager : MonoBehaviour
         foreach (GameObject theDoor in doors)
         {
             Door door = theDoor.GetComponent<Door>();
-            if (door) door.assignedDoor = null;
+            if (door) door.linkedDoor = null;
             eastDoors.Add(theDoor);
         }
 
@@ -147,7 +147,7 @@ public class RoomManager : MonoBehaviour
         foreach (GameObject theDoor in doors)
         {
             Door door = theDoor.GetComponent<Door>();
-            if (door) door.assignedDoor = null;
+            if (door) door.linkedDoor = null;
             northDoors.Add(theDoor);
         }
 
@@ -156,7 +156,7 @@ public class RoomManager : MonoBehaviour
         foreach (GameObject theDoor in doors)
         {
             Door door = theDoor.GetComponent<Door>();
-            if (door) door.assignedDoor = null;
+            if (door) door.linkedDoor = null;
             southDoors.Add(theDoor);
         }
     }

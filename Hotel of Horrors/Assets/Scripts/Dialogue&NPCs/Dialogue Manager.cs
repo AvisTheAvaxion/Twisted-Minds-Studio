@@ -24,7 +24,6 @@ public class DialogueManager : MonoBehaviour
     TMPro.TMP_Text buttonOneText;
     TMPro.TMP_Text buttonTwoText;
     Dialogue dialogue = new Dialogue();
-    QuestSystem questSystem;
 
     bool skipCutscene = false;
 
@@ -67,16 +66,13 @@ public class DialogueManager : MonoBehaviour
         nameBox = GameObject.Find("NameBox").GetComponent<TMPro.TMP_Text>();
         buttonOneText = GameObject.Find("ButtonOneText").GetComponent<TMPro.TMP_Text>();
         buttonTwoText = GameObject.Find("ButtonTwoText").GetComponent<TMPro.TMP_Text>();
-        questSystem = FindObjectOfType<QuestSystem>();
         ButtonSwitch(false);
-        CanvasSwitch(false);
-        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //SetCutscene(Dialogue.Dialog.VarrenEncounter);
+        SetCutscene(Dialogue.Dialog.VarrenEncounter);
     }
 
     void StartCutScene(string dialogueName, int line)
@@ -266,8 +262,7 @@ public class DialogueManager : MonoBehaviour
             #region Invetory Functions
             else if (lines[currentLine].EndsWith("$GiveWeapon") || lines[currentLine].StartsWith("$GiveWeapon"))
             {
-
-                WeaponInfo desiredWeaponInfo = ScriptableObject.CreateInstance<WeaponInfo>();
+                WeaponInfo desiredWeaponInfo = new WeaponInfo();
 
                 int giveStartIndex = lines[currentLine].IndexOf('(');
                 int giveEndIndex = lines[currentLine].IndexOf(')');
@@ -289,7 +284,7 @@ public class DialogueManager : MonoBehaviour
             }
             else if (lines[currentLine].EndsWith("$GiveItem") || lines[currentLine].StartsWith("$GiveItem"))
             {
-                ItemInfo desiredItemInfo = ScriptableObject.CreateInstance<ItemInfo>();
+                ItemInfo desiredItemInfo = new ItemInfo();
 
                 int giveStartIndex = lines[currentLine].IndexOf('(');
                 int giveEndIndex = lines[currentLine].IndexOf(')');

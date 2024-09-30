@@ -5,19 +5,17 @@ using UnityEngine;
 public class CheckForPlayer : MonoBehaviour
 {
     [SerializeField] EnemySpawner spawner;
-    QuestSystem questSystem;
 
-    private void Awake()
+    private void Start()
     {
-        questSystem = FindObjectOfType<QuestSystem>();
+        spawner = GetComponentInChildren<EnemySpawner>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Player entering " + gameObject.transform.parent.name);
-            questSystem.QuestEvent(QuestSystem.QuestEventType.RoomEnter, gameObject.transform.parent.name);
+            Debug.Log("Player entering " + gameObject.name);
             spawner.isActiviated = true;
         }
     }
@@ -26,7 +24,7 @@ public class CheckForPlayer : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            //Debug.Log("Player exiting " + gameObject.name);
+            Debug.Log("Player exiting " + gameObject.name);
             spawner.isActiviated = false;
         }
     }

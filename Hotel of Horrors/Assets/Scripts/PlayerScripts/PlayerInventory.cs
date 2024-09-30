@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 
 [System.Serializable]
 public class PlayerInventory : MonoBehaviour
@@ -93,7 +92,7 @@ public class PlayerInventory : MonoBehaviour
             bool remove = true;
             UseableInfo useable = data.GetItemData();
             int count = data.GetCount();
-            OnItemCollect?.Invoke(useable.GetName(), EventArgs.Empty);
+            OnItemCollect?.Invoke(useable.name, EventArgs.Empty);
             if (useable.GetType() == typeof(ItemInfo))
             {
                 Item newItem = new Item((ItemInfo)useable, count);

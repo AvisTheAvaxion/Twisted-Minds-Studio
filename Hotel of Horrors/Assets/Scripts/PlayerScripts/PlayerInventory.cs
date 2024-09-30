@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 
 [System.Serializable]
 public class PlayerInventory : MonoBehaviour
@@ -330,7 +329,8 @@ public class PlayerInventory : MonoBehaviour
     public void AddEmotionalEnergy(int amount)
     {
         emotionalEnergy += amount;
-
+        Floor floor = FindObjectOfType<Floor>();
+        floor.AddEmotionalEnergy(amount);
         playerGUI.UpdateEmotionalEnergy();
     }
     /// <summary>
@@ -364,6 +364,7 @@ public class PlayerInventory : MonoBehaviour
         AddEmotionalEnergy(serializedClass.emotionalEnergy);
 
         emotionalEnergyGained = serializedClass.emotionalEnergyGained;
+
 
         currentItemIndex = serializedClass.currentItemIndex;
         currentWeaponIndex = serializedClass.currentWeaponIndex;

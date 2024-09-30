@@ -15,7 +15,6 @@ public class Floor : MonoBehaviour
     int roomTraversals = 0;
 
     //chance gained to spawn each room for every EE picked up
-    [SerializeField] float easyChanceGained = -0.02f;
     [SerializeField] float mediumChanceGained = 0.02f;
     [SerializeField] float hardChanceGained = 0.01f;
 
@@ -24,7 +23,6 @@ public class Floor : MonoBehaviour
     [SerializeField] float mindRoomChanceGained = 7.5f;
 
     //starting chances for each room type to spawn
-    [SerializeField] float easyChance = 80f;
     [SerializeField] float mediumChance = 15f;
     [SerializeField] float hardChance = 5f;
     [SerializeField] float elevatorChance = 0f;
@@ -33,7 +31,8 @@ public class Floor : MonoBehaviour
     string currentRoom;
     int enemiesToKill = 0;
 
-    ElevatorMenuManager elevator;
+    [SerializeField]ElevatorMenuManager elevator;
+    public GameObject elevatorCanvas;
 
     private void Start()
     {
@@ -46,7 +45,7 @@ public class Floor : MonoBehaviour
         roomsByCategory.Add("Mind Room", new List<Room>());
 
         elevator = FindObjectOfType<ElevatorMenuManager>();
-        elevator.ResetShop();
+        
 
         foreach (Room room in allRooms)
         {
@@ -85,7 +84,6 @@ public class Floor : MonoBehaviour
     {
         emotionalEnergyGained = amount;
 
-        easyChance += (easyChanceGained * amount);
         mediumChance += (mediumChanceGained * amount);
         hardChance += (hardChanceGained * amount);
     }
@@ -94,7 +92,6 @@ public class Floor : MonoBehaviour
     {
         emotionalEnergyGained += amountGained;
 
-        easyChance += (easyChanceGained * amountGained);
         mediumChance += (mediumChanceGained * amountGained);
         hardChance += (hardChanceGained * amountGained);
     }
@@ -103,7 +100,14 @@ public class Floor : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
+        mediumChance = 15f;
+        hardChance = 5f;
+        elevatorChance = 0f;
+        mindRoomChance = 0f;
+
+        emotionalEnergyGained = 0;
         SetEEGains(playerInventoryRef.emotionalEnergyGained);
+        elevator.ResetShop();
     }
 
     /// <summary>
@@ -112,7 +116,6 @@ public class Floor : MonoBehaviour
     /// <returns>The next room's spawn location to teleport the player to</returns>
     public Door getDoorLink(Door.DoorLocations targetOrientation)
     {
-        Room nextRoom = null;
         Door spawnDoor;
         float difficultyRoll = Random.Range(0, 100);
         List<Room> possibleRooms = new List<Room>();
@@ -129,7 +132,9 @@ public class Floor : MonoBehaviour
 
         if (mindRoomChance > Random.Range(0, 100f))
         {
-            nextRoom = roomsByName["Mind Room"];
+            possibleRooms.Clear();
+            possibleRooms.Add(roomsByName["Mind Room"]);
+            mindRoomChance = 0;
         }
         else if (hardChance > difficultyRoll)
         {
@@ -165,7 +170,7 @@ public class Floor : MonoBehaviour
 
         spawnDoor.associatedRoom.doorsAvailable.Remove(spawnDoor);
         currentRoom = spawnDoor.associatedRoom.roomName;
-        questSys.QuestEvent(QuestSystem.QuestEventType.RoomEnter, currentRoom);
+        //questSys.QuestEvent(QuestSystem.QuestEventType.RoomEnter, currentRoom);
 
         return spawnDoor;
     }
@@ -225,5 +230,20 @@ public class Floor : MonoBehaviour
                 d.locked = false;
             }
         }
+    }
+
+    public float GetElevatorChance()
+    {
+        return elevatorChance;
+    }
+    
+    public void IncreaseElevatorChance()
+    {
+        elevatorChance += elevatorChanceGained;
+    }
+
+    public void ClearElevatorChance()
+    {
+        elevatorChance = 0;
     }
 }

@@ -10,11 +10,12 @@ public class Door : MonoBehaviour
     public bool locked = false;
     public bool elevatorDoor = false;
     public Room associatedRoom;
-    [HideInInspector] public Transform spawnLocation;
+    public Transform spawnLocation;
     [HideInInspector] public Door linkedDoor;
 
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] Image fadeImage;
+
 
 
     public enum DoorLocations
@@ -28,7 +29,7 @@ public class Door : MonoBehaviour
     private void Start()
     {
         floor = FindObjectOfType<Floor>();
-        spawnLocation = GetComponentInChildren<Transform>();
+        spawnLocation = transform.GetChild(0).transform;
         associatedRoom = GetComponentInParent<Room>();
         fadeImage = GameObject.Find("Fade to Black Image").GetComponent<Image>();
 
@@ -51,22 +52,24 @@ public class Door : MonoBehaviour
                 break;
         }
     }
+
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
         if (collision.gameObject.tag.Equals("Player"))
         {
+            print("Touched Door");
+
             GameObject player = collision.gameObject;
-            if ((player.GetComponent<PlayerMovement>().Direction.Equals("North") && doorLocation.Equals(DoorLocations.North)) ||
-                (player.GetComponent<PlayerMovement>().Direction.Equals("East") && doorLocation.Equals(DoorLocations.East)) ||
-                (player.GetComponent<PlayerMovement>().Direction.Equals("South") && doorLocation.Equals(DoorLocations.South)) ||
-                (player.GetComponent<PlayerMovement>().Direction.Equals("West") && doorLocation.Equals(DoorLocations.West)))
+            if (!locked)
             {
-                
+                print("Facing the right way");
                 if (elevatorDoor)
                 {
                     //take player to elevator room menu without moving them
-
+                    StartCoroutine(GoToElevator(player));
                 }
                 else
                 {
@@ -103,6 +106,10 @@ public class Door : MonoBehaviour
         //takes the player to the next door
         player.transform.position = linkedDoor.spawnLocation.position;
 
+        //generates a potential elevator room spawn
+        floor.IncreaseElevatorChance();
+        linkedDoor.associatedRoom.MakeElevatorDoor();
+
         //fade to clear
         for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)
         {
@@ -116,5 +123,34 @@ public class Door : MonoBehaviour
             player.GetComponent<Animator>().SetBool("isWalking", true);
         else
             player.GetComponent<Animator>().SetBool("isWalking", false);
+    }
+
+    IEnumerator GoToElevator(GameObject player)
+    {
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        player.GetComponent<Animator>().SetBool("isWalking", false);
+
+        player.GetComponent<PlayerMovement>().canMove = false;
+
+        //player.GetComponent<NewAudioManager>().PlayEffect("DoorOpen");
+
+        //fade to black
+        for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
+        {
+            // set color with i as alpha
+            fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
+            yield return null;
+        }
+        
+        floor.elevatorCanvas.SetActive(true);
+        Cursor.visible = true;
+
+        //fade to clear
+        for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)
+        {
+            // set color with i as alpha
+            fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
+            yield return null;
+        }
     }
 }

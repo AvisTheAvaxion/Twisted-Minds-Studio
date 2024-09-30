@@ -151,7 +151,6 @@ public class ElevatorMenuManager : MonoBehaviour
             shopSize = Random.Range(2, maxToSell + 1);
         }
         badIndexes.Clear();
-        
 
         for (int i = 0; i < shopSize; i++)
         {

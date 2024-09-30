@@ -231,6 +231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dialogue System
       objectReference: {fileID: 0}
+    - target: {fileID: 7042842034925127218, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2520,16 +2524,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   traversalsForReset: 5
-  easyChanceGained: -0.02
   mediumChanceGained: 0.02
   hardChanceGained: 0.01
   elevatorChanceGained: 10
   mindRoomChanceGained: 7.5
-  easyChance: 80
   mediumChance: 15
   hardChance: 5
   elevatorChance: 0
   mindRoomChance: 0
+  elevator: {fileID: 985726702}
+  elevatorCanvas: {fileID: 1054389759}
 --- !u!4 &207219869
 Transform:
   m_ObjectHideFlags: 0
@@ -27194,6 +27198,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8045487404437363649, guid: 26a74dd3e1a49eb409325a8cce7aad69, type: 3}
+      propertyPath: elevatorDoor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045487404437363649, guid: 26a74dd3e1a49eb409325a8cce7aad69, type: 3}
       propertyPath: associatedRoom
       value: 
       objectReference: {fileID: 0}
@@ -42644,8 +42652,8 @@ MonoBehaviour:
   fadeImage: {fileID: 1298287971}
   doorTransitionLength: 0.5
   player: {fileID: 1953471803}
-  audioManager: {fileID: 0}
-  serializationManager: {fileID: 0}
+  audioManager: {fileID: 1624864695}
+  serializationManager: {fileID: 207219870}
   shopItems:
   - itemSold: {fileID: 11400000, guid: ac3ab661bcdfda444b86dd893de0156d, type: 2}
     cost: 50

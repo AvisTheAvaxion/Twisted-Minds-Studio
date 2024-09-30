@@ -10,6 +10,7 @@ public class Room : MonoBehaviour
     EnemySpawner enemySpawner;
     public Door[] doors;
     public List<Door> doorsAvailable = new List<Door>();
+    Floor currentFloor;
 
     public enum roomCategories
     {
@@ -33,7 +34,8 @@ public class Room : MonoBehaviour
     {
         enemySpawner = this.gameObject.GetComponentInChildren<EnemySpawner>();
         doors = GetComponentsInChildren<Door>();
-        
+        currentFloor = GetComponentInParent<Floor>();
+
         foreach(Door door in doors)
         {
             doorsAvailable.Add(door);
@@ -52,5 +54,13 @@ public class Room : MonoBehaviour
         return null;
     }
 
-    
+    public void MakeElevatorDoor()
+    {
+        if(currentFloor.GetElevatorChance() > Random.Range(0, 100))
+        {
+            print(doorsAvailable.Count + " doors available for elevator");
+            doorsAvailable[Random.Range(0, doorsAvailable.Count)].elevatorDoor = true;
+            currentFloor.ClearElevatorChance();
+        }
+    }
 }

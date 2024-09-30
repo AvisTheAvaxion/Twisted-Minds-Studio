@@ -296,6 +296,7 @@ public class DialogueManager : MonoBehaviour
                 }
             }
             #endregion
+            #region Quest Functions
             else if (lines[currentLine].EndsWith("$SetQuest") || lines[currentLine].StartsWith("$SetQuest"))
             {
                 int moveStartIndex = lines[currentLine].IndexOf('(');
@@ -304,6 +305,7 @@ public class DialogueManager : MonoBehaviour
                 string[] splitString = questInfo.Split(',');
                 questSystem.SetQuest(Int32.Parse(splitString[0]), Int32.Parse(splitString[1]));
             }
+            #endregion
             else if (lines[currentLine].StartsWith("$Emote"))
             {
                 try

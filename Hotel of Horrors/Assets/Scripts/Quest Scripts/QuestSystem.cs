@@ -55,9 +55,7 @@ public class QuestSystem : MonoBehaviour
         }
     }
 
-    
-
-
+    //This method should be called whenever a relevant game event occurs and see if quest conditions have been fulfilled
     public void QuestEvent(QuestEventType EventType, string objectName)
     {
         if(currentObjective == null)
@@ -182,6 +180,8 @@ public class QuestSystem : MonoBehaviour
         }
     }
 
+    //This method is called to set the variable, currentObjective, to a QuestType with the helper method ParseQuestString
+    //Should be called whenever the user wants to set the currentObjective after changing the floor and ObjectiveNum accordingly
     void LoadObjective()
     {
         string quest = objectives.getObjective(floor, objectiveNum);
@@ -195,6 +195,8 @@ public class QuestSystem : MonoBehaviour
         }
     }
 
+    //Helper method for LoadObjective. Takes in a string and returns the relevent QuestType.
+    //Can also start cutscenes, Although it is a bit of a recursion mess.
     QuestType ParseQuestString(string questString)
     {
         QuestType questType = null;
@@ -259,17 +261,21 @@ public class QuestSystem : MonoBehaviour
         return questType;
     }
 
+    //Call when the player has fulfilled the conditions to move to the next objective
     public void NextQuest()
     {
         objectiveNum++;
         LoadObjective();
     }
+
+    //Call to set the quest
     public void SetQuest(int floor, int objective)
     {
         this.floor = floor;
         this.objectiveNum = objective;
     }
 
+    //
     public enum QuestEventType
     {
         RoomEnter = 0,

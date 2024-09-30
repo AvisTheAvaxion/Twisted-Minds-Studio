@@ -1,8 +1,8 @@
 using UnityEngine;
 
-interface QuestType
+public abstract class QuestType
 {
-    string ToSaveString();
+    public abstract string ToSaveString();
 }
 
 public class FindObject : QuestType
@@ -14,10 +14,17 @@ public class FindObject : QuestType
 
     string objectName;
 
-    public string ToSaveString()
+    #region Find Object Methods
+    public string GetObjectName()
+    {
+        return objectName;
+    }
+
+    public override string ToSaveString()
     {
         return $"FindObject|{objectName}";
     }
+    #endregion
 }
 
 public class FindMultiple : QuestType
@@ -25,11 +32,28 @@ public class FindMultiple : QuestType
     public FindMultiple(string[] objs)
     {
         objects = objs;
+        ownedObjs = new bool[objs.Length];
     }
 
     string[] objects;
+    bool[] ownedObjs;
 
-    public string ToSaveString()
+    #region Find Multiple Methods
+    public string[] GetObjectNames()
+    {
+        return objects;
+    }
+
+    public bool[] CheckItems(int index)
+    {
+        if (index > -1)
+        {
+            ownedObjs[index] = true;
+        }
+        return ownedObjs;
+    }
+
+    public override string ToSaveString()
     {
         string s = "";
 
@@ -41,8 +65,60 @@ public class FindMultiple : QuestType
 
         return $"FindMultiple|{s}";
     }
+    #endregion
 }
+public class Collect : QuestType
+{
+    public Collect(int amountCollected, int total)
+    {
+        this.amountCollected = amountCollected;
+        this.total = total;
+    }
+    int amountCollected;
+    int total;
 
+    #region Collect Methods
+    public void IncrementAmountCollected(int amount)
+    {
+        amountCollected += amount;
+    }
+
+    public int GetAmountCollected()
+    {
+        return amountCollected;
+    }
+
+    public int GetTotal()
+    {
+        return total;
+    }
+
+    public override string ToSaveString()
+    {
+        return $"Collect|{amountCollected}|{total}";
+    }
+    #endregion
+}
+public class Traverse : QuestType
+{
+    public Traverse(string room)
+    {
+        roomName = room;
+    }
+    string roomName;
+
+    #region Traverse Methods
+    public string GetRoomName()
+    {
+        return roomName;
+    }
+
+    public override string ToSaveString()
+    {
+        return $"Traverse|{roomName}";
+    }
+    #endregion
+}
 public class Talk : QuestType
 {
     public Talk(GameObject npc, Dialogue.Dialog dialog)
@@ -53,12 +129,23 @@ public class Talk : QuestType
     GameObject npc;
     Dialogue.Dialog dialouge;
 
-    public string ToSaveString()
+    #region Talk Methods
+    public string GetNPC()
+    {
+        return this.npc.name;
+    }
+
+    public Dialogue.Dialog GetDialog()
+    {
+        return this.dialouge;
+    }
+
+    public override string ToSaveString()
     {
         return $"Talk|{npc}|{dialouge.ToString()}";
     }
+    #endregion
 }
-
 public class Kill : QuestType
 {
     public Kill(int amountKilled, int total)
@@ -69,12 +156,28 @@ public class Kill : QuestType
     int amountKilled;
     int total;
 
-    public string ToSaveString()
+    #region Kill Methods
+    public void IncrementAmountKilled()
+    {
+        amountKilled++;
+    }
+
+    public int GetAmountKilled()
+    {
+        return amountKilled;
+    }
+
+    public int GetTotal()
+    {
+        return total;
+    }
+
+    public override string ToSaveString()
     {
         return $"Kill|{amountKilled}|{total}";
     }
+    #endregion
 }
-
 public class KillSpecific : QuestType
 {
     public KillSpecific(int amoundKilled, int total, string enemyName)
@@ -86,38 +189,33 @@ public class KillSpecific : QuestType
     int amountKilled;
     int total;
     string enemyName;
-    public string ToSaveString()
+
+    #region Kill Specific Methods
+    public void IncrementAmountKilled(string enemyKilled)
+    {
+        if (enemyKilled == enemyName)
+        {
+            amountKilled++;
+        }
+    }
+    public int GetAmountKilled()
+    {
+        return amountKilled;
+    }
+    public int GetTotal()
+    {
+        return total;
+    }
+
+    public string GetEnemyName()
+    {
+        return enemyName;
+    }
+
+    public override string ToSaveString()
     {
         return $"KillSpecific|{amountKilled}|{total}|{enemyName}";
     }
+    #endregion
 }
 
-public class Collect : QuestType
-{
-    public Collect(int amountCollected, int total)
-    {
-        this.amountCollected = amountCollected;
-        this.total = total;
-    }
-    int amountCollected;
-    int total;
-
-    public string ToSaveString()
-    {
-        return $"Collect|{amountCollected}|{total}";
-    }
-}
-
-public class Traverse : QuestType
-{
-    public Traverse(string room)
-    {
-        roomName = room;
-    }
-    string roomName;
-
-    public string ToSaveString()
-    {
-        return $"Traverse|{roomName}";
-    }
-}

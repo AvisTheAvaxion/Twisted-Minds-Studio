@@ -133,7 +133,6 @@ public class RoomTraversal : MonoBehaviour
         }
 
         print(roomManager.GetCurrentRoom());
-        questSys.QuestEvent(QuestSystem.QuestEventType.RoomEnter, roomManager.GetCurrentRoom());
 
         //print("fading clear");
         // loop over 1 second backwards - fade to clear

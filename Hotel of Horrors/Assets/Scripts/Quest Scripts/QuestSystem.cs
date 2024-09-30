@@ -51,6 +51,11 @@ public class QuestSystem : MonoBehaviour
 
     public void QuestEvent(QuestEventType EventType, string objectName)
     {
+        if(currentObjective == null)
+        {
+            Debug.LogWarning("Quest Event ERROR. CurrentObjective is currently NULL");
+        }
+
         switch (EventType)
         {
             case QuestEventType.RoomEnter:
@@ -59,6 +64,7 @@ public class QuestSystem : MonoBehaviour
                     Traverse traverse = (Traverse)currentObjective;
                     if (traverse.GetRoomName() == objectName)
                     {
+                        Debug.Log("Room Get");
                         objectiveNum++;
                         LoadObjective();
                     }
@@ -172,27 +178,30 @@ public class QuestSystem : MonoBehaviour
                 }
                 break;
         }
-        OnQuestUpdate?.Invoke(currentObjective, EventArgs.Empty);
     }
 
     void LoadObjective()
     {
         string quest = objectives.getObjective(floor, objectiveNum);
-        QuestType questType = ParseQuestString(quest);
-        currentObjective = questType;
-        OnQuestUpdate?.Invoke(questType, EventArgs.Empty);
-        Debug.Log("Current Obj: " + currentObjective.ToSaveString());
+        Debug.Log("Current Objective Type (Before): " + currentObjective?.GetType());
+        currentObjective = ParseQuestString(quest);
+        Debug.Log("Current Objective Type (After): " + currentObjective?.GetType());
+        if (currentObjective != null)
+        {
+            OnQuestUpdate?.Invoke(currentObjective, EventArgs.Empty);
+            Debug.Log("Current Obj: " + currentObjective.ToSaveString());
+        }
     }
 
     QuestType ParseQuestString(string questString)
     {
-        QuestType type = null;
+        QuestType questType = null;
         string[] parts = questString.Split('|');
         switch (parts[0])
         {
             case "FindObject":
-                type = new FindObject(parts[1]);
-                break;
+                questType = new FindObject(parts[1]);
+                return questType;
             case "FindMultiple":
                 List<string> objs = new List<string>();
                 int index = 0;
@@ -206,33 +215,47 @@ public class QuestSystem : MonoBehaviour
                     index++;
                 }
                 string[] objsArray = objs.ToArray();
-                type = new FindMultiple(objsArray);
-                break;
+                questType = new FindMultiple(objsArray);
+                return questType;
             case "Talk":
                 GameObject npc = GameObject.Find(parts[1]);
                 Dialogue.Dialog talkDialog;
                 Enum.TryParse(parts[2], out talkDialog);
-                type = new Talk(npc, talkDialog);
-                break;
+                questType = new Talk(npc, talkDialog);
+                return questType;
             case "Kill":
-                type = new Kill(Int32.Parse(parts[1]), Int32.Parse(parts[2]));
-                break;
+                questType = new Kill(Int32.Parse(parts[1]), Int32.Parse(parts[2]));
+                return questType;
             case "KillSpecific":
-                type = new KillSpecific(Int32.Parse(parts[1]), Int32.Parse(parts[2]), parts[3]);
-                break;
+                questType = new KillSpecific(Int32.Parse(parts[1]), Int32.Parse(parts[2]), parts[3]);
+                return questType;
             case "Collect":
-                type = new Collect(Int32.Parse(parts[1]), Int32.Parse(parts[2]));
-                break;
+                questType = new Collect(Int32.Parse(parts[1]), Int32.Parse(parts[2]));
+                return questType;
             case "Traverse":
-                type = new Traverse(parts[1]);
-                break;
-            case "SetCutsene":
+                questType = new Traverse(parts[1]);
+                return questType;
+            case "SetCutscene":
                 Dialogue.Dialog dialog;
                 Enum.TryParse(parts[1], true, out dialog);
                 dialogueManager.SetCutscene(dialog);
-                break;
+
+                objectiveNum++;
+                questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
+
+                return questType;
         }
-        return type;
+        if(questType == null)
+        {
+            Debug.LogWarning("Quest Parsing ERROR. CurrentObjective is currently NULL");
+        }
+        return questType;
+    }
+
+    public void NextQuest()
+    {
+        objectiveNum++;
+        LoadObjective();
     }
 
     public enum QuestEventType

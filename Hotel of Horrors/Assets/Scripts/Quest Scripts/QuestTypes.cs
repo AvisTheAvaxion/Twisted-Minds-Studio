@@ -1,8 +1,8 @@
 using UnityEngine;
 
-interface QuestType
+public abstract class QuestType
 {
-    string ToSaveString();
+    public abstract string ToSaveString();
 }
 
 public class FindObject : QuestType
@@ -20,7 +20,7 @@ public class FindObject : QuestType
         return objectName;
     }
 
-    public string ToSaveString()
+    public override string ToSaveString()
     {
         return $"FindObject|{objectName}";
     }
@@ -53,7 +53,7 @@ public class FindMultiple : QuestType
         return ownedObjs;
     }
 
-    public string ToSaveString()
+    public override string ToSaveString()
     {
         string s = "";
 
@@ -93,7 +93,7 @@ public class Collect : QuestType
         return total;
     }
 
-    public string ToSaveString()
+    public override string ToSaveString()
     {
         return $"Collect|{amountCollected}|{total}";
     }
@@ -113,7 +113,7 @@ public class Traverse : QuestType
         return roomName;
     }
 
-    public string ToSaveString()
+    public override string ToSaveString()
     {
         return $"Traverse|{roomName}";
     }
@@ -140,7 +140,7 @@ public class Talk : QuestType
         return this.dialouge;
     }
 
-    public string ToSaveString()
+    public override string ToSaveString()
     {
         return $"Talk|{npc}|{dialouge.ToString()}";
     }
@@ -172,7 +172,7 @@ public class Kill : QuestType
         return total;
     }
 
-    public string ToSaveString()
+    public override string ToSaveString()
     {
         return $"Kill|{amountKilled}|{total}";
     }
@@ -212,7 +212,7 @@ public class KillSpecific : QuestType
         return enemyName;
     }
 
-    public string ToSaveString()
+    public override string ToSaveString()
     {
         return $"KillSpecific|{amountKilled}|{total}|{enemyName}";
     }

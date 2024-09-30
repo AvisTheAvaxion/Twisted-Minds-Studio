@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1722241433, guid: 6b0cdafd0d110394ab8825aab6ef1c97, type: 3}
+  m_Sprite: {fileID: 1264560598, guid: 6b0cdafd0d110394ab8825aab6ef1c97, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,9 +102,9 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6143300023033336772}
   collider: {fileID: 0}
   sprites:
-  - {fileID: -1261331470, guid: 6b0cdafd0d110394ab8825aab6ef1c97, type: 3}
-  - {fileID: -1722241433, guid: 6b0cdafd0d110394ab8825aab6ef1c97, type: 3}
-  - {fileID: -1237853850, guid: 6b0cdafd0d110394ab8825aab6ef1c97, type: 3}
+  - {fileID: 1264560598, guid: 6b0cdafd0d110394ab8825aab6ef1c97, type: 3}
+  - {fileID: -162623482, guid: 6b0cdafd0d110394ab8825aab6ef1c97, type: 3}
+  - {fileID: 356550418, guid: 6b0cdafd0d110394ab8825aab6ef1c97, type: 3}
   frameRate: 10
   defaultTag: Enemy
   faceUp: 1
@@ -115,7 +115,7 @@ MonoBehaviour:
   - frameLayers: 00000000000000000000000000000000
   - frameLayers: 00000000000000000000000000000000
   - frameLayers: 00000000000000000000000000000000
-  - frameLayers: 02000000020000000200000002000000
+  - frameLayers: 00000000020000000200000002000000
   - frameLayers: 02000000020000000200000002000000
   enemyAudioManager: {fileID: 5113344359566845617}
 --- !u!60 &8284666980901265937

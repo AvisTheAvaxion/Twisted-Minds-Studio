@@ -131,7 +131,8 @@ public class Dialogue
         "Varren: Cya later kiddo",
         "$Move(Varren,-4,-48.32)",
         "Protag: Well, I guess I should get moving.",
-        "$Kill(Varren)"
+        "$Kill(Varren)",
+        "$SetQuest(0,0)"
     };
 
     string[] CombatTutorial = new string[]

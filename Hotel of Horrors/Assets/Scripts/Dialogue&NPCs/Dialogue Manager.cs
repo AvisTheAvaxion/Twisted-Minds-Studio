@@ -76,7 +76,7 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //SetCutscene(Dialogue.Dialog.VarrenEncounter);
+        SetCutscene(Dialogue.Dialog.VarrenEncounter);
     }
 
     void StartCutScene(string dialogueName, int line)
@@ -248,21 +248,6 @@ public class DialogueManager : MonoBehaviour
                 currentLine--;
             }
             #endregion
-            else if (lines[currentLine].StartsWith("$Emote"))
-            {
-                try
-                {
-                    emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
-                }
-                catch(ArgumentException)
-                {
-                    emotions.Remove(lines[currentLine].Split("|")[1]);
-                    emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
-                }
-                currentLine++;
-                OnDialogueUpdate();
-                currentLine--;
-            }
             #region Invetory Functions
             else if (lines[currentLine].EndsWith("$GiveWeapon") || lines[currentLine].StartsWith("$GiveWeapon"))
             {
@@ -311,6 +296,30 @@ public class DialogueManager : MonoBehaviour
                 }
             }
             #endregion
+            else if (lines[currentLine].EndsWith("$SetQuest") || lines[currentLine].StartsWith("$SetQuest"))
+            {
+                int moveStartIndex = lines[currentLine].IndexOf('(');
+                int moveEndIndex = lines[currentLine].IndexOf(')');
+                string questInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
+                string[] splitString = questInfo.Split(',');
+                questSystem.SetQuest(Int32.Parse(splitString[0]), Int32.Parse(splitString[1]));
+            }
+            else if (lines[currentLine].StartsWith("$Emote"))
+            {
+                try
+                {
+                    emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
+                }
+                catch(ArgumentException)
+                {
+                    emotions.Remove(lines[currentLine].Split("|")[1]);
+                    emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
+                }
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
+            }
+            
 
             else
             {

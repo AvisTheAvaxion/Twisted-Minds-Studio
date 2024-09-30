@@ -11,6 +11,7 @@ public class QuestSystem : MonoBehaviour
 
     QuestType currentObjective;
     Objectives objectives;
+    bool objectiveSet = false;
 
     DialogueManager dialogueManager;
     PlayerInventory inventory;
@@ -27,7 +28,6 @@ public class QuestSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadObjective();
         /*if (PlayerPrefs.HasKey("idkWhatWeAreSavingThisAs"))
             //This might be it's own function
             //depending on how Ben is doing data persistancy with multiple save files
@@ -47,6 +47,16 @@ public class QuestSystem : MonoBehaviour
         }*/
     }
 
+    private void Update()
+    {
+        if (dialogueManager.getInCutscene() == false && objectiveSet == false)
+        {
+            LoadObjective();
+        }
+    }
+
+    
+
 
     public void QuestEvent(QuestEventType EventType, string objectName)
     {
@@ -64,8 +74,7 @@ public class QuestSystem : MonoBehaviour
                     if (traverse.GetRoomName() == objectName)
                     {
                         Debug.Log("Room Get");
-                        objectiveNum++;
-                        LoadObjective();
+                        NextQuest();
                     }
                 }
                 break;
@@ -77,8 +86,7 @@ public class QuestSystem : MonoBehaviour
 
                     if(kill.GetAmountKilled() >= kill.GetTotal())
                     {
-                        objectiveNum++;
-                        LoadObjective();
+                        NextQuest();
                     }
                     else
                     {
@@ -92,8 +100,7 @@ public class QuestSystem : MonoBehaviour
 
                     if (killSpecific.GetAmountKilled() >= killSpecific.GetTotal())
                     {
-                        objectiveNum++;
-                        LoadObjective();
+                        NextQuest();
                     }
                     else
                     {
@@ -107,8 +114,7 @@ public class QuestSystem : MonoBehaviour
                     Talk talk = (Talk)currentObjective;
                     if (talk.GetNPC() == objectName)
                     {
-                        objectiveNum++;
-                        LoadObjective();
+                        NextQuest();
                     }
                 }
                 break;
@@ -118,8 +124,7 @@ public class QuestSystem : MonoBehaviour
                     FindObject findObject = (FindObject)currentObjective;
                     if(findObject.GetObjectName() == objectName)
                     {
-                        objectiveNum++;
-                        LoadObjective();
+                        NextQuest();
                     }
                 }
                 else if (currentObjective.GetType() == typeof(FindMultiple))
@@ -151,8 +156,7 @@ public class QuestSystem : MonoBehaviour
 
                     if(allItemsObtained == true)
                     {
-                        objectiveNum++;
-                        LoadObjective();
+                        NextQuest();
                     }
                     else
                     {
@@ -167,8 +171,7 @@ public class QuestSystem : MonoBehaviour
                     collect.IncrementAmountCollected(Int32.Parse(objectName));
                     if(collect.GetAmountCollected() >= collect.GetTotal())
                     {
-                        objectiveNum++;
-                        LoadObjective();
+                        NextQuest();
                     }
                     else
                     {
@@ -244,9 +247,14 @@ public class QuestSystem : MonoBehaviour
 
                 return questType;
         }
-        if(questType == null)
+
+        if (questType == null)
         {
             Debug.LogWarning("Quest Parsing ERROR. CurrentObjective is currently NULL");
+        }
+        else
+        {
+            objectiveSet = true;
         }
         return questType;
     }
@@ -255,6 +263,11 @@ public class QuestSystem : MonoBehaviour
     {
         objectiveNum++;
         LoadObjective();
+    }
+    public void SetQuest(int floor, int objective)
+    {
+        this.floor = floor;
+        this.objectiveNum = objective;
     }
 
     public enum QuestEventType

@@ -339,6 +339,7 @@ public class DialogueManager : MonoBehaviour
             uiCanvas.SetActive(true);
             movement.TogglePlayerControls(true);
             inCutscene = false;
+            InstaSkip = false;
             skipCutscene = false;
             currentLine = 0;
         }

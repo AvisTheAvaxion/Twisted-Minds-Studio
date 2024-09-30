@@ -17,6 +17,8 @@ public class Dialogue
                 return CombatTutorial;
             case "DrHarrisQuest":
                 return DrHarrisQuest;
+            case "DrHarrisQuest2":
+                return DrHarrisQuest2;
             case "SteinIntro":
                 return SteinIntro;
 
@@ -183,7 +185,7 @@ public class Dialogue
         "Dr. Harris: Ah! Just in time. I was wondering what was taking you so long.",
         "Protag: I couldn't find anything but this goop.",
         "Dr. Harris: Such a hard worker too! This should be more than enough. Keep this up and I'll be sure to let the doctor know to give you a bonus.",
-        "As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads",
+        " :*As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads*",
         "Protag: How did you do that?",
         "Dr. Harris: Do what?",
         "Protag: The goop! It turned into what we needed!",

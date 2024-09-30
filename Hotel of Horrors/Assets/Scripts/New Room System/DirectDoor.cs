@@ -64,7 +64,7 @@ public class DirectDoor : MonoBehaviour
 
         player.GetComponent<PlayerMovement>().canMove = false;
         //print("fading black");
-        player.GetComponent<NewAudioManager>().PlayEffect("DoorOpen");
+        //player.GetComponent<NewAudioManager>().PlayEffect("DoorOpen");
 
         // loop over 1 second - fade to black
         for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)

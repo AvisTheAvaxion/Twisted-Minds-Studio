@@ -21,12 +21,14 @@ public class Floor : MonoBehaviour
     //chance gained every time the player enters a new room
     [SerializeField] float elevatorChanceGained = 10f;
     [SerializeField] float mindRoomChanceGained = 7.5f;
+    [SerializeField] float hallwayChanceGained = 5f;
 
     //starting chances for each room type to spawn
     [SerializeField] float mediumChance = 15f;
     [SerializeField] float hardChance = 5f;
     [SerializeField] float elevatorChance = 0f;
     [SerializeField] float mindRoomChance = 0f;
+    [SerializeField] float hallwayChance = 0f;
 
     string currentRoom;
     int enemiesToKill = 0;
@@ -123,6 +125,7 @@ public class Floor : MonoBehaviour
         roomTraversals++;
 
         mindRoomChance += mindRoomChanceGained;
+        hallwayChance += hallwayChanceGained;
 
         if(roomTraversals >= traversalsForReset)
         {
@@ -135,6 +138,12 @@ public class Floor : MonoBehaviour
             possibleRooms.Clear();
             possibleRooms.Add(roomsByName["Mind Room"]);
             mindRoomChance = 0;
+        }
+        else if (hallwayChance > Random.Range(0,100f))
+        {
+            possibleRooms.Clear();
+            possibleRooms.Add(roomsByName["Hallway"]);
+            hallwayChance = 0;
         }
         else if (hardChance > difficultyRoll)
         {

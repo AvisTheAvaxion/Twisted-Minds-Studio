@@ -60,12 +60,9 @@ public class Door : MonoBehaviour
 
         if (collision.gameObject.tag.Equals("Player"))
         {
-            print("Touched Door");
-
             GameObject player = collision.gameObject;
             if (!locked)
             {
-                print("Facing the right way");
                 if (elevatorDoor)
                 {
                     //take player to elevator room menu without moving them

@@ -219,6 +219,7 @@ public class Floor : MonoBehaviour
             foreach (Door d in allDoors)
             {
                 d.locked = true;
+                d.LockGate(d.locked);
             }
 
         }
@@ -237,6 +238,7 @@ public class Floor : MonoBehaviour
             foreach (Door d in allDoors)
             {
                 d.locked = false;
+                d.LockGate(d.locked);
             }
         }
     }

@@ -16,7 +16,10 @@ public class Door : MonoBehaviour
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] Image fadeImage;
 
-
+    [Header("Locked Gate Settings")]
+    [SerializeField] SpriteRenderer lockedGateRend;
+    [SerializeField] int frameRate = 10;
+    [SerializeField] Sprite[] lockedGateFrames;
 
     public enum DoorLocations
     {
@@ -149,5 +152,30 @@ public class Door : MonoBehaviour
             fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
             yield return null;
         }
+    }
+
+    public void LockGate(bool close)
+    {
+        StartCoroutine(AnimateLockedGate(close));
+    }
+    IEnumerator AnimateLockedGate(bool close)
+    {
+        float frameLength = 1f / frameRate;
+        WaitForSeconds wait = new WaitForSeconds(frameLength);
+
+        lockedGateRend.enabled = true;
+
+        for (int f = 0; f < lockedGateFrames.Length; f++)
+        {
+            lockedGateRend.sprite = close ? lockedGateFrames[f] : lockedGateFrames[lockedGateFrames.Length - 1 - f];
+            yield return wait;
+        }
+
+
+        lockedGateRend.sprite = close ? lockedGateFrames[lockedGateFrames.Length - 1] : lockedGateFrames[0];
+
+        yield return wait;
+
+        lockedGateRend.enabled = close;
     }
 }

@@ -230,7 +230,7 @@ public class ActionController : MonoBehaviour
         {
             SetMeleeDirection();
 
-            if (attackButtonReleased && attackButtonPressed && !playerMovement.IsDashing)
+            if (attackButtonPressed && !playerMovement.IsDashing)
             {
                 StartCoroutine(Attack());
                 //playerAudio.Play("Attack");
@@ -351,6 +351,9 @@ public class ActionController : MonoBehaviour
             MeleeSlash meleeStrike = go.GetComponent<MeleeSlash>();
             if (meleeStrike) meleeStrike.Init(this, defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy", cameraShake, meleeDir);
         }
+
+        attackButtonPressed = false;
+        attackButtonReleased = false;
     }
 
     //End of an attack for melee (animation event) and ranged
@@ -363,24 +366,27 @@ public class ActionController : MonoBehaviour
 
         playerMovement.canMove = true;
 
-        attackNumber++;
+        /*attackNumber++;
 
         attackNumber = attackNumber % 3;
 
         if (!attackButtonPressed || playerMovement.IsDashing)
         {
             attackNumber = 0;
-        }
+        }*/
 
         //if (hand) hand.rotation = Quaternion.identity;
 
         if (inventory.CurrentWeapon != null)
         {
-            if (attackNumber == 0)
-            {
-                attackButtonPressed = false;
+            //if (attackNumber == 0)
+            //{
+                //attackButtonPressed = false;
+            if(attackNumber == 2)
+                StartCoroutine(AttackCooldown(1 / (inventory.CurrentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed)) * 2));
+            else
                 StartCoroutine(AttackCooldown(1 / (inventory.CurrentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed))));
-            }
+            //}
         }
         else
         {
@@ -391,12 +397,22 @@ public class ActionController : MonoBehaviour
     #region Cooldowns
     IEnumerator AttackCooldown(float waitTime)
     {
+        int oldAttackNumber = attackNumber;
+        bool increasedAttackNum = false;
+
         canAttack = false;
         if (playerGUI != null) playerGUI.UpdateWeaponCooldown(1);
 
         float timer = 0;
         while (timer <= waitTime)
         {
+            if (!increasedAttackNum && attackButtonPressed)
+            {
+                attackNumber++;
+                increasedAttackNum = true;
+            }
+            if (playerMovement.IsDashing) attackNumber = oldAttackNumber;
+
             timer += Time.deltaTime;
             if (playerGUI != null) playerGUI.UpdateWeaponCooldown(1 - timer / waitTime);
             yield return null;
@@ -404,6 +420,15 @@ public class ActionController : MonoBehaviour
 
         canAttack = true;
         if (playerGUI != null) playerGUI.UpdateWeaponCooldown(0);
+
+        attackNumber = attackNumber % 3;
+
+        if (attackNumber == oldAttackNumber || attackNumber == 0) attackNumber = 0;
+        else
+        {
+            SetMeleeDirection();
+            StartCoroutine(Attack());
+        }
 
         if (attackButtonPressed && (autoAttack || (inventory.CurrentWeapon != null && inventory.CurrentWeapon.GetInfo().IsAutoAttack())))
         {

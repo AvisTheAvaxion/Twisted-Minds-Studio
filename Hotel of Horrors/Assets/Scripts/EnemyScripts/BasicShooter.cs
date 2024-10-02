@@ -83,7 +83,7 @@ public class BasicShooter : MonoBehaviour
                     GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
 
                     //newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);
-                    Vector2 dir = (pos - (Vector2)transform.position).normalized;
+                    Vector2 dir = (pos - (Vector2)bulletSpawnPoint.position).normalized;
                     Vector2 rotatedDir = Quaternion.AngleAxis(bulletAngleOffset, Vector3.forward) * dir;
                     newBullet.transform.rotation = Quaternion.FromToRotation(newBullet.transform.up, rotatedDir) * newBullet.transform.rotation;
 
@@ -124,8 +124,8 @@ public class BasicShooter : MonoBehaviour
 
     private void TargetConeOfInfluence(out float startAngle, out float currentAngle, out float angleStep, out float endAngle)
     {
-        var dir = (bulletSpawnPoint.position - target.position).normalized;
-        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 180;
+        var dir = (target.position - bulletSpawnPoint.position).normalized;
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         startAngle = angle;
         endAngle = angle;
@@ -143,8 +143,8 @@ public class BasicShooter : MonoBehaviour
     }
     private void TargetConeOfInfluence(Vector3 targetPos, out float startAngle, out float currentAngle, out float angleStep, out float endAngle)
     {
-        var dir = (bulletSpawnPoint.position - targetPos).normalized;
-        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 180;
+        var dir = ((targetPos + bulletSpawnPoint.position) - bulletSpawnPoint.position).normalized;
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         startAngle = angle;
         endAngle = angle;
@@ -173,7 +173,7 @@ public class BasicShooter : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(bulletSpawnPoint.position, 0.05f);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(debugTargetPos, 0.05f);
+        Gizmos.DrawWireSphere(debugTargetPos + (Vector2)bulletSpawnPoint.position, 0.05f);
         Gizmos.color = Color.white;
 
         if (target != null)
@@ -184,13 +184,13 @@ public class BasicShooter : MonoBehaviour
         for (int j = 0; j < projectilesPerBurst; j++)
         {
             Vector2 pos = FindBulletSpawnPos(currentAngleDebug);
-            Vector2 dir = (pos - (Vector2)transform.position).normalized;
+            Vector2 dir = (pos - (Vector2)bulletSpawnPoint.position).normalized;
 
             Vector2 rotatedDir = Quaternion.AngleAxis(bulletAngleOffset, Vector3.forward) * dir;
 
-            Gizmos.DrawWireSphere((Vector2)transform.position + dir * startingDistance, 0.1f);
+            //Gizmos.DrawWireSphere((Vector2)bulletSpawnPoint.position + dir * startingDistance, 0.1f);
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere((Vector2)transform.position + rotatedDir * startingDistance, 0.1f);
+            Gizmos.DrawWireSphere((Vector2)bulletSpawnPoint.position + rotatedDir * startingDistance, 0.1f);
             //var dir = newBullet.transform.position - GameObject.Find("Player").transform.position;
             //var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
 

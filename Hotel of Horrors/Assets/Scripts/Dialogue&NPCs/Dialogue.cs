@@ -1,4 +1,6 @@
 
+using Unity.VisualScripting;
+
 public class Dialogue
 {
     public string[] getDialogue(string name)
@@ -21,6 +23,8 @@ public class Dialogue
                 return DrHarrisQuest2;
             case "SteinIntro":
                 return SteinIntro;
+            case "Empty":
+                return Empty;
 
         }
         return null;
@@ -40,7 +44,14 @@ public class Dialogue
         DrHarrisQuest4,
         DrHarrisQuest5,
         SteinIntro,
+        Empty,
     }
+
+
+    string[] Empty = new string[]
+    {
+        ".:."
+    };
 
     #region Floor 1 Dialog
     #region Tutorial

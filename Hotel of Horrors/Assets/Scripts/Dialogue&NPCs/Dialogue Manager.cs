@@ -93,8 +93,6 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L)) { InstaSkip = !InstaSkip; }
-
 
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && inCutscene && !isPicking && !characterMoving)
         {
@@ -106,7 +104,11 @@ public class DialogueManager : MonoBehaviour
         }
         else if (skipCutscene)
         {
-            if (InstaSkip & !isPicking) { OnDialogueUpdate(); }
+            if (InstaSkip & !isPicking)
+            {
+                OnDialogueUpdate();
+
+            }
 
             else
             {
@@ -456,6 +458,12 @@ public class DialogueManager : MonoBehaviour
     {
         skipCutscene = true;
         isPicking = false;
+    }
+
+    public void DevSkipCutscene()
+    {
+        SetCutscene(Dialogue.Dialog.Empty);
+
     }
 
     public bool getInCutscene()

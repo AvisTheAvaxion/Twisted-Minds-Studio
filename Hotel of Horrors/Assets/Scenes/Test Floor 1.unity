@@ -359,6 +359,9 @@ MonoBehaviour:
   linkedDoor: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  lockedGateRend: {fileID: 0}
+  frameRate: 10
+  lockedGateFrames: []
   doorLocation: 4
 --- !u!61 &24213895
 BoxCollider2D:
@@ -726,6 +729,9 @@ MonoBehaviour:
   linkedDoor: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  lockedGateRend: {fileID: 0}
+  frameRate: 10
+  lockedGateFrames: []
   doorLocation: 4
 --- !u!61 &35933019
 BoxCollider2D:
@@ -32986,6 +32992,9 @@ MonoBehaviour:
   linkedDoor: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  lockedGateRend: {fileID: 0}
+  frameRate: 10
+  lockedGateFrames: []
   doorLocation: 4
 --- !u!61 &886663883
 BoxCollider2D:
@@ -48379,6 +48388,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 463228737}
+    - target: {fileID: 5823014093595053886, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 463228737}
+    - target: {fileID: 5823014093595053886, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DevSkipCutscene
+      objectReference: {fileID: 0}
     - target: {fileID: 6527588405644392456, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
       propertyPath: m_Name
       value: CanvasDialogue
@@ -66336,6 +66353,9 @@ MonoBehaviour:
   linkedDoor: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  lockedGateRend: {fileID: 0}
+  frameRate: 10
+  lockedGateFrames: []
   doorLocation: 4
 --- !u!61 &1598705479
 BoxCollider2D:
@@ -78772,6 +78792,9 @@ MonoBehaviour:
   linkedDoor: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  lockedGateRend: {fileID: 0}
+  frameRate: 10
+  lockedGateFrames: []
   doorLocation: 4
 --- !u!61 &1917613266
 BoxCollider2D:
@@ -99015,6 +99038,9 @@ MonoBehaviour:
   linkedDoor: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  lockedGateRend: {fileID: 0}
+  frameRate: 10
+  lockedGateFrames: []
   doorLocation: 4
 --- !u!61 &2146889562
 BoxCollider2D:

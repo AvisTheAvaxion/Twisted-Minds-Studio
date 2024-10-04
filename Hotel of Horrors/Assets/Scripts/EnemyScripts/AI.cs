@@ -33,7 +33,7 @@ public class AI : MonoBehaviour
     [SerializeField][Range(4, 24)] int numOfWeights = 16;
     [SerializeField] bool visualizeWeights = true;
     [Header("Obstacle Settings")]
-    [SerializeField][Range(0.01f, 1000f)] float obstacleDistanceSensitivity = 1;
+    [SerializeField][Range(0.01f, 1000f)] float obstacleDistanceSensitivity = .48f;
     [SerializeField] float desireKeepSameDir = 0.1f;
     [SerializeField] float noObstacleDesire = 0.3f;
     [SerializeField] string comradeTag = "Enemy";

@@ -5222,7 +5222,7 @@ MonoBehaviour:
   comradeTag: Enemy
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 2112
+    m_Bits: 18625
   wallMask:
     serializedVersion: 2
     m_Bits: 2112
@@ -5253,6 +5253,7 @@ MonoBehaviour:
   moveSpeed: 10
   emotionalEnergyWorth: 50
   stunLength: 0.5
+  movesOnPatrol: 1
   patrolRadius: 1.92
   patrolTime: 2
   pauseMin: 3
@@ -5263,6 +5264,7 @@ MonoBehaviour:
   attackCooldownMin: 2
   attackCooldownMax: 2.5
   maxDistanceToNavigate: 3
+  contWalkRightAfterAttack: 0
   meleeAttackPoint: {fileID: 0}
   meleeRange: 0.5
   meleeRadius: 0

@@ -205,9 +205,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
-  associatedRoom: 
+  elevatorDoor: 0
+  associatedRoom: {fileID: 0}
+  spawnLocation: {fileID: 0}
+  linkedDoor: {fileID: 0}
+  doorTransitionLength: 0.5
+  fadeImage: {fileID: 0}
+  lockedGateRend: {fileID: 3243567255371827927}
+  frameRate: 10
+  lockedGateFrames:
+  - {fileID: 1929345146, guid: ec9e2b4ed71c25c459fdf92b1f597310, type: 3}
+  - {fileID: -1857455100, guid: ec9e2b4ed71c25c459fdf92b1f597310, type: 3}
+  - {fileID: -1598911727, guid: ec9e2b4ed71c25c459fdf92b1f597310, type: 3}
   doorLocation: 3
-  assignedDoor: {fileID: 0}
 --- !u!1 &4820411527683724689
 GameObject:
   m_ObjectHideFlags: 0

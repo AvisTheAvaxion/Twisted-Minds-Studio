@@ -64,8 +64,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3255254621524780120}
   - {fileID: 8183424876605192200}
+  - {fileID: 3255254621524780120}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &780618124814192220
@@ -205,9 +205,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
-  associatedRoom: 
+  elevatorDoor: 0
+  associatedRoom: {fileID: 0}
+  spawnLocation: {fileID: 0}
+  linkedDoor: {fileID: 0}
+  doorTransitionLength: 0.5
+  fadeImage: {fileID: 0}
+  lockedGateRend: {fileID: 4158292917183668847}
+  frameRate: 10
+  lockedGateFrames:
+  - {fileID: 1929345146, guid: ec9e2b4ed71c25c459fdf92b1f597310, type: 3}
+  - {fileID: -1857455100, guid: ec9e2b4ed71c25c459fdf92b1f597310, type: 3}
+  - {fileID: -1598911727, guid: ec9e2b4ed71c25c459fdf92b1f597310, type: 3}
   doorLocation: 1
-  assignedDoor: {fileID: 0}
 --- !u!1 &8453467033612020176
 GameObject:
   m_ObjectHideFlags: 0

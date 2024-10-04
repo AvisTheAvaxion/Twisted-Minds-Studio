@@ -5142,13 +5142,13 @@ MonoBehaviour:
   biasThreshold: 1.1
   numOfWeights: 16
   visualizeWeights: 1
-  obstacleDistanceSensitivity: 0.15
+  obstacleDistanceSensitivity: 0.48
   desireKeepSameDir: 0.1
   noObstacleDesire: 0.3
   comradeTag: Enemy
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 16631
   wallMask:
     serializedVersion: 2
     m_Bits: 0
@@ -5179,6 +5179,7 @@ MonoBehaviour:
   moveSpeed: 10
   emotionalEnergyWorth: 50
   stunLength: 0.5
+  movesOnPatrol: 1
   patrolRadius: 1
   patrolTime: 3
   pauseMin: 2
@@ -5189,6 +5190,7 @@ MonoBehaviour:
   attackCooldownMin: 3
   attackCooldownMax: 4
   maxDistanceToNavigate: 3
+  contWalkRightAfterAttack: 0
   meleeAttackPoint: {fileID: 4727642729652596645}
   meleeRange: 0.5
   meleeRadius: 0.5

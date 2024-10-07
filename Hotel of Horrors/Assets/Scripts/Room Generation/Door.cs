@@ -67,6 +67,8 @@ public class Door : MonoBehaviour
             GameObject player = collision.gameObject;
             if (!locked)
             {
+                floor.AddTraversal();
+
                 if (elevatorDoor)
                 {
                     //take player to elevator room menu without moving them

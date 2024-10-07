@@ -125,8 +125,6 @@ public class Floor : MonoBehaviour
         float difficultyRoll = Random.Range(0, 100);
         List<Room> possibleRooms = new List<Room>();
 
-        roomTraversals++;
-
         mindRoomChance += mindRoomChanceGained;
         hallwayChance += hallwayChanceGained;
 
@@ -214,6 +212,7 @@ public class Floor : MonoBehaviour
             foreach(Door door in room.doors)
             {
                 door.linkedDoor = null;
+                door.elevatorDoor = false;
             }
 
             room.doorsAvailable.Clear();
@@ -275,5 +274,10 @@ public class Floor : MonoBehaviour
     public void ClearElevatorChance()
     {
         elevatorChance = 0;
+    }
+
+    public void AddTraversal()
+    {
+        roomTraversals++;
     }
 }

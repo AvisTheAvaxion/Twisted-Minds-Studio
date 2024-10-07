@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     //List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
     [HideInInspector]public bool canMove;
     [HideInInspector]public bool canDash;
+    bool inCutscene;
 
     [Header("Dashing Modifiers")]
     [SerializeField] float dashCooldown;
@@ -57,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-    public bool CanMove { get => canMove; }
     public bool IsDashing { get => isDashing; }
     public string Direction { get => direction; }
     public Vector2 MovementVector { get => movementVector; }
@@ -333,7 +333,8 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(length);
 
-        canMove = true;
+        if(!inCutscene)
+            canMove = true;
 
         if (!isAttackMode)
             AnimateMovement();
@@ -368,4 +369,21 @@ public class PlayerMovement : MonoBehaviour
         this.direction = newDirection;
     }
 
+    public void StartCutscene()
+    {
+        rb.velocity = Vector2.zero;
+        animator.SetBool("isWalking", false);
+        animator.SetBool("Dashing", false);
+
+        TogglePlayerControls(false);
+        inCutscene = true;
+    }
+
+    public void EndCutscene()
+    {
+        rb.velocity = Vector2.zero;
+
+        TogglePlayerControls(true);
+        inCutscene = false;
+    }
 }

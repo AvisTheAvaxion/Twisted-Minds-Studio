@@ -35,6 +35,9 @@ public class Floor : MonoBehaviour
 
     [SerializeField]ElevatorMenuManager elevator;
     public GameObject elevatorCanvas;
+    [SerializeField] bool debug;
+
+    System.Random prng;
 
     private void Start()
     {
@@ -73,7 +76,7 @@ public class Floor : MonoBehaviour
             }
         }
 
-
+        prng = new System.Random(Random.Range(int.MinValue, int.MaxValue));
 
         playerInventoryRef = FindObjectOfType<PlayerInventory>();
         questSys = FindObjectOfType<QuestSystem>();
@@ -138,24 +141,34 @@ public class Floor : MonoBehaviour
             possibleRooms.Clear();
             possibleRooms.Add(roomsByName["Mind Room"]);
             mindRoomChance = 0;
+
+            if (debug) print("Travelling to Mind Room");
         }
         else if (hallwayChance > Random.Range(0,100f))
         {
             possibleRooms.Clear();
             possibleRooms.Add(roomsByName["Hallway"]);
             hallwayChance = 0;
+
+            if (debug) print("Travelling to Hallway");
         }
         else if (hardChance > difficultyRoll)
         {
             possibleRooms = roomsByCategory["Hard"];
+
+            if (debug) print("Travelling to Hard Room");
         }
         else if (mediumChance > difficultyRoll)
         {
             possibleRooms = roomsByCategory["Medium"];
+
+            if (debug) print("Travelling to Medium Room");
         }
         else
         {
             possibleRooms = roomsByCategory["Easy"];
+
+            if (debug) print("Travelling to Easy Room");
         }
 
         int findAttempts = 0;
@@ -173,7 +186,10 @@ public class Floor : MonoBehaviour
                     possibleRooms.Add(room);
             }
 
-            spawnDoor = possibleRooms[Random.Range(0, possibleRooms.Count)].GetTargetDoor(targetOrientation);
+            int next = prng.Next();
+            int i = next % possibleRooms.Count;
+            if (debug) print("Chosen room index: " + i);
+            spawnDoor = possibleRooms[i].GetTargetDoor(targetOrientation);
 
         } while (spawnDoor == null);
 
@@ -192,6 +208,9 @@ public class Floor : MonoBehaviour
     {
         foreach(Room room in allRooms)
         {
+            if(room.enemySpawner != null)
+                room.enemySpawner.ResetSpawner();
+
             foreach(Door door in room.doors)
             {
                 door.linkedDoor = null;

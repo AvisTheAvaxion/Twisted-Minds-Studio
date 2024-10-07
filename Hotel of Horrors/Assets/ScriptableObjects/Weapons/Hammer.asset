@@ -29,14 +29,17 @@ MonoBehaviour:
   attacks:
   - damagePercIncrease: 0
     knockbackPercIncrease: 0
+    hitStopLength: 0.05
     weaponStrike: {fileID: 8308924630415093721, guid: 98ee93986eb690645ac808f7366bf96c, type: 3}
     overrideController: {fileID: 0}
   - damagePercIncrease: 0
     knockbackPercIncrease: 0
+    hitStopLength: 0.05
     weaponStrike: {fileID: 8308924630415093721, guid: 1e1dc90de1bbdce4b89f1171dfcefadb, type: 3}
     overrideController: {fileID: 0}
   - damagePercIncrease: 0
     knockbackPercIncrease: 0
+    hitStopLength: 0.05
     weaponStrike: {fileID: 8308924630415093721, guid: 1e1dc90de1bbdce4b89f1171dfcefadb, type: 3}
     overrideController: {fileID: 0}
   damage: 12

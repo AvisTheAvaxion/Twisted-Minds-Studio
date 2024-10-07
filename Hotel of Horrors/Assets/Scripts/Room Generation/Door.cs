@@ -15,6 +15,7 @@ public class Door : MonoBehaviour
 
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] Image fadeImage;
+    [SerializeField] bool debug;
 
     [Header("Locked Gate Settings")]
     [SerializeField] SpriteRenderer lockedGateRend;
@@ -73,6 +74,8 @@ public class Door : MonoBehaviour
                 }
                 else
                 {
+                    if (debug) print("Linked Door: " + linkedDoor);
+
                     //if the door already does not have a link, give it one 
                     if (linkedDoor == null)
                     {

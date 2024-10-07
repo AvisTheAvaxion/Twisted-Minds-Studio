@@ -6,6 +6,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] int damage = 1;
+    [SerializeField] float hitStopLength = 0.05f;
     [SerializeField] float deflectionResistance;
     [SerializeField] [Range(0,1)] float chanceToInflictEffect;
     [SerializeField] EffectInfo[] effectsToInflict;
@@ -95,6 +96,8 @@ public class Projectile : MonoBehaviour
                         targetsHit++;
                         if (targetsHit >= maxTargets)
                             DestroySelf();
+
+                        GameTime.AddHitStop(hitStopLength);
                     }
                 }
                 else

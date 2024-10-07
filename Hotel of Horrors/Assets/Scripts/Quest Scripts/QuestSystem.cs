@@ -185,13 +185,13 @@ public class QuestSystem : MonoBehaviour
     void LoadObjective()
     {
         string quest = objectives.getObjective(floor, objectiveNum);
-        Debug.Log("Current Objective Type (Before): " + currentObjective?.GetType());
+        //Debug.Log("Current Objective Type (Before): " + currentObjective?.GetType());
         currentObjective = ParseQuestString(quest);
-        Debug.Log("Current Objective Type (After): " + currentObjective?.GetType());
+        //Debug.Log("Current Objective Type (After): " + currentObjective?.GetType());
         if (currentObjective != null)
         {
             OnQuestUpdate?.Invoke(currentObjective, EventArgs.Empty);
-            Debug.Log("Current Obj: " + currentObjective.ToSaveString());
+            //Debug.Log("Current Obj: " + currentObjective.ToSaveString());
         }
     }
 

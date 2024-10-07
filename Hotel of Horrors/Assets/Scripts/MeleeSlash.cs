@@ -33,12 +33,14 @@ public class MeleeSlash : MonoBehaviour
     };
 
     Weapon weapon;
+    int attackNum;
 
     string targetTag;
 
     int damage;
     float knockback;
     float deflectionStrength;
+    float hitStopLength;
 
     CameraShake cameraShake;
 
@@ -50,7 +52,7 @@ public class MeleeSlash : MonoBehaviour
 
     int sortingID;
 
-    public void Init(ActionController actionController, int damage, float knockback, float deflectionStrength, string targetTag, CameraShake cameraShake, int sortingIDIn, Effect[] effects = null)
+    public void Init(ActionController actionController, float hitStopLengthIn, int damage, float knockback, float deflectionStrength, string targetTag, CameraShake cameraShake, int sortingIDIn, Effect[] effects = null)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -61,6 +63,7 @@ public class MeleeSlash : MonoBehaviour
         this.deflectionStrength = deflectionStrength;
         this.targetTag = targetTag;
         this.cameraShake = cameraShake;
+        hitStopLength = hitStopLengthIn;
 
         sortingID = sortingIDIn;
 
@@ -71,13 +74,14 @@ public class MeleeSlash : MonoBehaviour
 
         StartCoroutine(Animate());
     }
-    public void Init(ActionController actionController, Weapon weapon, string targetTag, CameraShake cameraShake, int sortingIDIn)
+    public void Init(ActionController actionController, Weapon weapon, int attackNumIn, string targetTag, CameraShake cameraShake, int sortingIDIn)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 
         this.actionController = actionController;
 
         this.weapon = weapon;
+        attackNum = attackNumIn;
 
         EffectInfo[] effectInfos = weapon.GetInfo().GetEffectsToInflict();
         Effect[] effects = new Effect[effectInfos.Length];
@@ -122,6 +126,8 @@ public class MeleeSlash : MonoBehaviour
                             health.InflictEffect(effect);
                         }
                     }
+
+                    GameTime.AddHitStop(weapon != null ? weapon.GetInfo().GetAttack(attackNum).hitStopLength : hitStopLength);
                 }
             }
         } else

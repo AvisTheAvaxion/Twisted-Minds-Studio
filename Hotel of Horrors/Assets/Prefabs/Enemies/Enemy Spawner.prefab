@@ -48,6 +48,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyQueue: []
   spawnPerWave: 0
+  spawnedMonsters: []
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 18112
+  obstacleCheckRadius: 0
   isActiviated: 0
 --- !u!60 &582406424742337936
 PolygonCollider2D:

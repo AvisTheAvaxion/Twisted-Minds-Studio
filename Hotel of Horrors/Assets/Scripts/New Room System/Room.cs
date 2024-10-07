@@ -7,10 +7,11 @@ public class Room : MonoBehaviour
     public string roomName = "Nameless Room";
     public roomCategories category;
     public enemyModifiers currentModifier;
-    EnemySpawner enemySpawner;
     public Door[] doors;
     public List<Door> doorsAvailable = new List<Door>();
     Floor currentFloor;
+
+    public EnemySpawner enemySpawner { get; private set; }
 
     public enum roomCategories
     {

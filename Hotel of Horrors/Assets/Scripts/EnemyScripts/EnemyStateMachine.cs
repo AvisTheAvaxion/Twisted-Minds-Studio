@@ -30,6 +30,8 @@ public class EnemyStateMachine : MonoBehaviour
 
     protected Rigidbody2D rb;
 
+    protected EnemySpawner mySpawner;
+
     [Header("Animation")]
     [SerializeField] protected Animator animator;
     [SerializeField] protected bool hasWalkCycle = true;
@@ -56,6 +58,7 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected float contactDamage;
     [SerializeField] protected float contactKnockback;
     [SerializeField] protected float attackCooldownMin, attackCooldownMax;
+    [SerializeField] protected float hitStopLength = 0.05f;
     [SerializeField] protected float maxDistanceToNavigate = 3f;
     [SerializeField] protected bool contWalkRightAfterAttack;
 
@@ -134,6 +137,10 @@ public class EnemyStateMachine : MonoBehaviour
     }
     protected virtual void Initialize()
     {
+    }
+    public void SetSpawner(EnemySpawner spawner)
+    {
+        mySpawner = spawner;
     }
 
     private void Update()
@@ -278,7 +285,9 @@ public class EnemyStateMachine : MonoBehaviour
             if (!patrolling)
             {
                 patrolling = true;
-                Vector2 randomPos = startPos + GetRandomDir() * patrolRadius;
+                Vector2 randomPos = startPos;
+                if (mySpawner) randomPos = mySpawner.GetRandomPosition(startPos, patrolRadius);
+                else randomPos = startPos + GetRandomDir() * patrolRadius;
                 patrolTargetPos = randomPos;
 
                 patrolTimer = 0;
@@ -635,8 +644,11 @@ public class EnemyStateMachine : MonoBehaviour
             IHealth health = collision.gameObject.GetComponent<IHealth>();
             Vector2 dir = (collision.transform.position - transform.position).normalized;
 
-            health.TakeDamage(contactDamage);
-            playerMovement.Knockback(dir, contactKnockback*2);
+            if (contactKnockback > 0 && contactDamage > 0)
+            {
+                health.TakeDamage(contactDamage);
+                playerMovement.Knockback(dir, contactKnockback * 2);
+            }
         }
     }
 

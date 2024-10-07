@@ -5099,7 +5099,7 @@ MonoBehaviour:
   comradeTag: Enemy
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 35009
+    m_Bits: 18625
   wallMask:
     serializedVersion: 2
     m_Bits: 2112
@@ -5136,8 +5136,8 @@ MonoBehaviour:
   pauseMin: 0
   pauseMax: 0
   aggroRadius: 1.54
-  contactDamage: 1
-  contactKnockback: 3
+  contactDamage: 0
+  contactKnockback: 0
   attackCooldownMin: 0
   attackCooldownMax: 0
   maxDistanceToNavigate: 6

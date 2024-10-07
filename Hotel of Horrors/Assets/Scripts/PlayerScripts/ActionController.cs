@@ -339,7 +339,7 @@ public class ActionController : MonoBehaviour
             }
             if (meleeStrike)
             {
-                meleeStrike.Init(this, inventory.CurrentWeapon, "Enemy", cameraShake, meleeDir);
+                meleeStrike.Init(this, inventory.CurrentWeapon, attackNumber, "Enemy", cameraShake, meleeDir);
 
                 playerMovement.MeleeLunge(meleeDirection.up, 0.4f);
                 playerMovement.canMove = false;
@@ -349,7 +349,7 @@ public class ActionController : MonoBehaviour
         {
             GameObject go = Instantiate(defaultMeleeStrike, weaponStrike1SpawnPoint.position, weaponStrike1SpawnPoint.rotation, meleeDirection);
             MeleeSlash meleeStrike = go.GetComponent<MeleeSlash>();
-            if (meleeStrike) meleeStrike.Init(this, defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy", cameraShake, meleeDir);
+            if (meleeStrike) meleeStrike.Init(this, 0.03f, defaultDamage, defaultKnockback, defaultDeflectionStrength, "Enemy", cameraShake, meleeDir);
         }
 
         attackButtonPressed = false;

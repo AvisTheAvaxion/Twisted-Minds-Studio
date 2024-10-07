@@ -20,6 +20,7 @@ public class WeaponInfo : UseableInfo
     {
         public float damagePercIncrease;
         public float knockbackPercIncrease;
+        public float hitStopLength;
         public GameObject weaponStrike;
         public AnimatorOverrideController overrideController;
     }

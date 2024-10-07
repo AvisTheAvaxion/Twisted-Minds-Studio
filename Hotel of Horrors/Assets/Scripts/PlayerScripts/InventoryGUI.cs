@@ -356,6 +356,8 @@ public class InventoryGUI : MonoBehaviour
             inventoryUI.SetActive(false);
             itemToolTip.gameObject.SetActive(false);
             Cursor.visible = false;
+
+            GameTime.UnpauseTime();
         }
         else
         {
@@ -365,6 +367,8 @@ public class InventoryGUI : MonoBehaviour
             if (!initialized) Start();
 
             UpdateGUI();
+
+            GameTime.PauseTime(false);
         }
     }
 

@@ -11,10 +11,13 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField, Description("The amount of monsters that will spawn every wave.")] int spawnPerWave;
     PolygonCollider2D spawnArea;
     Queue<GameObject> queue;
-    Floor floor;
     QuestSystem questSys;
     [SerializeField] List<GameObject> spawnedMonsters;
+    [SerializeField] LayerMask obstacleMask;
+    [SerializeField] float obstacleCheckRadius = 0.2f;
     public bool isActiviated;
+
+    public Floor floor { get; private set; }
 
     private void Awake()
     {
@@ -68,6 +71,12 @@ public class EnemySpawner : MonoBehaviour
                 floor.AddEnemy();
                 GameObject monster = Instantiate(queue.Dequeue(), GetRandomPosition(spawnBound), Quaternion.identity);
                 monster.GetComponent<EnemyStateMachine>().OnEnemyDeath += EnemyDeathDetected;
+
+                EnemyStateMachine esm = monster.GetComponent<EnemyStateMachine>();
+                if(esm)
+                {
+                    esm.SetSpawner(this);
+                }
             }
             else
             {
@@ -77,14 +86,33 @@ public class EnemySpawner : MonoBehaviour
     }
 
     //Gets random valid position of room
-    Vector2 GetRandomPosition(Bounds bound)
+    public Vector2 GetRandomPosition(Bounds bound)
     {
         //Loop that gets random positions until a position in the Spawnbounds is found
         while (true)
         {
             Vector2 randomSpawn = new Vector2(UnityEngine.Random.Range(bound.min.x, bound.max.x), UnityEngine.Random.Range(bound.min.y, bound.max.y));
             //End loop if valid pos
-            if (spawnArea.OverlapPoint(randomSpawn))
+            if (spawnArea.OverlapPoint(randomSpawn) && Physics2D.OverlapCircle(randomSpawn, obstacleCheckRadius, obstacleMask) == null)
+            {
+                return randomSpawn;
+            }
+            //Continue loop if non-valid pos
+            else
+            {
+                continue;
+            }
+        }
+    }
+
+    public Vector2 GetRandomPosition(Vector2 pos, float radius)
+    {
+        //Loop that gets random positions until a position in the Spawnbounds is found
+        while (true)
+        {
+            Vector2 randomSpawn = pos + UnityEngine.Random.insideUnitCircle * radius;
+            //End loop if valid pos
+            if (spawnArea.OverlapPoint(randomSpawn) && Physics2D.OverlapCircle(randomSpawn, obstacleCheckRadius, obstacleMask) == null)
             {
                 return randomSpawn;
             }
@@ -101,5 +129,11 @@ public class EnemySpawner : MonoBehaviour
     {
         string enemyName = (string) sender;
         questSys.QuestEvent(QuestSystem.QuestEventType.EnemyDeath, enemyName);
+    }
+
+    public void ResetSpawner()
+    {
+        isActiviated = false;
+        queue = new Queue<GameObject>(enemyQueue);
     }
 }

@@ -49,6 +49,8 @@ public class FNSMonster : BossStateMachine
     [SerializeField] float chargeCancelCamShake = 0.8f;
     [SerializeField] float slamCameraShake = 0.9f;
     [SerializeField] float walkingCameraShake = 0.4f;
+    [SerializeField] float slamHitStopLength = 0.1f;
+    [SerializeField] float chargeHitStopLength = 0.1f;
     [SerializeField] LayerMask wallMask;
 
     AttackSettings currentSettings;
@@ -251,8 +253,11 @@ public class FNSMonster : BossStateMachine
                 IHealth health = colliders[i].gameObject.GetComponent<IHealth>();
                 Vector2 dir = (colliders[i].transform.position - transform.position).normalized;
 
-                health.TakeDamage(currentSettings.slamDamage);
-                health.Knockback(dir, currentSettings.slamKnockback);
+                if (health.TakeDamage(currentSettings.slamDamage))
+                {
+                    health.Knockback(dir, currentSettings.slamKnockback);
+                    GameTime.AddHitStop(slamHitStopLength);
+                }
 
                 break;
             }
@@ -298,10 +303,13 @@ public class FNSMonster : BossStateMachine
 
             if (isCharging)
             {
-                if(health.TakeDamage(currentSettings.chargeDamage, currentSettings.chargeStun))
+                if (health.TakeDamage(currentSettings.chargeDamage, currentSettings.chargeStun))
+                {
                     health.Knockback(dir, currentSettings.chargeKnockback);
+                    GameTime.AddHitStop(chargeHitStopLength);
+                }
             }
-            else if (!isAttacking)
+            else if (!isAttacking && currentSettings.normalContactDamage > 0)
             {
                 if(health.TakeDamage(currentSettings.normalContactDamage))
                     health.Knockback(dir, currentSettings.normalKnockback);

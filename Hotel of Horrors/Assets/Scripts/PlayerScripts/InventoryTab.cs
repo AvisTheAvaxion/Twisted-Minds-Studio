@@ -88,8 +88,8 @@ public class InventoryTab : MonoBehaviour, IPointerEnterHandler, IPointerClickHa
         while (t < 1)
         {
             transform.localPosition = Vector2.Lerp(startPos, endPosition, t);
-            yield return null;
-            t += moveSpeed * Time.deltaTime;
+            yield return new WaitForSecondsRealtime(1 / 60f);
+            t += moveSpeed * (1 / 60f);
         }
 
         transform.localPosition = endPosition;

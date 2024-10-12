@@ -58,22 +58,26 @@ public class Floor : MonoBehaviour
 
             switch (room.category)
             {
-                case Room.roomCategories.peaceful:
+                case Room.RoomCategories.peaceful:
                     roomsByCategory["Peaceful"].Add(room);
                     break;
-                case Room.roomCategories.easy:
+                case Room.RoomCategories.easy:
                     roomsByCategory["Easy"].Add(room);
                     break;
-                case Room.roomCategories.medium:
+                case Room.RoomCategories.medium:
                     roomsByCategory["Medium"].Add(room);
                     break;
-                case Room.roomCategories.hard:
+                case Room.RoomCategories.hard:
                     roomsByCategory["Hard"].Add(room);
                     break;
-                case Room.roomCategories.mindRoom:
+                case Room.RoomCategories.mindRoom:
                     roomsByCategory["Mind Room"].Add(room);
                     break;
             }
+
+            room.ChooseRoomModifier();
+            if(room.enemySpawner != null)
+                room.enemySpawner.ApplyRoomModifier(room.currentModifier);
         }
 
         prng = new System.Random(Random.Range(int.MinValue, int.MaxValue));
@@ -128,11 +132,11 @@ public class Floor : MonoBehaviour
         mindRoomChance += mindRoomChanceGained;
         hallwayChance += hallwayChanceGained;
 
-        if(roomTraversals >= traversalsForReset)
+       /* if(roomTraversals >= traversalsForReset)
         {
             ResetDoorLinks();
             roomTraversals = 0;
-        }
+        }*/
 
         if (mindRoomChance > Random.Range(0, 100f))
         {
@@ -193,6 +197,7 @@ public class Floor : MonoBehaviour
 
         spawnDoor.associatedRoom.doorsAvailable.Remove(spawnDoor);
         currentRoom = spawnDoor.associatedRoom.roomName;
+
         //questSys.QuestEvent(QuestSystem.QuestEventType.RoomEnter, currentRoom);
 
         return spawnDoor;
@@ -209,10 +214,15 @@ public class Floor : MonoBehaviour
             if(room.enemySpawner != null)
                 room.enemySpawner.ResetSpawner();
 
-            foreach(Door door in room.doors)
+            room.ChooseRoomModifier();
+
+            if (room.enemySpawner != null)
+                room.enemySpawner.ApplyRoomModifier(room.currentModifier);
+
+            foreach (Door door in room.doors)
             {
                 door.linkedDoor = null;
-                door.elevatorDoor = false;
+                door.ResetDoor();
             }
 
             room.doorsAvailable.Clear();
@@ -251,12 +261,19 @@ public class Floor : MonoBehaviour
 
         if (enemiesToKill <= 0)
         {
-            Door[] allDoors = FindObjectsOfType<Door>();
-
-            foreach (Door d in allDoors)
+            if (roomsByName[currentRoom].enemySpawner.AreEnemiesRemaining())
             {
-                d.locked = false;
-                d.LockGate(d.locked);
+                roomsByName[currentRoom].enemySpawner.waveActive = false;
+            }
+            else
+            {
+                Door[] allDoors = FindObjectsOfType<Door>();
+
+                foreach (Door d in allDoors)
+                {
+                    d.locked = false;
+                    d.LockGate(d.locked);
+                }
             }
         }
     }
@@ -279,5 +296,11 @@ public class Floor : MonoBehaviour
     public void AddTraversal()
     {
         roomTraversals++;
+
+        if (roomTraversals >= traversalsForReset)
+        {
+            ResetDoorLinks();
+            roomTraversals = 0;
+        }
     }
 }

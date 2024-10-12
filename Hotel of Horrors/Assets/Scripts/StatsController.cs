@@ -394,6 +394,14 @@ public class Stat
         currentValue = value;
         if (hasMax && currentValue > maxValue) currentValue = maxValue;
     }
+
+    public void ChangeMaxValue(float percentage)
+    {
+        defaultValue *= percentage;
+        maxValue *= percentage;
+
+        Reset();
+    }
 }
 
 

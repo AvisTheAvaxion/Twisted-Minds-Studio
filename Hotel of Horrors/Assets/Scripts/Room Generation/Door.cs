@@ -13,14 +13,20 @@ public class Door : MonoBehaviour
     public Transform spawnLocation;
     [HideInInspector] public Door linkedDoor;
 
+    [SerializeField] SpriteRenderer doorRenderer;
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] Image fadeImage;
     [SerializeField] bool debug;
 
     [Header("Locked Gate Settings")]
     [SerializeField] SpriteRenderer lockedGateRend;
+    [SerializeField] Animator lockedGateAnim;
     [SerializeField] int frameRate = 10;
     [SerializeField] Sprite[] lockedGateFrames;
+
+    [Header("Elevator Door Settings")]
+    [SerializeField] SpriteRenderer elevatorDoorRend;
+    [SerializeField] Animator elevatorDoorAnim;
 
     public enum DoorLocations
     {
@@ -161,11 +167,14 @@ public class Door : MonoBehaviour
 
     public void LockGate(bool close)
     {
-        StartCoroutine(AnimateLockedGate(close));
+        if(close)
+            StartCoroutine(AnimateLockGate());
+        else
+            StartCoroutine(AnimateUnlockGate());
     }
-    IEnumerator AnimateLockedGate(bool close)
+    IEnumerator AnimateLockGate()
     {
-        float frameLength = 1f / frameRate;
+        /*float frameLength = 1f / frameRate;
         WaitForSeconds wait = new WaitForSeconds(frameLength);
 
         lockedGateRend.enabled = true;
@@ -177,10 +186,61 @@ public class Door : MonoBehaviour
         }
 
 
-        lockedGateRend.sprite = close ? lockedGateFrames[lockedGateFrames.Length - 1] : lockedGateFrames[0];
+        lockedGateRend.sprite = close ? lockedGateFrames[lockedGateFrames.Length - 1] : lockedGateFrames[0];*/
+        lockedGateRend.gameObject.SetActive(true);
+        lockedGateAnim.SetBool("Close", true);
 
-        yield return wait;
+        yield return new WaitForSeconds(0.5f);
 
-        lockedGateRend.enabled = close;
+        if (elevatorDoor)
+            elevatorDoorAnim.SetTrigger("ElevatorOpen");
+
+        //lockedGateRend.enabled = close;
+    }
+
+    IEnumerator AnimateUnlockGate()
+    {
+        /*float frameLength = 1f / frameRate;
+        WaitForSeconds wait = new WaitForSeconds(frameLength);
+
+        lockedGateRend.enabled = true;
+
+        for (int f = 0; f < lockedGateFrames.Length; f++)
+        {
+            lockedGateRend.sprite = close ? lockedGateFrames[f] : lockedGateFrames[lockedGateFrames.Length - 1 - f];
+            yield return wait;
+        }
+
+
+        lockedGateRend.sprite = close ? lockedGateFrames[lockedGateFrames.Length - 1] : lockedGateFrames[0];*/
+
+        lockedGateAnim.SetBool("Close", false);
+
+        if (elevatorDoor)
+        {
+            elevatorDoorAnim.SetTrigger("GateOpen");
+            elevatorDoorAnim.ResetTrigger("Reset");
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        lockedGateRend.gameObject.SetActive(false);
+
+        //lockedGateRend.enabled = close;
+    }
+
+    public void SetElevatorDoor()
+    {
+        elevatorDoor = true;
+        doorRenderer.enabled = false;
+        elevatorDoorRend.gameObject.SetActive(true);
+    }
+
+    public void ResetDoor()
+    {
+        elevatorDoor = false;
+        doorRenderer.enabled = true;
+        elevatorDoorAnim.SetTrigger("Reset");
+        elevatorDoorRend.gameObject.SetActive(false);
     }
 }

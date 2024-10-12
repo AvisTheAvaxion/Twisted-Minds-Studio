@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField, Description("Monsters will spawn until the queue is depleted")] List<GameObject> enemyQueue;
     [SerializeField, Description("The amount of monsters that will spawn every wave.")] int spawnPerWave;
+    int currentSpawnPerWave;
     PolygonCollider2D spawnArea;
     Queue<GameObject> queue;
     QuestSystem questSys;
@@ -17,7 +18,10 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] float obstacleCheckRadius = 0.2f;
     public bool isActiviated;
 
+    public bool waveActive;
+
     public Floor floor { get; private set; }
+    public Room myRoom { get; private set; }
 
     private void Awake()
     {
@@ -27,14 +31,23 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         spawnedMonsters = new List<GameObject>();
-        queue = new Queue<GameObject>(enemyQueue);
+        if (queue == null)
+        {
+            queue = new Queue<GameObject>(enemyQueue);
+            currentSpawnPerWave = spawnPerWave;
+        }
         spawnArea = GetComponent<PolygonCollider2D>();
         floor = FindObjectOfType<Floor>();
+        myRoom = GetComponentInParent<Room>();
+
     }
 
     void Update()
     {
-        ActivateSpawning(isActiviated);
+        if (AreEnemiesRemaining())
+        {
+            ActivateSpawning(isActiviated);
+        }
     }
 
     #region Enemy Spawning
@@ -50,8 +63,8 @@ public class EnemySpawner : MonoBehaviour
             //If there are still enemies to spawn
             else
             {
-                GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
-                if (objects.Length <= 0 || (objects.Length == 1 && objects[0].GetComponent<BossStateMachine>()))
+                //GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
+                if (!waveActive)
                 {
                     SpawnWave();
                 }
@@ -68,6 +81,8 @@ public class EnemySpawner : MonoBehaviour
         {
             if (queue.Count > 0)
             {
+                waveActive = true;
+
                 floor.AddEnemy();
                 GameObject monster = Instantiate(queue.Dequeue(), GetRandomPosition(spawnBound), Quaternion.identity);
                 monster.GetComponent<EnemyStateMachine>().OnEnemyDeath += EnemyDeathDetected;
@@ -76,6 +91,7 @@ public class EnemySpawner : MonoBehaviour
                 if(esm)
                 {
                     esm.SetSpawner(this);
+                    esm.ApplyRoomModifier(myRoom.currentModifier);
                 }
             }
             else
@@ -135,5 +151,25 @@ public class EnemySpawner : MonoBehaviour
     {
         isActiviated = false;
         queue = new Queue<GameObject>(enemyQueue);
+        currentSpawnPerWave = spawnPerWave;
+    }
+
+    public bool AreEnemiesRemaining()
+    {
+        return queue.Count > 0;
+    }
+
+    public void ApplyRoomModifier(Room.RoomModifiers modifier)
+    {
+        if(modifier == Room.RoomModifiers.moreEnemies)
+        {
+            queue = new Queue<GameObject>();
+            for (int i = 0; i < enemyQueue.Count * 2; i++)
+            {
+                queue.Enqueue(enemyQueue[i % enemyQueue.Count]);
+            }
+
+            currentSpawnPerWave = spawnPerWave * 2;
+        }
     }
 }

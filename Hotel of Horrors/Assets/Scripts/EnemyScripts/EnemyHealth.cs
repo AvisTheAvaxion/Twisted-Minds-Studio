@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(StatsController))]
 public class EnemyHealth : MonoBehaviour, IHealth
 {
-    public StatsController stats { get; private set; }
+    public StatsController stats { get; private set; } //{ get { if (stats == null) { stats = GetComponent<StatsController>(); } return stats; } private set { stats = value; } }
     [SerializeField] bool debug;
     [SerializeField] float iFrameTime = 0.5f;
     [SerializeField] bool healOverTime = false;
@@ -17,7 +17,7 @@ public class EnemyHealth : MonoBehaviour, IHealth
     bool canTakeDamage;
 
     float timer = 0;
-    private void Start()
+    private void Awake()
     {
         stats = GetComponent<StatsController>();
         if (enemyMovement == null) enemyMovement = GetComponent<EnemyStateMachine>();

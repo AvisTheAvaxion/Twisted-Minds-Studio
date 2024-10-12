@@ -31,11 +31,19 @@ public class EnemyVisuals : MonoBehaviour
 
     IEnumerator Dissolve(float initialWait)
     {
-        if(portalAnim != null)
+        if (portalAnim != null)
+        {
             portalAnim.gameObject.SetActive(true);
+            portalAnim.SetBool("Close", false);
+        }
         ActivatePS();
 
-        yield return new WaitForSeconds(0.4f);
+        for (int i = 0; i < enemySpriteRends.Length; i++)
+        {
+            enemySpriteRends[i].enabled = true;
+        }
+
+        yield return new WaitForSeconds(initialWait);
 
         WaitForSeconds wait = new WaitForSeconds(1f / frameRate);
         float t = 0;
@@ -53,14 +61,12 @@ public class EnemyVisuals : MonoBehaviour
 
         for (int i = 0; i < enemySpriteRends.Length; i++)
         {
-            Color color = enemySpriteRends[i].color;
-            color.a = .5f;
-            enemySpriteRends[i].color = color;
+            enemySpriteRends[i].enabled = false;
         }
 
         DeactivatePS();
         if (portalAnim != null)
-            portalAnim.SetTrigger("Close");
+            portalAnim.SetBool("Close", true);
 
         gameObject.SendMessage("OnSpawnItemDrops");
         yield return new WaitForSeconds(0.75f);
@@ -79,6 +85,65 @@ public class EnemyVisuals : MonoBehaviour
         for (int i = 0; i < portalPSs.Length; i++)
         {
             portalPSs[i].Stop();
+        }
+    }
+
+    public void StartAppear(float initialWait)
+    {
+        StartCoroutine(Appear(initialWait));
+    }
+
+    IEnumerator Appear(float initialWait)
+    {
+        yield return null;
+
+        if (portalAnim != null)
+            portalAnim.gameObject.SetActive(true);
+        ActivatePS();
+
+        for (int i = 0; i < enemySpriteRends.Length; i++)
+        {
+            enemySpriteRends[i].enabled = false;
+        }
+
+        yield return new WaitForSeconds(initialWait);
+
+        for (int i = 0; i < enemySpriteRends.Length; i++)
+        {
+            enemySpriteRends[i].enabled = true;
+        }
+
+        WaitForSeconds wait = new WaitForSeconds(1f / frameRate);
+        float t = 0;
+        while (t < dissolveRate)
+        {
+            for (int i = 0; i < enemySpriteRends.Length; i++)
+            {
+                Color color = enemySpriteRends[i].color;
+                color.a = Mathf.Lerp(0.7f, 1f, (t / dissolveRate) * (t / dissolveRate));
+                enemySpriteRends[i].color = color;
+            }
+            yield return wait;
+            t += 1f / frameRate;
+        }
+
+        for (int i = 0; i < enemySpriteRends.Length; i++)
+        {
+            Color color = enemySpriteRends[i].color;
+            color.a = 1;
+            enemySpriteRends[i].color = color;
+        }
+
+        DeactivatePS();
+        if (portalAnim != null)
+            portalAnim.SetBool("Close", true);
+
+        yield return new WaitForSeconds(0.4f);
+
+        if (portalAnim != null)
+        {
+            portalAnim.SetBool("Close", false);   
+            portalAnim.gameObject.SetActive(false);
         }
     }
 }

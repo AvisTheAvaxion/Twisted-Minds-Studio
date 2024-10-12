@@ -383,9 +383,9 @@ public class ActionController : MonoBehaviour
             //{
                 //attackButtonPressed = false;
             if(attackNumber == 2)
-                StartCoroutine(AttackCooldown(1 / (inventory.CurrentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed)) * 2));
-            else
                 StartCoroutine(AttackCooldown(1 / (inventory.CurrentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed))));
+            else
+                StartCoroutine(AttackCooldown(1 / (inventory.CurrentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed)) / 2));
             //}
         }
         else

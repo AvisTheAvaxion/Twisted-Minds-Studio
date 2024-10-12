@@ -4,16 +4,41 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    [System.Serializable]
+    public struct RoomModifierWeight
+    {
+        public float weight;
+        public RoomModifiers modifier;
+
+        public RoomModifierWeight(float weightIn, RoomModifiers modifierIn)
+        {
+            weight = weightIn;
+            modifier = modifierIn;
+        }
+    }
+
     public string roomName = "Nameless Room";
-    public roomCategories category;
-    public enemyModifiers currentModifier;
+    public RoomCategories category = RoomCategories.easy;
+    public RoomModifiers currentModifier = RoomModifiers.none;
+    [SerializeField] RoomModifierWeight[] roomModifierWeights = { 
+        new RoomModifierWeight(8, RoomModifiers.none), 
+        new RoomModifierWeight(1, RoomModifiers.increasedHealth),
+        new RoomModifierWeight(1, RoomModifiers.increasedDamage),
+        new RoomModifierWeight(1, RoomModifiers.increasedAttackSpeed),
+        new RoomModifierWeight(1, RoomModifiers.increasedMovementSpeed),
+        new RoomModifierWeight(1, RoomModifiers.moreEnemies)
+    };
+
+    [HideInInspector]
     public Door[] doors;
+    [HideInInspector]
     public List<Door> doorsAvailable = new List<Door>();
+
     Floor currentFloor;
 
     public EnemySpawner enemySpawner { get; private set; }
 
-    public enum roomCategories
+    public enum RoomCategories
     {
         peaceful,
         easy, 
@@ -21,7 +46,7 @@ public class Room : MonoBehaviour
         hard,
         mindRoom
     }
-    public enum enemyModifiers
+    public enum RoomModifiers
     {
         none,
         increasedHealth, 
@@ -60,8 +85,66 @@ public class Room : MonoBehaviour
         if(currentFloor.GetElevatorChance() > Random.Range(0, 100))
         {
             print(doorsAvailable.Count + " doors available for elevator");
-            doorsAvailable[Random.Range(0, doorsAvailable.Count)].elevatorDoor = true;
+            doorsAvailable[Random.Range(0, doorsAvailable.Count)].SetElevatorDoor();
             currentFloor.ClearElevatorChance();
+        }
+    }
+
+    public void ChooseRoomModifier()
+    {
+        if (category == RoomCategories.easy || category == RoomCategories.medium || category == RoomCategories.hard)
+        {
+            float weightTotal = 0;
+            for (int i = 0; i < roomModifierWeights.Length; i++)
+            {
+                if (roomModifierWeights[i].modifier != RoomModifiers.none)
+                {
+                    switch (category)
+                    {
+                        case RoomCategories.easy:
+                            weightTotal += roomModifierWeights[i].weight;
+                            break;
+                        case RoomCategories.medium:
+                            weightTotal += roomModifierWeights[i].weight * 1.25f;
+                            break;
+                        case RoomCategories.hard:
+                            weightTotal += roomModifierWeights[i].weight * 1.5f;
+                            break;
+                    }
+                } 
+                else
+                {
+                    weightTotal += roomModifierWeights[i].weight;
+                }
+            }
+
+            float rand = Random.Range(0, weightTotal);
+            print($"{roomName}: {rand}");
+            int e = 0;
+            for (; e < roomModifierWeights.Length; e++)
+            {
+                float currentWeight = roomModifierWeights[e].weight;
+                if (roomModifierWeights[e].modifier != RoomModifiers.none)
+                {
+                    switch (category)
+                    {
+                        case RoomCategories.medium:
+                            currentWeight = roomModifierWeights[e].weight * 1.25f;
+                            break;
+                        case RoomCategories.hard:
+                            currentWeight = roomModifierWeights[e].weight * 1.5f;
+                            break;
+                    }
+                }
+
+                if (rand < currentWeight)
+                    break;
+                rand -= currentWeight;
+            }
+            if (e < roomModifierWeights.Length)
+            {
+                currentModifier = roomModifierWeights[e].modifier;
+            }
         }
     }
 }

@@ -364,18 +364,20 @@ MonoBehaviour:
   movementSpeed: 0.5
   drag: 0.705
   walkParticles: {fileID: 27261255123880283}
+  normalLayer: 13
   canMove: 0
   canDash: 0
   dashCooldown: 1
-  dashDistance: 2
+  dashDistance: 1.5
   dashSpeed: 10
-  iFrameDistForDash: 1.5
+  iFrameDistForDash: 1
   dashPartcileSpawn: {fileID: 5707572800642187728}
   dashParticles:
   - {fileID: 2815551542813213013, guid: 21288c9b39aad00469b8f6780d14335b, type: 3}
   - {fileID: 3406015402621822103, guid: 8bbffcce4ec9b9a4da171cef27f207a7, type: 3}
   - {fileID: 726553003626226448, guid: 54fe9497f5f293b49bb9e80cac4d528a, type: 3}
   - {fileID: 1222665275652685480, guid: 7d0e3b76c99c27e4bb2713107fdd5223, type: 3}
+  dashLayer: 17
 --- !u!114 &8294943214975604175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6551,6 +6553,10 @@ PrefabInstance:
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 4134056278113837131}
+    - target: {fileID: 7826697520106895558, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

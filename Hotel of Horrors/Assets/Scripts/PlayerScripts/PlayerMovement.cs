@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public float movementSpeed;
     [SerializeField] [Range(0,1)] float drag;
     [SerializeField] ParticleSystem walkParticles;
+    [SerializeField] int normalLayer = 13;
     
     //public float collisionOffset = 0.05f;
     //public ContactFilter2D movementFilter;
@@ -43,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float iFrameDistForDash;
     [SerializeField] Transform dashPartcileSpawn;
     [SerializeField] GameObject[] dashParticles;
+    [SerializeField] int dashLayer = 17;
     bool isDashing = false;
     float currentDashLength;
 
@@ -78,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("Dashing", false);
 
         canMove = canDash = true;
+
+        gameObject.layer = normalLayer;
     }
 
     // Update is called once per frame
@@ -119,11 +123,19 @@ public class PlayerMovement : MonoBehaviour
                 {
                     direction = "East";
                     spriteRenderer.flipX = true;
+
+                    Vector3 scale = afterImage.transform.localScale;
+                    scale.x *= 1;
+                    afterImage.transform.localScale = scale;
                 }
                 else
                 {
                     direction = "West";
                     spriteRenderer.flipX = false;
+
+                    Vector3 scale = afterImage.transform.localScale;
+                    scale.x = -1;
+                    afterImage.transform.localScale = scale;
                 }
             }
 
@@ -152,6 +164,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (currentDashLength <= dashDistance / dashSpeed)
                 {
+                    gameObject.layer = dashLayer;
+
                     rb.MovePosition(rb.position + dashMovementVector * (dashSpeed + stats.GetCurrentValue(Stat.StatType.MovementSpeed)) * Time.fixedDeltaTime);
                     currentDashLength += Time.fixedDeltaTime;
                 }
@@ -161,6 +175,8 @@ public class PlayerMovement : MonoBehaviour
                     animator.SetBool("Dashing", false);
                     isDashing = false;
                     StartCoroutine(DashCooldown());
+
+                    gameObject.layer = normalLayer;
                 }
             }
             else if (movementVector != Vector2.zero)

@@ -32,6 +32,8 @@ public class EnemyStateMachine : MonoBehaviour
 
     protected EnemySpawner mySpawner;
 
+    protected EnemyHealth myHealth;
+
     [Header("Animation")]
     [SerializeField] protected Animator animator;
     [SerializeField] protected bool hasWalkCycle = true;
@@ -85,6 +87,7 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected GameObject itemHolderPrefab;
     [SerializeField] protected ItemDrop[] itemDrops;
     [SerializeField] protected GameObject emotionalEnergyPrefab;
+    [SerializeField] protected int deathLayer = 16;
     [SerializeField] protected EnemyVisuals enemyVisuals;
     public event EventHandler OnEnemyDeath;
     string enemyName;
@@ -110,6 +113,35 @@ public class EnemyStateMachine : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] protected EnemyAudioManager enemyAudioManager;
 
+    public void ApplyRoomModifier(Room.RoomModifiers modifier)
+    {
+        if(myHealth == null) myHealth = GetComponent<EnemyHealth>();
+
+        switch (modifier)
+        {
+            case Room.RoomModifiers.increasedHealth:
+                Stat healthStat = myHealth.stats.GetStat(Stat.StatType.Health);
+                healthStat.ChangeMaxValue(1.5f);
+                break;
+            case Room.RoomModifiers.increasedDamage:
+                Stat damageStat = myHealth.stats.GetStat(Stat.StatType.MeleeDamage);
+                if(damageStat != null) damageStat.ChangeMaxValue(1.5f);
+
+                damageStat = myHealth.stats.GetStat(Stat.StatType.RangedDamage);
+                if (damageStat != null) damageStat.ChangeMaxValue(1.5f);
+                break;
+            case Room.RoomModifiers.increasedAttackSpeed:
+                Stat attackSpeedStat = myHealth.stats.GetStat(Stat.StatType.AttackSpeed);
+                if (attackSpeedStat != null) attackSpeedStat.ChangeMaxValue(1.5f);
+                break;
+            case Room.RoomModifiers.increasedMovementSpeed:
+                Stat movementSpeedStat = myHealth.stats.GetStat(Stat.StatType.MovementSpeed);
+                if (movementSpeedStat != null) movementSpeedStat.ChangeMaxValue(1.5f);
+                navigation.SetSpeed((moveSpeed + myHealth.stats.GetCurrentValue(Stat.StatType.MovementSpeed)) / 10f);
+                break;
+        }
+    }
+
 
     private void Start()
     {
@@ -119,10 +151,11 @@ public class EnemyStateMachine : MonoBehaviour
 
         navigation = GetComponent<AI>();
         rb = GetComponent<Rigidbody2D>();
+        myHealth = GetComponent<EnemyHealth>();
 
         navigation.SetTarget(target.transform);
         navigation.SetCanMove(true);
-        navigation.SetSpeed(moveSpeed / 10f);
+        navigation.SetSpeed((moveSpeed + myHealth.stats.GetCurrentValue(Stat.StatType.MovementSpeed)) / 10f);
 
         startPos = transform.position;
 
@@ -134,6 +167,11 @@ public class EnemyStateMachine : MonoBehaviour
         Initialize();
 
         StartCoroutine(WaitBeforeMoving(pauseMin, pauseMax));
+
+        if (enemyVisuals)
+        {
+            enemyVisuals.StartAppear(0.6f);
+        }
     }
     protected virtual void Initialize()
     {
@@ -206,6 +244,8 @@ public class EnemyStateMachine : MonoBehaviour
             enemyAudioManager.Die();
 
             animator.enabled = false;
+
+            gameObject.layer = deathLayer;
 
             if (enemyVisuals)
             {
@@ -444,7 +484,7 @@ public class EnemyStateMachine : MonoBehaviour
                 IHealth health = colliders[i].gameObject.GetComponent<IHealth>();
                 Vector2 dir = (colliders[i].transform.position - transform.position).normalized;
 
-                health.TakeDamage(meleeDamage);
+                health.TakeDamage(meleeDamage + myHealth.stats.GetCurrentValue(Stat.StatType.MeleeDamage));
                 health.Knockback(dir, knockback);
                 if (effectsToInflict != null)
                 {
@@ -468,7 +508,8 @@ public class EnemyStateMachine : MonoBehaviour
             if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
         }
 
-        StartCoroutine(WaitBeforeAttacking(attackCooldownMin, attackCooldownMax));
+        StartCoroutine(WaitBeforeAttacking(attackCooldownMin - myHealth.stats.GetCurrentValue(Stat.StatType.AttackSpeed), 
+            attackCooldownMax - myHealth.stats.GetCurrentValue(Stat.StatType.AttackSpeed)));
     }
     #endregion
 
@@ -504,7 +545,8 @@ public class EnemyStateMachine : MonoBehaviour
             if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
         }
 
-        StartCoroutine(WaitBeforeAttacking(attackCooldownMin, attackCooldownMax));
+        StartCoroutine(WaitBeforeAttacking(attackCooldownMin - myHealth.stats.GetCurrentValue(Stat.StatType.AttackSpeed), 
+            attackCooldownMax - myHealth.stats.GetCurrentValue(Stat.StatType.AttackSpeed)));
     }
     #endregion
 

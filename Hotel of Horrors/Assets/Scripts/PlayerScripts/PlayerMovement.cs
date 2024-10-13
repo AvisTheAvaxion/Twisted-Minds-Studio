@@ -376,7 +376,7 @@ public class PlayerMovement : MonoBehaviour
         canMove = toggle;
 
         if(attackController == null) attackController = GetComponent<ActionController>();
-
+        rb.velocity = Vector2.zero;
         attackController.ToggleAttackControls(toggle);
     }
 

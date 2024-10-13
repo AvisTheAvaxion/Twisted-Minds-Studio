@@ -76,7 +76,7 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetCutscene(Dialogue.Dialog.VarrenEncounter);
+        //SetCutscene(Dialogue.Dialog.VarrenEncounter);
     }
 
     void StartCutScene(string dialogueName, int line)

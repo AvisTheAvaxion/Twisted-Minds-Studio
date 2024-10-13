@@ -160,7 +160,25 @@ public class BasicShooter : MonoBehaviour
             currentAngle = startAngle;
         }
     }
-
+    public void ModifyAngleSpread(float aSpread)
+    {
+        angleSpread = Mathf.Clamp(aSpread, 0, 359);
+    }
+    public void ModifyBulletAngleOffset(int bulletOffest, bool setOffset)
+    {
+        if (setOffset == true)
+        {
+            bulletAngleOffset = Mathf.Clamp(bulletOffest, -180, 180);
+        }
+        else
+        {
+            bulletAngleOffset = Mathf.Clamp(bulletAngleOffset + bulletOffest, -180, 180); ;
+        }
+    }
+    public void ModifyBurstCount(int burstNumber)
+    {
+        burstCount = burstNumber;
+    }
     private void OnDrawGizmosSelected()
     {
         if (!debug) return;

@@ -50,6 +50,7 @@ public class Dialogue
 
     string[] Empty = new string[]
     {
+        ".:.",
         ".:."
     };
 

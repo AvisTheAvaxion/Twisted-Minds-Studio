@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,12 +28,20 @@ public class KarenBoss : BossStateMachine
         public float slamCooldownMax;
     }
 
+    protected enum RoomPositions
+    {
+        TopLeft, Top, TopRight,
+        Left, Middle, Right,
+        BottomLeft, Bottom, BottomRight,
+    }
+
     [Header("References")]
     [SerializeField] Animator animator;
     [SerializeField] AfterImage afterImage;
     [SerializeField] BasicShooter shooter;
     [SerializeField] AI ai;
     [SerializeField] Transform raycastOrigin;
+    [SerializeField] Transform[] roomPositions;
 
     [Header("Attack Settings")]
     [SerializeField] AttackSettings normalAttackSettings;
@@ -100,6 +109,10 @@ public class KarenBoss : BossStateMachine
         {
             StandardSlamBegin();
             currentAttack++;
+        }
+        else if (stages[currentStageIndex].attackSequence[currentAttack] == 1)
+        {
+
         }
 
         currentAttack = currentAttack % stages[currentStageIndex].attackSequence.Length;
@@ -274,5 +287,10 @@ public class KarenBoss : BossStateMachine
     {
         yield return new WaitForSeconds(1f);
         OnDialogueEnd();
+    }
+
+    protected Transform GetRoomPosition(RoomPositions roomPosition)
+    {
+        return roomPositions[(int)roomPosition];
     }
 }

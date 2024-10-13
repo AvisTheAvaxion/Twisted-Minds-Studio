@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DirectDoor : MonoBehaviour
 {
     Floor floor;
+    public bool sceneTransition = false;
+    public int sceneToLoad = 0;
     public bool locked = false;
     public Room associatedRoom;
     public Transform spawnLocation;
@@ -26,7 +29,9 @@ public class DirectDoor : MonoBehaviour
     {
         floor = FindObjectOfType<Floor>();
         associatedRoom = GetComponentInParent<Room>();
-        fadeImage = GameObject.Find("Fade to Black Image").GetComponent<Image>();
+
+        if(fadeImage == null)
+            fadeImage = GameObject.Find("Fade to Black Image").GetComponent<Image>();
 
         switch (doorLocation)
         {
@@ -75,6 +80,10 @@ public class DirectDoor : MonoBehaviour
         }
 
         //takes the player to the next door
+        if (sceneTransition)
+        {
+            SceneManager.LoadScene(sceneToLoad);
+        }
         player.transform.position = spawnLocation.position;
 
         // loop over 1 second backwards - fade to clear

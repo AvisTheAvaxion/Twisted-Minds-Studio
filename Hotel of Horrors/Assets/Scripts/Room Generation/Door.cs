@@ -73,7 +73,8 @@ public class Door : MonoBehaviour
             GameObject player = collision.gameObject;
             if (!locked)
             {
-                floor.AddTraversal();
+                if(floor != null)
+                    floor.AddTraversal();
 
                 if (elevatorDoor)
                 {

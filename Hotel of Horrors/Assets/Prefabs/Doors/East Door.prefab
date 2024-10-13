@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 5613467346823850656}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.09519609}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -235,7 +235,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.039771557, y: -0.80468976}
@@ -308,7 +308,7 @@ MonoBehaviour:
   - {fileID: -1598911727, guid: ec9e2b4ed71c25c459fdf92b1f597310, type: 3}
   elevatorDoorRend: {fileID: 1936303968262508869}
   elevatorDoorAnim: {fileID: 155452681131088930}
-  doorLocation: 1
+  doorLocation: 0
 --- !u!1 &5798201224137637698
 GameObject:
   m_ObjectHideFlags: 0

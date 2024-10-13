@@ -116,7 +116,8 @@ public class Floor : MonoBehaviour
 
         emotionalEnergyGained = 0;
         SetEEGains(playerInventoryRef.emotionalEnergyGained);
-        elevator.ResetShop();
+        if(elevator != null)
+            elevator.ResetShop();
     }
 
     /// <summary>

@@ -341,7 +341,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.034411684, y: -0.8002328}
@@ -414,7 +414,7 @@ MonoBehaviour:
   - {fileID: -1598911727, guid: ec9e2b4ed71c25c459fdf92b1f597310, type: 3}
   elevatorDoorRend: {fileID: 420404864191212179}
   elevatorDoorAnim: {fileID: 347019073522913957}
-  doorLocation: 3
+  doorLocation: 0
 --- !u!1 &4820411527683724689
 GameObject:
   m_ObjectHideFlags: 0

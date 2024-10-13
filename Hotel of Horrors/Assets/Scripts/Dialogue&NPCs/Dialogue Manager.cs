@@ -2,7 +2,9 @@ using NUnit.Framework.Constraints;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Reflection;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
@@ -444,9 +446,7 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         currentState = CutsceneState.Continue;
         playerAudio.NextLine(currentLine);
-        currentLine++;
         OnDialogueUpdate();
-        currentLine--;
     }
 
     IEnumerator FadeIn(float r, float g, float b)

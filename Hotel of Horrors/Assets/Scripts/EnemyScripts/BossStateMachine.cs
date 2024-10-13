@@ -110,7 +110,7 @@ public abstract class BossStateMachine : MonoBehaviour
 
     protected abstract void Fight();
     protected abstract void Idle();
-    protected void OnDialogueStart(Dialogue.Dialog cutscene)
+    public void OnDialogueStart(Dialogue.Dialog cutscene)
     {
         currentState = States.DialogueStart;
         StartCoroutine(DialogueStart(cutscene));

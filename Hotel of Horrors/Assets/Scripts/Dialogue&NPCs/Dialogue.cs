@@ -256,6 +256,12 @@ public class Dialogue
         "Dr. Frank N. Stein: You have my thanks. Dr. Harris let me know how usefull you've been.",
         "Dr. Frank N. Stein: Thanks to your efforts, the surgery was a sucess!",
         "Dr. Frank N. Stein: Behold the results of my work! He's even better than before!",
+        "$Animate(FNSMonster_IntroCutscene,Electricute,true)",
+        "$Timer(3)",
+        "$FadeIn(255,255,255)",
+        "$Kill(FNSMonster_IntroCutscene)",
+        "$Tele(FrankNSteinMonster,18.31,-47.401)",
+        "$FadeOut(255,255,255)",
         "Protag: Eww. Gross.",
         "Dr. Frank N. Stein: DIE!",
     };

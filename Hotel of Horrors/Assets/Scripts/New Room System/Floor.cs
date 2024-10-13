@@ -14,6 +14,8 @@ public class Floor : MonoBehaviour
     [SerializeField] int traversalsForReset = 5;
     int roomTraversals = 0;
 
+    bool bossDefeated;
+
     //chance gained to spawn each room for every EE picked up
     [SerializeField] float mediumChanceGained = 0.02f;
     [SerializeField] float hardChanceGained = 0.01f;

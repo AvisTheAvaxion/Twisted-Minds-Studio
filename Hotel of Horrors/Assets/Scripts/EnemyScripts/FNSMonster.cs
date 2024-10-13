@@ -41,6 +41,8 @@ public class FNSMonster : BossStateMachine
     [SerializeField] BasicShooter shooter;
     [SerializeField] AI ai;
     [SerializeField] Transform raycastOrigin;
+    [SerializeField] ParticleSystem stompPSLeft;
+    [SerializeField] ParticleSystem stompPSRight;
 
     [Header("Attack Settings")]
     [SerializeField] AttackSettings normalAttackSettings;
@@ -52,6 +54,7 @@ public class FNSMonster : BossStateMachine
     [SerializeField] float slamHitStopLength = 0.1f;
     [SerializeField] float chargeHitStopLength = 0.1f;
     [SerializeField] LayerMask wallMask;
+    [SerializeField] GameObject shockwavePrefab;
 
     AttackSettings currentSettings;
 
@@ -224,6 +227,7 @@ public class FNSMonster : BossStateMachine
 
         if(cancelCharge)
         {
+            animator.SetBool("ChargeStun", true);
             if (cameraShake != null) cameraShake.ShakeCamera(chargeCancelCamShake, 0.6f, false);
             Stun(currentSettings.cancelStunLength, true);
         }
@@ -262,6 +266,7 @@ public class FNSMonster : BossStateMachine
                 break;
             }
         }
+        Destroy(Instantiate(shockwavePrefab, raycastOrigin.transform.position, Quaternion.identity), 1.5f);
         if(cameraShake != null) cameraShake.ShakeCamera(slamCameraShake);
         shooter.Attack();
     }
@@ -382,6 +387,8 @@ public class FNSMonster : BossStateMachine
             currentState = States.Fighting;
         }
 
+        animator.SetBool("ChargeStun", false);
+
         stunCoroutine = null;
     }
 
@@ -415,5 +422,22 @@ public class FNSMonster : BossStateMachine
     {
         yield return new WaitForSeconds(1f);
         OnDialogueEnd();
+    }
+
+    public void EmitStompParticlesLeft()
+    {
+        if(stompPSLeft != null)
+        {
+            stompPSLeft.Stop();
+            stompPSLeft.Play();
+        }
+    }
+    public void EmitStompParticlesRight()
+    {
+        if (stompPSRight != null)
+        {
+            stompPSRight.Stop();
+            stompPSRight.Play();
+        }
     }
 }

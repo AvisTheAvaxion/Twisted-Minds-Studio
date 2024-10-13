@@ -20,6 +20,8 @@ public abstract class BossStateMachine : MonoBehaviour
 
     protected States currentState = States.Idle;
 
+    protected Floor floor;
+
     protected GameObject player;
     protected Rigidbody2D rb;
     protected bool enraged;
@@ -68,6 +70,8 @@ public abstract class BossStateMachine : MonoBehaviour
         player = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
         bossHealth = GetComponent<BossHealth>();
+
+        floor = FindObjectOfType<Floor>();
 
         if (cameraShake == null) cameraShake = FindObjectOfType<CameraShake>();
 

@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 9195956232266042739}
   - component: {fileID: 9097308364032616427}
   - component: {fileID: 5456653635264547736}
+  - component: {fileID: 1945688253193568734}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -396,7 +397,7 @@ MonoBehaviour:
   cameraShake: {fileID: 7305724931220426512}
   playerGUI: {fileID: 0}
   stats: {fileID: 9195956232266042739}
-  playerHealth: {fileID: 0}
+  playerHealth: {fileID: 5456653635264547736}
   meleeDirection: {fileID: 1089444973903779873}
   weaponStrikeParent: {fileID: 9158669448377762531}
   weaponStrike1SpawnPoint: {fileID: 3412874156805523533}
@@ -522,6 +523,18 @@ MonoBehaviour:
   stunTime: 0.5
   flashColorLength: 0.2
   playerAudio: {fileID: 984262410609764714}
+--- !u!114 &1945688253193568734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870587051542624426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5804ad6fdfd3840924b04a490649d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2597693920358613910
 GameObject:
   m_ObjectHideFlags: 0

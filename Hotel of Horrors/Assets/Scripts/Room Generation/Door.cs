@@ -73,9 +73,6 @@ public class Door : MonoBehaviour
             GameObject player = collision.gameObject;
             if (!locked)
             {
-                if(floor != null)
-                    floor.AddTraversal();
-
                 if (elevatorDoor)
                 {
                     //take player to elevator room menu without moving them
@@ -83,6 +80,9 @@ public class Door : MonoBehaviour
                 }
                 else
                 {
+                    if (floor != null)
+                        floor.AddTraversal();
+
                     if (debug) print("Linked Door: " + linkedDoor);
 
                     //if the door already does not have a link, give it one 

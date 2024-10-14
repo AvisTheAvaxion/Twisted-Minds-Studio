@@ -162,12 +162,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
+  hitStopLength: 0.05
   deflectionResistance: 1.5
   chanceToInflictEffect: 0
   effectsToInflict: []
   maxTargets: 1
   maxWallBounces: 1
   goThroughWalls: 0
+  impactEffect: {fileID: 9071062035390458290, guid: 8817c3f378e9eb643884dd6d5e5feec9, type: 3}
   timeTillDestroy: 0.6
   projetilesToSpawn: {fileID: -2338807076699898595, guid: 716f4f7f1c0fe874ca48258d4f14a483, type: 3}
   numOfChildProj: 4

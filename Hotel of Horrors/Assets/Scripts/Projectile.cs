@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] int maxTargets = 1;
     [SerializeField] int maxWallBounces = 1;
     [SerializeField] bool goThroughWalls = false;
+    [SerializeField] GameObject impactEffect;
 
     protected Rigidbody2D rb;
 
@@ -58,7 +59,18 @@ public class Projectile : MonoBehaviour
                 wallBounces++;
             }
             else
+            {
+                //Spawn impact effect
+                if (impactEffect != null)
+                {
+                    Vector2 impactSpawnPoint = collision.ClosestPoint(transform.position);
+                    Vector2 rotateDir = ((Vector2)transform.position - impactSpawnPoint).normalized;
+                    Quaternion rot = Quaternion.FromToRotation(impactEffect.transform.up, rotateDir) * impactEffect.transform.rotation;
+                    Destroy(Instantiate(impactEffect, impactSpawnPoint, rot), 1.5f);
+                }
+
                 DestroySelf();
+            }
         }
         else if(collision.tag.Equals("MeleeStrike"))
         {
@@ -66,14 +78,18 @@ public class Projectile : MonoBehaviour
             if(meleeStrike && meleeStrike.GetDeflectionStrength() > deflectionResistance)
             {
                 Rigidbody2D rb = GetComponent<Rigidbody2D>();
+                Vector2 dir = -rb.velocity.normalized;
                 rb.velocity = Vector2.zero;
-                Vector2 dir = Vector2.Reflect(-transform.up, collision.transform.up);
-                rb.AddForce(dir * (meleeStrike.GetDeflectionStrength() - deflectionResistance) / 2f, ForceMode2D.Impulse);
+                //Vector2 dir = //Vector2.Reflect(-transform.up, collision.transform.up);
+                rb.AddForce(dir * (meleeStrike.GetDeflectionStrength()), ForceMode2D.Impulse);
 
-                transform.rotation = Quaternion.FromToRotation(-transform.up, dir) * transform.rotation;
+                transform.rotation = Quaternion.FromToRotation(transform.up, dir) * transform.rotation;
 
                 if (tag.Equals("PlayerBullet")) tag = "EnemyBullet";
                 if (tag.Equals("EnemyBullet")) tag = "PlayerBullet";
+            } else
+            {
+                DestroySelf();
             }
         }
         else if ((this.tag.Equals("PlayerBullet") && !collision.gameObject.tag.Equals("Player")) || (this.tag.Equals("EnemyBullet") && !collision.gameObject.tag.Equals("Enemy")))

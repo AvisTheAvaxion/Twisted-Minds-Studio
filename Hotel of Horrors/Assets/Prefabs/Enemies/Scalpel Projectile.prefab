@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
+  hitStopLength: 0.05
   deflectionResistance: 0
   chanceToInflictEffect: 1
   effectsToInflict:
@@ -254,3 +255,4 @@ MonoBehaviour:
   maxTargets: 1
   maxWallBounces: 0
   goThroughWalls: 0
+  impactEffect: {fileID: 568501527068774560, guid: 0404b2579f163954dbc4299aa2918bcb, type: 3}

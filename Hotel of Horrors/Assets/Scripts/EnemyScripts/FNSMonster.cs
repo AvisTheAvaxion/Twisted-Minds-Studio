@@ -204,8 +204,8 @@ public class FNSMonster : BossStateMachine
         while(!cancelCharge && timer < currentSettings.chargeLength)
         {
             moveDir = Vector2.Lerp(moveDir, GetDirTowardsPlayer(), currentSettings.chargeSensitivity * Time.deltaTime * 10);
-            rb.velocity = moveDir * currentSettings.chargeSpeed * Time.deltaTime * 10;
-
+            rb.velocity = moveDir * currentSettings.chargeSpeed * Time.fixedDeltaTime * 10;
+            
             if (afterImage == null)
                 CheckToRotate(moveDir, null);
             else

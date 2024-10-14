@@ -34,5 +34,10 @@ public class Objectives
         "SetCutscene|Nope",
     };
 
+    string[] Floor1 = new string[]
+    {
+
+    };
+
 }
 

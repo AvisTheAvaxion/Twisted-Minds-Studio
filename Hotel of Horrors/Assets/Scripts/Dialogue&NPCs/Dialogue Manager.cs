@@ -24,6 +24,7 @@ public class DialogueManager : MonoBehaviour
 
     GameObject canvas;
     GameObject uiCanvas;
+    GameObject dialogUI;
     TMPro.TMP_Text textBox;
     TMPro.TMP_Text nameBox;
     TMPro.TMP_Text buttonOneText;
@@ -73,6 +74,7 @@ public class DialogueManager : MonoBehaviour
     {
         //PlayerMovement movement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         canvas = GameObject.Find("CanvasDialogue");
+        dialogUI = GameObject.Find("DialogeBG");
         uiCanvas = GameObject.Find("Player UI");
         textBox = GameObject.Find("TextBox").GetComponent<TMPro.TMP_Text>();
         nameBox = GameObject.Find("NameBox").GetComponent<TMPro.TMP_Text>();
@@ -415,7 +417,18 @@ public class DialogueManager : MonoBehaviour
                 OnDialogueUpdate();
                 currentLine--;
             }
-            
+            else if (lines[currentLine].EndsWith("$ToggleUI") || lines[currentLine].StartsWith("$ToggleUI"))
+            {
+                int toggleStartIndex = lines[currentLine].IndexOf('(');
+                int toggleEndIndex = lines[currentLine].IndexOf(')');
+                string toggleInfo = lines[currentLine].Substring(toggleStartIndex + 1, toggleEndIndex - toggleStartIndex - 1);
+
+                UISwitch(bool.Parse(toggleInfo));
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
+            }
+
             else
             {
                 textBox.fontStyle = TMPro.FontStyles.Normal;
@@ -559,6 +572,10 @@ public class DialogueManager : MonoBehaviour
     void CanvasSwitch(bool isCanvasOn)
     {
         canvas.SetActive(isCanvasOn);
+    }
+    void UISwitch(bool isUIOn)
+    {
+        dialogUI.SetActive(isUIOn);
     }
 
     void UpdateImage()

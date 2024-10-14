@@ -357,12 +357,16 @@ MonoBehaviour:
   associatedRoom: {fileID: 0}
   spawnLocation: {fileID: 0}
   linkedDoor: {fileID: 0}
+  doorRenderer: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
   debug: 0
   lockedGateRend: {fileID: 0}
+  lockedGateAnim: {fileID: 0}
   frameRate: 10
   lockedGateFrames: []
+  elevatorDoorRend: {fileID: 0}
+  elevatorDoorAnim: {fileID: 0}
   doorLocation: 4
 --- !u!61 &24213895
 BoxCollider2D:
@@ -728,12 +732,16 @@ MonoBehaviour:
   associatedRoom: {fileID: 0}
   spawnLocation: {fileID: 0}
   linkedDoor: {fileID: 0}
+  doorRenderer: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
   debug: 0
   lockedGateRend: {fileID: 0}
+  lockedGateAnim: {fileID: 0}
   frameRate: 10
   lockedGateFrames: []
+  elevatorDoorRend: {fileID: 0}
+  elevatorDoorAnim: {fileID: 0}
   doorLocation: 4
 --- !u!61 &35933019
 BoxCollider2D:
@@ -7243,6 +7251,19 @@ MonoBehaviour:
   roomName: Room 8
   category: 3
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!1 &204789880
@@ -15519,6 +15540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779d897c317dd484aa1d03ab4ff98546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneTransition: 0
+  sceneToLoad: 0
   locked: 0
   associatedRoom: {fileID: 1357246873}
   spawnLocation: {fileID: 931928814}
@@ -26275,6 +26298,19 @@ MonoBehaviour:
   roomName: Room 5
   category: 2
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!4 &718632914 stripped
@@ -27046,6 +27082,19 @@ MonoBehaviour:
   roomName: Room 7
   category: 3
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!1001 &755953512
@@ -32864,12 +32913,16 @@ MonoBehaviour:
   associatedRoom: {fileID: 0}
   spawnLocation: {fileID: 0}
   linkedDoor: {fileID: 0}
+  doorRenderer: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
   debug: 0
   lockedGateRend: {fileID: 0}
+  lockedGateAnim: {fileID: 0}
   frameRate: 10
   lockedGateFrames: []
+  elevatorDoorRend: {fileID: 0}
+  elevatorDoorAnim: {fileID: 0}
   doorLocation: 4
 --- !u!61 &886663883
 BoxCollider2D:
@@ -34922,6 +34975,19 @@ MonoBehaviour:
   roomName: Hallway
   category: 0
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!1 &1008660416
@@ -34992,6 +35058,19 @@ MonoBehaviour:
   roomName: Room 2
   category: 1
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!1001 &1008817098
@@ -40043,17 +40122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e80f836852cee649b93faef94a7bc9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1118179413 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5367254218961287942, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
-  m_PrefabInstance: {fileID: 1360649200}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1118179407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 660bd72752f382b4d9f066185f966aab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1118179414 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 8490620325508692427, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
@@ -40389,6 +40457,19 @@ MonoBehaviour:
   roomName: Room 1
   category: 1
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!1 &1160441761
@@ -45160,6 +45241,19 @@ MonoBehaviour:
   roomName: Mind Room
   category: 4
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!1 &1225265536
@@ -51274,6 +51368,19 @@ MonoBehaviour:
   roomName: Hallway
   category: 0
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!1001 &1360649200
@@ -51327,7 +51434,7 @@ PrefabInstance:
     - target: {fileID: 3194915936490214647, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: playerHealth
       value: 
-      objectReference: {fileID: 1118179413}
+      objectReference: {fileID: 0}
     - target: {fileID: 3194915936490214647, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: elevatorCanvas
       value: 
@@ -51922,6 +52029,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779d897c317dd484aa1d03ab4ff98546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneTransition: 0
+  sceneToLoad: 0
   locked: 0
   associatedRoom: {fileID: 1006929102}
   spawnLocation: {fileID: 931928814}
@@ -52560,6 +52669,19 @@ MonoBehaviour:
   roomName: Room 4
   category: 2
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!4 &1453345149 stripped
@@ -64826,6 +64948,19 @@ MonoBehaviour:
   roomName: Room 6
   category: 2
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!4 &1573478452 stripped
@@ -66214,12 +66349,16 @@ MonoBehaviour:
   associatedRoom: {fileID: 0}
   spawnLocation: {fileID: 0}
   linkedDoor: {fileID: 0}
+  doorRenderer: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
   debug: 0
   lockedGateRend: {fileID: 0}
+  lockedGateAnim: {fileID: 0}
   frameRate: 10
   lockedGateFrames: []
+  elevatorDoorRend: {fileID: 0}
+  elevatorDoorAnim: {fileID: 0}
   doorLocation: 4
 --- !u!61 &1598705479
 BoxCollider2D:
@@ -78654,12 +78793,16 @@ MonoBehaviour:
   associatedRoom: {fileID: 0}
   spawnLocation: {fileID: 0}
   linkedDoor: {fileID: 0}
+  doorRenderer: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
   debug: 0
   lockedGateRend: {fileID: 0}
+  lockedGateAnim: {fileID: 0}
   frameRate: 10
   lockedGateFrames: []
+  elevatorDoorRend: {fileID: 0}
+  elevatorDoorAnim: {fileID: 0}
   doorLocation: 4
 --- !u!61 &1917613266
 BoxCollider2D:
@@ -79317,6 +79460,19 @@ MonoBehaviour:
   roomName: Room 3
   category: 1
   currentModifier: 0
+  roomModifierWeights:
+  - weight: 8
+    modifier: 0
+  - weight: 1
+    modifier: 1
+  - weight: 1
+    modifier: 2
+  - weight: 1
+    modifier: 5
+  - weight: 1
+    modifier: 4
+  - weight: 1
+    modifier: 3
   doors: []
   doorsAvailable: []
 --- !u!1 &1946045638
@@ -98901,12 +99057,16 @@ MonoBehaviour:
   associatedRoom: {fileID: 0}
   spawnLocation: {fileID: 0}
   linkedDoor: {fileID: 0}
+  doorRenderer: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
   debug: 0
   lockedGateRend: {fileID: 0}
+  lockedGateAnim: {fileID: 0}
   frameRate: 10
   lockedGateFrames: []
+  elevatorDoorRend: {fileID: 0}
+  elevatorDoorAnim: {fileID: 0}
   doorLocation: 4
 --- !u!61 &2146889562
 BoxCollider2D:
@@ -99070,6 +99230,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2479242650200582080, guid: 66b504b2a8fc9b64f833b9d339256532, type: 3}
+      propertyPath: floor
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3903423655892573024, guid: 66b504b2a8fc9b64f833b9d339256532, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.873602

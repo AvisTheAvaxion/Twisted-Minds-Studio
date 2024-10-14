@@ -23,4 +23,18 @@ public class CutSceneTrigger : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (cutSceneStarted) { return; }
+
+        if (collision.gameObject.name == "Player")
+        {
+            Debug.Log("Starting cutscene");
+            DialogueManager.SetCutscene(cutscene);
+            cutSceneStarted = true;
+
+            gameObject.SetActive(false);
+        }
+    }
 }

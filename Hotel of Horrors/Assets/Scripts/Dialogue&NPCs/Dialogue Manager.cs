@@ -284,6 +284,25 @@ public class DialogueManager : MonoBehaviour
                 OnDialogueUpdate();
                 currentLine--;
             }
+            else if (lines[currentLine].EndsWith("$AfterImage") || lines[currentLine].StartsWith("$AfterImage"))
+            {
+                int imageStartIndex = lines[currentLine].IndexOf('(');
+                int imageEndIndex = lines[currentLine].IndexOf(')');
+                string imageInfo = lines[currentLine].Substring(imageStartIndex + 1, imageEndIndex - imageStartIndex - 1);
+                string[] splitString = imageInfo.Split(",");
+                GameObject character = GameObject.Find(splitString[0]);
+                if (bool.Parse(splitString[1]) == true)
+                {
+                    character.GetComponent<AfterImage>().StartEffect();
+                }
+                else
+                {
+                    character.GetComponent<AfterImage>().StopEffect();
+                }
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
+            }
             else if(lines[currentLine].EndsWith("$Animate") || lines[currentLine].StartsWith("$Animate"))
             {
                 int animateStartIndex = lines[currentLine].IndexOf('(');

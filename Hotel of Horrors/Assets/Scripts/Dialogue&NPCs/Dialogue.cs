@@ -22,8 +22,14 @@ public class Dialogue
                 return VarrenEncounter;
             #endregion
             #region Floor 1
-            case "DrHarrisQuest":
-                return DrHarrisQuest;
+            case "DrSteinBossDoor":
+                return DrSteinBossDoor;
+            case "DrSteinBossDoor1":
+                return DrSteinBossDoor1;
+            case "DrSteinBossDoor2":
+                return DrSteinBossDoor2;
+            case "DrHarrisQuestIntro":
+                return DrHarrisQuestIntro;
             case "DrHarrisQuest2":
                 return DrHarrisQuest2;
             case "DrHarrisQuest3":
@@ -32,6 +38,8 @@ public class Dialogue
                 return DrHarrisQuest4;
             case "SteinIntro":
                 return SteinIntro;
+            case "SteinScene1":
+                return SteinScene1;
             #endregion
             case "Empty":
                 return Empty;
@@ -101,6 +109,9 @@ public class Dialogue
     ///     
     ///  $Animate     |   $Animate(name,variable,?bool)             |         This command sets a variable of a gameobjects animator to play animations.
     ///     ONLY IN OWN LINE                                                  This can only modify triggers or booleans. Leave the bool out for triggers.
+    ///     
+    ///  $AfterImage  |   $AfterImage(name,bool)                    |         This command turns a Gameobject's AfterImage component on and off.
+    ///     ONLY IN OWN LINE 
     ///     
     ///  $FadeIn      |   $FadeIn(r,g,b)                            |         This command causes a fade in of a select color to play.
     ///     ONLY IN OWN LINE                                                  This is usally used for transitions or hiding $Kill & $Tele.
@@ -318,7 +329,6 @@ public class Dialogue
         "Protag: Hopefully this is what he's talking about."
     };
 
-
     string[] DrHarrisQuest2 = new string[]
     {
         //After collecting enough emotional energy (the goop), the player walks into a room where the doctor is
@@ -391,7 +401,7 @@ public class Dialogue
         "Victor: It sucks you missed the our game against Panthers, we absolutely crushed them.",
         "Dr. Stein: I'm sorry I missed it Victor.",
         "Victor: It's okay. I know you're really busy with work, plus you promised you'd make it to this one!",
-        "Victor: Especially with James out, I'll be the lead running back, and coach told me several scouts would be coming!"
+        "Victor: Especially with James out, I'll be the lead running back, and coach told me several scouts would be coming!",
         "Dr. Stein: ...",
         "Victor: Dad?",
         "Dr. Stein: That's good, son.",
@@ -412,7 +422,6 @@ public class Dialogue
         "System: DECEASED",
         "System: I'M SORRY"
     };
-
     #endregion
     #region Boss Fight
     string[] SteinIntro = new string[]

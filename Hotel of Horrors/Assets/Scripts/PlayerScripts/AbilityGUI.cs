@@ -11,6 +11,7 @@ public class AbilityGUI : MonoBehaviour
 
     [SerializeField] AbilityInfo[] possibleAbilities;
     [SerializeField] GameObject abilityGUISlotPrefab;
+    [SerializeField] GameObject selectedAbilityInfo;
     [SerializeField] Transform[] abilityFloorContainers;
     [SerializeField] TMP_Text buttonText;
     [SerializeField] Image selectedAbilityImage;
@@ -22,6 +23,8 @@ public class AbilityGUI : MonoBehaviour
     AbilityGUISlot[] abilityGUISlots;
 
     int selectedAbilityIndex;
+
+    bool viewSelectedAbilityInfo = false;
 
     // Start is called before the first frame update
     void Start()
@@ -64,9 +67,11 @@ public class AbilityGUI : MonoBehaviour
     public void SetSelectedAbility(int index)
     {
         AbilityGUISlot slot = abilityGUISlots[index];
+        viewSelectedAbilityInfo = false;
 
         if (slot != null)
         {
+            viewSelectedAbilityInfo = true;
             selectedAbilityIndex = index;
         }
 
@@ -104,6 +109,8 @@ public class AbilityGUI : MonoBehaviour
         }
 
         AbilityGUISlot slot = abilityGUISlots[selectedAbilityIndex];
+
+        selectedAbilityInfo.SetActive(viewSelectedAbilityInfo);
 
         if (slot != null)
         {
@@ -157,5 +164,12 @@ public class AbilityGUI : MonoBehaviour
             UpdateGUI();
             playerGUI.UpdateHotbarGUI();
         }
+    }
+
+    public void CloseSelectedAbilityInfo()
+    {
+        viewSelectedAbilityInfo = false;
+
+        UpdateGUI();
     }
 }

@@ -60,6 +60,75 @@ public class Dialogue
         #endregion
     }
 
+    /// <summary>
+    /// Below here is all of the dialog in the game. It is contained within string arrays and utilizes a fusion of rich text and custom commands.
+    ///                             The current Text commands will be put below in as Name | Syntax | Use Case:
+    ///                                      
+    ///                                       AUDIO FUNCTIONS
+    /// $PlayEffect   |   $PlayEffect|{SFX Name}                    |         This command plays sound effects. 
+    ///       ONLY AT START OF LINE                                           What SFX is available depends on what AudioClips are listed
+    ///                                                                       on the MusicBox Gameobject's Audio Sounds
+    ///                                                         
+    /// $PlaySong     |   $PlaySong|{Song Name}                     |         This command plays music. 
+    ///       ONLY AT START OF LINE                                           What music is available depends on what AudioClips are listed
+    ///                                                                       on the MusicBox Gameobject's Audio Sounds
+    ///                                                         
+    /// $Pause        |   $Pause                                    |         This command stops all music and ambience.
+    ///       ONLY AT START OF LINE
+    /// 
+    /// $Resume       |   $Resume                                   |         This command restarts all music and ambience.
+    ///       ONLY AT START OF LINE
+    ///             
+    ///                                        CHOICE FUNCTIONS
+    /// $Prompt       |   |{Choice A}|{Choice B}$Prompt             |         This command causes buttons to appear that the player pick from. 
+    ///     ONLY AT END OF LINE                                               Choice A & Choice B will be the choices the player must pick from.
+    ///     
+    /// $ChoiceA      |   $ChoiceA                                  |         This command marks which dialog will only be available to
+    ///     ONLY AT END OF LINE                                               those that chose Choice A during the most recent prompt. 
+    ///                                                                       
+    /// $ChoiceB      |   $ChoiceB                                  |         This command marks which dialog will only be available to
+    ///     ONLY AT END OF LINE                                               those that chose Choice B during the most recent prompt.
+    ///     
+    ///  $Move        |   $Move(name,x,y,z)                         |         This command moves a gameobject the inputted world coordinates.
+    ///     ONLY IN OWN LINE                                                  This can only move gameobjects with the AI Component (Excluding the Main Camera).
+    ///      
+    ///  $Tele        |   $Tele(name,x,y,z)                         |         This command teleports a gameobject to the inputted world coordinates.
+    ///     ONLY IN OWN LINE
+    ///     
+    ///                                        CUTSCENE FUNCTIONS
+    ///  $Kill        |   $Kill(name)                               |         This command destroys the inputted gameobject
+    ///     ONLY IN OWN LINE                                                  
+    ///     
+    ///  $Animate     |   $Animate(name,variable,?bool)             |         This command sets a variable of a gameobjects animator to play animations.
+    ///     ONLY IN OWN LINE                                                  This can only modify triggers or booleans. Leave the bool out for triggers.
+    ///     
+    ///  $FadeIn      |   $FadeIn(r,g,b)                            |         This command causes a fade in of a select color to play.
+    ///     ONLY IN OWN LINE                                                  This is usally used for transitions or hiding $Kill & $Tele.
+    ///     
+    ///  $FadeOut     |   $FadeOut(int or float)                    |         This command causes a fade out of a select color to play.
+    ///     ONLY IN OWN LINE                                                  This is used after $FadeIn.
+    ///
+    ///                                        Inventory FUNCTIONS
+    ///  $GiveWeapon  |   $GiveWeapon(name)                         |         This command places a select weapon in the player's inventory.
+    ///     ONLY IN OWN LINE    
+    ///     
+    ///  $GiveItem    |   $GiveItem(name)                           |         This command places a select item in the player's inventory.
+    ///     ONLY IN OWN LINE   
+    ///     
+    ///  $GiveAbility |   $GiveAbility(name)                        |         This command places a select ability in the player's inventory.
+    ///     ONLY IN OWN LINE    
+    ///
+    ///                                        Quest FUNCTIONS
+    ///  $SetQuest    |   $SetQuest(name)                           |         This command sets the current quest of the player.
+    ///     ONLY IN OWN LINE   
+    ///
+    ///                                        UI FUNCTIONS
+    ///  $Emote       |   $Emote|character|emotion                  |         This command sets the current portrait.
+    ///     ONLY IN OWN LINE                                                  Avaliable emotes are determined by the Dialogue Manager's Character Pics Array.
+    ///     
+    ///  $ToggleUI    |   $ToggleUI(bool)                           |         This command sets the visibility of the Dialog GUI.
+    ///     ONLY IN OWN LINE       
+    /// </summary>
 
     string[] Empty = new string[]
     {
@@ -95,6 +164,13 @@ public class Dialogue
         "Protag: I don't see anyone here either. Maybe, I'll find someone in the next room."
     };
 
+    string[] FirstMonster = new string[]
+    {
+        //Protag sees a monster in a room
+        "Protag: Nope."
+        //Protage leaves
+    };
+
     string[] CombatTutorial = new string[]
     {
         //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
@@ -108,12 +184,7 @@ public class Dialogue
         "Samantha: One finds it helps to make friends",
     };
 
-    string[] FirstMonster = new string[]
-    {
-        //Protag sees a monster in a room
-        "Protag: Nope."
-        //Protage leaves
-    };
+    
 
     string[] VarrenEncounter = new string[]
     {

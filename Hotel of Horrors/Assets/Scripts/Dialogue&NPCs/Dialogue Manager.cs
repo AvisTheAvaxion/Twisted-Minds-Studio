@@ -175,7 +175,7 @@ public class DialogueManager : MonoBehaviour
             }
 
             #endregion
-            #region ChoiceDialog
+            #region Choice Functions
             else if (lines[currentLine].EndsWith("$Prompt"))
             {
                 currentState = CutsceneState.Picking;
@@ -413,7 +413,7 @@ public class DialogueManager : MonoBehaviour
                 questSystem.SetQuest(Int32.Parse(splitString[0]), Int32.Parse(splitString[1]));
             }
             #endregion
-            #region UI Visuals
+            #region UI Functions
             else if (lines[currentLine].StartsWith("$Emote") || lines[currentLine].EndsWith("$Emote"))
             {
                 try

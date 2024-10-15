@@ -13,7 +13,7 @@ public class Dialogue
             case "SameRoomAgain":
                 return SameRoomAgain;
             case "InventoryTutorial":
-                return CombatTutorial;
+                return InventoryTutorial;
             case "CombatTutorial":
                 return CombatTutorial;
             case "FirstMonster":
@@ -69,12 +69,13 @@ public class Dialogue
     #region Tutorial Dialog
     string[] WakeUpTutorial = new string[]
     {
+        "$Move(Main Camera,3,0)",
         "$Emote|Protag|Surprised",
         "Protag: Ughhh",
         "Protag: What? Where am I?",
         "Protag: *looks around* Is this a... barn?",
         "Protag: Well, just standing here isn't going to accomplish anything",
-        "System: Use WASD to move",
+        "System: Use <b>WASD</b> to move",
         "Protag: I wonder if there is anything useful around here?"
     };
 
@@ -87,10 +88,10 @@ public class Dialogue
     string[] InventoryTutorial = new string[]
     {
         "Protag: Nice, a different room.",
-        "System: Press the <b><i>TAB</i></b> key to open your inventory.",
-        "System: On the left side of the inventory are tabs that can be opened by <b><i>Left Clicking</i></b>",
-        "System: These three tabs hold, from top to bottom:\n<b><color = red>Weapons</color>, <color = green>Items</color>, and <color = blue>Special Abilities</color></b>",
-        "System: As you explore you will find many things lying around, when you want to <b>EQUIP</b> something just click the item and then the UI button labeled <b><i>'Equip'</i></b>",
+        "System: Press the <b>'TAB'</b> key to open your inventory.",
+        "System: On the left side of the inventory are tabs that can be opened by <b>Left Clicking</b>",
+        "System: These three tabs hold, from top to bottom <b><color=#936A00>Weapons</color>, <color=#5B100A>Items</color>, and <color=#507830>Special Abilities</color></b>",
+        "System: As you explore you will find many things lying around, when you want to <b>equip</b> something just click the item and then the UI button labeled <b>'Equip'</b>",
         "Protag: I don't see anyone here either. Maybe, I'll find someone in the next room."
     };
 

@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 5456653635264547736}
   - component: {fileID: 7966828728596328411}
   - component: {fileID: 1945688253193568734}
+  - component: {fileID: 2092338393393940312}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -549,6 +550,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be5804ad6fdfd3840924b04a490649d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2092338393393940312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870587051542624426}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04822df9f773d3459508bb93808d18d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  currentDirSmoothing: 0.5
+  objectRadius: 0.2
+  centerOffset: {x: 0, y: 0}
+  speed: 2
+  orbitRadius: 1
+  orbitRadiusThickness: 0.2
+  minDistanceThreshold: 0.05
+  biasThreshold: 1.1
+  numOfWeights: 16
+  visualizeWeights: 1
+  obstacleDistanceSensitivity: 0.48
+  desireKeepSameDir: 0.1
+  noObstacleDesire: 0.3
+  comradeTag: Enemy
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstructionDetectionThreshold: 0.1
+  maxObstructionChangeDir: 0
+  minObstructionChangeDir: -0.8
 --- !u!1 &2597693920358613910
 GameObject:
   m_ObjectHideFlags: 0

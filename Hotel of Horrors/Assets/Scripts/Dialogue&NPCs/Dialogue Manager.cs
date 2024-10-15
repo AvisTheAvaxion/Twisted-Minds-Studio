@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 using Color = UnityEngine.Color;
 
 public class DialogueManager : MonoBehaviour
@@ -242,13 +243,23 @@ public class DialogueManager : MonoBehaviour
             #region Cutscene Functions
             else if (lines[currentLine].EndsWith("$Move") || lines[currentLine].StartsWith("$Move"))
             {
+                currentState = CutsceneState.Waiting;
                 int moveStartIndex = lines[currentLine].IndexOf('(');
                 int moveEndIndex = lines[currentLine].IndexOf(')');
                 string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
                 string[] splitString = moveInfo.Split(',');
-                Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
+                Vector3 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
                 playerAudio.NextLine(currentLine);
-                SetMoveCharacterInfo(splitString[0], 3, target);
+                if (splitString[0] == "Main Camera")
+                {
+                    Transform cameraTransform = GameObject.Find(splitString[0]).transform;
+                    target.z = cameraTransform.position.z;
+                    StartCoroutine(MoveCamera(.05f, cameraTransform, target));
+                }
+                else
+                {
+                    SetMoveCharacterInfo(splitString[0], 3, target);
+                }
             }
             else if (lines[currentLine].EndsWith("$Tele") || lines[currentLine].StartsWith("$Tele"))
             {
@@ -446,6 +457,7 @@ public class DialogueManager : MonoBehaviour
         {
             CanvasSwitch(false);
             uiCanvas.SetActive(true);
+            ResetCamera();
             movement.EndCutscene();
             inCutscene = false;
             InstaSkip = false;
@@ -511,6 +523,28 @@ public class DialogueManager : MonoBehaviour
     #endregion
 
     #region CutsceneMovement
+    IEnumerator MoveCamera(float time, Transform cameraTransform, Vector3 target)
+    {
+        
+        float interpol = 0;
+        while (cameraTransform.localPosition != target)
+        {
+            Debug.Log($"{interpol} | Camera:{cameraTransform.localPosition} | target: {target}");
+            cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, target, interpol);
+            
+            interpol += 0.01f;
+            yield return new WaitForSeconds(time);
+        }
+        playerAudio.NextLine(currentLine);
+        OnDialogueUpdate();
+        currentState = CutsceneState.Continue;
+    }
+
+    void ResetCamera()
+    {
+        GameObject.Find("Main Camera").transform.localPosition = new Vector3(0, 0, -7.5f);
+    }
+
     void SetMoveCharacterInfo(string name, float speed, Vector2 target)
     {
         GameObject character = GameObject.Find(name);
@@ -520,6 +554,10 @@ public class DialogueManager : MonoBehaviour
         characterAnimator = character.GetComponent<Animator>();
         characterAI.SetSpeed(speed);
         characterAI.SetCanMove(true);
+        if(character.name == "Player")
+        {
+            characterAI.enabled = true;
+        }
         characterMoving = true;
     }
 
@@ -529,9 +567,13 @@ public class DialogueManager : MonoBehaviour
         {
             characterAI.SetCanMove(false);
             characterAI.SetTarget(null);
-            currentState = CutsceneState.Continue;
             characterAnimator.SetBool("isWalking", false);
+            if(characterAI.gameObject.name == "Player")
+            {
+                characterAI.enabled=false;
+            }
             OnDialogueUpdate();
+            currentState = CutsceneState.Continue;
         }
         else
         {

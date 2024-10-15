@@ -25,12 +25,13 @@ public class Objectives
     return $"FindObject|{objectName}";
 */
 
-    //Test for the tutorial floor
+    //Test for the tutorial floor. Uses a lot of TripTrigger Quest since the room detection doesn't work like it does in a normal floor.
     string[] Floor0 = new string[] {
         "SetCutscene|WakeUpTutorial",
         "TripTrigger|SameRoomTrigger",
         "SetCutscene|SameRoomAgain",
-        //"SetCutscene|VarrenEncounter",
+        "TripTrigger|InventoryTutorialTrigger",
+        "SetCutscene|InventoryTutorial",
         "Traverse|Room3",
         "SetCutscene|Nope",
     };

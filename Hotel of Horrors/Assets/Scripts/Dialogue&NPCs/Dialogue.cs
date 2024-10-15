@@ -161,7 +161,13 @@ public class Dialogue
         "System: On the left side of the inventory are tabs that can be opened by <b>Left Clicking</b>",
         "System: These three tabs hold, from top to bottom <b><color=#936A00>Weapons</color>, <color=#5B100A>Items</color>, and <color=#507830>Special Abilities</color></b>",
         "System: As you explore you will find many things lying around, when you want to <b>equip</b> something just click the item and then the UI button labeled <b>'Equip'</b>",
-        "Protag: I don't see anyone here either. Maybe, I'll find someone in the next room."
+        "Protag: I don't see anyone here either. Maybe, I'll find someone in the next room.",
+
+
+        "Protag: This dagger should be useful for defending myself, I should keep it out, just in case",
+        "System: Press tab to open your inventory.",
+        "System: Use the headers on the left side to equip the dagger.",
+        "System: You can also equip items and view abilities in the inventory"
     };
 
     string[] FirstMonster = new string[]
@@ -180,21 +186,25 @@ public class Dialogue
         "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
         "Protag: You can talk?",
         "Monster: Why wouldn't I be able to? My name is Samantha, and yours?[1Protag1][2What's it matter to you2]",
-        "Samantha: Well it's certainly nice to meet you Protag, but please do try to refrain from attacking me for no reason",
-        "Samantha: One finds it helps to make friends",
+        "Samantha: Well it's certainly nice to meet you, but please do try to refrain from attacking me for no reason$ChoiceA",
+        "Samantha: One finds it helps to make friends$ChoiceB",
+        "Samantha: Now, before you get going, perhaps I should show you how to properly fight.",
+        "To start, just try attacking with the dagger",
+        "System: Press left-click repeatadly to complete an attack combo",
+        "Samantha: Good!",
+        "Samantha: Now, let's try using your dash to quickly move about",
+        "System: Press shift to dash",
+        "Samantha: Excellent, dashing can also be used to avoid attacks and quickly get behind enemies.",
+        "Samantha: Now, let's test out that ability of yours.",
+        "System: Press E to use your ability.",
+        "Samantha: Amazing! If you would like to change abilities or upgrade weapons, you can do so in the mind room.",
+        "Samantha: Well, i've got duties to attend to, take care! And don't let the Vampire scare you."
     };
 
     
 
     string[] VarrenEncounter = new string[]
     {
-        /*
-        "Varren: Play some toons",
-        "$PlaySong|KarrenTheme",
-        "Varren: Here i come",
-        "$PlayEffect|DoorOpen",
-        "coming: hai",
-        */
         "$PlaySong|StienTheme",
         "$Move(Varren,0,-48.32)",
         "Varren: Oh? And who might you be?|No one|AHHHHH$Prompt",
@@ -260,7 +270,29 @@ public class Dialogue
     //(The player must defeat enemies using the scalpel, as enemies take bleeding DOT, the blood bag fills up with blood,
     //and once the bag is 100% full, the player can meet with the doctor again)
 
-    string[] DrHarrisQuest = new string[]
+
+    //If the player tries to enter the boss room before finishing Harris's quest
+    string[] DrSteinBossDoor = new string[]
+    {
+        "System: You can hear the sounds of drilling and hammering coming from behind the door.",
+        "Dr. Stein: I won't fail again...",
+        "Dr. Stein: I'll save you this time Victor"
+    };
+
+    string[] DrSteinBossDoor1 = new string[]
+    {
+        "Dr. Stein: NO! NO! NO!",
+        "Dr. Stein: Don't you die on me!"
+    };
+
+    string[] DrSteinBossDoor2 = new string[]
+    {
+        "System: Muffled sobbing can be heard from behind the door.",
+        "Dr. Stein: I failed...",
+        "Dr. Stein: Sniffle..."
+    };
+
+    string[] DrHarrisQuestIntro = new string[]
     {
         //The player enters the outpatient room, Doctor Dr. Harris is standing inside with a clipboard
         "Dr. Harris: There you are! You must be my new assistant!",
@@ -268,7 +300,11 @@ public class Dialogue
         "Dr. Harris: Yes. Come along now, we have a lot to do. We need to get everything ready for the surgery.",
         "Protag: Surgery?",
         "Dr. Harris: Did the nurse not tell you anything? I'm afraid the good doctor's son won't make it if we aren't on schedule.",
-        "Dr. Harris: Let's see here, first off we need bandages and antiseptic, I'll handle that, you just collect some rootweed and numblumbitantrilia.",
+        "Protag: His son? What happened to him?",
+        "Dr. Harris: A horrendous accident! The poor lad took a hard hid during the semifinals.",
+        "Protag: The finals?",
+        "Dr. Harris: Indeed, but don't fret my boy. I am fully confident in the abilities of Dr. Stein, and that's where we come in.",
+        "Dr. Harris: Now let's see here, first off we need bandages and antiseptic, I'll handle that, you just collect some rootweed and numblumbitantrilia.",
         "Protag: Rootfeet and numblubi... what?",
         "Dr. Harris: Rootweed, and.. forget it. You should be able to find some from defeating monsters.",
         "Dr. Harris: Come find me when you've got at least 20 pieces of each, don't keep me waiting.",
@@ -276,36 +312,42 @@ public class Dialogue
         //Dr. Harris walks off into a different room
     };
 
-    /*
-    //Player after killing several enemies and collecting only emotional energy
-    4|Protag: None of these monsters seem to be leaving anything besides this goop. Is this what he wants?
+    string[] DrHarrisQuest1 = new string[]
+    {
+        "Protag: I've defeated all of these monsters but found nothing but goop.",
+        "Protag: Hopefully this is what he's talking about."
+    };
 
-
-    //Player after killing several more enemies
-    5|Protag: Still nothing but goop.
-    */
 
     string[] DrHarrisQuest2 = new string[]
     {
         //After collecting enough emotional energy (the goop), the player walks into a room where the doctor is
         "Dr. Harris: Ah! Just in time. I was wondering what was taking you so long.",
         "Protag: I couldn't find anything but this goop.",
-        "Dr. Harris: Such a hard worker too! This should be more than enough. Keep this up and I'll be sure to let the doctor know to give you a bonus.",
-        " :*As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads*",
+        "Dr. Harris: Such a hard worker too! This should be more than enough. Keep this up and I'll be sure to put in a good word with the doctor.",
+        "System: *As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads*",
         "Protag: How did you do that?",
         "Dr. Harris: Do what?",
         "Protag: The goop! It turned into what we needed!",
-        "Dr. Harris: Goop? I appreciate your hard work, but please make sure you are getting enough rest.",
-        "Dr. Harris: If you would like I can talk to the doctor about prescribing you some sleep medications. We can't have you making mistakes on the job now, can we?",
+        "Dr. Harris: Goop? I appreciate your hard work, but please do be sure you are getting enough rest.",
+        "Dr. Harris: If you would like I can talk to the doctor about prescribing you some sleep medications.",
+        "Dr. Harris: We can't have you making mistakes on the job now, can we?|No Thanks|That would be nice|$Promtpt",
+        "Dr. Harris: Suit yourself.$OptionA",
+        "Dr. Harris: I will be sure to get you some.$OptionB",
         "Dr. Harris: The next thing on the list is rimblenut, I'll do that one, and O- Blood.",
         "Dr. Harris: For this one, you'll need something to collect the blood in, so let's see here.",
-        //Dr. Harris digs through his bag, which holds a collection of perfectly normal medical instruments and the most bizarre of ingredients before pulling out a scalpel)
-        "Dr. Harris: Ah, here we are. This should make it easier. When you encounter the monsters, use this scalpel. Severing the arteries should make collecting the blood we need a breeze.",
+        "System: Dr. Harris digs through his bag, which holds a collection of perfectly normal medical instruments",
+        "Sytem: and the most bizarre of ingredients",
+        "System: before pulling out a scalpel",
+        "Dr. Harris: Ah, this should make it easier. When you encounter the monsters, use this scalpel.",
+        "Dr. Harris: Severing the arteries should make collecting the blood we need a breeze.",
         "$Give(Scapel)",
         "$Give(BloodBag)",
         "Dr. Harris: As usual, come and find me when you're done.",
-        "Protag: Wait!",
-        "Dr. Harris: Sorry, no time for questions, we're on a tight schedule here.",
+        "Protag: Why do we need all this bood",
+        "Dr. Harris: Victor, the good Doctors son, lost a lot of blood after the accident",
+        "Dr. Harris: We will need to replinish it if he hopes to play in the finals.",
+        "Dr. Harris: That's enough questions for now. We must hurry if we want to save our star athlete in time!",
         "Dr. Harris: Todaloo!",
         //(Dr. Harris leaves the room)
     };
@@ -313,16 +355,23 @@ public class Dialogue
     string[] DrHarrisQuest3 = new string[]
     {
         //(Protag enters a room with Dr. Dr. Harris)
-        "Dr. Harris: Ah just on time, I knew we could count on you!",
-        "(Protag hands the doctor the blood bag and the scalpel)",
-        "Dr. Harris: You can keep the scalpel, never know when you might need it",
-        "Protag: So, what happened to the doctor's son?",
-        "Dr. Harris: It was tragic, really. The poor boy only had 30 yards left to go, when he went down hard.",
-        "Protag: What do you mean?",
-        "Dr. Harris: A broken leg, a sprained wrist, and a concussion, just one week before the finals.",
-        "Dr. Harris: But no matter, once we've got this cure finished he'll be back up and at it in no time, even better than he was before.",
-        "Dr. Harris: Now for the final ingredient, well not really an ingredient, but we need his jersey. You should be able to find it in the good doctor's office.",
-        "Dr. Harris: In the meantime, I shall start preparing the ingredients so that the doctor can do his work.",
+        "Dr. Harris: Ah good, you're here.",
+        "Protag: Is everything okay?",
+        "Dr. Harris: I'm afraid the good doctor's son isn't doing as well as we hoped.",
+        "Protag: Did the rootfeet and numblistuff not work?",
+        "Dr. Harris: The treatment wasn't as effective as we had hoped.",
+        "Dr. Harris: In fact, I was only barely able to deliver the ingredients before the patient died.",
+        "Protag: He died?",
+        "Dr. Harris: ...",
+        "Dr. Harris: Nonesense. Not if I have anything to say about it.",
+        "Dr. Harris: I'm sure the good doctor has everything under control.",
+        "Dr. Harris: You've been a great help. I'll be sure to inform the doctor of your exceptional performance.",
+        "Dr. Harris: However, there is one thing that remains.",
+        "Dr. Harris: Please fetch our young patents jersy from the good doctors office.",
+        "Dr. Harris: He will need it for his big day!",
+        "Dr. Harris: I'll be waiting for you in the operatin room.",
+        "Protag: Wait, your scapel",
+        "Dr. Harris: Hold onto it my dear boy. Our job is not yet complete",
         "Dr. Harris: Todaloo!",
     };
 
@@ -331,12 +380,39 @@ public class Dialogue
 
     string[] DrHarrisQuest4 = new string[]
     {
-        //(Protag finds Dr Dr. Harris after grabbing the jersey)
-        "Dr. Harris: Ah, the jersey.",
-        "Dr. Harris: This should be all for now, I've prepared the ingredients for the doctor and he should be able to cure his son now. Thank you for all of your help, I shall let the doctor how helpful you've been.",
-        "Dr. Harris: Todaloo!",
-        //Boss Room should now be accessiable
+        //(Protag finds the jersy
+        "Protag: This looks like the jersy.",
+        "Phone: Bzzz",
+        "Protag: Wait, a phone, and it has service!",
+        "Protag: That creepy vampire was wrong! I can call someone and get out of here",
+        "System: You try to call home, but instead of the phone rining, a pre-recorded message plays",
+        "Victor: Dad, I can't wait for you to see me at the semi finals!",
+        "Dr. Stein: Yeah...",
+        "Victor: It sucks you missed the our game against Panthers, we absolutely crushed them.",
+        "Dr. Stein: I'm sorry I missed it Victor.",
+        "Victor: It's okay. I know you're really busy with work, plus you promised you'd make it to this one!",
+        "Victor: Especially with James out, I'll be the lead running back, and coach told me several scouts would be coming!"
+        "Dr. Stein: ...",
+        "Victor: Dad?",
+        "Dr. Stein: That's good, son.",
+        "Victor: You can't make it... Can you?",
+        "Dr. Stein: I'm sorry, I-... Something came up... I won't be able to make it.",
+        "Victor: But you promised! This could be the biggest game of my college career!",
+        "Dr. Stein: I know. I'm sorry. I'll make it up to you. I promise.",
+        "System: The line disconnects as Victor hangs up.",
+        "Dr. Stein: Victor?",
+        "Dr. Stein: Victor???",
+        "Dr. Stein: ...",
+        "Dr. Stein: I'm so sorry",
+        "System: The recoring ends as Dr. Stein hangs up.",
+
+        "System: Looking around, you can see several copies of Victors medicine chart",
+        "System: A few of them have words written in large red ink on them",
+        "System: FAILURE",
+        "System: DECEASED",
+        "System: I'M SORRY"
     };
+
     #endregion
     #region Boss Fight
     string[] SteinIntro = new string[]
@@ -345,7 +421,14 @@ public class Dialogue
         "Dr. Frank N. Stein: Ah! You're here. And not a moment too soon.",
         "Dr. Frank N. Stein: You have my thanks. Dr. Harris let me know how usefull you've been.",
         "Dr. Frank N. Stein: Thanks to your efforts, the surgery was a sucess!",
-        "Dr. Frank N. Stein: Behold the results of my work! He's even better than before!",
+        "Protag: Wait, it was?",
+        "Dr. Frank N. Stein: Of course it was. I, the great Dr. Frank N. Stein, have sucessfully cured death!",
+        "Dr. Frank N. Stein: Behold the results of my work!",
+        "Dr. Frank N. Stein: My son.",
+        "Dr. Frank N. Stein: No...",
+        "Dr. Frank N. Stein: My creation!",
+        "Dr. Frank N. Stein: He's even better than before!",
+        "Dr. Frank N. Stein: He's Alive!",
         "$ToggleUI(False)",
         "$Animate(FNSMonster_IntroCutscene,Electricute,true)",
         "$Timer(3)",
@@ -357,6 +440,17 @@ public class Dialogue
         "$ToggleUI(True)",
         "Protag: Eww. Gross.",
         "Dr. Frank N. Stein: DIE!",
+    };
+
+
+    string[] SteinScene1 = new string[]
+    {
+        "Protag: You have to accept your son is dead.",
+        "Dr. Frank N. Stein: No! He's right in front of me!",
+        "Dr. Frank N. Stein: Can't you see.|He wouldn't have wanted this|That's not him|$Prompt",
+        "Dr. Frank N. Stein: No... You're wrong$OptionA",
+        "Dr. Frank N. Stein: Nonsense!$OptionB"
+        //"$Enrage() Need to have him enrage if option b is chosen
     };
     #endregion
     #endregion

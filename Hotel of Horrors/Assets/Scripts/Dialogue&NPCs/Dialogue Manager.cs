@@ -402,7 +402,8 @@ public class DialogueManager : MonoBehaviour
                 questSystem.SetQuest(Int32.Parse(splitString[0]), Int32.Parse(splitString[1]));
             }
             #endregion
-            else if (lines[currentLine].StartsWith("$Emote"))
+            #region UI Visuals
+            else if (lines[currentLine].StartsWith("$Emote") || lines[currentLine].EndsWith("$Emote"))
             {
                 try
                 {
@@ -417,7 +418,7 @@ public class DialogueManager : MonoBehaviour
                 OnDialogueUpdate();
                 currentLine--;
             }
-            else if (lines[currentLine].EndsWith("$ToggleUI") || lines[currentLine].StartsWith("$ToggleUI"))
+            else if (lines[currentLine].StartsWith("$ToggleUI") || lines[currentLine].EndsWith("$ToggleUI"))
             {
                 int toggleStartIndex = lines[currentLine].IndexOf('(');
                 int toggleEndIndex = lines[currentLine].IndexOf(')');
@@ -428,7 +429,7 @@ public class DialogueManager : MonoBehaviour
                 OnDialogueUpdate();
                 currentLine--;
             }
-
+            #endregion
             else
             {
                 textBox.fontStyle = TMPro.FontStyles.Normal;
@@ -454,6 +455,7 @@ public class DialogueManager : MonoBehaviour
         currentLine++;
     }
 
+    #region Cutscene Visual Effects
     IEnumerator Timer(float time)
     {
         yield return new WaitForSeconds(time);
@@ -506,6 +508,7 @@ public class DialogueManager : MonoBehaviour
         currentState = CutsceneState.Continue;
         OnDialogueUpdate();
     }
+    #endregion
 
     #region CutsceneMovement
     void SetMoveCharacterInfo(string name, float speed, Vector2 target)
@@ -599,6 +602,7 @@ public class DialogueManager : MonoBehaviour
     }
     #endregion]
 
+    #region Public Methods
     public PlayerChoice GetPlayerChoice()
     {
         return currentChoice;
@@ -608,7 +612,7 @@ public class DialogueManager : MonoBehaviour
     {
         return lastChoice;
     }
-
+    
     public void SetCutscene(Dialogue.Dialog newDialog)
     {
         cutscene = newDialog;
@@ -631,6 +635,7 @@ public class DialogueManager : MonoBehaviour
     {
         return inCutscene;
     }
+    #endregion
 }
 
 

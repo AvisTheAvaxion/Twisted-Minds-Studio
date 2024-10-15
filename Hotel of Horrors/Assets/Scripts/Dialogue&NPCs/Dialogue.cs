@@ -7,25 +7,34 @@ public class Dialogue
     {
         switch (name)
         {
+            #region Floor 0
             case "WakeUpTutorial":
                 return WakeUpTutorial;
             case "SameRoomAgain":
                 return SameRoomAgain;
+            case "InventoryTutorial":
+                return CombatTutorial;
+            case "CombatTutorial":
+                return CombatTutorial;
             case "FirstMonster":
                 return FirstMonster;
             case "VarrenEncounter":
                 return VarrenEncounter;
-            case "CombatEncounter":
-                return CombatTutorial;
+            #endregion
+            #region Floor 1
             case "DrHarrisQuest":
                 return DrHarrisQuest;
             case "DrHarrisQuest2":
                 return DrHarrisQuest2;
+            case "DrHarrisQuest3":
+                return DrHarrisQuest3;
+            case "DrHarrisQuest4":
+                return DrHarrisQuest4;
             case "SteinIntro":
                 return SteinIntro;
+            #endregion
             case "Empty":
                 return Empty;
-
         }
         return null;
     }
@@ -33,44 +42,69 @@ public class Dialogue
     public enum Dialog
     {
         None,
+        Empty,
+        #region Floor 0
         WakeUpTutorial,
         SameRoomAgain,
+        InventoryTutorial,
+        CombatTutorial,
         FirstMonster,
         VarrenEncounter,
-        CombatTutorial,
+        #endregion
+        #region Floor 1
         DrHarrisQuest,
         DrHarrisQuest2,
         DrHarrisQuest3,
         DrHarrisQuest4,
-        DrHarrisQuest5,
         SteinIntro,
-        Empty,
+        #endregion
     }
 
 
     string[] Empty = new string[]
     {
-        ".:.",
         ".:."
     };
 
-    #region Floor 1 Dialog
-    #region Tutorial
+    #region Tutorial Dialog
     string[] WakeUpTutorial = new string[]
     {
+        "$Emote|Protag|Surprised",
         "Protag: Ughhh",
         "Protag: What? Where am I?",
         "Protag: *looks around* Is this a... barn?",
         "Protag: Well, just standing here isn't going to accomplish anything",
         "System: Use WASD to move",
-        "Protag: I wonder if there is anything useful around here?",
-        "System: Press F to interact with drawers and doors",
+        "Protag: I wonder if there is anything useful around here?"
     };
 
     string[] SameRoomAgain = new string[]
     {
         //Protag ends up in same room after leaving
         "Protag: Huh? I could've sworn I just left this room."
+    };
+
+    string[] InventoryTutorial = new string[]
+    {
+        "Protag: Nice, a different room.",
+        "System: Press the <b><i>TAB</i></b> key to open your inventory.",
+        "System: On the left side of the inventory are tabs that can be opened by <b><i>Left Clicking</i></b>",
+        "System: These three tabs hold, from top to bottom:\n<b><color = red>Weapons</color>, <color = green>Items</color>, and <color = blue>Special Abilities</color></b>",
+        "System: As you explore you will find many things lying around, when you want to <b>EQUIP</b> something just click the item and then the UI button labeled <b><i>'Equip'</i></b>",
+        "Protag: I don't see anyone here either. Maybe, I'll find someone in the next room."
+    };
+
+    string[] CombatTutorial = new string[]
+    {
+        //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
+        "Protag: A monster!",
+        "Protag: This is a good time to try testing my dagger",
+        //Protag charges at the cleaning lady, who dodges the attack
+        "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
+        "Protag: You can talk?",
+        "Monster: Why wouldn't I be able to? My name is Samantha, and yours?[1Protag1][2What's it matter to you2]",
+        "Samantha: Well it's certainly nice to meet you Protag, but please do try to refrain from attacking me for no reason",
+        "Samantha: One finds it helps to make friends",
     };
 
     string[] FirstMonster = new string[]
@@ -148,20 +182,8 @@ public class Dialogue
         "$Kill(Varren)",
         "$SetQuest(0,0)"
     };
-
-    string[] CombatTutorial = new string[]
-    {
-        //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
-        "Protag: A monster!",
-        "Protag: This is a good time to try testing my dagger",
-        //Protag charges at the cleaning lady, who dodges the attack
-        "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
-        "Protag: You can talk?",
-        "Monster: Why wouldn't I be able to? My name is Samantha, and yours?[1Protag1][2What's it matter to you2]",
-        "Samantha: Well it's certainly nice to meet you Protag, but please do try to refrain from attacking me for no reason",
-        "Samantha: One finds it helps to make friends",
-    };
     #endregion
+    #region Floor 1 Dialog
     #region Side Quest
     //(The player must defeat enemies using the scalpel, as enemies take bleeding DOT, the blood bag fills up with blood,
     //and once the bag is 100% full, the player can meet with the doctor again)
@@ -206,11 +228,6 @@ public class Dialogue
         "Dr. Harris: The next thing on the list is rimblenut, I'll do that one, and O- Blood.",
         "Dr. Harris: For this one, you'll need something to collect the blood in, so let's see here.",
         //Dr. Harris digs through his bag, which holds a collection of perfectly normal medical instruments and the most bizarre of ingredients before pulling out a scalpel)
-
-    };
-
-    string[] DrHarrisQuest3 = new string[]
-    {
         "Dr. Harris: Ah, here we are. This should make it easier. When you encounter the monsters, use this scalpel. Severing the arteries should make collecting the blood we need a breeze.",
         "$Give(Scapel)",
         "$Give(BloodBag)",
@@ -221,7 +238,7 @@ public class Dialogue
         //(Dr. Harris leaves the room)
     };
 
-    string[] DrHarrisQuest4 = new string[]
+    string[] DrHarrisQuest3 = new string[]
     {
         //(Protag enters a room with Dr. Dr. Harris)
         "Dr. Harris: Ah just on time, I knew we could count on you!",
@@ -240,12 +257,13 @@ public class Dialogue
     //    (Protag finds his way to the doctor's office (outpatient tileset room) inside they can grab the jersey
     //    and possibly have a file with a list of some of the doctor's other patients including the experiments he did on them)
 
-    string[] DrHarrisQuest5 = new string[]
+    string[] DrHarrisQuest4 = new string[]
     {
         //(Protag finds Dr Dr. Harris after grabbing the jersey)
         "Dr. Harris: Ah, the jersey.",
         "Dr. Harris: This should be all for now, I've prepared the ingredients for the doctor and he should be able to cure his son now. Thank you for all of your help, I shall let the doctor how helpful you've been.",
         "Dr. Harris: Todaloo!",
+        //Boss Room should now be accessiable
     };
     #endregion
     #region Boss Fight
@@ -269,6 +287,5 @@ public class Dialogue
         "Dr. Frank N. Stein: DIE!",
     };
     #endregion
-
     #endregion
 }

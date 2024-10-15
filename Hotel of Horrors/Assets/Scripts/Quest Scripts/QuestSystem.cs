@@ -116,6 +116,16 @@ public class QuestSystem : MonoBehaviour
                     }
                 }
                 break;
+            case QuestEventType.TripTrigger:
+                if(currentObjective.GetType() == typeof(TripTrigger))
+                {
+                    TripTrigger trigger = (TripTrigger)currentObjective;
+                    if(trigger.GetExpectedTriggerName() == objectName)
+                    {
+                        NextQuest();
+                    }
+                }
+                break;
             case QuestEventType.ItemObtained:
                 if (currentObjective.GetType() == typeof(FindObject))
                 {
@@ -227,6 +237,9 @@ public class QuestSystem : MonoBehaviour
                 Enum.TryParse(parts[2], out talkDialog);
                 questType = new Talk(npc, talkDialog);
                 return questType;
+            case "TripTrigger":
+                questType = new TripTrigger(parts[1]);
+                return questType;
             case "Kill":
                 questType = new Kill(Int32.Parse(parts[1]), Int32.Parse(parts[2]));
                 return questType;
@@ -243,7 +256,6 @@ public class QuestSystem : MonoBehaviour
                 Dialogue.Dialog dialog;
                 Enum.TryParse(parts[1], true, out dialog);
                 dialogueManager.SetCutscene(dialog);
-
                 objectiveNum++;
                 questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
 
@@ -282,7 +294,8 @@ public class QuestSystem : MonoBehaviour
         EnemyDeath = 1,
         NpcInteraction = 2,
         ItemObtained = 3,
-        EnergyCollected = 4
+        EnergyCollected = 4,
+        TripTrigger = 5
     }
 
     #region Inventory Event Detectors

@@ -146,6 +146,24 @@ public class Talk : QuestType
     }
     #endregion
 }
+public class TripTrigger : QuestType
+{
+    public TripTrigger(string triggerName)
+    {
+        expectedName = triggerName;
+    }
+    string expectedName;
+
+    public override string ToSaveString()
+    {
+        return $"TripTrigger|{expectedName}";
+    }
+
+    public string GetExpectedTriggerName()
+    {
+        return expectedName;
+    }
+}
 public class Kill : QuestType
 {
     public Kill(int amountKilled, int total)

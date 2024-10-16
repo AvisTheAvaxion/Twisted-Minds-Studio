@@ -19,9 +19,9 @@ public class NewAudioManager : MonoBehaviour
         if (PlayerPrefs.HasKey("SFXVolume")) { volumes = Load(); }
         else { volumes = new float[3] { 1f, 1f, 1f }; }
 
-        volumes = new float[3] { 1f, 1f, 1f };
-        PlayerPrefs.DeleteAll();
-        Save();
+        //volumes = new float[3] { 0.5f, 0.5f, 0.5f };
+        //PlayerPrefs.DeleteAll();
+        //Save();
     }
 
 
@@ -35,7 +35,7 @@ public class NewAudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void PlaySong(string songName)
@@ -95,6 +95,11 @@ public class NewAudioManager : MonoBehaviour
         PlayerPrefs.SetFloat("BGMVolume", volumes[0]);
         PlayerPrefs.SetFloat("SFXVolume", volumes[1]);
         PlayerPrefs.SetFloat("AmbientVolume", volumes[2]);
+
+        bgmSource.volume = volumes[0];
+        effectSource.volume = volumes[1];
+        ambientSource.volume = volumes[2];
+
         Debug.Log($"Save Audio Ran{volumes[0]}|{volumes[1]}|{volumes[2]}");
     }
 

@@ -18,11 +18,14 @@ public class AudioSlider : MonoBehaviour
 
     public void SfxUpdate()
     {
+        Debug.Log(sfxSlider.value);
         NewAudioManager.SFXVolume(sfxSlider.value);
+        NewAudioManager.PlayEffect("NextLine");
     }
 
     public void BgmUpdate()
     {
+        Debug.Log(BgmSlider.value);
         NewAudioManager.BackgroundVolume(BgmSlider.value);
     }
 }

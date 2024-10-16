@@ -27,7 +27,7 @@ public class Objectives
 
     //Test for the tutorial floor. Uses a lot of TripTrigger Quest since the room detection doesn't work like it does in a normal floor.
     string[] Floor0 = new string[] {
-        "SetCutscene|VarrenEncounter",
+        "SetCutscene|WakeUpTutorial",
         "TripTrigger|SameRoomTrigger",
         "SetCutscene|SameRoomAgain",
         "TripTrigger|InventoryTutorialTrigger",

@@ -149,7 +149,6 @@ public class Dialogue
     #region Tutorial Dialog
     string[] WakeUpTutorial = new string[]
     {
-        "$Move(Main Camera,3,0)",
         "$Emote|Protag|Surprised",
         "Protag: Ughhh",
         "Protag: What? Where am I?",

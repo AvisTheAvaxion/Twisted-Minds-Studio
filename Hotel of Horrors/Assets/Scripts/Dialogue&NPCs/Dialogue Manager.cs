@@ -63,7 +63,7 @@ public class DialogueManager : MonoBehaviour
 
     public enum CutsceneState
     {
-        None, Continue, Moving, Picking, Waiting
+        None, Continue, Skipping, Moving, Picking, Waiting
     }
 
     PlayerChoice currentChoice = PlayerChoice.None;
@@ -116,16 +116,20 @@ public class DialogueManager : MonoBehaviour
         {
             MoveCharacter();
         }
-        else if (skipCutscene)
+        else if (currentState == CutsceneState.Skipping)
         {
-            if (InstaSkip & currentState == CutsceneState.Continue)
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && inCutscene)
+            {
+                OnDialogueUpdate();
+            }
+            if (InstaSkip)
             {
                 OnDialogueUpdate();
             }
             else
             {
                 skipTimer = skipTimer - Time.deltaTime;
-                if ((skipTimer < 0) && (currentState == CutsceneState.Continue))
+                if (skipTimer < 0)
                 {
                     OnDialogueUpdate();
                     skipTimer = skipCooldown;
@@ -480,7 +484,6 @@ public class DialogueManager : MonoBehaviour
             movement.EndCutscene();
             inCutscene = false;
             InstaSkip = false;
-            skipCutscene = false;
             currentLine = 0;
         }
         currentLine++;
@@ -682,14 +685,13 @@ public class DialogueManager : MonoBehaviour
 
     public void SkipCutscene()
     {
-        skipCutscene = true;
-        currentState = CutsceneState.Continue;
+        currentState = CutsceneState.Skipping;
     }
 
     public void DevSkipCutscene()
     {
+        currentState = CutsceneState.Skipping;
         InstaSkip = true;
-        //SetCutscene(Dialogue.Dialog.Empty);
     }
 
     public bool getInCutscene()

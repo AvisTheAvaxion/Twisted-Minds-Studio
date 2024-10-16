@@ -1,5 +1,6 @@
 
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public class Dialogue
 {
@@ -297,7 +298,7 @@ public class Dialogue
 
     string[] DrSteinBossDoor2 = new string[]
     {
-        "System: Muffled sobbing can be heard from behind the door.",
+        " : Muffled sobbing can be heard from behind the door.",
         "Dr. Stein: I failed...",
         "Dr. Stein: Sniffle..."
     };
@@ -320,8 +321,10 @@ public class Dialogue
         "Dr. Harris: Come find me when you've got at least 20 pieces of each, don't keep me waiting.",
         "Dr. Harris: Todaloo!",
         //Dr. Harris walks off into a different room
+        //Collect quest where the player needs to get emotional energy
     };
 
+    //Once the player has enough emotional energy
     string[] DrHarrisQuest1 = new string[]
     {
         "Protag: I've defeated all of these monsters but found nothing but goop.",
@@ -359,9 +362,16 @@ public class Dialogue
         "Dr. Harris: That's enough questions for now. We must hurry if we want to save our star athlete in time!",
         "Dr. Harris: Todaloo!",
         //(Dr. Harris leaves the room)
+        //Player must kill enemies using the scapel
     };
 
     string[] DrHarrisQuest3 = new string[]
+    {
+        "Blaze: The blood bag is full now",
+        "Blaze: I should head back"
+    };
+
+    string[] DrHarrisQuest4 = new string[]
     {
         //(Protag enters a room with Dr. Dr. Harris)
         "Dr. Harris: Ah good, you're here.",
@@ -382,19 +392,20 @@ public class Dialogue
         "Protag: Wait, your scapel",
         "Dr. Harris: Hold onto it my dear boy. Our job is not yet complete",
         "Dr. Harris: Todaloo!",
+        //The player needs to go to Dr. Stein's office and grab the jersey
     };
 
     //    (Protag finds his way to the doctor's office (outpatient tileset room) inside they can grab the jersey
     //    and possibly have a file with a list of some of the doctor's other patients including the experiments he did on them)
 
-    string[] DrHarrisQuest4 = new string[]
+    string[] DrHarrisQuest5 = new string[]
     {
         //(Protag finds the jersy
         "Protag: This looks like the jersy.",
         "Phone: Bzzz",
         "Protag: Wait, a phone, and it has service!",
         "Protag: That creepy vampire was wrong! I can call someone and get out of here",
-        "System: You try to call home, but instead of the phone rining, a pre-recorded message plays",
+        " : You try to call home, but instead of the phone rining, a pre-recorded message plays",
         "Victor: Dad, I can't wait for you to see me at the semi finals!",
         "Dr. Stein: Yeah...",
         "Victor: It sucks you missed the our game against Panthers, we absolutely crushed them.",
@@ -408,18 +419,19 @@ public class Dialogue
         "Dr. Stein: I'm sorry, I-... Something came up... I won't be able to make it.",
         "Victor: But you promised! This could be the biggest game of my college career!",
         "Dr. Stein: I know. I'm sorry. I'll make it up to you. I promise.",
-        "System: The line disconnects as Victor hangs up.",
+        " : The line disconnects as Victor hangs up.",
         "Dr. Stein: Victor?",
         "Dr. Stein: Victor???",
         "Dr. Stein: ...",
         "Dr. Stein: I'm so sorry",
-        "System: The recoring ends as Dr. Stein hangs up.",
+        " : The recording ends as Dr. Stein hangs up.",
 
-        "System: Looking around, you can see several copies of Victors medicine chart",
-        "System: A few of them have words written in large red ink on them",
-        "System: FAILURE",
-        "System: DECEASED",
-        "System: I'M SORRY"
+        " : Looking around, you can see several copies of Victors medicine chart",
+        " : A few of them have words written in large red ink on them",
+        " : FAILURE",
+        " : DECEASED",
+        " : I'M SORRY"
+        //Player now needs to head to the boss room
     };
     #endregion
     #region Boss Fight
@@ -447,6 +459,7 @@ public class Dialogue
         "$FadeOut(255,255,255)",
         "$ToggleUI(True)",
         "Protag: Eww. Gross.",
+        "Dr. Frank N. Stein: How dare you insult my son!",
         "Dr. Frank N. Stein: DIE!",
     };
 

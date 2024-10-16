@@ -478,6 +478,7 @@ public class DialogueManager : MonoBehaviour
         //When there are no more lines of dialog to read.
         else if (currentLine > lines.Length-1)
         {
+            currentState = CutsceneState.Continue;
             CanvasSwitch(false);
             uiCanvas.SetActive(true);
             ResetCamera();

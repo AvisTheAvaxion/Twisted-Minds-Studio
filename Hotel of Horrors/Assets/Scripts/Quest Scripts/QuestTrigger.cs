@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestTrigger : MonoBehaviour
 {
-    [SerializeField] string triggerName;
+    [SerializeField] Objectives.ObjectiveTriggers objective;
     QuestSystem quest;
     private void Awake()
     {
@@ -13,7 +13,7 @@ public class QuestTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        quest.QuestEvent(QuestSystem.QuestEventType.TripTrigger, triggerName);
+        quest.QuestEvent(QuestSystem.QuestEventType.TripTrigger, objective.ToString());
         Destroy(this.gameObject);
     }
 }

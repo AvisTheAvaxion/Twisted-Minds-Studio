@@ -15,12 +15,15 @@ public class QuestSystem : MonoBehaviour
 
     DialogueManager dialogueManager;
     PlayerInventory inventory;
-    public event EventHandler OnQuestUpdate;
+    QuestGUI questGUI;
+    string questTitle;
+    string questDesc;
     private void Awake()
     {
         objectives = new Objectives();
         dialogueManager = FindObjectOfType<DialogueManager>();
         inventory = FindObjectOfType<PlayerInventory>();
+        questGUI = FindObjectOfType<QuestGUI>();
         inventory.OnItemCollect += ItemPickUpDetected;
         inventory.OnEnergyCollect += EnergyPickUpDetected;
     }
@@ -198,11 +201,6 @@ public class QuestSystem : MonoBehaviour
         //Debug.Log("Current Objective Type (Before): " + currentObjective?.GetType());
         currentObjective = ParseQuestString(quest);
         //Debug.Log("Current Objective Type (After): " + currentObjective?.GetType());
-        if (currentObjective != null)
-        {
-            OnQuestUpdate?.Invoke(currentObjective, EventArgs.Empty);
-            //Debug.Log("Current Obj: " + currentObjective.ToSaveString());
-        }
     }
 
     //Helper method for LoadObjective. Takes in a string and returns the relevent QuestType.
@@ -213,6 +211,7 @@ public class QuestSystem : MonoBehaviour
         string[] parts = questString.Split('|');
         switch (parts[0])
         {
+            #region Quest Type Functions
             case "FindObject":
                 questType = new FindObject(parts[1]);
                 return questType;
@@ -252,14 +251,38 @@ public class QuestSystem : MonoBehaviour
             case "Traverse":
                 questType = new Traverse(parts[1]);
                 return questType;
+            #endregion
+            #region Auxilary Functions
             case "SetCutscene":
                 Dialogue.Dialog dialog;
                 Enum.TryParse(parts[1], true, out dialog);
                 dialogueManager.SetCutscene(dialog);
-                objectiveNum++;
-                questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
 
-                return questType;
+                if ((objectiveNum + 1) < objectives.getObjectiveAmount(floor, objectiveNum))
+                {
+                    objectiveNum++;
+                    questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
+                }
+                break;
+            case "QuestTitle":
+                questGUI.SetQuestTitle(parts[1]);
+
+                if ((objectiveNum + 1) < objectives.getObjectiveAmount(floor, objectiveNum))
+                {
+                    objectiveNum++;
+                    questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
+                }
+                break;
+            case "QuestDesc":
+                questGUI.SetQuestDesc(parts[1]);
+
+                if((objectiveNum + 1) < objectives.getObjectiveAmount(floor, objectiveNum))
+                {
+                    objectiveNum++;
+                    questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
+                }
+                break;
+             #endregion
         }
 
         if (questType == null)

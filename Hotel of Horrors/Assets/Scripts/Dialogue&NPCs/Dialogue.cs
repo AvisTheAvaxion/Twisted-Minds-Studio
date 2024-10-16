@@ -167,17 +167,15 @@ public class Dialogue
     string[] InventoryTutorial = new string[]
     {
         "Protag: Nice, a different room.",
-        "System: Press the <b>'TAB'</b> key to open your inventory.",
-        "System: On the left side of the inventory are tabs that can be opened by <b>Left Clicking</b>",
-        "System: These three tabs hold, from top to bottom <b><color=#936A00>Weapons</color>, <color=#5B100A>Items</color>, and <color=#507830>Special Abilities</color></b>",
-        "System: As you explore you will find many things lying around, when you want to <b>equip</b> something just click the item and then the UI button labeled <b>'Equip'</b>",
-        "Protag: I don't see anyone here either. Maybe, I'll find someone in the next room.",
-
-
-        "Protag: This dagger should be useful for defending myself, I should keep it out, just in case",
-        "System: Press tab to open your inventory.",
-        "System: Use the headers on the left side to equip the dagger.",
-        "System: You can also equip items and view abilities in the inventory"
+        " : Press the <b>'TAB'</b> key to open your inventory.",
+        " : On the left side of the inventory are tabs that can be opened by <b>Left Clicking</b>",
+        " : These three tabs hold, from top to bottom <b><color=#936A00>Weapons</color>, <color=#5B100A>Items</color>, and <color=#507830>Special Abilities</color></b>",
+        " : As you explore you will find many things lying around, when you want to <b>equip</b> something just click the item and then the UI button labeled <b>'Equip'</b>",
+        " : I don't see anyone here either. Maybe, I'll find someone in the next room.",
+        " : This dagger should be useful for defending myself, I should keep it out, just in case",
+        " : Press tab to open your inventory.",
+        " : Use the headers on the left side to equip the dagger.",
+        " : You can also equip items and view abilities in the inventory"
     };
 
     string[] FirstMonster = new string[]

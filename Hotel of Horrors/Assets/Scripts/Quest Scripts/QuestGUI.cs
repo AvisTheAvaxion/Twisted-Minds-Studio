@@ -7,34 +7,26 @@ using UnityEngine;
 public class QuestGUI : MonoBehaviour
 {
     [SerializeField] GameObject questGUI;
-    [SerializeField] TextMeshProUGUI questTextGUI;
-    QuestSystem questSystem;
+    [SerializeField] TextMeshProUGUI questTitleGUI;
+    [SerializeField] TextMeshProUGUI questDescGUI;
 
-    private void Awake()
-    {
-        questSystem = FindObjectOfType<QuestSystem>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        questSystem.OnQuestUpdate += SetQuestText;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    string questTitle;
+    string questDesc;
 
     void ToggleQuestGUI(bool isActive)
     {
         questGUI.SetActive(isActive);
     }
 
-    void SetQuestText(object sender, EventArgs e)
+    public void SetQuestTitle(string title)
     {
-        QuestType quest = (QuestType)sender;
-        questTextGUI.text = quest.ToSaveString();
+        questTitle = title;
+        questTitleGUI.text = title;
+    }
+
+    public void SetQuestDesc(string desc)
+    {
+        questDesc = desc;
+        questDescGUI.text = desc;
     }
 }

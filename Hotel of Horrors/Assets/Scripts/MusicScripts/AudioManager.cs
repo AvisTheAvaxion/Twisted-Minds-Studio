@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NewAudioManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class NewAudioManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("SFXVolume")) { volumes = Load(); }
         else { volumes = new float[3] { 1f, 1f, 1f }; }
+
+        volumes = new float[3] { 1f, 1f, 1f };
     }
 
 

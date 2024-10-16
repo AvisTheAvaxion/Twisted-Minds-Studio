@@ -20,6 +20,8 @@ public class NewAudioManager : MonoBehaviour
         else { volumes = new float[3] { 1f, 1f, 1f }; }
 
         volumes = new float[3] { 1f, 1f, 1f };
+        PlayerPrefs.DeleteAll();
+        Save();
     }
 
 
@@ -93,10 +95,13 @@ public class NewAudioManager : MonoBehaviour
         PlayerPrefs.SetFloat("BGMVolume", volumes[0]);
         PlayerPrefs.SetFloat("SFXVolume", volumes[1]);
         PlayerPrefs.SetFloat("AmbientVolume", volumes[2]);
+        Debug.Log($"Save Audio Ran{volumes[0]}|{volumes[1]}|{volumes[2]}");
     }
 
     private float[] Load()
     {
+        Debug.Log($"Load{PlayerPrefs.GetFloat("BGMVolume")},{PlayerPrefs.GetFloat("SFXVolume")},{PlayerPrefs.GetFloat("AmbientVolume")}");
+
         return new float[3]
         {
             PlayerPrefs.GetFloat("BGMVolume"),

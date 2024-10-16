@@ -195,7 +195,7 @@ public class Dialogue
         //Protag charges at the cleaning lady, who dodges the attack
         "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
         "Protag: You can talk?",
-        "Monster: Why wouldn't I be able to? My name is Samantha, and yours?|Protag|What's it matter to you|$Prompt",
+        "Monster: Why wouldn't I be able to? My name is Samantha, and yours?|Blaze|What's it matter to you|$Prompt",
         "Samantha: Well it's certainly nice to meet you, but please do try to refrain from attacking me for no reason$OptionA",
         "Samantha: One finds it helps to make friends$OptionB",
         "Samantha: Now, before you get going, perhaps I should show you how to properly fight.",

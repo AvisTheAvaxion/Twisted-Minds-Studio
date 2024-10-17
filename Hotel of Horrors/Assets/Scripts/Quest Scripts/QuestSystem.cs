@@ -12,12 +12,11 @@ public class QuestSystem : MonoBehaviour
     QuestType currentObjective;
     Objectives objectives;
     bool objectiveSet = false;
+    bool floorCleared = false;
 
     DialogueManager dialogueManager;
     PlayerInventory inventory;
     QuestGUI questGUI;
-    string questTitle;
-    string questDesc;
     private void Awake()
     {
         objectives = new Objectives();
@@ -26,6 +25,7 @@ public class QuestSystem : MonoBehaviour
         questGUI = FindObjectOfType<QuestGUI>();
         inventory.OnItemCollect += ItemPickUpDetected;
         inventory.OnEnergyCollect += EnergyPickUpDetected;
+        floorCleared = false;
     }
 
     // Start is called before the first frame update
@@ -52,7 +52,7 @@ public class QuestSystem : MonoBehaviour
 
     private void Update()
     {
-        if (dialogueManager.getInCutscene() == false && objectiveSet == false)
+        if (dialogueManager.getInCutscene() == false && objectiveSet == false && floorCleared == false)
         {
             LoadObjective();
         }
@@ -257,37 +257,28 @@ public class QuestSystem : MonoBehaviour
                 Dialogue.Dialog dialog;
                 Enum.TryParse(parts[1], true, out dialog);
                 dialogueManager.SetCutscene(dialog);
-
-                if ((objectiveNum + 1) < objectives.getObjectiveAmount(floor, objectiveNum))
-                {
-                    objectiveNum++;
-                    questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
-                }
+                objectiveNum++;
+                questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
                 break;
             case "QuestTitle":
                 questGUI.SetQuestTitle(parts[1]);
-
-                if ((objectiveNum + 1) < objectives.getObjectiveAmount(floor, objectiveNum))
-                {
-                    objectiveNum++;
-                    questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
-                }
+                objectiveNum++;
+                questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
                 break;
             case "QuestDesc":
                 questGUI.SetQuestDesc(parts[1]);
-
-                if((objectiveNum + 1) < objectives.getObjectiveAmount(floor, objectiveNum))
-                {
-                    objectiveNum++;
-                    questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
-                }
+                objectiveNum++;
+                questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
+                break;
+            case "ClearFloor":
+                floorCleared = true;
                 break;
              #endregion
         }
 
         if (questType == null)
         {
-            Debug.LogWarning("Quest Parsing ERROR. CurrentObjective is currently NULL");
+            objectiveSet = false;
         }
         else
         {

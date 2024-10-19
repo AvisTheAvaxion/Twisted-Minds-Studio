@@ -116,6 +116,7 @@ public class EnemyStateMachine : MonoBehaviour
     public void ApplyRoomModifier(Room.RoomModifiers modifier)
     {
         if(myHealth == null) myHealth = GetComponent<EnemyHealth>();
+        if(navigation == null) navigation = GetComponent<AI>();
 
         switch (modifier)
         {

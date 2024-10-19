@@ -52,7 +52,8 @@ public class Floor : MonoBehaviour
         roomsByCategory.Add("Mind Room", new List<Room>());
 
         elevator = FindObjectOfType<ElevatorMenuManager>();
-        
+
+        //Random.InitState((int)System.DateTime.Now.Ticks);
 
         foreach (Room room in allRooms)
         {

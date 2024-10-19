@@ -13,7 +13,7 @@ public class ButtonTextVisuals : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     bool mouseOver;
 
-    private void Awake()
+    private void OnEnable()
     {
         if (textHandler == null) textHandler = GetComponent<TextMeshProUGUI>();
         textHandler.color = defaultColor;

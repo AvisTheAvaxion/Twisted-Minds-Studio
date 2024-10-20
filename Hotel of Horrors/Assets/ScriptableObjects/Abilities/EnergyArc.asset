@@ -15,14 +15,23 @@ MonoBehaviour:
   useableName: EnergyArc
   description: Shoot out an Arc of emotional energy
   maxStackAmount: 1
-  sprite: {fileID: 21300000, guid: 42c27b3088ff7e84398c18a160d1f5fc, type: 3}
-  displaySprite: {fileID: 21300000, guid: 42c27b3088ff7e84398c18a160d1f5fc, type: 3}
+  sprite: {fileID: 21300000, guid: 57230dcfd7107634bbf5156ac990ea9a, type: 3}
+  displaySprite: {fileID: 21300000, guid: 57230dcfd7107634bbf5156ac990ea9a, type: 3}
   baseLevel: 1
   maxLevel: 5
   unlockEECost: 200
-  unlockFloor: 1
+  unlockFloor: 2
   playerAbility: {fileID: 5262229291953371984, guid: 458b049490e25704aad7a2686f48762e, type: 3}
-  upgradeInfos: []
+  upgradeInfos:
+  - percentageIncrease: 25
+    eeCost: 0
+  - percentageIncrease: 15
+    eeCost: 0
+  - percentageIncrease: 10
+    eeCost: 0
+  - percentageIncrease: 5
+    eeCost: 0
+  animatorOverride: {fileID: 22100000, guid: 81caf8b12d609ca4c90fa11128a2aa9a, type: 2}
   cooldown: 10
   duration: 0.5
   damage: 12

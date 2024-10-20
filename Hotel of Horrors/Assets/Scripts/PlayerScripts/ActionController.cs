@@ -9,6 +9,7 @@ public class ActionController : MonoBehaviour
 {
     [SerializeField] AttackModes currentAttackMode;
     [SerializeField] Animator playerAnimator; //Animator that plays the base attack animations
+    RuntimeAnimatorController defaultController;
     [SerializeField] PlayerMovement playerMovement; //Player movement reference to check whether dashing or not
     [SerializeField] CameraShake cameraShake;
     //[SerializeField] UIDisplayContainer uiDisplay;
@@ -53,8 +54,9 @@ public class ActionController : MonoBehaviour
     int meleeDir;
 
     bool canDoPlayerAbility = true;
-    bool canDoWeaponAbility = true;
+    //bool canDoWeaponAbility = true;
     bool canDoSpecialAbility = true;
+    bool canUseItem = true;
 
     PlayerInventory inventory;
 
@@ -79,6 +81,8 @@ public class ActionController : MonoBehaviour
         inventory = GetComponent<PlayerInventory>();
         playerGUI = FindObjectOfType<PlayerGUI>();
 
+        defaultController = playerAnimator.runtimeAnimatorController;
+
         //if (uiDisplay == null) uiDisplay = FindObjectOfType<UIDisplayContainer>();
         //if (uiDisplay == null) Debug.LogError("UI display container script not assigned and not found in scene (located on canvas UI prefab");
 
@@ -95,7 +99,6 @@ public class ActionController : MonoBehaviour
     //Called by the inventory system to store reference to the current weapon
     public void EquipWeapon(Weapon weapon)
     {
-
         if(inventory.CurrentWeapon != null)
         {
             //weaponVisual.enabled = true;
@@ -129,7 +132,7 @@ public class ActionController : MonoBehaviour
     }
     public void EquipPlayerAbility(Ability ability)
     {
-        if (ability != null && canDoPlayerAbility)
+        if (ability != null)
         {
             if (currentPlayerAbitlity != null) Destroy(currentPlayerAbitlity.gameObject);
 
@@ -143,7 +146,7 @@ public class ActionController : MonoBehaviour
     }
     public void EquipSpecialAbility(MementoInfo mententos)
     {
-        if (mententos != null && canDoSpecialAbility)
+        if (mententos != null)
         {
             if (currentSpecialAbility != null) Destroy(currentSpecialAbility.gameObject);
 
@@ -159,7 +162,7 @@ public class ActionController : MonoBehaviour
     #region Input Detection
     void OnAttack(InputValue inputValue)
     {
-        if (disableAttackControls) return;
+        if (disableAttackControls || GameTime.paused) return;
 
         if(isAttacking)
         {
@@ -193,7 +196,7 @@ public class ActionController : MonoBehaviour
     }
     void OnPrimaryAction(InputValue inputValue)
     {
-        if (disableAttackControls) return;
+        if (disableAttackControls || GameTime.paused) return;
 
         if (currentSpecialAbility != null && canDoSpecialAbility)
         {
@@ -203,23 +206,27 @@ public class ActionController : MonoBehaviour
     }
     void OnSecondaryAction(InputValue inputValue)
     {
-        if (disableAttackControls) return;
+        if (disableAttackControls || GameTime.paused) return;
 
-        if (currentPlayerAbitlity != null && canDoPlayerAbility)
+        if (canDoPlayerAbility && canUseItem)
         {
-            currentPlayerAbitlity.Use(this, inventory.CurrentAbility);
-            StartCoroutine(PlayerAbilityCooldown(currentPlayerAbitlity.Cooldown));
-        }
-        else if (inventory.CurrentItem != null)
-        {
-            Item item = inventory.CurrentItem;
-            inventory.UseItem(inventory.currentItemIndex);
-            foreach (EffectInfo effectInfo in item.GetInfo().GetEffectInfos())
+            if (currentPlayerAbitlity != null)
             {
-                Effect effect = new Effect(effectInfo, 1);
-                playerHealth.InflictEffect(effect);
+                currentPlayerAbitlity.Use(this, inventory.CurrentAbility);
+                StartCoroutine(PlayerAbilityCooldown(currentPlayerAbitlity.Cooldown));
             }
-            playerGUI.UpdateHotbarGUI();
+            else if (inventory.CurrentItem != null)
+            {
+                Item item = inventory.CurrentItem;
+                StartCoroutine(ItemCooldown(item.GetInfo().GetCooldown()));
+                inventory.UseItem(inventory.currentItemIndex);
+                foreach (EffectInfo effectInfo in item.GetInfo().GetEffectInfos())
+                {
+                    Effect effect = new Effect(effectInfo, 1);
+                    playerHealth.InflictEffect(effect);
+                }
+                playerGUI.UpdateHotbarGUI();
+            }
         }
     }
     #endregion
@@ -307,9 +314,13 @@ public class ActionController : MonoBehaviour
             //playerAnimator.SetLayerWeight(1, 1); //Enables the attack layer on the player animator
         }*/
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
-        if(attackNumber == 2 && currentWeaponAbility != null)
+        if (inventory.CurrentWeapon != null && inventory.CurrentWeapon.GetInfo().GetAttack(attackNumber).overrideController != null) 
+            playerAnimator.runtimeAnimatorController = inventory.CurrentWeapon.GetInfo().GetAttack(attackNumber).overrideController;
+        playerAnimator.SetBool("isAttacking", true);
+
+        if (attackNumber == 2 && currentWeaponAbility != null)
         {
             currentWeaponAbility.Use(this, inventory.CurrentWeapon);
             yield return new WaitForSeconds(inventory.CurrentWeapon.GetInfo().GetWeaponAbilityDuration());
@@ -359,7 +370,8 @@ public class ActionController : MonoBehaviour
     //End of an attack for melee (animation event) and ranged
     public void AttackEnd()
     {
-        //playerAnimator.SetBool("Shooting1", false);
+        playerAnimator.SetBool("isAttacking", false);
+        playerAnimator.runtimeAnimatorController = defaultController;
         //playerAnimator.SetLayerWeight(1, 0); //Disables the attack layer on the player animator
 
         isAttacking = false;
@@ -441,7 +453,14 @@ public class ActionController : MonoBehaviour
         canDoPlayerAbility = false;
         //playerAudio.PlayAbility(currentPlayerAbitlity.ToString());
 
+        if (inventory.CurrentAbility.GetInfo().GetOverrideController() != null) 
+            playerAnimator.runtimeAnimatorController = inventory.CurrentAbility.GetInfo().GetOverrideController();
+        playerAnimator.SetBool("isAbilitying", true);
+
         yield return new WaitUntil(() => !currentPlayerAbitlity.isAttacking);
+
+        playerAnimator.SetBool("isAbilitying", false);
+        playerAnimator.runtimeAnimatorController = defaultController;
 
         if (playerGUI != null) playerGUI.UpdateFreeSlotCooldown(1);
 
@@ -458,7 +477,7 @@ public class ActionController : MonoBehaviour
     IEnumerator WeaponAbilityCooldown(float cooldown)
     {
         float timer = 0;
-        canDoWeaponAbility = false;
+        //canDoWeaponAbility = false;
 
         yield return new WaitUntil(() => !currentWeaponAbility.isAttacking);
 
@@ -468,7 +487,7 @@ public class ActionController : MonoBehaviour
             yield return null;
         }
 
-        canDoWeaponAbility = true;
+        //canDoWeaponAbility = true;
     }
     IEnumerator SpecialAbilityCooldown(float cooldown)
     {
@@ -488,6 +507,23 @@ public class ActionController : MonoBehaviour
 
         canDoSpecialAbility = true;
         if (playerGUI != null) playerGUI.UpdateMementoCooldown(0);
+    }
+    IEnumerator ItemCooldown(float cooldown)
+    {
+        float timer = 0;
+        canUseItem = false;
+
+        if (playerGUI != null) playerGUI.UpdateFreeSlotCooldown(1);
+
+        while (timer <= cooldown)
+        {
+            timer += Time.deltaTime;
+            if (playerGUI != null) playerGUI.UpdateFreeSlotCooldown(1 - timer / cooldown);
+            yield return null;
+        }
+
+        canUseItem = true;
+        if (playerGUI != null) playerGUI.UpdateFreeSlotCooldown(0);
     }
     #endregion
 

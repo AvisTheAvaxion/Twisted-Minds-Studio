@@ -5,34 +5,51 @@ using UnityEngine;
 public class GameTime : MonoBehaviour
 {
     static bool interruptable = true;
+
+    public static bool paused { get; private set; }
+    
     public static void PauseTime(bool interruptableIn)
     {
         Time.timeScale = 0;
 
-        if(interruptable)
+        paused = true;
+
+        if (interruptable)
             interruptable = interruptableIn;
     }
     public static void UnpauseTime()
     {
         Time.timeScale = 1;
 
+        paused = false;
+
         interruptable = true;
+    }
+
+    static void HitStopPause()
+    {
+        Time.timeScale = 0;
+    }
+    static void HitStopUnpause()
+    {
+        Time.timeScale = 1;
     }
 
     static Queue<float> hitStopQueue = new Queue<float>();
     public static void AddHitStop(float length)
     {
-        hitStopQueue.Enqueue(length);
+        int count = hitStopQueue.Count;
+        hitStopQueue.Enqueue(length / (count + 1));
     }
 
     static Coroutine hitStopCoroutine;
     IEnumerator HitStop(float length)
     {
-        PauseTime(true);
+        HitStopPause();
         yield return new WaitForSecondsRealtime(length);
 
         if(interruptable)
-            UnpauseTime();
+            HitStopUnpause();
 
         hitStopCoroutine = null;
     }

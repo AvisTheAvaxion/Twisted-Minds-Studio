@@ -430,6 +430,9 @@ public class InventoryGUI : MonoBehaviour
     {
         if (abilitySlots == null || inventory == null) return;
 
+        if (selectedAbilityIndex >= 0)
+            abilitySlots[selectedAbilityIndex].SelectImage(false);
+
         //selectedItemIndex = -1;
         //selectedWeaponIndex = -1;
         selectedAbilityIndex = selectedAbility;

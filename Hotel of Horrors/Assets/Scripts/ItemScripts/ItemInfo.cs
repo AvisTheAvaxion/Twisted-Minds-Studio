@@ -6,7 +6,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Item", menuName = "Useables/Item", order = 2)]
 public class ItemInfo : UseableInfo
 {
+    [SerializeField] float cooldown;
     [SerializeField] EffectInfo[] effects;
+
 
     public EffectInfo[] GetEffectInfos()
     {
@@ -16,6 +18,11 @@ public class ItemInfo : UseableInfo
     public override void Use()
     {
         Debug.Log($"Item {GetName()} Used");
+    }
+
+    public float GetCooldown()
+    {
+        return cooldown;
     }
 
     public string GetEffectsDescription()

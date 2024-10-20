@@ -19,8 +19,8 @@ public class MeleeSlash : MonoBehaviour
     [SerializeField] Collider2D collider;
     [SerializeField] Sprite[] sprites;
     [SerializeField] int frameRate;
-    [SerializeField] string defaultTag = "Enemy";
-    [SerializeField] bool faceUp = false;
+    //[SerializeField] string defaultTag = "Enemy";
+    //[SerializeField] bool faceUp = false;
     [SerializeField] FrameSorting[] frameSorting = new FrameSorting[] { 
         new FrameSorting(new int[] { 2, 2, 2 }), //0
         new FrameSorting(new int[] { 2, 2, 2 }), //1

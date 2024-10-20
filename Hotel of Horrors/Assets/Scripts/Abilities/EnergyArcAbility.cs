@@ -24,7 +24,7 @@ public class EnergyArcAbility : PlayerAbility
     {
         isAttacking = true;
         //Leaves room for start animation
-        yield return null;
+        yield return new WaitForSeconds(0.25f);
         transform.rotation = Quaternion.FromToRotation(transform.up, (controller.CrosshairPosition - (Vector2)transform.position).normalized) * transform.rotation;
         GameObject go = Instantiate(arc, spawnPoint.position, spawnPoint.rotation);
         MultiProjectile multi = go.GetComponent<MultiProjectile>();

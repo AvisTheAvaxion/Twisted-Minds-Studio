@@ -123,13 +123,13 @@ public class AbilityGUI : MonoBehaviour
             {
                 Ability ability = inventory.GetAbility(slot.inventoryIndex);
                 cooldownText.text = "Cooldown: " + ability.cooldown.ToString();
-                eeCostText.text = "EE Cost: " + ability.GetUpgradeEECost().ToString();
+                eeCostText.text = ability.GetUpgradeEECost().ToString();
                 buttonText.text = "Upgrade";
             }
             else
             {
                 cooldownText.text = "Cooldown: " + info.GetCooldown().ToString();
-                eeCostText.text = "EE Cost: " + info.GetUnlockEECost().ToString();
+                eeCostText.text = info.GetUnlockEECost().ToString();
                 buttonText.text = "Unlock";
             }
         }

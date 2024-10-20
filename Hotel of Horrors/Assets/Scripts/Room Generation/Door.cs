@@ -21,8 +21,8 @@ public class Door : MonoBehaviour
     [Header("Locked Gate Settings")]
     [SerializeField] SpriteRenderer lockedGateRend;
     [SerializeField] Animator lockedGateAnim;
-    [SerializeField] int frameRate = 10;
-    [SerializeField] Sprite[] lockedGateFrames;
+    //[SerializeField] int frameRate = 10;
+    //[SerializeField] Sprite[] lockedGateFrames;
 
     [Header("Elevator Door Settings")]
     [SerializeField] SpriteRenderer elevatorDoorRend;

@@ -43,6 +43,13 @@ public class BasicShooter : MonoBehaviour
             StartCoroutine(ShootRoutine());
         }
     }
+    public void Attack(Ability ability, Vector3 targetPos)
+    {
+        if (!isShooting)
+        {
+            StartCoroutine(ShootRoutine(ability, targetPos));
+        }
+    }
 
     public void SetTarget(Transform target)
     {
@@ -111,6 +118,71 @@ public class BasicShooter : MonoBehaviour
 
         isShooting = false;
     }
+    IEnumerator ShootRoutine(Ability ability, Vector3 targetPos)
+    {
+        if (target != null)
+        {
+            isShooting = true;
+
+            float startAngle, currentAngle, angleStep, endAngle;
+            float timeTimeBetweenProjectiles = 0f;
+
+            TargetConeOfInfluence(targetPos, out startAngle, out currentAngle, out angleStep, out endAngle);
+
+            if (stagger)
+                timeTimeBetweenProjectiles = timeBetweenBursts / projectilesPerBurst;
+
+            for (int i = 0; i < burstCount; i++)
+            {
+                if (!oscillate)
+                {
+                    TargetConeOfInfluence(targetPos, out startAngle, out currentAngle, out angleStep, out endAngle);
+                }
+                else
+                {
+                    currentAngle = endAngle;
+                    endAngle = startAngle;
+                    startAngle = currentAngle;
+                    angleStep *= -1;
+                }
+
+                for (int j = 0; j < projectilesPerBurst; j++)
+                {
+                    Vector2 pos = FindBulletSpawnPos(currentAngle);
+                    GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
+
+                    //newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);
+                    Vector2 dir = (pos - (Vector2)bulletSpawnPoint.position).normalized;
+                    Vector2 rotatedDir = Quaternion.AngleAxis(bulletAngleOffset, Vector3.forward) * dir;
+                    newBullet.transform.rotation = Quaternion.FromToRotation(newBullet.transform.up, rotatedDir) * newBullet.transform.rotation;
+
+                    newBullet.GetComponent<Rigidbody2D>().AddForce(newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
+
+                    Projectile proj = newBullet.GetComponent<Projectile>();
+                    if (proj != null)
+                    {
+                        proj.Initialize(ability);
+
+                        //if (proj is ProjectileBoomerang)
+                        //    (proj as ProjectileBoomerang).Initialize(target.position);
+                    }
+
+                    currentAngle += angleStep;
+
+                    if (stagger)
+                        yield return new WaitForSeconds(timeTimeBetweenProjectiles);
+                }
+
+                currentAngle = startAngle;
+
+                yield return new WaitForSeconds(timeBetweenShots);
+            }
+        }
+
+        yield return new WaitForSeconds(timeBetweenBursts);
+
+        isShooting = false;
+    }
 
     Vector2 FindBulletSpawnPos(float currentAngle)
     {
@@ -142,6 +214,25 @@ public class BasicShooter : MonoBehaviour
         }
     }
     private void TargetConeOfInfluence(Vector3 targetPos, out float startAngle, out float currentAngle, out float angleStep, out float endAngle)
+    {
+        var dir = (targetPos - bulletSpawnPoint.position).normalized;
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        startAngle = angle;
+        endAngle = angle;
+        currentAngle = angle;
+        float halfAngleSpread = 0f;
+        angleStep = 0;
+        if (angleSpread != 0)
+        {
+            angleStep = angleSpread / (projectilesPerBurst - 1);
+            halfAngleSpread = angleSpread / 2f;
+            startAngle = angle - halfAngleSpread;
+            endAngle = angle + halfAngleSpread;
+            currentAngle = startAngle;
+        }
+    }
+    private void DebugTargetConeOfInfluence(Vector3 targetPos, out float startAngle, out float currentAngle, out float angleStep, out float endAngle)
     {
         var dir = ((targetPos + bulletSpawnPoint.position) - bulletSpawnPoint.position).normalized;
         var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -197,7 +288,7 @@ public class BasicShooter : MonoBehaviour
         if (target != null)
             TargetConeOfInfluence(out startAngleDebug, out currentAngleDebug, out angleStepDebug, out endAngleDebug);
         else
-            TargetConeOfInfluence(debugTargetPos, out startAngleDebug, out currentAngleDebug, out angleStepDebug, out endAngleDebug);
+            DebugTargetConeOfInfluence(debugTargetPos, out startAngleDebug, out currentAngleDebug, out angleStepDebug, out endAngleDebug);
 
         for (int j = 0; j < projectilesPerBurst; j++)
         {

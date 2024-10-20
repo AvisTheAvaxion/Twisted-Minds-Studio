@@ -21,12 +21,12 @@ public class QuestGUI : MonoBehaviour
     public void SetQuestTitle(string title)
     {
         questTitle = title;
-        questTitleGUI.text = title;
+        //questTitleGUI.text = title;
     }
 
     public void SetQuestDesc(string desc)
     {
         questDesc = desc;
-        questDescGUI.text = desc;
+        //questDescGUI.text = desc;
     }
 }

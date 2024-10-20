@@ -20,15 +20,16 @@ public class AbilityInfo : UseableInfo
     [SerializeField] int unlockFloor = 1;
     [SerializeField] GameObject playerAbility;
     [SerializeField] UpgradeInfo[] upgradeInfos;
+    [SerializeField] AnimatorOverrideController animatorOverride;
 
-    [Header("Ability Settings (Not all Settings apply to every Ability")]
+    [Header("Ability Settings (Not all Settings apply to every Ability)")]
     [SerializeField] float cooldown;
     [SerializeField] float duration;
     [SerializeField] float damage;
     [SerializeField] float size;
     [SerializeField] float range;
 
-    [Header("Projectile Settings (Not all may apply")]
+    [Header("Projectile Settings (Not all may apply)")]
     [SerializeField] int numberOfProjectiles;
     [SerializeField] float deflectionResistance;
     [SerializeField] [Range(0, 1)] float chanceToInflictEffect;
@@ -108,5 +109,9 @@ public class AbilityInfo : UseableInfo
     public UpgradeInfo GetUpgradeInfo(int index)
     {
         return (index < upgradeInfos.Length && index >= 0) ? upgradeInfos[index] : new UpgradeInfo();
+    }
+    public AnimatorOverrideController GetOverrideController()
+    {
+        return animatorOverride;
     }
 }

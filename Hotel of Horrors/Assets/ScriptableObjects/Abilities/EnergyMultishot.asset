@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc98286725570646b9a2f660f538220, type: 3}
+  m_Name: EnergyMultishot
+  m_EditorClassIdentifier: 
+  useableName: Multishot
+  description: Shoot out 3 concentrations of emotional energy in a triple direction
+    pattern
+  maxStackAmount: 1
+  sprite: {fileID: 21300000, guid: 703d9b47354706849b602a2b370ab936, type: 3}
+  displaySprite: {fileID: 21300000, guid: 703d9b47354706849b602a2b370ab936, type: 3}
+  baseLevel: 1
+  maxLevel: 5
+  unlockEECost: 200
+  unlockFloor: 1
+  playerAbility: {fileID: 526821339888425695, guid: eeda5b3f40bd0ba4391dde010534699b, type: 3}
+  upgradeInfos: []
+  animatorOverride: {fileID: 22100000, guid: 81caf8b12d609ca4c90fa11128a2aa9a, type: 2}
+  cooldown: 6
+  duration: 0
+  damage: 8
+  size: 0
+  range: 0
+  numberOfProjectiles: 0
+  deflectionResistance: 2
+  chanceToInflictEffect: 0
+  effectsToInflict: []
+  maxTargets: 1
+  goThroughWalls: 0

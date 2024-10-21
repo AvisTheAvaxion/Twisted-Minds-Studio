@@ -186,6 +186,14 @@ public class Dialogue
         //Protage leaves
     };
 
+    string[] MindRoom = new string[]
+    {
+        "Blaze: This room.",
+        "Blaze: It feels... Strange.",
+        " : You feel a strange pull towards the chair.",
+        " : Maybe something will happen if you interact with it."
+    };
+
     string[] CombatTutorial = new string[]
     {
         //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls

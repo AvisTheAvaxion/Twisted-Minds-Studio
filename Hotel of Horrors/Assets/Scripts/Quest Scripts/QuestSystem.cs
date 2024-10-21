@@ -125,6 +125,7 @@ public class QuestSystem : MonoBehaviour
                     TripTrigger trigger = (TripTrigger)currentObjective;
                     if(trigger.GetExpectedTriggerName() == objectName)
                     {
+                        Debug.Log("Quest " + objectName + " Happening");
                         NextQuest();
                     }
                 }
@@ -256,6 +257,7 @@ public class QuestSystem : MonoBehaviour
             case "SetCutscene":
                 Dialogue.Dialog dialog;
                 Enum.TryParse(parts[1], true, out dialog);
+                Debug.Log("QuestSystem: " + dialog.ToString() + " String: " + questString + " Part: " + parts[1] + " ObjectiveNum: " + objectiveNum);
                 dialogueManager.SetCutscene(dialog);
                 objectiveNum++;
                 questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));

@@ -51,7 +51,6 @@ public class DialogueManager : MonoBehaviour
     #region AIVariables
     AI characterAI;
     Vector2 targetPosition;
-    bool characterMoving = false;
     Rigidbody2D characterRB2D;
     Animator characterAnimator;
     #endregion
@@ -136,7 +135,6 @@ public class DialogueManager : MonoBehaviour
                 }
             }
         }
-        
     }
 
     void OnDialogueUpdate()
@@ -161,6 +159,7 @@ public class DialogueManager : MonoBehaviour
                 AudioManager.PlaySong(sound[1]);
                 currentLine++;
                 OnDialogueUpdate();
+                currentLine--;
             }
             else if (lines[currentLine].StartsWith("$Pause"))
             {
@@ -251,17 +250,18 @@ public class DialogueManager : MonoBehaviour
                 int moveEndIndex = lines[currentLine].IndexOf(')');
                 string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
                 string[] splitString = moveInfo.Split(',');
-                Vector3 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
                 playerAudio.NextLine(currentLine);
                 if (splitString[0] == "Main Camera")
                 {
+                    Vector3 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
                     Transform cameraTransform = GameObject.Find(splitString[0]).transform;
                     target.z = cameraTransform.position.z;
                     StartCoroutine(MoveCamera(.05f, cameraTransform, target));
                 }
                 else
                 {
-                    SetMoveCharacterInfo(splitString[0], 3, target);
+                    Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
+                    SetMoveCharacterInfo(splitString[0], 2, target);
                 }
             }
             else if (lines[currentLine].EndsWith("$Tele") || lines[currentLine].StartsWith("$Tele"))
@@ -580,7 +580,7 @@ public class DialogueManager : MonoBehaviour
         {
             characterAI.enabled = true;
         }
-        characterMoving = true;
+        currentState = CutsceneState.Moving;
     }
 
     void MoveCharacter()
@@ -679,8 +679,8 @@ public class DialogueManager : MonoBehaviour
     
     public void SetCutscene(Dialogue.Dialog newDialog)
     {
+        Debug.Log("DialogManager: " + newDialog.ToString());
         cutscene = newDialog;
-        currentState = CutsceneState.Continue;
         StartCutScene(cutscene.ToString(), 0);
     }
 

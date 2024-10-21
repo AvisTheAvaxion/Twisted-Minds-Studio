@@ -215,7 +215,7 @@ public class Dialogue
     string[] VarrenEncounter = new string[]
     {
         "$PlaySong|StienTheme",
-        "$Move(Varren,-16,-14.3)",
+        "$Move(Varren,-15.75,-14.29)",
         "Varren: Oh? And who might you be?|No one|AHHHHH$Prompt",
         "Protag: Who are you? Where did you come from?$OptionA",
         "Varren: Me? I'm a... resident of this lovely establishment.$OptionA",
@@ -270,8 +270,7 @@ public class Dialogue
         "Varren: Cya later kiddo",
         "$Move(Varren,-11.57,-14.3)",
         "Protag: Well, I guess I should get moving.",
-        "$Kill(Varren)",
-        "$SetQuest(0,0)"
+        "$Kill(Varren)"
     };
     #endregion
     #region Floor 1 Dialog

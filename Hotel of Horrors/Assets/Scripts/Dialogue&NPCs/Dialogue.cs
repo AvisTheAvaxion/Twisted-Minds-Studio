@@ -215,7 +215,7 @@ public class Dialogue
     string[] VarrenEncounter = new string[]
     {
         "$PlaySong|StienTheme",
-        "$Move(Varren,0,-48.32)",
+        "$Move(Varren,-16,-14.3)",
         "Varren: Oh? And who might you be?|No one|AHHHHH$Prompt",
         "Protag: Who are you? Where did you come from?$OptionA",
         "Varren: Me? I'm a... resident of this lovely establishment.$OptionA",
@@ -268,7 +268,7 @@ public class Dialogue
         "Varren: You can't die here, but you still can feel pain. Let's see how far you get before you give up.",
          //"Varren: (disappears into smoke)",
         "Varren: Cya later kiddo",
-        "$Move(Varren,-4,-48.32)",
+        "$Move(Varren,-11.57,-14.3)",
         "Protag: Well, I guess I should get moving.",
         "$Kill(Varren)",
         "$SetQuest(0,0)"

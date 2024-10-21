@@ -161,7 +161,6 @@ public class DialogueManager : MonoBehaviour
                 AudioManager.PlaySong(sound[1]);
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
             else if (lines[currentLine].StartsWith("$Pause"))
             {
@@ -681,6 +680,7 @@ public class DialogueManager : MonoBehaviour
     public void SetCutscene(Dialogue.Dialog newDialog)
     {
         cutscene = newDialog;
+        currentState = CutsceneState.Continue;
         StartCutScene(cutscene.ToString(), 0);
     }
 

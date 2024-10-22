@@ -150,6 +150,7 @@ public class EnemySpawner : MonoBehaviour
     public void ResetSpawner()
     {
         isActiviated = false;
+        waveActive = false;
         queue = new Queue<GameObject>(enemyQueue);
         currentSpawnPerWave = spawnPerWave;
     }

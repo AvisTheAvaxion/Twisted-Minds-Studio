@@ -129,12 +129,11 @@ public class Floor : MonoBehaviour
     /// <returns>The next room's spawn location to teleport the player to</returns>
     public Door getDoorLink(Door.DoorLocations targetOrientation)
     {
-        Door spawnDoor;
-        float difficultyRoll = Random.Range(0, 100);
+        Door doorLink = null;
+        float difficultyRoll = Random.Range(0f, 100f);
+        print("Difficulty Roll: " + difficultyRoll);
         List<Room> possibleRooms = new List<Room>();
 
-        mindRoomChance += mindRoomChanceGained;
-        hallwayChance += hallwayChanceGained;
 
        /* if(roomTraversals >= traversalsForReset)
         {
@@ -177,6 +176,9 @@ public class Floor : MonoBehaviour
             if (debug) print("Travelling to Easy Room");
         }
 
+        mindRoomChance += mindRoomChanceGained;
+        hallwayChance += hallwayChanceGained;
+
         int findAttempts = 0;
         do
         {
@@ -195,16 +197,21 @@ public class Floor : MonoBehaviour
             int next = prng.Next();
             int i = next % possibleRooms.Count;
             if (debug) print("Chosen room index: " + i);
-            spawnDoor = possibleRooms[i].GetTargetDoor(targetOrientation);
+            if (i < possibleRooms.Count)
+            {
+                doorLink = possibleRooms[i].GetTargetDoor(targetOrientation);
+                if (doorLink == null)
+                    possibleRooms.RemoveAt(i);
+            }
 
-        } while (spawnDoor == null);
+        } while (doorLink == null);
 
-        spawnDoor.associatedRoom.doorsAvailable.Remove(spawnDoor);
-        currentRoom = spawnDoor.associatedRoom.roomName;
+        doorLink.associatedRoom.doorsAvailable.Remove(doorLink);
+        currentRoom = doorLink.associatedRoom.roomName;
 
         //questSys.QuestEvent(QuestSystem.QuestEventType.RoomEnter, currentRoom);
 
-        return spawnDoor;
+        return doorLink;
     }
 
     /// <summary>

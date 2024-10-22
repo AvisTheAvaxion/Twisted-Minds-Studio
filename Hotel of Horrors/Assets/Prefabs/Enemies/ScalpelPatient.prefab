@@ -5151,7 +5151,7 @@ MonoBehaviour:
   comradeTag: Enemy
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 16631
+    m_Bits: 28407
   wallMask:
     serializedVersion: 2
     m_Bits: 0
@@ -5236,6 +5236,7 @@ MonoBehaviour:
     maxCount: 1
     weight: 0.05
   emotionalEnergyPrefab: {fileID: 98322870789914543, guid: 88afadea5fb2250408442fb5baf50973, type: 3}
+  deathLayer: 16
   enemyVisuals: {fileID: 6297455237483238175}
   enemyAudioManager: {fileID: 1438359901115324106}
 --- !u!114 &8624140693439099872
@@ -5471,7 +5472,7 @@ PrefabInstance:
       objectReference: {fileID: 435154185, guid: 4775348b10aaee843aa383c58d8a2e12, type: 3}
     - target: {fileID: 5230267096727238034, guid: 73d9eab6937b5464181db21d54ee8ede, type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

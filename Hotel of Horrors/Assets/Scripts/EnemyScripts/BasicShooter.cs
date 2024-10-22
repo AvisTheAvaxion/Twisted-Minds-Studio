@@ -43,11 +43,11 @@ public class BasicShooter : MonoBehaviour
             StartCoroutine(ShootRoutine());
         }
     }
-    public void Attack(Ability ability, Vector3 targetPos)
+    public void Attack(Ability ability, float delay, Vector3 targetPos)
     {
         if (!isShooting)
         {
-            StartCoroutine(ShootRoutine(ability, targetPos));
+            StartCoroutine(ShootRoutine(ability, delay, targetPos));
         }
     }
 
@@ -118,7 +118,7 @@ public class BasicShooter : MonoBehaviour
 
         isShooting = false;
     }
-    IEnumerator ShootRoutine(Ability ability, Vector3 targetPos)
+    IEnumerator ShootRoutine(Ability ability, float delay, Vector3 targetPos)
     {
         if (target != null)
         {
@@ -156,13 +156,13 @@ public class BasicShooter : MonoBehaviour
                     Vector2 rotatedDir = Quaternion.AngleAxis(bulletAngleOffset, Vector3.forward) * dir;
                     newBullet.transform.rotation = Quaternion.FromToRotation(newBullet.transform.up, rotatedDir) * newBullet.transform.rotation;
 
-                    newBullet.GetComponent<Rigidbody2D>().AddForce(newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
+                    //newBullet.GetComponent<Rigidbody2D>().AddForce(newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
 
                     Projectile proj = newBullet.GetComponent<Projectile>();
                     if (proj != null)
                     {
-                        proj.Initialize(ability);
-
+                        proj.Initialize(ability, delay);
+                        proj.StartApplyForce(newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
                         //if (proj is ProjectileBoomerang)
                         //    (proj as ProjectileBoomerang).Initialize(target.position);
                     }

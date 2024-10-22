@@ -7,6 +7,7 @@ public class EnergyMultishot : PlayerAbility
 {
     [Header("Multishot Settings")]
     [SerializeField] BasicShooter shooter;
+    [SerializeField] float shootDelay = 0.25f;
 
     public override void Use(ActionController controller, Ability ability)
     {
@@ -22,8 +23,9 @@ public class EnergyMultishot : PlayerAbility
     IEnumerator Attack()
     {
         isAttacking = true;
-        yield return new WaitForSeconds(0.25f);
+        shooter.Attack(ability, shootDelay, controller.CrosshairPosition);
+        yield return new WaitForSeconds(shootDelay);
+        controller.ShakeCamera(cameraShakeFrequency, Mathf.Max(0.5f, duration), false);
         isAttacking = false;
-        shooter.Attack(ability, controller.CrosshairPosition);
     }
 }

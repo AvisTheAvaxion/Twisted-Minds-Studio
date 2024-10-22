@@ -48,7 +48,8 @@ public class Ability
         currentLevel = abilitySave.currentLevel;
         cooldown = abilitySave.cooldown;
         duration = abilitySave.duration;
-        damage = abilitySave.size;
+        damage = abilitySave.damage;
+        size = abilitySave.size;
         range = abilitySave.range;
 
         numberOfProjectiles = abilitySave.numberOfProjectiles;

@@ -27,6 +27,7 @@ public class InventoryGUI : MonoBehaviour
     [SerializeField] TMP_Text selectedItemEffects;
     [SerializeField] TMP_Text selectedAbilityCooldown;
     [SerializeField] GameObject equipButton;
+    [SerializeField] GameObject destroyButton;
     [SerializeField] TMP_Text equipButtonText;
     [SerializeField] Sprite defaultSelectedSprite;
 
@@ -106,6 +107,7 @@ public class InventoryGUI : MonoBehaviour
             {
                 weaponSlots[selectedWeaponIndex].SelectImage(true);
                 equipButton.SetActive(true);
+                destroyButton.SetActive(true);
                 if (selectedWeaponIndex == inventory.currentWeaponIndex)
                     equipButtonText.text = "Unequip";
                 else
@@ -114,6 +116,7 @@ public class InventoryGUI : MonoBehaviour
             else
             {
                 equipButton.SetActive(false);
+                destroyButton.SetActive(false);
             }
         }
         else if (tab == 1)
@@ -122,6 +125,7 @@ public class InventoryGUI : MonoBehaviour
             {
                 itemSlots[selectedItemIndex].SelectImage(true);
                 equipButton.SetActive(true);
+                destroyButton.SetActive(true);
                 if (selectedItemIndex == inventory.currentItemIndex)
                     equipButtonText.text = "Unequip";
                 else
@@ -130,6 +134,7 @@ public class InventoryGUI : MonoBehaviour
             else
             {
                 equipButton.SetActive(false);
+                destroyButton.SetActive(false);
             }
         }
         else if (tab == 2)
@@ -141,6 +146,7 @@ public class InventoryGUI : MonoBehaviour
             {
                 abilitySlots[selectedAbilityIndex].SelectImage(true);
                 equipButton.SetActive(true);
+                destroyButton.SetActive(false);
                 if (selectedAbilityIndex == inventory.currentAbilityIndex)
                     equipButtonText.text = "Unequip";
                 else
@@ -149,6 +155,7 @@ public class InventoryGUI : MonoBehaviour
             else
             {
                 equipButton.SetActive(false);
+                destroyButton.SetActive(false);
             }
         }
 
@@ -465,5 +472,35 @@ public class InventoryGUI : MonoBehaviour
         equipButton.SetActive(false);
 
         UpdateGUI();
+    }
+
+    public void DestroyCurrentItem()
+    {
+        if (tab == 0)
+        {
+            if(selectedWeaponIndex >= 0)
+            {
+                if (selectedWeaponIndex == inventory.currentWeaponIndex)
+                    EquipWeapon(-1);
+
+                inventory.RemoveWeapon(selectedWeaponIndex);
+                weaponSlots[selectedWeaponIndex].SelectImage(false);
+                selectedWeaponIndex = -1;
+                SetUnselected();
+            }
+        }
+        else if (tab == 1)
+        {
+            if(selectedItemIndex >= 0)
+            {
+                if (selectedItemIndex == inventory.currentItemIndex)
+                    EquipItem(-1);
+
+                inventory.RemoveItem(selectedItemIndex);
+                itemSlots[selectedItemIndex].SelectImage(false);
+                selectedItemIndex = -1;
+                SetUnselected();
+            }
+        }
     }
 }

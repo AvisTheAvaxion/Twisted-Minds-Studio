@@ -15,11 +15,16 @@ public class Projectile : MonoBehaviour
     [SerializeField] bool goThroughWalls = false;
     [SerializeField] GameObject impactEffect;
 
+    protected Animator animator;
+
     protected Rigidbody2D rb;
+    protected Collider2D collider;
 
     int targetsHit = 0;
 
     int wallBounces = 0;
+
+    float forceDelay;
 
     protected virtual void Start()
     {
@@ -27,7 +32,10 @@ public class Projectile : MonoBehaviour
         wallBounces = 0;
 
         rb = GetComponent<Rigidbody2D>();
-    } 
+        animator = GetComponent<Animator>();
+
+        collider = GetComponent<Collider2D>();
+    }
 
     public virtual void Initialize(Ability ability)
     {
@@ -37,16 +45,89 @@ public class Projectile : MonoBehaviour
         goThroughWalls = ability.goThroughWalls;
         chanceToInflictEffect = ability.GetInfo().GetChanceToInflicEffects();
         effectsToInflict = ability.GetInfo().GetEffectsToInflict();
+
+        forceDelay = 0;
+    }
+    public virtual void Initialize(Ability ability, float forceDelayIn)
+    {
+        damage = (int)ability.damage;
+        deflectionResistance = ability.deflectionResistance;
+        maxTargets = ability.maxTargets;
+        goThroughWalls = ability.goThroughWalls;
+        chanceToInflictEffect = ability.GetInfo().GetChanceToInflicEffects();
+        effectsToInflict = ability.GetInfo().GetEffectsToInflict();
+
+        forceDelay = forceDelayIn;
+        collider = GetComponent<Collider2D>();
+        collider.enabled = false;
+    }
+    public virtual void Initialize(Weapon weapon, int deflectionResistance, int maxTargets, bool goThroughWalls, float forceDelayIn)
+    {
+        this.deflectionResistance = deflectionResistance;
+        this.maxTargets = maxTargets;
+        this.goThroughWalls = goThroughWalls;
+
+        damage = weapon.damage;
+        chanceToInflictEffect = weapon.GetInfo().GetChanceToInflictEffect();
+        effectsToInflict = weapon.GetInfo().GetEffectsToInflict();
+
+        forceDelay = forceDelayIn;
+        collider = GetComponent<Collider2D>();
+        collider.enabled = false;
+    }
+    public virtual void Initialize(Weapon weapon, float forceDelayIn)
+    {
+        damage = weapon.damage;
+        chanceToInflictEffect = weapon.GetInfo().GetChanceToInflictEffect();
+        effectsToInflict = weapon.GetInfo().GetEffectsToInflict();
+
+        forceDelay = forceDelayIn;
+        collider = GetComponent<Collider2D>();
+        collider.enabled = false;
     }
 
-    protected virtual void DestroySelf()
+    public virtual void StartApplyForce(Vector2 force, ForceMode2D forceMode)
     {
-        Destroy(gameObject);
+        StartCoroutine(ApplyForce(force, forceMode));
+    }
+
+    IEnumerator ApplyForce(Vector2 force, ForceMode2D forceMode)
+    {
+        yield return new WaitForSeconds(forceDelay);
+        collider.enabled = true;
+        rb.AddForce(force, forceMode);
+    }
+
+    protected virtual void DestroySelf(bool hitWall = false)
+    {
+        if(hitWall)
+        {
+            Destroy(gameObject);
+        } 
+        else
+        {
+            rb.velocity = Vector2.zero;
+            if (animator != null)
+            {
+                animator.SetTrigger("Destroy");
+                collider.enabled = false;
+                Destroy(gameObject, 1f);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    protected bool CheckWallCollision(Collider2D collision)
+    {
+        return collision.tag.Equals("Wall") || collision.tag.Equals("WestDoor") || collision.tag.Equals("EastDoor") || collision.tag.Equals("NorthDoor") || collision.tag.Equals("SouthDoor");
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag.Equals("Wall") && !goThroughWalls)
+        if(CheckWallCollision(collision) && !goThroughWalls)
         {
             if (wallBounces < maxWallBounces)
             {
@@ -69,7 +150,7 @@ public class Projectile : MonoBehaviour
                     Destroy(Instantiate(impactEffect, impactSpawnPoint, rot), 1.5f);
                 }
 
-                DestroySelf();
+                DestroySelf(true);
             }
         }
         else if(collision.tag.Equals("MeleeStrike"))
@@ -80,7 +161,6 @@ public class Projectile : MonoBehaviour
                 Rigidbody2D rb = GetComponent<Rigidbody2D>();
                 Vector2 dir = -rb.velocity.normalized;
                 rb.velocity = Vector2.zero;
-                //Vector2 dir = //Vector2.Reflect(-transform.up, collision.transform.up);
                 rb.AddForce(dir * (meleeStrike.GetDeflectionStrength()), ForceMode2D.Impulse);
 
                 transform.rotation = Quaternion.FromToRotation(transform.up, dir) * transform.rotation;
@@ -151,7 +231,7 @@ public class Projectile : MonoBehaviour
                         }
                         targetsHit++;
                         if (targetsHit >= maxTargets)
-                            Destroy(gameObject);
+                            DestroySelf();
                     }
                 }
             }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 42c27b3088ff7e84398c18a160d1f5fc
+guid: c8f6cc9ae815f7d40b140397b02f5975
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EmotionalEnergyProjectile_0
+      name: Scalpel_ability_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 36
-        width: 36
-        height: 36
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b00224504b58e014b9a8f9bf16329cdd
-      internalID: 846019957
+      spriteID: 5ffcefd0ade654c498d62e8378756af3
+      internalID: -266110359
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmotionalEnergyProjectile_1
+      name: Scalpel_ability_1
       rect:
         serializedVersion: 2
-        x: 36
-        y: 36
-        width: 36
-        height: 36
+        x: 48
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e1e41c764c6dc54aa7d0c8cd6265214
-      internalID: -1060085609
+      spriteID: e60ca773bc4e00544a3ee7ae36899f4c
+      internalID: 1312934938
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmotionalEnergyProjectile_2
+      name: Scalpel_ability_2
       rect:
         serializedVersion: 2
-        x: 72
-        y: 36
-        width: 36
-        height: 36
+        x: 96
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +179,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69e613916d7d70f42a20b7227859da90
-      internalID: -1995159547
+      spriteID: c6864d4fd9268a0499352e433cb1521e
+      internalID: -182187481
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmotionalEnergyProjectile_3
+      name: Scalpel_ability_3
       rect:
         serializedVersion: 2
-        x: 108
-        y: 36
-        width: 36
-        height: 36
+        x: 144
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,20 +200,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d2587d97707db94e9687a08ebdc6142
-      internalID: -424340795
+      spriteID: 3f64fc8cf369d6c4e8c51f60efe534d4
+      internalID: -121207440
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmotionalEnergyProjectile_4
+      name: Scalpel_ability_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd381c6567235334296c0604b49c5004
+      internalID: -12878820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scalpel_ability_5
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4450d05174c25df459d2cf8444689afc
+      internalID: 1775714270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scalpel_ability_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 36
-        height: 36
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,20 +263,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d96ab0bf60b1aba4daa3ce51b98d5b6a
-      internalID: -58116771
+      spriteID: 434d363c85a55bd47863d6c3613178c5
+      internalID: -453630631
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EmotionalEnergyProjectile_5
+      name: Scalpel_ability_7
       rect:
         serializedVersion: 2
-        x: 36
+        x: 48
         y: 0
-        width: 36
-        height: 36
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,50 +284,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b47813ce33187c945b49f261e7ed6626
-      internalID: 1818616411
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EmotionalEnergyProjectile_6
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 0
-        width: 36
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: db3fea7c24879c046a70a714fbc137d4
-      internalID: 2032775258
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EmotionalEnergyProjectile_7
-      rect:
-        serializedVersion: 2
-        x: 108
-        y: 0
-        width: 36
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e82ce8df213815e4eaa9832200bff548
-      internalID: -95159246
+      spriteID: 47ccf0ebc217cf54886fe67f9fa767c3
+      internalID: -209903399
       vertices: []
       indices: 
       edges: []
@@ -301,14 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      EmotionalEnergyProjectile_0: 846019957
-      EmotionalEnergyProjectile_1: -1060085609
-      EmotionalEnergyProjectile_2: -1995159547
-      EmotionalEnergyProjectile_3: -424340795
-      EmotionalEnergyProjectile_4: -58116771
-      EmotionalEnergyProjectile_5: 1818616411
-      EmotionalEnergyProjectile_6: 2032775258
-      EmotionalEnergyProjectile_7: -95159246
+      Scalpel_ability_0: -266110359
+      Scalpel_ability_1: 1312934938
+      Scalpel_ability_2: -182187481
+      Scalpel_ability_3: -121207440
+      Scalpel_ability_4: -12878820
+      Scalpel_ability_5: 1775714270
+      Scalpel_ability_6: -453630631
+      Scalpel_ability_7: -209903399
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

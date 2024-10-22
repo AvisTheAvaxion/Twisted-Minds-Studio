@@ -18,7 +18,7 @@ public class ProjectileSplit : Projectile
         Invoke("DestroySelf", timeTillDestroy);
     }
 
-    protected override void DestroySelf()
+    protected override void DestroySelf(bool hitWall = false)
     {
         float startAngle, currentAngle, angleStep, endAngle;
         TargetConeOfInfluence(out startAngle, out currentAngle, out angleStep, out endAngle);

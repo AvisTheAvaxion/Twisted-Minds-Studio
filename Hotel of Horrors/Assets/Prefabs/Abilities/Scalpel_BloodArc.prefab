@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 2249774550089054955}
   - component: {fileID: 6308824492288706587}
   - component: {fileID: 7257209097732957606}
-  - component: {fileID: 7474245149075927392}
   - component: {fileID: 1580232807614606665}
+  - component: {fileID: 7357103478933820486}
   m_Layer: 15
-  m_Name: EmotionalEnergyProjectile
+  m_Name: Scalpel_BloodArc
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -424340795, guid: 42c27b3088ff7e84398c18a160d1f5fc, type: 3}
+  m_Sprite: {fileID: -121207440, guid: c8f6cc9ae815f7d40b140397b02f5975, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.36, y: 0.36}
+  m_Size: {x: 0.48, y: 0.48}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -130,14 +130,36 @@ MonoBehaviour:
   damage: 15
   hitStopLength: 0.065
   deflectionResistance: 0
-  chanceToInflictEffect: 0
-  effectsToInflict: []
-  maxTargets: 2
-  maxWallBounces: 1
+  chanceToInflictEffect: 1
+  effectsToInflict:
+  - {fileID: 11400000, guid: 468c61e0eca26bd49b25067517367bd7, type: 2}
+  maxTargets: 1
+  maxWallBounces: 0
   goThroughWalls: 0
   impactEffect: {fileID: 9071062035390458290, guid: 8817c3f378e9eb643884dd6d5e5feec9, type: 3}
---- !u!58 &7474245149075927392
-CircleCollider2D:
+--- !u!95 &1580232807614606665
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596976630600310531}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cbc1cef7d5e1a9048af6187ed8170ea6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!60 &7357103478933820486
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -169,26 +191,27 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.12
---- !u!95 &1580232807614606665
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1596976630600310531}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3edda94910b2ee743b3d9905b05906ee, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.48, y: 0.48}
+    newSize: {x: 0.48, y: 0.48}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.21301061, y: -0.05630862}
+      - {x: 0.18670195, y: -0.019319212}
+      - {x: 0.12961675, y: 0.03912758}
+      - {x: 0.07223399, y: 0.062233992}
+      - {x: -0.08893596, y: 0.05602119}
+      - {x: -0.19903177, y: -0.024170442}
+      - {x: -0.22, y: -0.14}
+      - {x: -0.19999999, y: -0.14999999}
+      - {x: -0.15912758, y: -0.10281896}
+      - {x: -0.08, y: -0.08}
+      - {x: 0.06610689, y: -0.07641453}
+      - {x: 0.22, y: -0.14}
+  m_UseDelaunayMesh: 0

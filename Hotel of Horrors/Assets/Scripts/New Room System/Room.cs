@@ -70,14 +70,22 @@ public class Room : MonoBehaviour
 
     public Door GetTargetDoor(Door.DoorLocations targetLocation) 
     {
+        List<Door> otherDoors = new List<Door>();
         foreach (Door door in doorsAvailable)
         {
             if (door.doorLocation.Equals(targetLocation))
             {
                 return door;
             }
+            else if (!(targetLocation == Door.DoorLocations.North && door.doorLocation == Door.DoorLocations.South) &&
+                !(targetLocation == Door.DoorLocations.South && door.doorLocation == Door.DoorLocations.North) &&
+                !(targetLocation == Door.DoorLocations.East && door.doorLocation == Door.DoorLocations.West) &&
+                !(targetLocation == Door.DoorLocations.West && door.doorLocation == Door.DoorLocations.East))
+            {
+                otherDoors.Add(door);
+            }
         }
-        return null;
+        return otherDoors.Count > 0 ? otherDoors[Random.Range(0, otherDoors.Count)] : null;
     }
 
     public void MakeElevatorDoor()

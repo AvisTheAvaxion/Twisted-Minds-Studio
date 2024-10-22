@@ -31,9 +31,10 @@ public class Objectives
 
     public enum ObjectiveTriggers
     {
-        SameRoomTrigger,
+        VarrenTrigger,
         InventoryTutorialTrigger,
-        CombatTutorialTrigger
+        CombatTutorialTrigger,
+        MindRoomTrigger
     }
 
     /*  Cheat sheet for string formatting
@@ -53,10 +54,12 @@ public class Objectives
     string[] Floor0 = new string[] {
         "QuestTitle|Explore",
         "SetCutscene|WakeUpTutorial",
-        "TripTrigger|SameRoomTrigger",
-        "SetCutscene|SameRoomAgain",
+        "TripTrigger|VarrenTrigger",
+        "SetCutscene|VarrenEncounter",
         "TripTrigger|InventoryTutorialTrigger",
         "SetCutscene|InventoryTutorial",
+        "TripTrigger|MindRoomTrigger",
+        "SetCutscene|MindRoom",
         "TripTrigger|CombatTutorialTrigger",
         "SetCutscene|CombatTutorial",
         "ClearFloor"

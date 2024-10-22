@@ -33,7 +33,8 @@ public class Objectives
     {
         VarrenTrigger,
         InventoryTutorialTrigger,
-        CombatTutorialTrigger
+        CombatTutorialTrigger,
+        MindRoomTrigger
     }
 
     /*  Cheat sheet for string formatting
@@ -57,6 +58,8 @@ public class Objectives
         "SetCutscene|VarrenEncounter",
         "TripTrigger|InventoryTutorialTrigger",
         "SetCutscene|InventoryTutorial",
+        "TripTrigger|MindRoomTrigger",
+        "SetCutscene|MindRoom",
         "TripTrigger|CombatTutorialTrigger",
         "SetCutscene|CombatTutorial",
         "ClearFloor"

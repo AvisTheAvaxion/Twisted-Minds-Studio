@@ -100,6 +100,8 @@ public class DialogueManager : MonoBehaviour
         lines = dialogue.getDialogue(dialogueName);
         currentLine = line;
         inCutscene = true;
+        nameBox.text = "";
+        textBox.text = "";
         OnDialogueUpdate();
     }
 
@@ -251,18 +253,23 @@ public class DialogueManager : MonoBehaviour
                 string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
                 string[] splitString = moveInfo.Split(',');
                 playerAudio.NextLine(currentLine);
-                if (splitString[0] == "Main Camera")
-                {
-                    Vector3 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
-                    Transform cameraTransform = GameObject.Find(splitString[0]).transform;
-                    target.z = cameraTransform.position.z;
-                    StartCoroutine(MoveCamera(.05f, cameraTransform, target));
-                }
-                else
-                {
-                    Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
-                    SetMoveCharacterInfo(splitString[0], 2, target);
-                }
+
+                Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
+                SetMoveCharacterInfo(splitString[0], 2, target);
+            }
+            else if (lines[currentLine].EndsWith("$MoveViaLerp") || lines[currentLine].StartsWith("$MoveViaLerp"))
+            {
+                currentState = CutsceneState.Waiting;
+                int moveStartIndex = lines[currentLine].IndexOf('(');
+                int moveEndIndex = lines[currentLine].IndexOf(')');
+                string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
+                string[] splitString = moveInfo.Split(',');
+                playerAudio.NextLine(currentLine);
+
+                Vector3 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
+                Transform objTransform = GameObject.Find(splitString[0]).transform;
+                target.z = objTransform.position.z;
+                StartCoroutine(MoveViaLerp(.05f, objTransform, target));
             }
             else if (lines[currentLine].EndsWith("$Tele") || lines[currentLine].StartsWith("$Tele"))
             {
@@ -296,11 +303,11 @@ public class DialogueManager : MonoBehaviour
                 GameObject character = GameObject.Find(splitString[0]);
                 if (bool.Parse(splitString[1]) == true)
                 {
-                    character.GetComponent<AfterImage>().StartEffect();
+                    character.transform.GetChild(0).GetComponent<AfterImage>().StartEffect();
                 }
                 else
                 {
-                    character.GetComponent<AfterImage>().StopEffect();
+                    character.transform.GetChild(0).GetComponent<AfterImage>().StopEffect();
                 }
                 currentLine++;
                 OnDialogueUpdate();
@@ -479,6 +486,7 @@ public class DialogueManager : MonoBehaviour
         {
             currentState = CutsceneState.Continue;
             CanvasSwitch(false);
+            ButtonSwitch(false);
             uiCanvas.SetActive(true);
             ResetCamera();
             movement.EndCutscene();
@@ -545,9 +553,8 @@ public class DialogueManager : MonoBehaviour
     #endregion
 
     #region CutsceneMovement
-    IEnumerator MoveCamera(float time, Transform cameraTransform, Vector3 target)
+    IEnumerator MoveViaLerp(float time, Transform cameraTransform, Vector3 target)
     {
-        
         float interpol = 0;
         while (cameraTransform.localPosition != target)
         {
@@ -597,7 +604,7 @@ public class DialogueManager : MonoBehaviour
             OnDialogueUpdate();
             currentState = CutsceneState.Continue;
         }
-        else
+        else if(characterAnimator != null)
         {
             characterAnimator.SetBool("isWalking", true);
             characterAnimator.SetFloat("x", characterRB2D.velocity.x);

@@ -15,6 +15,8 @@ public class Dialogue
                 return SameRoomAgain;
             case "InventoryTutorial":
                 return InventoryTutorial;
+            case "MindRoom":
+                return MindRoom;
             case "CombatTutorial":
                 return CombatTutorial;
             case "FirstMonster":
@@ -56,6 +58,7 @@ public class Dialogue
         WakeUpTutorial,
         SameRoomAgain,
         InventoryTutorial,
+        MindRoom,
         CombatTutorial,
         FirstMonster,
         VarrenEncounter,
@@ -197,9 +200,12 @@ public class Dialogue
     string[] CombatTutorial = new string[]
     {
         //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
+        "$Move(Player,20.265,2.898)",
         "Protag: A monster!",
         "Protag: This is a good time to try testing my dagger",
         //Protag charges at the cleaning lady, who dodges the attack
+        "$Move(Player,20.265,2.282)",
+        "$Tele(SlimeLady,20.26,3.09)",
         "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
         "Protag: You can talk?",
         "Monster: Why wouldn't I be able to? My name is Samantha, and yours?|Blaze|What's it matter to you|$Prompt",
@@ -225,11 +231,11 @@ public class Dialogue
         "$PlaySong|StienTheme",
         "$Move(Varren,-15.75,-14.29)",
         "Varren: Oh? And who might you be?|No one|AHHHHH$Prompt",
-        "Protag: Who are you? Where did you come from?$OptionA",
-        "Varren: Me? I'm a... resident of this lovely establishment.$OptionA",
-        "Protag: A GHOST!!!$OptionB",
-        "Varren: Calm down kid, I'm not a ghost.$OptionB",
-        "Varren: I'm just another person trapped here like you.$OptionB",
+        "Protag: Who are you? Where did you come from? $OptionA",
+        "Varren: Me? I'm a... resident of this lovely establishment. $OptionA",
+        "Protag: A GHOST!!! $OptionB",
+        "Varren: Calm down kid, I'm not a ghost. $OptionB",
+        "Varren: I'm just another person trapped here like you. $OptionB",
         "$Emote|Protag|Angry",
         //Line above is a test line
         "Protag: Where are we?",

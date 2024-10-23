@@ -263,28 +263,28 @@ public class PlayerMovement : MonoBehaviour
                 if (dashPartcileSpawn && dashParticles[0]) Destroy(Instantiate(dashParticles[0], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
 
                 direction = "North";
-                animator.runtimeAnimatorController = backController;
+                //animator.runtimeAnimatorController = backController;
             }
             else if (movementVector.y <= -0.1f)
             {
                 if (dashPartcileSpawn && dashParticles[1]) Destroy(Instantiate(dashParticles[1], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
 
                 direction = "South";
-                animator.runtimeAnimatorController = forwardController;
+                //animator.runtimeAnimatorController = forwardController;
             }
             else if (movementVector.x <= -0.1f)
             {
                 if (dashPartcileSpawn && dashParticles[2]) Destroy(Instantiate(dashParticles[2], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
 
                 direction = "West";
-                animator.runtimeAnimatorController = leftController;
+                //animator.runtimeAnimatorController = leftController;
             }
             else if (movementVector.x >= 0.1f)
             {
                 if (dashPartcileSpawn && dashParticles[3]) Destroy(Instantiate(dashParticles[3], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
 
                 direction = "East";
-                animator.runtimeAnimatorController = rightController;
+                //animator.runtimeAnimatorController = rightController;
             } else
             {
                 return; 

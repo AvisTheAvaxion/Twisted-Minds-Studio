@@ -16,12 +16,14 @@ public class QuestSystem : MonoBehaviour
 
     DialogueManager dialogueManager;
     PlayerInventory inventory;
+    Floor currentFloor;
     QuestGUI questGUI;
     private void Awake()
     {
         objectives = new Objectives();
         dialogueManager = FindObjectOfType<DialogueManager>();
         inventory = FindObjectOfType<PlayerInventory>();
+        currentFloor = FindObjectOfType<Floor>();
         questGUI = FindObjectOfType<QuestGUI>();
         inventory.OnItemCollect += ItemPickUpDetected;
         inventory.OnEnergyCollect += EnergyPickUpDetected;
@@ -319,6 +321,12 @@ public class QuestSystem : MonoBehaviour
                     SetQuestTitle("The Big Day");
                     SetQuestDesc("Get the patient's jersy");
                     TeleportGameobject("FrankJersey(Quest)", new Vector2(63.3892f, -28.0588f));
+                    break;
+                case 8:
+                    currentFloor.UnlockToBossDoor();
+                    break;
+                case 9:
+                    currentFloor.UnlockFromBossDoor();
                     break;
             }
         }

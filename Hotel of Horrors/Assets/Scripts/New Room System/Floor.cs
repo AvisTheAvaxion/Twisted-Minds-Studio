@@ -40,6 +40,10 @@ public class Floor : MonoBehaviour
     [SerializeField] float hallwayChance = 0f;
     [SerializeField] float peacefulRoomChance = 0f;
 
+    [Header("Boss Room")]
+    [SerializeField] DirectDoor toBossDoor;
+    [SerializeField] DirectDoor fromBossDoor;
+
     public float MediumChance { get => mediumChance; }
     public float HardChance { get => hardChance; }
 
@@ -57,7 +61,10 @@ public class Floor : MonoBehaviour
         allRooms = FindObjectsOfType<Room>();
 
         currentFloor = floorNumber;
-        if (currentFloor < maxFloorTraveledTo) maxFloorTraveledTo = currentFloor;
+        if (currentFloor > maxFloorTraveledTo) maxFloorTraveledTo = currentFloor;
+
+        toBossDoor.LockDoor();
+        fromBossDoor.LockDoor();
 
         roomsByCategory.Add("Peaceful", new List<Room>());
         roomsByCategory.Add("Easy", new List<Room>());
@@ -338,6 +345,15 @@ public class Floor : MonoBehaviour
             ResetDoorLinks();
             roomTraversals = 0;
         }
+    }
+
+    public void UnlockToBossDoor()
+    {
+        toBossDoor.UnlockDoor();
+    }
+    public void UnlockFromBossDoor()
+    {
+        fromBossDoor.UnlockDoor();
     }
 
     public void LoadData(SerializedClass save)

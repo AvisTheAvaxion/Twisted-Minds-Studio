@@ -13,6 +13,7 @@ public class DirectDoor : MonoBehaviour
     public Room associatedRoom;
     public Transform spawnLocation;
 
+    [SerializeField] Animator animator;
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] Image fadeImage;
 
@@ -29,6 +30,8 @@ public class DirectDoor : MonoBehaviour
     {
         floor = FindObjectOfType<Floor>();
         associatedRoom = GetComponentInParent<Room>();
+
+        animator = GetComponent<Animator>();
 
         if(fadeImage == null)
             fadeImage = GameObject.Find("Fade to Black Image").GetComponent<Image>();
@@ -55,8 +58,7 @@ public class DirectDoor : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        if (collision.gameObject.tag.Equals("Player"))
+        if (!locked && collision.gameObject.tag.Equals("Player"))
         {
             StartCoroutine(TeleportPlayer(collision.gameObject));
         }
@@ -102,5 +104,18 @@ public class DirectDoor : MonoBehaviour
             player.GetComponent<Animator>().SetBool("isWalking", true);
         else
             player.GetComponent<Animator>().SetBool("isWalking", false);
+    }
+
+    public void LockDoor()
+    {
+        locked = true;
+        if(animator)
+            animator.SetBool("Locked", true);
+    }
+    public void UnlockDoor()
+    {
+        locked = false;
+        if (animator)
+            animator.SetBool("Locked", false);
     }
 }

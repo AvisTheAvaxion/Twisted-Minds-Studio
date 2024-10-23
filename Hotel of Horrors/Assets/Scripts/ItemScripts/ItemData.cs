@@ -5,11 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class ItemData : MonoBehaviour
 {
-    [SerializeField] UseableInfo thisItemData;
-    [SerializeField] int count = 1;
-    [SerializeField] float activationTime = 0.7f;
-    [SerializeField] int defaultLayer;
-    [SerializeField] int collectableLayer;
+    [SerializeField] protected UseableInfo thisItemData;
+    [SerializeField] protected int count = 1;
+    [SerializeField] protected float activationTime = 0.7f;
+    [SerializeField] protected int defaultLayer;
+    [SerializeField] protected int collectableLayer;
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class ItemData : MonoBehaviour
     {
         return count;
     }
-    public void SetItemData(UseableInfo item, int count)
+    public virtual void SetItemData(UseableInfo item, int count)
     {
         thisItemData = item;
         this.count = count;
@@ -34,7 +34,7 @@ public class ItemData : MonoBehaviour
         if (spriteRenderer) spriteRenderer.sprite = item.GetSprite();
     }
 
-    void ActivateCollider()
+    protected void ActivateCollider()
     {
         gameObject.layer = collectableLayer;
         //GetComponent<Collider2D>().enabled = true;

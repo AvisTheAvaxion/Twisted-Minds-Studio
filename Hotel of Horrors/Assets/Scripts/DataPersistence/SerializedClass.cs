@@ -26,12 +26,22 @@ public class SerializedClass
     public int currentAbilityIndex;
     public int currentMementoIndex;
 
+    public float mediumRoomChance;
+    public float hardRoomChance;
+
+    public int maxLevelTravelledTo;
+
     //public List<Quest> quests;
 
-    public SerializedClass(PlayerInventory inventory)
+    public SerializedClass(PlayerInventory inventory, Floor floorObj)
     {
-        level = SceneManager.GetActiveScene().buildIndex; 
-        maxLevelAchieved = -1; //initalizing to -1 until evelator is implemented
+        //level = SceneManager.GetActiveScene().buildIndex; 
+        level = Floor.currentFloor; 
+        maxLevelAchieved = Floor.maxFloorUnlocked; //initalizing to -1 until evelator is implemented
+        maxLevelTravelledTo = Floor.maxFloorTraveledTo;
+
+        mediumRoomChance = floorObj.MediumChance;
+        hardRoomChance = floorObj.HardChance;
 
         PlayerInventory playerInventory = inventory;
 
@@ -115,11 +125,11 @@ public class SerializedClass
         //quests = questManager.GetQuests();
     }
 
-    public void OverWriteData(PlayerInventory inventory)
+    public void OverWriteData(PlayerInventory inventory, Floor floor)
     {
         //set all the corresponding variables in their home scripts
         inventory.LoadInventory(this);
-
+        floor.LoadData(this);
     }
 }
 

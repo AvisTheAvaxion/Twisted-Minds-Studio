@@ -42,6 +42,13 @@ public abstract class BossStateMachine : MonoBehaviour
     [SerializeField] protected CameraShake cameraShake;
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
+    [Header("Drop Settings")]
+    [SerializeField] MementoInfo mementoInfo;
+    [SerializeField] int emotionalEnergyWorth = 500;
+    [SerializeField] GameObject holderPrefab;
+    [SerializeField] float dropRadius = 0.2f;
+    [SerializeField] float startHeight = 0.2f;
+    [SerializeField] float upwardsVelocity = 0.2f;
     [Header("Dialogue Settings")]
     [SerializeField] protected DialogueManager DialogueManager;
     [SerializeField] protected Dialogue.Dialog openCutscene;
@@ -133,12 +140,28 @@ public abstract class BossStateMachine : MonoBehaviour
     protected abstract IEnumerator DeathSequence();
     protected virtual void OnDeath()
     {
+        if (Floor.maxFloorUnlocked <= Floor.currentFloor)
+            Floor.maxFloorUnlocked = Floor.currentFloor + 1;
+
         isDying = true;
         StartCoroutine(DeathSequence());
     }
 
     protected abstract void Enrage();
     protected abstract void Disenrage();
+
+    protected virtual void SpawnMemento()
+    {
+        GameObject go = Instantiate(holderPrefab, transform.position, Quaternion.identity);
+        MementoData data = go.GetComponent<MementoData>();
+        if (data) data.SetItemData(mementoInfo, 1, emotionalEnergyWorth);
+        CustomRigidbody2D rb = go.GetComponent<CustomRigidbody2D>();
+        if (rb)
+        {
+            rb.Initialize(startHeight, UnityEngine.Random.Range(0f, upwardsVelocity));
+            rb.AddForce(GetRandomDir() * dropRadius * 2, ForceMode2D.Impulse);
+        }
+    }
 
     /// <summary>
     /// Flips the sprite if necessary

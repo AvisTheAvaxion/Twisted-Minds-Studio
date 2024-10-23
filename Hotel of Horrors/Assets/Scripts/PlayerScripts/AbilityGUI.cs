@@ -139,7 +139,7 @@ public class AbilityGUI : MonoBehaviour
     {
         AbilityInfo abilityInfo = possibleAbilities[index];
 
-        if(inventory.emotionalEnergy >= abilityInfo.GetUnlockEECost())
+        if(Floor.maxFloorTraveledTo >= abilityInfo.GetUnlockFloor() && inventory.emotionalEnergy >= abilityInfo.GetUnlockEECost())
         {
             Ability ability = new Ability(abilityInfo);
 

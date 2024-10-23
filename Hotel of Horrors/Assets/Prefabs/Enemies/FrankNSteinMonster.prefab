@@ -10003,18 +10003,24 @@ MonoBehaviour:
   cameraShake: {fileID: 0}
   flipToRotate: 1
   transformToFlip: {fileID: 2881490729553979416}
+  mementoInfo: {fileID: 11400000, guid: 866273d950dfe9a4290791e45d363b3d, type: 2}
+  emotionalEnergyWorth: 500
+  holderPrefab: {fileID: 860357181134211097, guid: d244afbe275b70742bf86acf65bf525d, type: 3}
+  dropRadius: 0.2
+  startHeight: 0.2
+  upwardsVelocity: 0.2
   DialogueManager: {fileID: 0}
   openCutscene: 11
   stages:
   - stage: 1
-    healthThresholdToNextStage: 150
+    healthThresholdToNextStage: 250
     attackSequence: 000000000000000001000000
-    cutscene: 0
-    correctChoice: 2
+    cutscene: 19
+    correctChoice: 1
   - stage: 2
     healthThresholdToNextStage: 0
     attackSequence: 00000000010000000000000001000000
-    cutscene: 0
+    cutscene: 12
     correctChoice: 0
   animator: {fileID: 3622643437465758043}
   afterImage: {fileID: 7322350937174340592}
@@ -10027,7 +10033,7 @@ MonoBehaviour:
     walkSpeed: 0.8
     normalKnockback: 0
     normalContactDamage: 0
-    chargeSpeed: 75
+    chargeSpeed: 15
     chargeLength: 3
     chargeDamage: 10
     chargeKnockback: 8

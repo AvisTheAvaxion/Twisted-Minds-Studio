@@ -100,7 +100,10 @@ public class PlayerInventory : MonoBehaviour
             }
             else if (useable.GetType() == typeof(MementoInfo))
             {
+                MementoData mementoData = (MementoData)data;
                 remove = AddMemento((MementoInfo)useable);
+                OnEnergyCollect?.Invoke(mementoData.eeWorth.ToString(), EventArgs.Empty);
+                AddEmotionalEnergy(mementoData.eeWorth);
             }
             else if (useable.GetType() == typeof(WeaponInfo))
             {

@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class Floor : MonoBehaviour
 {
+    public static int maxFloorUnlocked = 1;
+    public static int maxFloorTraveledTo = 1;
+    public static int currentFloor { get; private set; }
+
     Room[] allRooms;
     PlayerInventory playerInventoryRef;
     QuestSystem questSys;
     Dictionary<string, Room> roomsByName = new Dictionary<string, Room>();
     Dictionary<string, List<Room>> roomsByCategory = new Dictionary<string, List<Room>>();
     int emotionalEnergyGained;
+
+    [SerializeField] int floorNumber = 1;
 
     [SerializeField] int traversalsForReset = 5;
     int roomTraversals = 0;
@@ -34,6 +40,9 @@ public class Floor : MonoBehaviour
     [SerializeField] float hallwayChance = 0f;
     [SerializeField] float peacefulRoomChance = 0f;
 
+    public float MediumChance { get => mediumChance; }
+    public float HardChance { get => hardChance; }
+
     string currentRoom;
     int enemiesToKill = 0;
 
@@ -46,6 +55,9 @@ public class Floor : MonoBehaviour
     private void Start()
     {
         allRooms = FindObjectsOfType<Room>();
+
+        currentFloor = floorNumber;
+        if (currentFloor < maxFloorTraveledTo) maxFloorTraveledTo = currentFloor;
 
         roomsByCategory.Add("Peaceful", new List<Room>());
         roomsByCategory.Add("Easy", new List<Room>());
@@ -326,5 +338,14 @@ public class Floor : MonoBehaviour
             ResetDoorLinks();
             roomTraversals = 0;
         }
+    }
+
+    public void LoadData(SerializedClass save)
+    {
+        currentFloor = floorNumber;
+        maxFloorUnlocked = save.maxLevelAchieved;
+        maxFloorTraveledTo = save.maxLevelTravelledTo;
+        mediumChance = save.mediumRoomChance;
+        hardChance = save.hardRoomChance;
     }
 }

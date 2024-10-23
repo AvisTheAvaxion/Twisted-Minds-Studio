@@ -33,12 +33,16 @@ public class Dialogue
                 return DrSteinBossDoor2;
             case "DrHarrisQuestIntro":
                 return DrHarrisQuestIntro;
+            case "DrHarrisQuest1":
+                return DrHarrisQuest1;
             case "DrHarrisQuest2":
                 return DrHarrisQuest2;
             case "DrHarrisQuest3":
                 return DrHarrisQuest3;
             case "DrHarrisQuest4":
                 return DrHarrisQuest4;
+            case "DrHarrisQuest5":
+                return DrHarrisQuest5;
             case "SteinIntro":
                 return SteinIntro;
             case "SteinScene1":
@@ -64,11 +68,17 @@ public class Dialogue
         VarrenEncounter,
         #endregion
         #region Floor 1
-        DrHarrisQuest,
+        DrSteinBossDoor,
+        DrSteinBossDoor1,
+        DrSteinBossDoor2,
+        DrHarrisQuestIntro,
+        DrHarrisQuest1,
         DrHarrisQuest2,
         DrHarrisQuest3,
         DrHarrisQuest4,
+        DrHarrisQuest5,
         SteinIntro,
+        SteinScene1,
         #endregion
     }
 
@@ -365,7 +375,6 @@ public class Dialogue
         "Dr. Harris: Ah, this should make it easier. When you encounter the monsters, use this scalpel.",
         "Dr. Harris: Severing the arteries should make collecting the blood we need a breeze.",
         "$Give(Scapel)",
-        "$Give(BloodBag)",
         "Dr. Harris: As usual, come and find me when you're done.",
         "Protag: Why do we need all this bood",
         "Dr. Harris: Victor, the good Doctors son, lost a lot of blood after the accident",
@@ -436,7 +445,6 @@ public class Dialogue
         "Dr. Stein: ...",
         "Dr. Stein: I'm so sorry",
         " : The recording ends as Dr. Stein hangs up.",
-
         " : Looking around, you can see several copies of Victors medicine chart",
         " : A few of them have words written in large red ink on them",
         " : FAILURE",

@@ -13,7 +13,7 @@ using Color = UnityEngine.Color;
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("Plug-in Variables")]
+    [Header("Plug-In Variables")]
     [SerializeField] Dialogue.Dialog cutscene;
     [SerializeField] PlayerMovement movement;
     [SerializeField] PlayerInventory inventory;
@@ -22,14 +22,15 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] Image ProfilePic;
     [SerializeField] Image WhiteFade;
     [SerializeField] List<Sprite> CharacterPics;
+    [Header("Text Plug-In Variables")]
+    [SerializeField] GameObject canvas;
+    [SerializeField] GameObject uiCanvas;
+    [SerializeField] GameObject dialogUI;
+    [SerializeField] TMPro.TMP_Text textBox;
+    [SerializeField] TMPro.TMP_Text nameBox;
+    [SerializeField] TMPro.TMP_Text buttonOneText;
+    [SerializeField] TMPro.TMP_Text buttonTwoText;
 
-    GameObject canvas;
-    GameObject uiCanvas;
-    GameObject dialogUI;
-    TMPro.TMP_Text textBox;
-    TMPro.TMP_Text nameBox;
-    TMPro.TMP_Text buttonOneText;
-    TMPro.TMP_Text buttonTwoText;
     Dialogue dialogue = new Dialogue();
     QuestSystem questSystem;
 
@@ -72,14 +73,14 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
-        //PlayerMovement movement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        /*PlayerMovement movement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         canvas = GameObject.Find("CanvasDialogue");
         dialogUI = GameObject.Find("DialogeBG");
         uiCanvas = GameObject.Find("Player UI");
         textBox = GameObject.Find("TextBox").GetComponent<TMPro.TMP_Text>();
         nameBox = GameObject.Find("NameBox").GetComponent<TMPro.TMP_Text>();
         buttonOneText = GameObject.Find("ButtonOneText").GetComponent<TMPro.TMP_Text>();
-        buttonTwoText = GameObject.Find("ButtonTwoText").GetComponent<TMPro.TMP_Text>();
+        buttonTwoText = GameObject.Find("ButtonTwoText").GetComponent<TMPro.TMP_Text>();*/
         questSystem = FindObjectOfType<QuestSystem>();
         ButtonSwitch(false);
         CanvasSwitch(false);

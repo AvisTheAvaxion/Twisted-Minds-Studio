@@ -199,9 +199,8 @@ public class QuestSystem : MonoBehaviour
     void LoadObjective()
     {
         string quest = objectives.getObjective(floor, objectiveNum);
-        //Debug.Log("Current Objective Type (Before): " + currentObjective?.GetType());
         currentObjective = ParseQuestString(quest);
-        //Debug.Log("Current Objective Type (After): " + currentObjective?.GetType());
+        SetRequiredGameState(floor, objectiveNum);
     }
 
     //Helper method for LoadObjective. Takes in a string and returns the relevent QuestType.
@@ -233,21 +232,19 @@ public class QuestSystem : MonoBehaviour
                 return questType;
             case "Talk":
                 GameObject npc = GameObject.Find(parts[1]);
-                Dialogue.Dialog talkDialog;
-                Enum.TryParse(parts[2], out talkDialog);
-                questType = new Talk(npc, talkDialog);
+                questType = new Talk(npc);
                 return questType;
             case "TripTrigger":
                 questType = new TripTrigger(parts[1]);
                 return questType;
             case "Kill":
-                questType = new Kill(Int32.Parse(parts[1]), Int32.Parse(parts[2]));
+                questType = new Kill(Int32.Parse(parts[1]));
                 return questType;
             case "KillSpecific":
-                questType = new KillSpecific(Int32.Parse(parts[1]), Int32.Parse(parts[2]), parts[3]);
+                questType = new KillSpecific(Int32.Parse(parts[1]), parts[2]);
                 return questType;
             case "Collect":
-                questType = new Collect(Int32.Parse(parts[1]), Int32.Parse(parts[2]));
+                questType = new Collect(Int32.Parse(parts[1]));
                 return questType;
             case "Traverse":
                 questType = new Traverse(parts[1]);
@@ -259,16 +256,6 @@ public class QuestSystem : MonoBehaviour
                 Enum.TryParse(parts[1], true, out dialog);
                 Debug.Log("QuestSystem: " + dialog.ToString() + " String: " + questString + " Part: " + parts[1] + " ObjectiveNum: " + objectiveNum);
                 dialogueManager.SetCutscene(dialog);
-                objectiveNum++;
-                questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
-                break;
-            case "QuestTitle":
-                questGUI.SetQuestTitle(parts[1]);
-                objectiveNum++;
-                questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
-                break;
-            case "QuestDesc":
-                questGUI.SetQuestDesc(parts[1]);
                 objectiveNum++;
                 questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
                 break;
@@ -287,6 +274,68 @@ public class QuestSystem : MonoBehaviour
             objectiveSet = true;
         }
         return questType;
+    }
+
+    void SetRequiredGameState(int floor, int objective)
+    {
+        if(floor == 0)
+        {
+            switch(objective)
+            {
+                case 0:
+                    SetQuestTitle("Explore");
+                    break;
+            }
+        }
+        else if(floor == 1)
+        {
+            switch (objective)
+            {
+                case 0:
+                    SetQuestTitle("Explore Floor 1");
+                    TeleportGameobject("DrHarris(Intro)", new Vector2(55.19f, -27.79f));
+                    break;
+                case 1:
+                    SetQuestTitle("Herb Collecting");
+                    SetQuestDesc("Defeat monsters until you get something");
+                    break;
+                case 3:
+                    SetQuestTitle("Herb Delivery");
+                    SetQuestDesc("Return to Dr. Harris");
+                    TeleportGameobject("DrHarris(Intro)", new Vector2(51f, -27f));
+                    TeleportGameobject("DrHarris(Q2)", new Vector2(55.19f, -27.79f));
+                    break;
+                case 4:
+                    SetQuestTitle("Blood Donation");
+                    SetQuestDesc("Defeat monsters for their blood");
+                    break;
+                case 6:
+                    SetQuestTitle("Blood Delivery");
+                    SetQuestDesc("Return to Dr. Harris");
+                    TeleportGameobject("DrHarris(Q2)", new Vector2(51f, -27f));
+                    TeleportGameobject("DrHarris(Q3)", new Vector2(55.19f, -27.79f));
+                    break;
+                case 7:
+                    SetQuestTitle("The Big Day");
+                    SetQuestDesc("Get the patient's jersy");
+                    TeleportGameobject("FrankJersey(Quest)", new Vector2(63.5041f, -28.0502f));
+                    break;
+            }
+        }
+    }
+    void TeleportGameobject(string desiredObjectName, Vector2 worldPosition)
+    {
+        GameObject.Find(desiredObjectName).transform.position = worldPosition;
+    }
+
+    void SetQuestTitle(string newTitle)
+    {
+        questGUI.SetQuestTitle(newTitle);
+    }
+
+    void SetQuestDesc(string newDescription)
+    {
+        questGUI.SetQuestDesc(newDescription);
     }
 
     //Call when the player has fulfilled the conditions to move to the next objective

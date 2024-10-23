@@ -41,18 +41,17 @@ public class Objectives
     * 
     *   return "QuestTitle|{Quest Title}"
     *   return "QuestDesc|{Breif Quest Description}"
-    *   return $"Traverse|{roomName}";
-        return $"Collect|{amountCollected}|{total}";
-        return $"KillSpecific|{amountKilled}|{total}|{enemyName}";
-        return $"Kill|{amountKilled}|{total}";
-        return $"Talk|{npc}|{dialouge.ToString()}";
-        return $"FindMultiple|{s}"; //s is a string of objects seperated by "|" (obj1|ob2|ob3)
-        return $"FindObject|{objectName}";
+    *   return "Traverse|{roomName}";
+        return "Collect|{total}";
+        return "KillSpecific|{total}|{enemyName}";
+        return "Kill|{total}";
+        return "Talk|{npc}";
+        return "FindMultiple|{s}"; //s is a string of objects seperated by "|" (obj1|ob2|ob3)
+        return "FindObject|{objectName}";
     */
 
     //Test for the tutorial floor. Uses a lot of TripTrigger Quest since the room detection doesn't work like it does in a normal floor.
     string[] Floor0 = new string[] {
-        "QuestTitle|Explore",
         "SetCutscene|WakeUpTutorial",
         "TripTrigger|VarrenTrigger",
         "SetCutscene|VarrenEncounter",
@@ -67,8 +66,16 @@ public class Objectives
 
     string[] Floor1 = new string[]
     {
-        "QuestTitle|Explore",
-        "Traverse|Room3"
+        "Talk|DrHarris(Intro)",
+        "Collect|50",
+        "SetCutscene|DrHarrisQuest1",
+        "Talk|DrHarris(Q2)",
+        "Kill|20",
+        "SetCutscene|DrHarrisQuest3",
+        "Talk|DrHarris(Q3)",
+        "Talk|FrankJerset(Quest)",
+        "KillSpecific|FrankNSteinMonster",
+        "ClearFloor"
     };
 
 }

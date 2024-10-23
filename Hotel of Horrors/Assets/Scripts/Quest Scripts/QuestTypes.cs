@@ -69,9 +69,8 @@ public class FindMultiple : QuestType
 }
 public class Collect : QuestType
 {
-    public Collect(int amountCollected, int total)
+    public Collect(int total)
     {
-        this.amountCollected = amountCollected;
         this.total = total;
     }
     int amountCollected;
@@ -121,13 +120,11 @@ public class Traverse : QuestType
 }
 public class Talk : QuestType
 {
-    public Talk(GameObject npc, Dialogue.Dialog dialog)
+    public Talk(GameObject npc)
     {
         this.npc = npc;
-        this.dialouge = dialog;
     }
     GameObject npc;
-    Dialogue.Dialog dialouge;
 
     #region Talk Methods
     public string GetNPC()
@@ -135,14 +132,9 @@ public class Talk : QuestType
         return this.npc.name;
     }
 
-    public Dialogue.Dialog GetDialog()
-    {
-        return this.dialouge;
-    }
-
     public override string ToSaveString()
     {
-        return $"Talk|{npc}|{dialouge.ToString()}";
+        return $"Talk|{npc}";
     }
     #endregion
 }
@@ -166,10 +158,9 @@ public class TripTrigger : QuestType
 }
 public class Kill : QuestType
 {
-    public Kill(int amountKilled, int total)
+    public Kill(int total)
     {
         this.total = total;
-        this.amountKilled = amountKilled;
     }
     int amountKilled;
     int total;
@@ -198,9 +189,8 @@ public class Kill : QuestType
 }
 public class KillSpecific : QuestType
 {
-    public KillSpecific(int amoundKilled, int total, string enemyName)
+    public KillSpecific(int total, string enemyName)
     {
-        this.amountKilled=amoundKilled;
         this.total = total;
         this.enemyName = enemyName;
     }

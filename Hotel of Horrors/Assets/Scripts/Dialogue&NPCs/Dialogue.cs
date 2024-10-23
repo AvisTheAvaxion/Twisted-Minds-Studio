@@ -168,7 +168,7 @@ public class Dialogue
         "Protag: What? Where am I?",
         "Protag: *looks around* Is this a... barn?",
         "Protag: Well, just standing here isn't going to accomplish anything",
-        "System: Use <b>WASD</b> to move",
+        " : Use <b>WASD</b> to move",
         "Protag: I wonder if there is anything useful around here?"
     };
 
@@ -223,13 +223,13 @@ public class Dialogue
         "Samantha: One finds it helps to make friends$OptionB",
         "Samantha: Now, before you get going, perhaps I should show you how to properly fight.",
         "Samantha: To start, just try attacking with the dagger",
-        "System: Press left-click repeatadly to complete an attack combo",
+        " : Press left-click repeatadly to complete an attack combo",
         "Samantha: Good!",
         "Samantha: Now, let's try using your dash to quickly move about",
-        "System: Press shift to dash",
+        " : Press shift to dash",
         "Samantha: Excellent, dashing can also be used to avoid attacks and quickly get behind enemies.",
         "Samantha: Now, let's test out that ability of yours.",
-        "System: Press E to use your ability.",
+        " : Press E to use your ability.",
         "Samantha: Amazing! If you would like to change abilities or upgrade weapons, you can do so in the mind room.",
         "Samantha: Well, i've got duties to attend to, take care! And don't let the Vampire scare you."
     };
@@ -287,7 +287,7 @@ public class Dialogue
         "Varren: Your stubbornness is quite amusing, take this",
         "$Pause",
         "$GiveWeapon(Dagger)",
-        "System: You got a Dagger!",
+        " : You got a Dagger!",
         "$Resume",
         "Varren: You can't die here, but you still can feel pain. Let's see how far you get before you give up.",
          //"Varren: (disappears into smoke)",
@@ -306,7 +306,7 @@ public class Dialogue
     //If the player tries to enter the boss room before finishing Harris's quest
     string[] DrSteinBossDoor = new string[]
     {
-        "System: You can hear the sounds of drilling and hammering coming from behind the door.",
+        " : You can hear the sounds of drilling and hammering coming from behind the door.",
         "Dr. Stein: I won't fail again...",
         "Dr. Stein: I'll save you this time Victor"
     };
@@ -358,7 +358,7 @@ public class Dialogue
         "Dr. Harris: Ah! Just in time. I was wondering what was taking you so long.",
         "Protag: I couldn't find anything but this goop.",
         "Dr. Harris: Such a hard worker too! This should be more than enough. Keep this up and I'll be sure to put in a good word with the doctor.",
-        "System: *As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads*",
+        " : *As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads*",
         "Protag: How did you do that?",
         "Dr. Harris: Do what?",
         "Protag: The goop! It turned into what we needed!",
@@ -369,12 +369,12 @@ public class Dialogue
         "Dr. Harris: I will be sure to get you some.$OptionB",
         "Dr. Harris: The next thing on the list is rimblenut, I'll do that one, and O- Blood.",
         "Dr. Harris: For this one, you'll need something to collect the blood in, so let's see here.",
-        "System: Dr. Harris digs through his bag, which holds a collection of perfectly normal medical instruments",
-        "Sytem: and the most bizarre of ingredients",
-        "System: before pulling out a scalpel",
+        " : Dr. Harris digs through his bag, which holds a collection of perfectly normal medical instruments...",
+        " : and the most bizarre of ingredients...",
+        " : before pulling out a scalpel.",
         "Dr. Harris: Ah, this should make it easier. When you encounter the monsters, use this scalpel.",
         "Dr. Harris: Severing the arteries should make collecting the blood we need a breeze.",
-        "$Give(Scapel)",
+        "$GiveWeapon(Scapel)",
         "Dr. Harris: As usual, come and find me when you're done.",
         "Protag: Why do we need all this bood",
         "Dr. Harris: Victor, the good Doctors son, lost a lot of blood after the accident",
@@ -445,11 +445,11 @@ public class Dialogue
         "Dr. Stein: ...",
         "Dr. Stein: I'm so sorry",
         " : The recording ends as Dr. Stein hangs up.",
-        " : Looking around, you can see several copies of Victors medicine chart",
-        " : A few of them have words written in large red ink on them",
-        " : FAILURE",
-        " : DECEASED",
-        " : I'M SORRY"
+        " : Looking around, you can see several copies of Victors medicine chart.",
+        " : A few of them have words written in large red ink on them:",
+        " : <color=red><b>FAILURE</b></color>",
+        " : <color=red><b>DECEASED</b></color>",
+        " : <color=red><b>I'M SORRY</b></color>"
         //Player now needs to head to the boss room
     };
     #endregion
@@ -479,7 +479,7 @@ public class Dialogue
         "$ToggleUI(True)",
         "Protag: Eww. Gross.",
         "Dr. Frank N. Stein: How dare you insult my son!",
-        "Dr. Frank N. Stein: DIE!",
+        "Dr. Frank N. Stein: <b>DIE!</b>",
     };
 
 
@@ -488,8 +488,8 @@ public class Dialogue
         "Protag: You have to accept your son is dead.",
         "Dr. Frank N. Stein: No! He's right in front of me!",
         "Dr. Frank N. Stein: Can't you see.|He wouldn't have wanted this|That's not him|$Prompt",
-        "Dr. Frank N. Stein: No... You're wrong$OptionA",
-        "Dr. Frank N. Stein: Nonsense!$OptionB"
+        "Dr. Frank N. Stein: No... You're wrong... $OptionA",
+        "Dr. Frank N. Stein: Nonsense! $OptionB"
         //"$Enrage() Need to have him enrage if option b is chosen
     };
     #endregion

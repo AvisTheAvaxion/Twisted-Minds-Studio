@@ -24,7 +24,6 @@ public class MindRoomInteraction : MonoBehaviour
 
     void OnInteract()
     {
-        print("interacting");
         if (inRangeOfChair)
         {
             mindRoomCanvas.SetActive(true);

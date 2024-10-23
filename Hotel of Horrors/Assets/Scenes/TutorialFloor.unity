@@ -4082,6 +4082,7 @@ MonoBehaviour:
   locked: 0
   associatedRoom: {fileID: 1320463093}
   spawnLocation: {fileID: 983885750}
+  animator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
   doorLocation: 1
@@ -6704,7 +6705,7 @@ Transform:
   m_GameObject: {fileID: 835475869}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.68506813, y: 0.1263116, z: 0.066183515}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10661,7 +10662,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 3
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -10711,7 +10712,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -11358,14 +11359,14 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 74b3436bfc2307049bfc0cfa3d03bf3b, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 1445801404, guid: eb2daafdbe45e9f4fbb664c13f8d5de0, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 20
     m_Data: {fileID: 2040621005, guid: eb2daafdbe45e9f4fbb664c13f8d5de0, type: 3}
   - m_RefCount: 1
+    m_Data: {fileID: 1445801404, guid: eb2daafdbe45e9f4fbb664c13f8d5de0, type: 3}
+  - m_RefCount: 1
     m_Data: {fileID: -1745291448, guid: eb2daafdbe45e9f4fbb664c13f8d5de0, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 815038950, guid: eb2daafdbe45e9f4fbb664c13f8d5de0, type: 3}
   - m_RefCount: 20
@@ -11528,6 +11529,7 @@ MonoBehaviour:
   locked: 0
   associatedRoom: {fileID: 440814280}
   spawnLocation: {fileID: 1501212033}
+  animator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
   doorLocation: 1
@@ -12119,6 +12121,7 @@ MonoBehaviour:
   locked: 0
   associatedRoom: {fileID: 323986947}
   spawnLocation: {fileID: 1764902619}
+  animator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
   doorLocation: 0
@@ -12742,7 +12745,7 @@ Transform:
   m_GameObject: {fileID: 1205756725}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.68506813, y: 0.1263116, z: 0.066183515}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13045,6 +13048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16be9da58cea8a44682b2a064db0ef6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floorNumber: 1
   traversalsForReset: 9999999
   mediumChanceGained: 0
   hardChanceGained: 0
@@ -13058,6 +13062,8 @@ MonoBehaviour:
   mindRoomChance: 0
   hallwayChance: 0
   peacefulRoomChance: 0
+  toBossDoor: {fileID: 0}
+  fromBossDoor: {fileID: 0}
   elevator: {fileID: 0}
   elevatorCanvas: {fileID: 0}
   debug: 0
@@ -13430,7 +13436,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 7
-      m_TileSpriteIndex: 7
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -13937,8 +13943,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: -888887904, guid: 371969a5bfaf5c34d8eb7a05406498aa, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
@@ -13953,8 +13959,8 @@ Tilemap:
     m_Data: {fileID: -1483331736, guid: 371969a5bfaf5c34d8eb7a05406498aa, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -2081697840, guid: 371969a5bfaf5c34d8eb7a05406498aa, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -888887904, guid: 371969a5bfaf5c34d8eb7a05406498aa, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -2013700704, guid: 371969a5bfaf5c34d8eb7a05406498aa, type: 3}
   - m_RefCount: 1
@@ -17199,6 +17205,7 @@ MonoBehaviour:
   locked: 0
   associatedRoom: {fileID: 34735702}
   spawnLocation: {fileID: 3512548663305953613}
+  animator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
   doorLocation: 2
@@ -17328,6 +17335,7 @@ MonoBehaviour:
   locked: 0
   associatedRoom: {fileID: 323986947}
   spawnLocation: {fileID: 700585185}
+  animator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
   doorLocation: 0
@@ -18708,6 +18716,7 @@ MonoBehaviour:
   locked: 0
   associatedRoom: {fileID: 810045713}
   spawnLocation: {fileID: 501601338}
+  animator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
   doorLocation: 0
@@ -18845,11 +18854,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3903423655892573024, guid: 66b504b2a8fc9b64f833b9d339256532, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.873602
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3903423655892573024, guid: 66b504b2a8fc9b64f833b9d339256532, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.471278
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3903423655892573024, guid: 66b504b2a8fc9b64f833b9d339256532, type: 3}
       propertyPath: m_LocalPosition.z
@@ -19108,6 +19117,7 @@ MonoBehaviour:
   locked: 0
   associatedRoom: {fileID: 1320463093}
   spawnLocation: {fileID: 1713556017}
+  animator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
   doorLocation: 3
@@ -19169,6 +19179,7 @@ MonoBehaviour:
   locked: 0
   associatedRoom: {fileID: 0}
   spawnLocation: {fileID: 0}
+  animator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
   doorLocation: 0
@@ -23428,6 +23439,7 @@ MonoBehaviour:
   locked: 0
   associatedRoom: {fileID: 34735702}
   spawnLocation: {fileID: 1999441563}
+  animator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
   doorLocation: 3

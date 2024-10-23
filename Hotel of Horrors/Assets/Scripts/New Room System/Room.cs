@@ -128,7 +128,7 @@ public class Room : MonoBehaviour
             }
 
             float rand = Random.Range(0, weightTotal);
-            print($"{roomName}: {rand}");
+            //print($"{roomName}: {rand}");
             int e = 0;
             for (; e < roomModifierWeights.Length; e++)
             {

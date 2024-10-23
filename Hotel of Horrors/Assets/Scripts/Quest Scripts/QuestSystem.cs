@@ -318,7 +318,7 @@ public class QuestSystem : MonoBehaviour
                 case 7:
                     SetQuestTitle("The Big Day");
                     SetQuestDesc("Get the patient's jersy");
-                    TeleportGameobject("FrankJersey(Quest)", new Vector2(63.5041f, -28.0502f));
+                    TeleportGameobject("FrankJersey(Quest)", new Vector2(63.3892f, -28.0588f));
                     break;
             }
         }

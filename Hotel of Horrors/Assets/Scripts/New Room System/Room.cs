@@ -44,6 +44,7 @@ public class Room : MonoBehaviour
         easy, 
         medium, 
         hard,
+        hallway,
         mindRoom
     }
     public enum RoomModifiers

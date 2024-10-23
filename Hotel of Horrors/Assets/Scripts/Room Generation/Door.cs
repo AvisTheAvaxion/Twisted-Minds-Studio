@@ -120,7 +120,12 @@ public class Door : MonoBehaviour
 
         //generates a potential elevator room spawn
         floor.IncreaseElevatorChance();
-        linkedDoor.associatedRoom.MakeElevatorDoor();
+        if (linkedDoor.associatedRoom.category == Room.RoomCategories.easy ||
+            linkedDoor.associatedRoom.category == Room.RoomCategories.medium ||
+            linkedDoor.associatedRoom.category == Room.RoomCategories.hard)
+        {
+            linkedDoor.associatedRoom.MakeElevatorDoor();
+        }
 
         //fade to clear
         for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)

@@ -52,6 +52,7 @@ public class Floor : MonoBehaviour
         roomsByCategory.Add("Medium", new List<Room>());
         roomsByCategory.Add("Hard", new List<Room>());
         roomsByCategory.Add("Mind Room", new List<Room>());
+        roomsByCategory.Add("Hallway", new List<Room>());
 
         elevator = FindObjectOfType<ElevatorMenuManager>();
 
@@ -77,6 +78,9 @@ public class Floor : MonoBehaviour
                     break;
                 case Room.RoomCategories.mindRoom:
                     roomsByCategory["Mind Room"].Add(room);
+                    break;
+                case Room.RoomCategories.hallway:
+                    roomsByCategory["Hallway"].Add(room);
                     break;
             }
 

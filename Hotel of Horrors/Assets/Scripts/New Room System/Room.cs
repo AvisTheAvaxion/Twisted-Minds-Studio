@@ -29,9 +29,9 @@ public class Room : MonoBehaviour
         new RoomModifierWeight(1, RoomModifiers.moreEnemies)
     };
 
-    [HideInInspector]
+    //[HideInInspector]
     public Door[] doors;
-    [HideInInspector]
+    //[HideInInspector]
     public List<Door> doorsAvailable = new List<Door>();
 
     Floor currentFloor;

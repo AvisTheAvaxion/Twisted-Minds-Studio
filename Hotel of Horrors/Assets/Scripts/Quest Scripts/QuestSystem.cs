@@ -9,7 +9,8 @@ public class QuestSystem : MonoBehaviour
     [SerializeField] int floor;
     [SerializeField] int objectiveNum;
 
-    
+    public int FloorNum { get => floor; }
+    public int ObjectiveNum { get => objectiveNum; }
 
     QuestType currentObjective;
     Objectives objectives;
@@ -185,8 +186,9 @@ public class QuestSystem : MonoBehaviour
                 if(currentObjective.GetType() == typeof(Collect))
                 {
                     Collect collect = (Collect)currentObjective;
-                    collect.IncrementAmountCollected(Int32.Parse(objectName));
-                    if(collect.GetAmountCollected() >= collect.GetTotal())
+                    collect.IncrementAmountCollected(int.Parse(objectName));
+                    print("Energy Collected for quest: " + objectName + ", " + collect.GetAmountCollected());
+                    if (collect.GetAmountCollected() >= collect.GetTotal())
                     {
                         NextQuest();
                     }
@@ -206,6 +208,7 @@ public class QuestSystem : MonoBehaviour
     {
         string quest = objectives.getObjective(floor, objectiveNum);
         currentObjective = ParseQuestString(quest);
+        objectiveSet = true;
         SetRequiredGameState(floor, objectiveNum);
     }
 
@@ -244,13 +247,13 @@ public class QuestSystem : MonoBehaviour
                 questType = new TripTrigger(parts[1]);
                 return questType;
             case "Kill":
-                questType = new Kill(Int32.Parse(parts[1]));
+                questType = new Kill(int.Parse(parts[1]));
                 return questType;
             case "KillSpecific":
-                questType = new KillSpecific(Int32.Parse(parts[1]), parts[2]);
+                questType = new KillSpecific(int.Parse(parts[1]), parts[2]);
                 return questType;
             case "Collect":
-                questType = new Collect(Int32.Parse(parts[1]));
+                questType = new Collect(int.Parse(parts[1]));
                 return questType;
             case "Traverse":
                 questType = new Traverse(parts[1]);
@@ -357,6 +360,7 @@ public class QuestSystem : MonoBehaviour
     public void NextQuest()
     {
         objectiveNum++;
+        objectiveSet = false;
         LoadObjective();
     }
 
@@ -392,11 +396,15 @@ public class QuestSystem : MonoBehaviour
 
     public void LoadQuest(SerializedClass saveData)
     {
-        /*QuestSave currentSave = saveData.questSaves[floor - 1];
-        floor = currentSave.floorNum;
-        objectiveNum = currentSave.objectiveNum;
-        LoadObjective();*/
+        if (saveData.questSaves != null)
+        {
+            QuestSave currentSave = saveData.questSaves[floor - 1];
+            if (floor == currentSave.floorNum)
+            {
+                objectiveNum = currentSave.objectiveNum;
+                LoadObjective();
+            }
+        }
     }
-
 }
 

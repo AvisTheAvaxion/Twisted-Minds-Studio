@@ -269,6 +269,7 @@ public class DialogueManager : MonoBehaviour
                 string[] splitString = moveInfo.Split(',');
                 playerAudio.NextLine(currentLine);
 
+                print("Start character move for cutscene");
                 Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
                 SetMoveCharacterInfo(splitString[0], 2, target);
             }
@@ -382,7 +383,7 @@ public class DialogueManager : MonoBehaviour
                 Floor floor = FindObjectOfType<Floor>();
                 floor.UnlockFromBossDoor();
             }
-            else if (lines[currentLine].EndsWith("$TimeScale") || lines[currentLine].StartsWith("$Timescale"))
+            else if (lines[currentLine].EndsWith("$TimeScale") || lines[currentLine].StartsWith("$TimeScale"))
             {
                 int timeStartIndex = lines[currentLine].IndexOf('(');
                 int timeEndIndex = lines[currentLine].IndexOf(')');
@@ -586,7 +587,7 @@ public class DialogueManager : MonoBehaviour
     IEnumerator MoveViaLerp(float time, Transform cameraTransform, Vector3 target)
     {
         float interpol = 0;
-        while (cameraTransform.position != target)
+        while ((cameraTransform.position - target).sqrMagnitude > 0.001f)
         {
             Debug.Log($"{interpol} | Camera:{cameraTransform.position} | target: {target}");
             cameraTransform.position = Vector3.Lerp(cameraTransform.position, target, interpol);
@@ -594,9 +595,11 @@ public class DialogueManager : MonoBehaviour
             interpol += 0.01f;
             yield return new WaitForSeconds(time);
         }
+        cameraTransform.position = target;
         playerAudio.NextLine(currentLine);
         OnDialogueUpdate();
-        currentState = CutsceneState.Continue;
+        if(currentState != CutsceneState.Moving)
+            currentState = CutsceneState.Continue;
     }
 
     void ResetCamera()
@@ -636,6 +639,7 @@ public class DialogueManager : MonoBehaviour
         }
         else if(characterAnimator != null)
         {
+            print("Moving character for cutscene");
             characterAnimator.SetBool("isWalking", true);
             characterAnimator.SetFloat("x", characterRB2D.velocity.x);
             characterAnimator.SetFloat("y", characterRB2D.velocity.y);

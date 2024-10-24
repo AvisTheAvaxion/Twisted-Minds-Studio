@@ -187,6 +187,8 @@ public class Floor : MonoBehaviour
             possibleRooms.Clear();
             possibleRooms = roomsByCategory["Peaceful"];
             peacefulRoomChance = 0;
+
+            if (debug) print("Travelling to Peaceful Room");
         }
         else if (hardChance > difficultyRoll)
         {

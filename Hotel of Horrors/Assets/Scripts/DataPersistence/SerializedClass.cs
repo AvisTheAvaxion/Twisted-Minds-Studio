@@ -122,7 +122,13 @@ public class SerializedClass
         currentAbilityIndex = playerInventory.currentAbilityIndex;
 
         //quests = questManager.GetQuests();
-        
+        this.questSaves = questSaves;
+        if(questSystem.FloorNum < this.questSaves.Length)
+        {
+            questSaves[questSystem.FloorNum - 1].floorNum = questSystem.FloorNum;
+            questSaves[questSystem.FloorNum - 1].objectiveNum = questSystem.ObjectiveNum;
+        }
+
     }
 
     public void OverWriteData(PlayerInventory inventory, Floor floor, QuestSystem questSystem)

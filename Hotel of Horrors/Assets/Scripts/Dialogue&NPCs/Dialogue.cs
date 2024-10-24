@@ -492,6 +492,7 @@ public class Dialogue
     string[] SteinScene1 = new string[]
     {
         "$Animate(FrankNSteinMonster,Intermediate,True)",
+        "$Animate(FrankNSteinMonster,StartIntermediate)",
         "Blaze: You have to accept your son is dead.",
         "Dr. Frank N. Stein: No! He's right in front of me!",
         "Dr. Frank N. Stein: Can't you see.|He wouldn't have wanted this|That's not him|$Prompt",
@@ -565,10 +566,10 @@ public class Dialogue
         "Dr. Frank N. Stein: Maybe. You're right.",
         "Dr. Frank N. Stein: Thank you... For helping me to see things differently.",
         "Dr. Frank N. Stein: I'm sorry Victor... I'll be with you soon...",
-        "$Animate(FNSMonster_EndCutscene,Stage4)",
-        "$BossPoof(FNSMonster_EndCutscene)",
         "$UnlockFromBoss",
         "$ToggleUI(False)",
+        "$Animate(FNSMonster_EndCutscene,Stage4)",
+        "$BossPoof(FNSMonster_EndCutscene)",
         "$Timer(6)",
         "$Kill(FNSMonster_EndCutscene)",
         " : All that remains is a helmet.",

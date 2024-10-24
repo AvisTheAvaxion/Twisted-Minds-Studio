@@ -25,6 +25,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Text Plug-In Variables")]
     [SerializeField] GameObject uiCanvas;
     [SerializeField] GameObject dialogUI;
+    [SerializeField] DialogueGUI dialogueGUI;
     [SerializeField] TMPro.TMP_Text textBox;
     [SerializeField] TMPro.TMP_Text nameBox;
     [SerializeField] TMPro.TMP_Text buttonOneText;
@@ -192,14 +193,17 @@ public class DialogueManager : MonoBehaviour
                 string bTwoText = splitString[2];
                 string outputName = promptText.Split(':')[0];
                 string outputText = promptText.Split(":")[1];
-                textBox.text = outputText;
-                nameBox.text = outputName;
-                buttonOneText.text = bOneText;
-                buttonTwoText.text = bTwoText;
+                if(dialogueGUI)
+                {
+                    dialogueGUI.SetDialogue(outputName, outputText, bOneText, bTwoText);
+                }
+                //textBox.text = outputText;
+                //nameBox.text = outputName;
+                //buttonOneText.text = bOneText;
+                //buttonTwoText.text = bTwoText;
 
                 playerAudio.NextLine(currentLine);
                 UpdateImage();
-
             }
             else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceOne)
             {
@@ -269,7 +273,7 @@ public class DialogueManager : MonoBehaviour
                 string[] splitString = moveInfo.Split(',');
                 playerAudio.NextLine(currentLine);
 
-                print("Start character move for cutscene");
+                //print("Start character move for cutscene");
                 Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
                 SetMoveCharacterInfo(splitString[0], 2, target);
             }
@@ -321,7 +325,7 @@ public class DialogueManager : MonoBehaviour
                 int poofEndIndex = lines[currentLine].IndexOf(')');
                 string poofInfo = lines[currentLine].Substring(poofStartIndex + 1, poofEndIndex - poofStartIndex - 1);
                 GameObject character = GameObject.Find(poofInfo);
-                character.GetComponent<BossVFX>().BossDeathEffects();
+                character.GetComponent<BossHelper>().BossDeathEffects();
                 currentLine++;
                 OnDialogueUpdate();
                 currentLine--;
@@ -503,10 +507,15 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 CanvasSwitch(true);
-                textBox.fontStyle = TMPro.FontStyles.Normal;
+                //textBox.fontStyle = TMPro.FontStyles.Normal;
                 currentChoice = PlayerChoice.None;
-                nameBox.text = lines[currentLine].Split(':')[0];
-                textBox.text = lines[currentLine].Split(':')[1];
+                string[] dialogueLine = lines[currentLine].Split(':');
+                //nameBox.text = lines[currentLine].Split(':')[0];
+                //textBox.text = lines[currentLine].Split(':')[1];
+                if(dialogueGUI && dialogueLine.Length == 2)
+                {
+                    dialogueGUI.SetDialogue(dialogueLine[0], dialogueLine[1]);
+                }
 
                 playerAudio.NextLine(currentLine);
                 UpdateImage();
@@ -589,7 +598,7 @@ public class DialogueManager : MonoBehaviour
         float interpol = 0;
         while ((cameraTransform.position - target).sqrMagnitude > 0.001f)
         {
-            Debug.Log($"{interpol} | Camera:{cameraTransform.position} | target: {target}");
+            //Debug.Log($"{interpol} | Camera:{cameraTransform.position} | target: {target}");
             cameraTransform.position = Vector3.Lerp(cameraTransform.position, target, interpol);
             
             interpol += 0.01f;
@@ -639,7 +648,7 @@ public class DialogueManager : MonoBehaviour
         }
         else if(characterAnimator != null)
         {
-            print("Moving character for cutscene");
+            //print("Moving character for cutscene");
             characterAnimator.SetBool("isWalking", true);
             characterAnimator.SetFloat("x", characterRB2D.velocity.x);
             characterAnimator.SetFloat("y", characterRB2D.velocity.y);
@@ -696,11 +705,15 @@ public class DialogueManager : MonoBehaviour
 
         myEmote = nameBox.text + myEmote;
 
+        if (dialogueGUI)
+            dialogueGUI.SetProfilePic(null);
 
         foreach (Sprite sprite in CharacterPics)
         {
             if (sprite.name == myEmote)
             {
+                if (dialogueGUI)
+                    dialogueGUI.SetProfilePic(sprite);
                 ProfilePic.sprite = sprite;
             }
         }

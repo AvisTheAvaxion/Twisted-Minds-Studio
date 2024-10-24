@@ -9,6 +9,8 @@ public class QuestSystem : MonoBehaviour
     [SerializeField] int floor;
     [SerializeField] int objectiveNum;
 
+    
+
     QuestType currentObjective;
     Objectives objectives;
     bool objectiveSet = false;
@@ -58,6 +60,7 @@ public class QuestSystem : MonoBehaviour
         {
             LoadObjective();
         }
+
     }
 
     //This method should be called whenever a relevant game event occurs and see if quest conditions have been fulfilled
@@ -194,6 +197,7 @@ public class QuestSystem : MonoBehaviour
                 }
                 break;
         }
+        SetRequiredGameState(floor, objectiveNum);
     }
 
     //This method is called to set the variable, currentObjective, to a QuestType with the helper method ParseQuestString
@@ -298,8 +302,9 @@ public class QuestSystem : MonoBehaviour
                     TeleportGameobject("DrHarris(Intro)", new Vector2(55.19f, -27.79f));
                     break;
                 case 1:
+                    Collect collect = (Collect)currentObjective;
                     SetQuestTitle("Herb Collecting");
-                    SetQuestDesc("Defeat monsters until you get something");
+                    SetQuestDesc($"Herbs Collected: {collect.GetAmountCollected()}/{collect.GetTotal()}");
                     break;
                 case 3:
                     SetQuestTitle("Herb Delivery");
@@ -308,8 +313,9 @@ public class QuestSystem : MonoBehaviour
                     TeleportGameobject("DrHarris(Q2)", new Vector2(55.19f, -27.79f));
                     break;
                 case 4:
+                    Kill kill = (Kill)currentObjective;
                     SetQuestTitle("Blood Donation");
-                    SetQuestDesc("Defeat monsters for their blood");
+                    SetQuestDesc($"Enemies Defeated: {kill.GetAmountKilled()}/{kill.GetTotal()}");
                     break;
                 case 6:
                     SetQuestTitle("Blood Delivery");
@@ -328,7 +334,6 @@ public class QuestSystem : MonoBehaviour
                     currentFloor.UnlockToBossDoor();
                     break;
                 case 9:
-                    currentFloor.UnlockFromBossDoor();
                     break;
             }
         }
@@ -384,4 +389,14 @@ public class QuestSystem : MonoBehaviour
         QuestEvent(QuestEventType.EnergyCollected, (string)sender);
     }
     #endregion
+
+    public void LoadQuest(SerializedClass saveData)
+    {
+        /*QuestSave currentSave = saveData.questSaves[floor - 1];
+        floor = currentSave.floorNum;
+        objectiveNum = currentSave.objectiveNum;
+        LoadObjective();*/
+    }
+
 }
+

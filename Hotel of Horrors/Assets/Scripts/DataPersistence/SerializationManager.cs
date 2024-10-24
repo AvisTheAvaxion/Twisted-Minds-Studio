@@ -8,12 +8,16 @@ public class SerializationManager : MonoBehaviour
     string saveFile;
     PlayerInventory inventory;
     Floor currentFloorObject;
+    QuestSystem questSystem;
+
+    QuestSave[] questSaves;
 
     private void Start()
     {
         saveFile = Application.persistentDataPath + "/saveinformation.json";
         inventory = FindObjectOfType<PlayerInventory>();
         currentFloorObject = FindObjectOfType<Floor>();
+        questSystem = FindObjectOfType<QuestSystem>();
 
         StartCoroutine(StartLoading());
         //quests = FindObjectOfType<QuestManager>();
@@ -38,7 +42,7 @@ public class SerializationManager : MonoBehaviour
 
         
 
-        SerializedClass classToSave = new SerializedClass(inventory, currentFloorObject);
+        SerializedClass classToSave = new SerializedClass(inventory, currentFloorObject, questSaves, questSystem);
 
         string json = JsonUtility.ToJson(classToSave);
         //print(json);
@@ -57,13 +61,13 @@ public class SerializationManager : MonoBehaviour
         string json = File.ReadAllText(saveFile);
         //print(json);
 
-        SerializedClass classToLoad = new SerializedClass(inventory, currentFloorObject);
+        SerializedClass classToLoad = new SerializedClass(inventory, currentFloorObject, questSaves, questSystem);
 
         //read the data from file and set jsondata
 
         JsonUtility.FromJsonOverwrite(json, classToLoad);
 
-        classToLoad.OverWriteData(inventory, currentFloorObject);
+        classToLoad.OverWriteData(inventory, currentFloorObject, questSystem);
 
         print("Loaded");
     }

@@ -246,7 +246,6 @@ public class DialogueManager : MonoBehaviour
             }
             #endregion
             #region Cutscene Functions
-
             else if (lines[currentLine].EndsWith("$MoveViaLerp") || lines[currentLine].StartsWith("$MoveViaLerp"))
             {
                 currentState = CutsceneState.Waiting;
@@ -372,6 +371,23 @@ public class DialogueManager : MonoBehaviour
                 string fadeOutInfo = lines[currentLine].Substring(fadeOutStartIndex + 1, fadeOutEndIndex - fadeOutStartIndex - 1);
                 string[] splitString = fadeOutInfo.Split(",");
                 StartCoroutine(FadeOut(Int32.Parse(splitString[0]), Int32.Parse(splitString[1]), Int32.Parse(splitString[2])));
+            }
+            else if (lines[currentLine].EndsWith("$UnlockToBoss") || lines[currentLine].StartsWith("$UnlockToBoss"))
+            {
+                Floor floor = FindObjectOfType<Floor>();
+                floor.UnlockToBossDoor();
+            }
+            else if (lines[currentLine].EndsWith("$UnlockFromBoss") || lines[currentLine].StartsWith("$UnlockFromBoss"))
+            {
+                Floor floor = FindObjectOfType<Floor>();
+                floor.UnlockFromBossDoor();
+            }
+            else if (lines[currentLine].EndsWith("$TimeScale") || lines[currentLine].StartsWith("$Timescale"))
+            {
+                int timeStartIndex = lines[currentLine].IndexOf('(');
+                int timeEndIndex = lines[currentLine].IndexOf(')');
+                string timeOutInfo = lines[currentLine].Substring(timeStartIndex + 1, timeEndIndex - timeStartIndex - 1);
+                Time.timeScale = float.Parse(timeOutInfo);
             }
             #endregion
             #region Invetory Functions

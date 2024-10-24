@@ -31,9 +31,8 @@ public class SerializedClass
 
     public int maxLevelTravelledTo;
 
-    //public List<Quest> quests;
-
-    public SerializedClass(PlayerInventory inventory, Floor floorObj)
+    public QuestSave[] questSaves;
+    public SerializedClass(PlayerInventory inventory, Floor floorObj, QuestSave[] questSaves, QuestSystem questSystem)
     {
         //level = SceneManager.GetActiveScene().buildIndex; 
         level = Floor.currentFloor; 
@@ -123,13 +122,15 @@ public class SerializedClass
         currentAbilityIndex = playerInventory.currentAbilityIndex;
 
         //quests = questManager.GetQuests();
+        
     }
 
-    public void OverWriteData(PlayerInventory inventory, Floor floor)
+    public void OverWriteData(PlayerInventory inventory, Floor floor, QuestSystem questSystem)
     {
         //set all the corresponding variables in their home scripts
         inventory.LoadInventory(this);
         floor.LoadData(this);
+        questSystem.LoadQuest(this);
     }
 }
 
@@ -170,4 +171,11 @@ public class WeaponSave
     public int damage;
     public float deflectionStrength;
     public float knockback;
+}
+
+[System.Serializable]
+public class QuestSave
+{
+    public int floorNum;
+    public int objectiveNum;
 }

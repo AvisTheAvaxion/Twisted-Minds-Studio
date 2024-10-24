@@ -167,23 +167,23 @@ public class Dialogue
     string[] WakeUpTutorial = new string[]
     {
         "$Emote|Protag|Surprised",
-        "Protag: Ughhh",
-        "Protag: What? Where am I?",
-        "Protag: *looks around* Is this a... barn?",
-        "Protag: Well, just standing here isn't going to accomplish anything",
+        "Blaze: Ughhh",
+        "Blaze: What? Where am I?",
+        "Blaze: *looks around* Is this a... barn?",
+        "Blaze: Well, just standing here isn't going to accomplish anything",
         " : Use <b>WASD</b> to move",
-        "Protag: I wonder if there is anything useful around here?"
+        "Blaze: I wonder if there is anything useful around here?"
     };
 
     string[] SameRoomAgain = new string[]
     {
-        //Protag ends up in same room after leaving
-        "Protag: Huh? I could've sworn I just left this room."
+        //Blaze ends up in same room after leaving
+        "Blaze: Huh? I could've sworn I just left this room."
     };
 
     string[] InventoryTutorial = new string[]
     {
-        "Protag: Nice, a different room.",
+        "Blaze: Nice, a different room.",
         " : Press the <b>'TAB'</b> key to open your inventory.",
         " : On the left side of the inventory are tabs that can be opened by <b>Left Clicking</b>",
         " : These three tabs hold, from top to bottom <b><color=#936A00>Weapons</color>, <color=#5B100A>Items</color>, and <color=#507830>Special Abilities</color></b>",
@@ -197,9 +197,9 @@ public class Dialogue
 
     string[] FirstMonster = new string[]
     {
-        //Protag sees a monster in a room
-        "Protag: Nope."
-        //Protage leaves
+        //Blaze sees a monster in a room
+        "Blaze: Nope."
+        //Blazee leaves
     };
 
     string[] MindRoom = new string[]
@@ -214,13 +214,13 @@ public class Dialogue
     {
         //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
         "$Move(Player,20.265,2.898)",
-        "Protag: A monster!",
-        "Protag: This is a good time to try testing my dagger",
-        //Protag charges at the cleaning lady, who dodges the attack
+        "Blaze: A monster!",
+        "Blaze: This is a good time to try testing my dagger",
+        //Blaze charges at the cleaning lady, who dodges the attack
         "$Move(Player,20.265,2.282)",
         "$Tele(SlimeLady,20.26,3.09)",
         "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
-        "Protag: You can talk?",
+        "Blaze: You can talk?",
         "Monster: Why wouldn't I be able to? My name is Samantha, and yours?|Blaze|What's it matter to you|$Prompt",
         "Samantha: Well it's certainly nice to meet you, but please do try to refrain from attacking me for no reason$OptionA",
         "Samantha: One finds it helps to make friends$OptionB",
@@ -244,31 +244,31 @@ public class Dialogue
         "$PlaySong|StienTheme",
         "$Move(Varren,-15.75,-14.29)",
         "Varren: Oh? And who might you be?|No one|AHHHHH$Prompt",
-        "Protag: Who are you? Where did you come from? $OptionA",
+        "Blaze: Who are you? Where did you come from? $OptionA",
         "Varren: Me? I'm a... resident of this lovely establishment. $OptionA",
-        "Protag: A GHOST!!! $OptionB",
+        "Blaze: A GHOST!!! $OptionB",
         "Varren: Calm down kid, I'm not a ghost. $OptionB",
         "Varren: I'm just another person trapped here like you. $OptionB",
         "$Emote|Protag|Angry",
         //Line above is a test line
-        "Protag: Where are we?",
+        "Blaze: Where are we?",
         "Varren: Hell of course! You died! Where else did you think you would end up?",
-        "Protag: What do you mean? Isn't this a barn?",
+        "Blaze: What do you mean? Isn't this a barn?",
         "$Emote|Protag|Surprised",
         //Line above is a test line
         "Varren: It's a hotel, and it's where you'll be spending the rest of your days, trapped here for eternity because of all of the terrible things you've done.|Are you pulling my leg?|What terrible things?$Prompt",
-        "Protag: I think I'd remember dying.$OptionA",
+        "Blaze: I think I'd remember dying.$OptionA",
         "Varren: Murder, theft, being an all around terrible person.$OptionB",
         "Varren: Whatever horrible deeds you've commited, you're now stuck here as punishment.$OptionB",
-        "Protag: But why would I be sent to a hotel?$OptionB",
+        "Blaze: But why would I be sent to a hotel?$OptionB",
         "Varren: Haven't you noticed how this place seems off? The rooms shifting, the lack of windows, the monsters?",
-        "Protag: Yes but-",
+        "Blaze: Yes but-",
         "Varren: Welcome to hell. You died. You're stuck here for eternity to be forever haunted by those... things. There is no exit, no escape. The atrocities you've committed have condemned you here for eternity.",
-        "Protag: But there has to be some kind of a mistake. I don't remember committing any atrocities or dying, maybe if I look around for long enough then I can find an exit, or the person who trapped us here?",
+        "Blaze: But there has to be some kind of a mistake. I don't remember committing any atrocities or dying, maybe if I look around for long enough then I can find an exit, or the person who trapped us here?",
         "Varren: You're going to fail. I've searched every nook and cranny of this place. I'm sorry, but there's no way out kid.",
-        "Protag: Maybe you missed a spot?",
+        "Blaze: Maybe you missed a spot?",
         "Varren: No.",
-        "Protag: Maybe there is a hidden room?",
+        "Blaze: Maybe there is a hidden room?",
         "$Pause",
         "$Emote|Varren|Angry",
         "Varren: <b>NO!!!</b>",
@@ -285,7 +285,7 @@ public class Dialogue
         "$Emote|Varren|Neutral",
         "$Resume",
         "Varren: Since we're stuck here why don't you go ahead and tell me what it is you've done to end up here?",
-        "Protag: I really don't remember. There has to be some sort of mix-up here. I'm going to find whoever put us here and prove that there is a way out.",
+        "Blaze: I really don't remember. There has to be some sort of mix-up here. I'm going to find whoever put us here and prove that there is a way out.",
         "Varren: There's no convincing you is there kid?|Well just giving up and just sitting here isn't going to accomplish anything.|There's no way I can stay in this stinky place$Prompt",
         "Varren: Your stubbornness is quite amusing, take this",
         "$Pause",
@@ -296,7 +296,7 @@ public class Dialogue
          //"Varren: (disappears into smoke)",
         "Varren: Cya later kiddo",
         "$Move(Varren,-11.57,-14.3)",
-        "Protag: Well, I guess I should get moving.",
+        "Blaze: Well, I guess I should get moving.",
         "$Kill(Varren)"
     };
     #endregion
@@ -331,16 +331,16 @@ public class Dialogue
     {
         //The player enters the outpatient room, Doctor Dr. Harris is standing inside with a clipboard
         "Dr. Harris: There you are! You must be my new assistant!",
-        "Protag: Assistant?",
+        "Blaze: Assistant?",
         "Dr. Harris: Yes. Come along now, we have a lot to do. We need to get everything ready for the surgery.",
-        "Protag: Surgery?",
+        "Blaze: Surgery?",
         "Dr. Harris: Did the nurse not tell you anything? I'm afraid the good doctor's son won't make it if we aren't on schedule.",
-        "Protag: His son? What happened to him?",
+        "Blaze: His son? What happened to him?",
         "Dr. Harris: A horrendous accident! The poor lad took a hard hid during the semifinals.",
-        "Protag: The finals?",
+        "Blaze: The finals?",
         "Dr. Harris: Indeed, but don't fret my boy. I am fully confident in the abilities of Dr. Stein, and that's where we come in.",
         "Dr. Harris: Now let's see here, first off we need bandages and antiseptic, I'll handle that, you just collect some rootweed and numblumbitantrilia.",
-        "Protag: Rootfeet and numblubi... what?",
+        "Blaze: Rootfeet and numblubi... what?",
         "Dr. Harris: Rootweed, and.. forget it. You should be able to find some from defeating monsters.",
         "Dr. Harris: Come find me when you've got at least 20 pieces of each, don't keep me waiting.",
         "Dr. Harris: Todaloo!",
@@ -351,20 +351,22 @@ public class Dialogue
     //Once the player has enough emotional energy
     string[] DrHarrisQuest1 = new string[]
     {
-        "Protag: I've defeated all of these monsters but found nothing but goop.",
-        "Protag: Hopefully this is what he's talking about."
+        "$TimeScale(0)",
+        "Blaze: I've defeated all of these monsters but found nothing but goop.",
+        "Blaze: Hopefully this is what he's talking about.",
+        "$TimeScale(1)",
     };
 
     string[] DrHarrisQuest2 = new string[]
     {
         //After collecting enough emotional energy (the goop), the player walks into a room where the doctor is
         "Dr. Harris: Ah! Just in time. I was wondering what was taking you so long.",
-        "Protag: I couldn't find anything but this goop.",
+        "Blaze: I couldn't find anything but this goop.",
         "Dr. Harris: Such a hard worker too! This should be more than enough. Keep this up and I'll be sure to put in a good word with the doctor.",
         " : *As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads*",
-        "Protag: How did you do that?",
+        "Blaze: How did you do that?",
         "Dr. Harris: Do what?",
-        "Protag: The goop! It turned into what we needed!",
+        "Blaze: The goop! It turned into what we needed!",
         "Dr. Harris: Goop? I appreciate your hard work, but please do be sure you are getting enough rest.",
         "Dr. Harris: If you would like I can talk to the doctor about prescribing you some sleep medications.",
         "Dr. Harris: We can't have you making mistakes on the job now, can we?|No Thanks|That would be nice|$Promtpt",
@@ -378,7 +380,7 @@ public class Dialogue
         "Dr. Harris: Ah, this should make it easier. When you encounter the monsters, use this scalpel.",
         "Dr. Harris: Severing the arteries should make collecting the blood we need a breeze.",
         "Dr. Harris: As usual, come and find me when you're done.",
-        "Protag: Why do we need all this bood",
+        "Blaze: Why do we need all this bood",
         "Dr. Harris: Victor, the good Doctors son, lost a lot of blood after the accident",
         "Dr. Harris: We will need to replinish it if he hopes to play in the finals.",
         "Dr. Harris: That's enough questions for now. We must hurry if we want to save our star athlete in time!",
@@ -389,20 +391,22 @@ public class Dialogue
 
     string[] DrHarrisQuest3 = new string[]
     {
+        "$TimeScale(0)",
         "Blaze: The blood bag is full now",
-        "Blaze: I should head back"
+        "Blaze: I should head back",
+        "$TimeScale(1)",
     };
 
     string[] DrHarrisQuest4 = new string[]
     {
-        //(Protag enters a room with Dr. Dr. Harris)
+        //(Blaze enters a room with Dr. Dr. Harris)
         "Dr. Harris: Ah good, you're here.",
-        "Protag: Is everything okay?",
+        "Blaze: Is everything okay?",
         "Dr. Harris: I'm afraid the good doctor's son isn't doing as well as we hoped.",
-        "Protag: Did the rootfeet and numblistuff not work?",
+        "Blaze: Did the rootfeet and numblistuff not work?",
         "Dr. Harris: The treatment wasn't as effective as we had hoped.",
         "Dr. Harris: In fact, I was only barely able to deliver the ingredients before the patient died.",
-        "Protag: He died?",
+        "Blaze: He died?",
         "Dr. Harris: ...",
         "Dr. Harris: Nonesense. Not if I have anything to say about it.",
         "Dr. Harris: I'm sure the good doctor has everything under control.",
@@ -411,22 +415,22 @@ public class Dialogue
         "Dr. Harris: Please fetch our young patents jersy from the good doctors office.",
         "Dr. Harris: He will need it for his big day!",
         "Dr. Harris: I'll be waiting for you in the operatin room.",
-        "Protag: Wait, your scapel",
+        "Blaze: Wait, your scapel",
         "Dr. Harris: Hold onto it my dear boy. Our job is not yet complete",
         "Dr. Harris: Todaloo!",
         //The player needs to go to Dr. Stein's office and grab the jersey
     };
 
-    //    (Protag finds his way to the doctor's office (outpatient tileset room) inside they can grab the jersey
+    //    (Blaze finds his way to the doctor's office (outpatient tileset room) inside they can grab the jersey
     //    and possibly have a file with a list of some of the doctor's other patients including the experiments he did on them)
 
     string[] DrHarrisQuest5 = new string[]
     {
-        //(Protag finds the jersy
-        "Protag: This looks like the jersy.",
+        //(Blaze finds the jersy
+        "Blaze: This looks like the jersy.",
         "Phone: Bzzz",
-        "Protag: Wait, a phone, and it has service!",
-        "Protag: That creepy vampire was wrong! I can call someone and get out of here",
+        "Blaze: Wait, a phone, and it has service!",
+        "Blaze: That creepy vampire was wrong! I can call someone and get out of here",
         " : You try to call home, but instead of the phone rining, a pre-recorded message plays",
         "Victor: Dad, I can't wait for you to see me at the semi finals!",
         "Dr. Stein: Yeah...",
@@ -462,7 +466,7 @@ public class Dialogue
         "Dr. Frank N. Stein: Ah! You're here. And not a moment too soon.",
         "Dr. Frank N. Stein: You have my thanks. Dr. Harris let me know how usefull you've been.",
         "Dr. Frank N. Stein: Thanks to your efforts, the surgery was a sucess!",
-        "Protag: Wait, it was?",
+        "Blaze: Wait, it was?",
         "Dr. Frank N. Stein: Of course it was. I, the great Dr. Frank N. Stein, have sucessfully cured death!",
         "Dr. Frank N. Stein: Behold the results of my work!",
         "Dr. Frank N. Stein: My son.",
@@ -480,7 +484,7 @@ public class Dialogue
         "$Kill(FrankNStein_Intro)",
         "$FadeOut(255,255,255)",
         "$ToggleUI(True)",
-        "Protag: Eww. Gross.",
+        "Blaze: Eww. Gross.",
         "Dr. Frank N. Stein: How dare you insult my son!",
         "Dr. Frank N. Stein: <b>DIE!</b>",
     };
@@ -488,7 +492,7 @@ public class Dialogue
     string[] SteinScene1 = new string[]
     {
         "$Animate(FrankNSteinMonster,Intermediate,True)",
-        "Protag: You have to accept your son is dead.",
+        "Blaze: You have to accept your son is dead.",
         "Dr. Frank N. Stein: No! He's right in front of me!",
         "Dr. Frank N. Stein: Can't you see.|He wouldn't have wanted this|That's not him|$Prompt",
         "Dr. Frank N. Stein: No... You're wrong... $OptionA",
@@ -513,7 +517,17 @@ public class Dialogue
         " : Talking Goes Here <b>AVIS PLEASE HELP</b>",
         "$Animate(FNSMonster_EndCutscene,Stage3)",
         "$BossPoof(FNSMonster_EndCutscene)",
-        "$Timer(6)"
+        "$UnlockFromBoss",
+        "$ToggleUI(False)",
+        "$Timer(6)",
+        "$Kill(FNSMonster_EndCutscene)",
+        "$Tele(Varren,18.39,-52.89)",
+        "$Move(Varren,20.28,-50.69)",
+        "Varren: Dude Mementos are sick!!!",
+        "Blaze: IKR!!!",
+        "$Move(Varren,18.39,-52.89)",
+        "$Kill(Varren)",
+        "$MoveViaLerp(Main Camera,18.74,-50.49)",
     };
     #endregion
     #endregion

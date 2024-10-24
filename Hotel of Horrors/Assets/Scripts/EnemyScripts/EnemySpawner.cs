@@ -13,7 +13,6 @@ public class EnemySpawner : MonoBehaviour
     PolygonCollider2D spawnArea;
     Queue<GameObject> queue;
     QuestSystem questSys;
-    [SerializeField] List<GameObject> spawnedMonsters;
     [SerializeField] LayerMask obstacleMask;
     [SerializeField] float obstacleCheckRadius = 0.2f;
     public bool isActiviated;
@@ -30,7 +29,6 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        spawnedMonsters = new List<GameObject>();
         if (queue == null)
         {
             queue = new Queue<GameObject>(enemyQueue);

@@ -5,19 +5,20 @@ using UnityEngine.UI;
 
 public class ScalerUpdater : MonoBehaviour
 {
-    bool f = false;
     [SerializeField] CanvasScaler scaler;
     private void OnEnable()
     {
+        scaler = gameObject.GetComponent<CanvasScaler>();
+
         if (GlobalSettings.isFullScreen)
         {
             scaler.scaleFactor = 1f;
         }
         else
         {
-            scaler.scaleFactor = 0.47f;
+            scaler.scaleFactor = 0.3f;
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
         }
-        
     }
 
     // Update is called once per frame
@@ -25,15 +26,15 @@ public class ScalerUpdater : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            if (f)
+            if (GlobalSettings.isFullScreen)
             {
                 scaler.scaleFactor = 1f;
             }
             else
             {
-                scaler.scaleFactor = 0.47f;
+                scaler.scaleFactor = 0.3f;
             }
-            f = !f;
+            GlobalSettings.isFullScreen = !GlobalSettings.isFullScreen;
         }
     }
 }

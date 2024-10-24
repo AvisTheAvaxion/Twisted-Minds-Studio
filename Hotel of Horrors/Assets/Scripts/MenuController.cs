@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
@@ -11,7 +13,12 @@ public class MenuController : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = true;
+        UnityEngine.Cursor.visible = true;
+
+        Screen.SetResolution(1920, 1080, true);
+        Screen.fullScreen = true;
+        GlobalSettings.isFullScreen = true;
+        gameObject.GetComponent<CanvasScaler>().scaleFactor = 1f;
     }
 
     public void PlayGame()

@@ -31,7 +31,7 @@ public class SettingsScript : MonoBehaviour
             Screen.SetResolution(768, 432, false);
             Screen.fullScreen = false;
             GlobalSettings.isFullScreen = false;
-            scaler.scaleFactor = 0.47f;
+            scaler.scaleFactor = 0.40f;
         }
     }
 }

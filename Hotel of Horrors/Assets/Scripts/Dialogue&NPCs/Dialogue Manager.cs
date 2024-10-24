@@ -182,6 +182,7 @@ public class DialogueManager : MonoBehaviour
             #region Choice Functions
             else if (lines[currentLine].EndsWith("$Prompt"))
             {
+                CanvasSwitch(true);
                 currentState = CutsceneState.Picking;
                 ButtonSwitch(true);
                 string startString = lines[currentLine].Replace("$Prompt", "");
@@ -214,7 +215,7 @@ public class DialogueManager : MonoBehaviour
             else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceOne)
             {
                 lastChoice = PlayerChoice.ChoiceOne;
-                while (lines[currentLine].Contains("$OptionB"))
+                while (currentLine < lines.Length && lines[currentLine].Contains("$OptionB"))
                 {
                     currentLine++;
                 }
@@ -236,7 +237,7 @@ public class DialogueManager : MonoBehaviour
             else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceTwo)
             {
                 lastChoice = PlayerChoice.ChoiceTwo;
-                while (lines[currentLine].Contains("$OptionA"))
+                while (currentLine < lines.Length && lines[currentLine].Contains("$OptionA"))
                 {
                     currentLine++;
                 }
@@ -245,18 +246,7 @@ public class DialogueManager : MonoBehaviour
             }
             #endregion
             #region Cutscene Functions
-            else if (lines[currentLine].EndsWith("$Move") || lines[currentLine].StartsWith("$Move"))
-            {
-                currentState = CutsceneState.Waiting;
-                int moveStartIndex = lines[currentLine].IndexOf('(');
-                int moveEndIndex = lines[currentLine].IndexOf(')');
-                string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
-                string[] splitString = moveInfo.Split(',');
-                playerAudio.NextLine(currentLine);
 
-                Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
-                SetMoveCharacterInfo(splitString[0], 2, target);
-            }
             else if (lines[currentLine].EndsWith("$MoveViaLerp") || lines[currentLine].StartsWith("$MoveViaLerp"))
             {
                 currentState = CutsceneState.Waiting;
@@ -270,6 +260,18 @@ public class DialogueManager : MonoBehaviour
                 Transform objTransform = GameObject.Find(splitString[0]).transform;
                 target.z = objTransform.position.z;
                 StartCoroutine(MoveViaLerp(.05f, objTransform, target));
+            }
+            else if (lines[currentLine].EndsWith("$Move") || lines[currentLine].StartsWith("$Move"))
+            {
+                currentState = CutsceneState.Waiting;
+                int moveStartIndex = lines[currentLine].IndexOf('(');
+                int moveEndIndex = lines[currentLine].IndexOf(')');
+                string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
+                string[] splitString = moveInfo.Split(',');
+                playerAudio.NextLine(currentLine);
+
+                Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
+                SetMoveCharacterInfo(splitString[0], 2, target);
             }
             else if (lines[currentLine].EndsWith("$Tele") || lines[currentLine].StartsWith("$Tele"))
             {
@@ -309,6 +311,17 @@ public class DialogueManager : MonoBehaviour
                 {
                     character.transform.GetChild(0).GetComponent<AfterImage>().StopEffect();
                 }
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
+            }
+            else if (lines[currentLine].EndsWith("$BossPoof") || lines[currentLine].StartsWith("$BossPoof"))
+            {
+                int poofStartIndex = lines[currentLine].IndexOf('(');
+                int poofEndIndex = lines[currentLine].IndexOf(')');
+                string poofInfo = lines[currentLine].Substring(poofStartIndex + 1, poofEndIndex - poofStartIndex - 1);
+                GameObject character = GameObject.Find(poofInfo);
+                character.GetComponent<BossVFX>().BossDeathEffects();
                 currentLine++;
                 OnDialogueUpdate();
                 currentLine--;
@@ -472,6 +485,7 @@ public class DialogueManager : MonoBehaviour
             #endregion
             else
             {
+                CanvasSwitch(true);
                 textBox.fontStyle = TMPro.FontStyles.Normal;
                 currentChoice = PlayerChoice.None;
                 nameBox.text = lines[currentLine].Split(':')[0];
@@ -556,10 +570,10 @@ public class DialogueManager : MonoBehaviour
     IEnumerator MoveViaLerp(float time, Transform cameraTransform, Vector3 target)
     {
         float interpol = 0;
-        while (cameraTransform.localPosition != target)
+        while (cameraTransform.position != target)
         {
-            Debug.Log($"{interpol} | Camera:{cameraTransform.localPosition} | target: {target}");
-            cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, target, interpol);
+            Debug.Log($"{interpol} | Camera:{cameraTransform.position} | target: {target}");
+            cameraTransform.position = Vector3.Lerp(cameraTransform.position, target, interpol);
             
             interpol += 0.01f;
             yield return new WaitForSeconds(time);

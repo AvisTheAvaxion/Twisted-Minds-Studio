@@ -47,6 +47,8 @@ public class Dialogue
                 return SteinIntro;
             case "SteinScene1":
                 return SteinScene1;
+            case "SteinEnd":
+                return SteinEnd;
             #endregion
             case "Empty":
                 return Empty;
@@ -79,6 +81,7 @@ public class Dialogue
         DrHarrisQuest5,
         SteinIntro,
         SteinScene1,
+        SteinEnd,
         #endregion
     }
 
@@ -374,7 +377,6 @@ public class Dialogue
         " : before pulling out a scalpel.",
         "Dr. Harris: Ah, this should make it easier. When you encounter the monsters, use this scalpel.",
         "Dr. Harris: Severing the arteries should make collecting the blood we need a breeze.",
-        "$GiveWeapon(Scapel)",
         "Dr. Harris: As usual, come and find me when you're done.",
         "Protag: Why do we need all this bood",
         "Dr. Harris: Victor, the good Doctors son, lost a lot of blood after the accident",
@@ -475,6 +477,7 @@ public class Dialogue
         "$Kill(FNSMonster_IntroCutscene)",
         "$Tele(FrankNSteinMonster,18.31,-47.401)",
         "$Tele(FrankNStein,17.535,-45.04)",
+        "$Kill(FrankNStein_Intro)",
         "$FadeOut(255,255,255)",
         "$ToggleUI(True)",
         "Protag: Eww. Gross.",
@@ -482,15 +485,35 @@ public class Dialogue
         "Dr. Frank N. Stein: <b>DIE!</b>",
     };
 
-
     string[] SteinScene1 = new string[]
     {
+        "$Animate(FrankNSteinMonster,Intermediate,True)",
         "Protag: You have to accept your son is dead.",
         "Dr. Frank N. Stein: No! He's right in front of me!",
         "Dr. Frank N. Stein: Can't you see.|He wouldn't have wanted this|That's not him|$Prompt",
         "Dr. Frank N. Stein: No... You're wrong... $OptionA",
-        "Dr. Frank N. Stein: Nonsense! $OptionB"
-        //"$Enrage() Need to have him enrage if option b is chosen
+        "Dr. Frank N. Stein: Nonsense! $OptionB",
+        "$Animate(FrankNSteinMonster,Intermediate,False)",
+        //"Need to have him enrage if option b is chosen
+    };
+
+    string[] SteinEnd = new string[]
+    {
+        "$ToggleUI(False)",
+        "$FadeIn(255,255,255)",
+        "$Kill(FrankNSteinMonster)",
+        "$Tele(FNSMonster_EndCutscene,20.328,-50.425)",
+        "$Tele(Player,18.74,-50.49)",
+        "$Tele(FrankNStein_Final,19.6,-47.46)",
+        "$FadeOut(255,255,255)",
+        "$MoveViaLerp(Main Camera,19.592,-50.49)",
+        "$MoveViaLerp(FrankNStein_Final,20.18,-50.47)",
+        "$Kill(FrankNStein_Final)",
+        "$Animate(FNSMonster_EndCutscene,Stage2)",
+        " : Talking Goes Here <b>AVIS PLEASE HELP</b>",
+        "$Animate(FNSMonster_EndCutscene,Stage3)",
+        "$BossPoof(FNSMonster_EndCutscene)",
+        "$Timer(6)"
     };
     #endregion
     #endregion

@@ -23,7 +23,6 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] Image WhiteFade;
     [SerializeField] List<Sprite> CharacterPics;
     [Header("Text Plug-In Variables")]
-    [SerializeField] GameObject canvas;
     [SerializeField] GameObject uiCanvas;
     [SerializeField] GameObject dialogUI;
     [SerializeField] TMPro.TMP_Text textBox;
@@ -646,7 +645,7 @@ public class DialogueManager : MonoBehaviour
 
     void CanvasSwitch(bool isCanvasOn)
     {
-        canvas.SetActive(isCanvasOn);
+        dialogUI.SetActive(isCanvasOn);
     }
     void UISwitch(bool isUIOn)
     {
@@ -687,7 +686,7 @@ public class DialogueManager : MonoBehaviour
     
     public void SetCutscene(Dialogue.Dialog newDialog)
     {
-        Debug.Log("DialogManager: " + newDialog.ToString());
+        //Debug.Log("DialogManager: " + newDialog.ToString());
         cutscene = newDialog;
         StartCutScene(cutscene.ToString(), 0);
     }

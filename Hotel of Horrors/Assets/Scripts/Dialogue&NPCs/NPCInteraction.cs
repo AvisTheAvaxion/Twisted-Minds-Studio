@@ -11,6 +11,10 @@ public class NPCInteraction : MonoBehaviour
     Dialogue.Dialog npcDialog;
     string npcName;
 
+
+    List<Dialogue.Dialog> npcDialogList;
+    [SerializeField]int lastRandomInt = -1;
+
     public event EventHandler OnPlayerTalk;
 
     private void Awake()
@@ -22,7 +26,15 @@ public class NPCInteraction : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("NPC") && collision.GetComponent<NPCBehavior>() != null)
         {
-            npcDialog = collision.GetComponent<NPCBehavior>().GetNPCDialog();
+            NPCBehavior behavior = collision.GetComponent<NPCBehavior>();
+            if (behavior.CheckForMultipleDialogs())
+            {
+                npcDialogList = behavior.GetNPCDialogList();
+            }
+            else
+            {
+                npcDialog = behavior.GetNPCDialog();
+            }
             npcName = collision.gameObject.name;
         }
     }
@@ -31,7 +43,15 @@ public class NPCInteraction : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("NPC") && collision.GetComponent<NPCBehavior>() != null)
         {
-            npcDialog = Dialogue.Dialog.None;
+            NPCBehavior behavior = collision.GetComponent<NPCBehavior>();
+            if (behavior.CheckForMultipleDialogs())
+            {
+                npcDialogList = null;
+            }
+            else
+            {
+                npcDialog = Dialogue.Dialog.None;
+            }
             npcName = null;
         }
     }
@@ -41,6 +61,18 @@ public class NPCInteraction : MonoBehaviour
         if (npcDialog != Dialogue.Dialog.None)
         {
             FindObjectOfType<DialogueManager>().SetCutscene(npcDialog);
+            questSys.QuestEvent(QuestSystem.QuestEventType.NpcInteraction, npcName);
+        }
+        else if(npcDialogList != null)
+        {
+            int randomInt = UnityEngine.Random.Range(0, npcDialogList.Count);
+            while (randomInt == lastRandomInt)
+            {
+                randomInt = UnityEngine.Random.Range(0, npcDialogList.Count);
+            }
+            lastRandomInt = randomInt;
+            Dialogue.Dialog randomDialog = npcDialogList[randomInt];
+            FindObjectOfType<DialogueManager>().SetCutscene(randomDialog);
             questSys.QuestEvent(QuestSystem.QuestEventType.NpcInteraction, npcName);
         }
     }

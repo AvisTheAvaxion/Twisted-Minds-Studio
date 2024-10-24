@@ -323,6 +323,8 @@ public class QuestSystem : MonoBehaviour
                     TeleportGameobject("FrankJersey(Quest)", new Vector2(63.3892f, -28.0588f));
                     break;
                 case 8:
+                    TeleportGameobject("FrankJersey(Quest)", new Vector2(55.19f, -27.79f));
+                    TeleportGameobject("FrankJersey", new Vector2(55.19f, -27.79f));
                     currentFloor.UnlockToBossDoor();
                     break;
                 case 9:

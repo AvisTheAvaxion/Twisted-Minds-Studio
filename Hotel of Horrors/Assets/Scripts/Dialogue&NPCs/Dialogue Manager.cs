@@ -61,7 +61,7 @@ public class DialogueManager : MonoBehaviour
     PlayerChoice currentChoice = PlayerChoice.None;
     PlayerChoice lastChoice = PlayerChoice.None;
 
-    CutsceneState currentState = CutsceneState.Continue;
+    CutsceneState currentState = CutsceneState.None;
 
     private void Awake()
     {

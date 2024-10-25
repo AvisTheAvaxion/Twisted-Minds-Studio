@@ -63,8 +63,11 @@ public class Floor : MonoBehaviour
         currentFloor = floorNumber;
         if (currentFloor > maxFloorTraveledTo) maxFloorTraveledTo = currentFloor;
 
-        toBossDoor.LockDoor();
-        fromBossDoor.LockDoor();
+        if (toBossDoor && fromBossDoor)
+        {
+            toBossDoor.LockDoor();
+            fromBossDoor.LockDoor();
+        }
 
         roomsByCategory.Add("Peaceful", new List<Room>());
         roomsByCategory.Add("Easy", new List<Room>());

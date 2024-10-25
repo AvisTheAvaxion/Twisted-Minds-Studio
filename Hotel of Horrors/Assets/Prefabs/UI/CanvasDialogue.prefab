@@ -750,7 +750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2736829710609484962
 RectTransform:
   m_ObjectHideFlags: 0
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 32.8
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1999,6 +1999,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   choiceTransform: {fileID: 9081636575529070319}
   profilePicObj: {fileID: 4427664774092121884}
+  GUI: {fileID: 2581914808435600849}
   profilePic: {fileID: 2993098889322547022}
   buttonOneText: {fileID: 1188105126746212703}
   buttonTwoText: {fileID: 5033563244816200719}

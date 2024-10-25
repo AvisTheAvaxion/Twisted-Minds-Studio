@@ -57,7 +57,7 @@ public class QuestSystem : MonoBehaviour
 
     private void Update()
     {
-        if (dialogueManager.getInCutscene() == false && objectiveSet == false && floorCleared == false)
+        if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None && objectiveSet == false && floorCleared == false)
         {
             LoadObjective();
         }

@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
     bool paused;
 
     [SerializeField] Canvas PauseScreen;
+    [SerializeField] DialogueManager dialogueManager;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape) && dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None)
         {
             paused = !paused;
 

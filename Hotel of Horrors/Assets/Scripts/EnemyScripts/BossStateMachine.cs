@@ -127,7 +127,7 @@ public abstract class BossStateMachine : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
 
-        if (!DialogueManager.getInCutscene()) 
+        if (DialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None) 
         { 
             currentState = States.DialogueEnd;
             StartCoroutine(DialogueEnd());

@@ -13,32 +13,24 @@ using Color = UnityEngine.Color;
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("Plug-In Variables")]
+    [Header("Variables")]
     [SerializeField] Dialogue.Dialog cutscene;
+    [Space(2)]
+    [Header("Functionality Plug-Ins")]
     [SerializeField] PlayerMovement movement;
     [SerializeField] PlayerInventory inventory;
     [SerializeField] NewAudioManager AudioManager;
     [SerializeField] PlayerAudio playerAudio;
-    [SerializeField] Image ProfilePic;
     [SerializeField] Image WhiteFade;
     [SerializeField] List<Sprite> CharacterPics;
-    [Header("Text Plug-In Variables")]
-    [SerializeField] GameObject uiCanvas;
-    [SerializeField] GameObject dialogUI;
+    [Header("Visual Plug-Ins")]
+    [SerializeField] GameObject playerGUI;
     [SerializeField] DialogueGUI dialogueGUI;
-    [SerializeField] TMPro.TMP_Text textBox;
-    [SerializeField] TMPro.TMP_Text nameBox;
-    [SerializeField] TMPro.TMP_Text buttonOneText;
-    [SerializeField] TMPro.TMP_Text buttonTwoText;
 
     Dialogue dialogue = new Dialogue();
     QuestSystem questSystem;
 
-    bool skipCutscene = false;
-
     string[] lines;
-
-    bool inCutscene = false;
 
     int currentLine = 0;
 
@@ -73,36 +65,26 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
-        /*PlayerMovement movement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        canvas = GameObject.Find("CanvasDialogue");
-        dialogUI = GameObject.Find("DialogeBG");
-        uiCanvas = GameObject.Find("Player UI");
-        textBox = GameObject.Find("TextBox").GetComponent<TMPro.TMP_Text>();
-        nameBox = GameObject.Find("NameBox").GetComponent<TMPro.TMP_Text>();
-        buttonOneText = GameObject.Find("ButtonOneText").GetComponent<TMPro.TMP_Text>();
-        buttonTwoText = GameObject.Find("ButtonTwoText").GetComponent<TMPro.TMP_Text>();*/
         questSystem = FindObjectOfType<QuestSystem>();
-        ButtonSwitch(false);
-        CanvasSwitch(false);
-        
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //SetCutscene(Dialogue.Dialog.VarrenEncounter);
+        if (dialogueGUI)
+        {
+            dialogueGUI.ToggleButtons(false);
+            dialogueGUI.ToggleGUI(false);
+        }
     }
 
     void StartCutScene(string dialogueName, int line)
     {
+        currentState = CutsceneState.Continue;
         movement.StartCutscene();
-        CanvasSwitch(true);
-        uiCanvas.SetActive(false);
         lines = dialogue.getDialogue(dialogueName);
         currentLine = line;
-        inCutscene = true;
-        nameBox.text = "";
-        textBox.text = "";
+        playerGUI.SetActive(false);
+        if (dialogueGUI)
+        {
+            dialogueGUI.ToggleGUI(false);
+            dialogueGUI.SetDialogue("", "");
+        }
         OnDialogueUpdate();
     }
 
@@ -110,7 +92,7 @@ public class DialogueManager : MonoBehaviour
     void Update()
     {
 
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && inCutscene && currentState == CutsceneState.Continue)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && currentState == CutsceneState.Continue)
         {
             OnDialogueUpdate();
         }
@@ -120,7 +102,7 @@ public class DialogueManager : MonoBehaviour
         }
         else if (currentState == CutsceneState.Skipping)
         {
-            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && inCutscene)
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)))
             {
                 OnDialogueUpdate();
             }
@@ -183,9 +165,8 @@ public class DialogueManager : MonoBehaviour
             #region Choice Functions
             else if (lines[currentLine].EndsWith("$Prompt"))
             {
-                CanvasSwitch(true);
                 currentState = CutsceneState.Picking;
-                ButtonSwitch(true);
+
                 string startString = lines[currentLine].Replace("$Prompt", "");
                 string[] splitString = startString.Split('|');
                 string promptText = splitString[0];
@@ -193,17 +174,15 @@ public class DialogueManager : MonoBehaviour
                 string bTwoText = splitString[2];
                 string outputName = promptText.Split(':')[0];
                 string outputText = promptText.Split(":")[1];
-                if(dialogueGUI)
+                if (dialogueGUI)
                 {
+                    dialogueGUI.ToggleButtons(true);
+                    dialogueGUI.ToggleGUI(true);
                     dialogueGUI.SetDialogue(outputName, outputText, bOneText, bTwoText);
                 }
-                //textBox.text = outputText;
-                //nameBox.text = outputName;
-                //buttonOneText.text = bOneText;
-                //buttonTwoText.text = bTwoText;
 
                 playerAudio.NextLine(currentLine);
-                UpdateImage();
+                UpdateImage(outputName);
             }
             else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceOne)
             {
@@ -211,10 +190,12 @@ public class DialogueManager : MonoBehaviour
                 string optionAText = lines[currentLine].Replace("$OptionA", "");
                 string outputText = optionAText.Split(":")[1];
                 string outputName = optionAText.Split(':')[0];
-                textBox.text = outputText;
-                nameBox.text = outputName;
+                if (dialogueGUI)
+                {
+                    dialogueGUI.SetDialogue(outputName, outputText);
+                }
                 playerAudio.NextLine(currentLine);
-                UpdateImage();
+                UpdateImage(outputName);
             }
             else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceOne)
             {
@@ -232,11 +213,13 @@ public class DialogueManager : MonoBehaviour
                 string optionBText = lines[currentLine].Replace("$OptionB", "");
                 string outputText = optionBText.Split(":")[1];
                 string optionBName = optionBText.Split(':')[0];
-                textBox.text = outputText;
-                nameBox.text = optionBName;
+                if (dialogueGUI)
+                {
+                    dialogueGUI.SetDialogue(optionBName, outputText);
+                }
 
                 playerAudio.NextLine(currentLine);
-                UpdateImage();
+                UpdateImage(optionBName);
             }
             else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceTwo)
             {
@@ -381,11 +364,17 @@ public class DialogueManager : MonoBehaviour
             {
                 Floor floor = FindObjectOfType<Floor>();
                 floor.UnlockToBossDoor();
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
             }
             else if (lines[currentLine].EndsWith("$UnlockFromBoss") || lines[currentLine].StartsWith("$UnlockFromBoss"))
             {
                 Floor floor = FindObjectOfType<Floor>();
                 floor.UnlockFromBossDoor();
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
             }
             else if (lines[currentLine].EndsWith("$TimeScale") || lines[currentLine].StartsWith("$TimeScale"))
             {
@@ -393,6 +382,9 @@ public class DialogueManager : MonoBehaviour
                 int timeEndIndex = lines[currentLine].IndexOf(')');
                 string timeOutInfo = lines[currentLine].Substring(timeStartIndex + 1, timeEndIndex - timeStartIndex - 1);
                 Time.timeScale = float.Parse(timeOutInfo);
+                currentLine++;
+                OnDialogueUpdate();
+                currentLine--;
             }
             #endregion
             #region Invetory Functions
@@ -498,7 +490,10 @@ public class DialogueManager : MonoBehaviour
                 int toggleEndIndex = lines[currentLine].IndexOf(')');
                 string toggleInfo = lines[currentLine].Substring(toggleStartIndex + 1, toggleEndIndex - toggleStartIndex - 1);
 
-                UISwitch(bool.Parse(toggleInfo));
+                if (dialogueGUI)
+                {
+                    dialogueGUI.ToggleGUI(bool.Parse(toggleInfo));
+                }
                 currentLine++;
                 OnDialogueUpdate();
                 currentLine--;
@@ -506,31 +501,33 @@ public class DialogueManager : MonoBehaviour
             #endregion
             else
             {
-                CanvasSwitch(true);
-                //textBox.fontStyle = TMPro.FontStyles.Normal;
+                if (dialogueGUI)
+                {
+                    dialogueGUI.ToggleGUI(true);
+                }
                 currentChoice = PlayerChoice.None;
                 string[] dialogueLine = lines[currentLine].Split(':');
-                //nameBox.text = lines[currentLine].Split(':')[0];
-                //textBox.text = lines[currentLine].Split(':')[1];
                 if(dialogueGUI && dialogueLine.Length == 2)
                 {
                     dialogueGUI.SetDialogue(dialogueLine[0], dialogueLine[1]);
                 }
 
                 playerAudio.NextLine(currentLine);
-                UpdateImage();
+                UpdateImage(dialogueLine[0]);
             }
         }
         //When there are no more lines of dialog to read.
         else if (currentLine > lines.Length-1)
         {
-            currentState = CutsceneState.Continue;
-            CanvasSwitch(false);
-            ButtonSwitch(false);
-            uiCanvas.SetActive(true);
+            currentState = CutsceneState.None;
+            if (dialogueGUI)
+            {
+                dialogueGUI.ToggleButtons(false);
+                dialogueGUI.ToggleGUI(false);
+            }
+            playerGUI.SetActive(true);
             ResetCamera();
             movement.EndCutscene();
-            inCutscene = false;
             InstaSkip = false;
             currentLine = 0;
         }
@@ -643,8 +640,8 @@ public class DialogueManager : MonoBehaviour
             {
                 characterAI.enabled=false;
             }
-            OnDialogueUpdate();
             currentState = CutsceneState.Continue;
+            OnDialogueUpdate();
         }
         else if(characterAnimator != null)
         {
@@ -660,7 +657,10 @@ public class DialogueManager : MonoBehaviour
     public void ButtonOneSelect()
     {
         currentChoice = PlayerChoice.ChoiceOne;
-        ButtonSwitch(false);
+        if (dialogueGUI)
+        {
+            dialogueGUI.ToggleButtons(true);
+        }
         while (lines[currentLine].Contains("$OptionB"))
         {
             currentLine++;
@@ -671,7 +671,10 @@ public class DialogueManager : MonoBehaviour
     public void ButtonTwoSelect()
     {
         currentChoice = PlayerChoice.ChoiceTwo;
-        ButtonSwitch(false);
+        if (dialogueGUI)
+        {
+            dialogueGUI.ToggleButtons(true);
+        }
         while (lines[currentLine].Contains("$OptionA"))
         {
             currentLine++;
@@ -680,30 +683,15 @@ public class DialogueManager : MonoBehaviour
         currentState = CutsceneState.Continue;
     }
 
-    void ButtonSwitch(bool isButtonOn)
-    {
-        buttonOneText.transform.parent.gameObject.SetActive(isButtonOn);
-        buttonTwoText.transform.parent.gameObject.SetActive(isButtonOn);
-    }
-
-    void CanvasSwitch(bool isCanvasOn)
-    {
-        dialogUI.SetActive(isCanvasOn);
-    }
-    void UISwitch(bool isUIOn)
-    {
-        dialogUI.SetActive(isUIOn);
-    }
-
-    void UpdateImage()
+    void UpdateImage(string name)
     {
         string myEmote = "";
 
-        emotions.TryGetValue(nameBox.text, out myEmote);
+        emotions.TryGetValue(name, out myEmote);
 
         if (myEmote == null) { myEmote = "Neutral"; }
 
-        myEmote = nameBox.text + myEmote;
+        myEmote = name + myEmote;
 
         if (dialogueGUI)
             dialogueGUI.SetProfilePic(null);
@@ -714,7 +702,8 @@ public class DialogueManager : MonoBehaviour
             {
                 if (dialogueGUI)
                     dialogueGUI.SetProfilePic(sprite);
-                ProfilePic.sprite = sprite;
+                else
+                    dialogueGUI.SetProfilePic(null);
             }
         }
     }
@@ -749,9 +738,9 @@ public class DialogueManager : MonoBehaviour
         InstaSkip = true;
     }
 
-    public bool getInCutscene()
+    public CutsceneState getCutsceneState()
     {
-        return inCutscene;
+        return currentState;
     }
     #endregion
 }

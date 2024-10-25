@@ -597,7 +597,7 @@ public class Dialogue
         "Varren: Well, good luck with your futile attempt to leave this place! $OptionA",
         "Varren: Your resolve still isn't broken? $OptionB",
         "Blaze: It's gonna take more than that to discourage me!",
-        "Varren: Well, it only get's harder from here.",
+        "Varren: Well, it only gets harder from here.",
         "Varren: Come find me at an elavator when you're ready to go to floor 2.",
         "Varren: I can't wait to see you fail.",
         "$Move(Varren,18.39,-52.89)",

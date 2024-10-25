@@ -24,17 +24,6 @@ public class ScalerUpdater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            if (GlobalSettings.isFullScreen)
-            {
-                scaler.scaleFactor = 1f;
-            }
-            else
-            {
-                scaler.scaleFactor = 0.3f;
-            }
-            GlobalSettings.isFullScreen = !GlobalSettings.isFullScreen;
-        }
+
     }
 }

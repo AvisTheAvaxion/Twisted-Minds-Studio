@@ -7,7 +7,7 @@ public class SettingsScript : MonoBehaviour
 {
     [SerializeField] Toggle fullScreenToggle;
     [SerializeField] CanvasScaler scaler;
-    [SerializeField] GameObject mainMenu;
+    //[SerializeField] GameObject mainMenu;
 
     // Start is called before the first frame update
     void Start()

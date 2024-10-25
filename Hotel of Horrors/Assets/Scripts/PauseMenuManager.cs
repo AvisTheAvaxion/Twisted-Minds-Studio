@@ -1,24 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenuManager : MonoBehaviour
 {
     bool paused;
 
-    [SerializeField] Canvas PauseScreen;
+    [SerializeField] Canvas canvas;
+    [SerializeField] GameObject PauseScreen;
+    [SerializeField] GameObject Settings;
+
     [SerializeField] DialogueManager dialogueManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        PauseScreen.gameObject.SetActive(false);
+        canvas.gameObject.SetActive(false);
+
         paused = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(dialogueManager.getCutsceneState().ToString());
+
         if (Input.GetKeyUp(KeyCode.Escape) && dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None)
         {
             paused = !paused;
@@ -33,18 +41,31 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-    
+
     public void Pause()
     {
         paused = true;
         Time.timeScale = 0;
 
-        PauseScreen.gameObject.SetActive(true);
+        canvas.gameObject.SetActive(true);
+        PauseScreen.SetActive(true);
+        Settings.SetActive(false);
     }
     public void UnPause()
     {
         paused = false;
         Time.timeScale = 1;
-        PauseScreen.gameObject.SetActive(false);
+        canvas.gameObject.SetActive(false);
+    }
+
+    public void OpenSettings()
+    {
+        Settings.SetActive(true);
+        PauseScreen.SetActive(false);
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

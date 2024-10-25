@@ -453,11 +453,21 @@ public class ActionController : MonoBehaviour
         canDoPlayerAbility = false;
         //playerAudio.PlayAbility(currentPlayerAbitlity.ToString());
 
-        if (inventory.CurrentAbility.GetInfo().GetOverrideController() != null) 
+        if (inventory.CurrentAbility.GetInfo().GetOverrideController() != null)
+        {
             playerAnimator.runtimeAnimatorController = inventory.CurrentAbility.GetInfo().GetOverrideController();
-        playerAnimator.SetBool("isAbilitying", true);
+            playerAnimator.SetBool("isAbilitying", true);
+        }
 
-        yield return new WaitUntil(() => !currentPlayerAbitlity.isAttacking);
+        if (playerGUI != null) playerGUI.UpdateFreeSlotCooldown(1);
+
+        while (currentPlayerAbitlity.isAttacking)
+        {
+            //if(!inventory.CurrentAbility.GetInfo().CanMove())
+            //    playerMovement.canMove = inventory.CurrentAbility.GetInfo().CanMove();
+            yield return null;
+        }
+        //yield return new WaitUntil(() => !currentPlayerAbitlity.isAttacking);
 
         playerAnimator.SetBool("isAbilitying", false);
         playerAnimator.runtimeAnimatorController = defaultController;

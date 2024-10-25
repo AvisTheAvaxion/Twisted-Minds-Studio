@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc98286725570646b9a2f660f538220, type: 3}
+  m_Name: EnergyTrail
+  m_EditorClassIdentifier: 
+  useableName: Energy Trail
+  description: When activated, leave cirlces of emotional energy that deals damage
+    to any enemy that steps on them.
+  maxStackAmount: 1
+  sprite: {fileID: 21300000, guid: 021266dcdfb48b24dbcb18f23edad5e5, type: 3}
+  displaySprite: {fileID: 21300000, guid: 021266dcdfb48b24dbcb18f23edad5e5, type: 3}
+  baseLevel: 1
+  maxLevel: 5
+  unlockEECost: 350
+  unlockFloor: 1
+  playerAbility: {fileID: 5262229291953371984, guid: 2bc16beeadca9384c8b2b5c4af8951f4, type: 3}
+  upgradeInfos:
+  - percentageIncrease: 25
+    eeCost: 300
+  - percentageIncrease: 20
+    eeCost: 325
+  - percentageIncrease: 15
+    eeCost: 350
+  - percentageIncrease: 10
+    eeCost: 400
+  animatorOverride: {fileID: 0}
+  cooldown: 8
+  duration: 10
+  damage: 3
+  size: 1
+  range: 0
+  numberOfProjectiles: 0
+  deflectionResistance: 0
+  chanceToInflictEffect: 0
+  effectsToInflict: []
+  maxTargets: 1
+  goThroughWalls: 0

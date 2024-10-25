@@ -139,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
+            if (canMove && (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f))
             {
                 animator.SetBool("isWalking", true);
             }

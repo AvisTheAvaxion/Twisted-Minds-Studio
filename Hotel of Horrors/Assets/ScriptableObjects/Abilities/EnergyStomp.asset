@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc98286725570646b9a2f660f538220, type: 3}
+  m_Name: EnergyStomp
+  m_EditorClassIdentifier: 
+  useableName: Energy Stomp
+  description: With a powerful stomp, send out a wave of emotional energy that deals
+    heavy damage and major knockback.
+  maxStackAmount: 1
+  sprite: {fileID: 21300000, guid: f977fbb6720ab584eba36b3d7b6838fa, type: 3}
+  displaySprite: {fileID: 21300000, guid: f977fbb6720ab584eba36b3d7b6838fa, type: 3}
+  baseLevel: 1
+  maxLevel: 5
+  unlockEECost: 600
+  unlockFloor: 1
+  playerAbility: {fileID: 5262229291953371984, guid: 267ab48862c01384498d64c71f09e757, type: 3}
+  upgradeInfos:
+  - percentageIncrease: 25
+    eeCost: 500
+  - percentageIncrease: 19
+    eeCost: 550
+  - percentageIncrease: 14
+    eeCost: 600
+  - percentageIncrease: 8
+    eeCost: 700
+  animatorOverride: {fileID: 0}
+  canMove: 0
+  cooldown: 15
+  duration: 0.5
+  damage: 20
+  size: 1
+  range: 0
+  numberOfProjectiles: 0
+  deflectionResistance: 0
+  chanceToInflictEffect: 0
+  effectsToInflict: []
+  maxTargets: 1
+  goThroughWalls: 0

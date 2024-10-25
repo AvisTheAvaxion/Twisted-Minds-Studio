@@ -57,6 +57,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha: 1
     - _EnableExternalAlpha: 0
     - _FrameRate: 16
     - _MoveSpeed: 0.35
@@ -64,7 +65,7 @@ Material:
     - _NoiseClipping: 0.01
     - _NoiseScale: 7.94
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.83402854, g: 0.83402854, b: 0.83402854, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _MoveDir: {r: 0, g: -1, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

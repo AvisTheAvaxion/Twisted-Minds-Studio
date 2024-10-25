@@ -52,17 +52,26 @@ public class MementoGUI : MonoBehaviour
 
         if(inventory.CurrentMemento != null)
         {
-            equippedMementoImage.sprite = inventory.CurrentMemento.GetSprite();
-            equippedMementoImage.color = Color.white;
+            //equippedMementoImage.sprite = inventory.CurrentMemento.GetSprite();
+            //equippedMementoImage.color = Color.white;
         } else
         {
-            equippedMementoImage.color = Color.clear;
+            //equippedMementoImage.color = Color.clear;
         }
     }
 
     public void EquipMemento(int index)
     {
         inventory.EquipMemento(index);
+        if(!mementoSlots[index].connected)
+            mementoSlots[index].ConnectTail(true);
+        for (int i = 0; i < mementoSlots.Length; i++)
+        {
+            if(mementoSlots[i].connected && i != index)
+            {
+                mementoSlots[index].ConnectTail(false);
+            }
+        }
 
         UpdateGUI();
         playerGUI.UpdateHotbarGUI();

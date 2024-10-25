@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -9,11 +10,24 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Canvas PauseScreen;
     [SerializeField] DialogueManager dialogueManager;
 
+    [SerializeField] CanvasScaler scaler;
+
     // Start is called before the first frame update
     void Start()
     {
         PauseScreen.gameObject.SetActive(false);
         paused = false;
+
+
+        if (GlobalSettings.isFullScreen)
+        {
+            scaler.scaleFactor = 1f;
+        }
+        else
+        {
+            scaler.scaleFactor = 0.3f;
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
+        }
     }
 
     // Update is called once per frame

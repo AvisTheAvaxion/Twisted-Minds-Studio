@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class ScalerUpdater : MonoBehaviour
 {
     [SerializeField] CanvasScaler scaler;
+    [SerializeField] bool EnableToggle;
+
     private void OnEnable()
     {
         scaler = gameObject.GetComponent<CanvasScaler>();
@@ -24,17 +26,20 @@ public class ScalerUpdater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (EnableToggle)
         {
-            if (GlobalSettings.isFullScreen)
+            if (Input.GetKeyDown(KeyCode.G))
             {
-                scaler.scaleFactor = 1f;
+                if (GlobalSettings.isFullScreen)
+                {
+                    scaler.scaleFactor = 1f;
+                }
+                else
+                {
+                    scaler.scaleFactor = 0.3f;
+                }
+                GlobalSettings.isFullScreen = !GlobalSettings.isFullScreen;
             }
-            else
-            {
-                scaler.scaleFactor = 0.3f;
-            }
-            GlobalSettings.isFullScreen = !GlobalSettings.isFullScreen;
         }
     }
 }

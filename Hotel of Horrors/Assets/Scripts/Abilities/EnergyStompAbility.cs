@@ -9,6 +9,16 @@ public class EnergyStompAbility : PlayerAbility
 
     Collider2D collider;
 
+    public override void CancelAbility()
+    {
+        /*isAttacking = false;
+        if(attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            collider.enabled = false;
+        }*/
+    }
+
     public override void Use(ActionController controller, Ability ability)
     {
         this.ability = ability;
@@ -22,10 +32,11 @@ public class EnergyStompAbility : PlayerAbility
 
         ((CircleCollider2D)collider).radius = ((CircleCollider2D)collider).radius * ability.size;
 
-        StartCoroutine(Attack());
+        attackCoroutine = StartCoroutine(Attack());
     }
 
-    IEnumerator Attack()
+    Coroutine attackCoroutine;
+    protected IEnumerator Attack()
     {
         isAttacking = true;
 
@@ -42,6 +53,7 @@ public class EnergyStompAbility : PlayerAbility
         yield return new WaitForSeconds(1f);
 
         stompObject.SetActive(false);
+        attackCoroutine = null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

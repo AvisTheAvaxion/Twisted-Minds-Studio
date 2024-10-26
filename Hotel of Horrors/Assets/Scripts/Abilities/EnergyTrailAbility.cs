@@ -8,6 +8,12 @@ public class EnergyTrailAbility : PlayerAbility
     [SerializeField] float timeBtwSpawns = 1f;
     [SerializeField] GameObject trailInstance;
 
+    public override void CancelAbility()
+    {
+        isAttacking = false;
+        if (attackCoroutine != null) StopCoroutine(attackCoroutine);
+    }
+
     public override void Use(ActionController controller, Ability ability)
     {
         this.ability = ability;
@@ -16,10 +22,11 @@ public class EnergyTrailAbility : PlayerAbility
         cooldown = ability.cooldown;
         duration = ability.duration;
 
-        StartCoroutine(Attack());
+        attackCoroutine = StartCoroutine(Attack());
     }
 
-    IEnumerator Attack()
+    Coroutine attackCoroutine;
+    protected IEnumerator Attack()
     {
         isAttacking = true;
 
@@ -46,5 +53,6 @@ public class EnergyTrailAbility : PlayerAbility
         }
 
         isAttacking = false;
+        attackCoroutine = null;
     }
 }

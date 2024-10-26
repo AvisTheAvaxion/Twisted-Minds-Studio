@@ -10,6 +10,10 @@ public class EnergyArcAbility : PlayerAbility
     [SerializeField] float forceDelay = 0.25f;
     [SerializeField] GameObject arc;
 
+    public override void CancelAbility()
+    {
+    }
+
     public override void Use(ActionController controller, Ability ability)
     {
         this.ability = ability;
@@ -21,7 +25,7 @@ public class EnergyArcAbility : PlayerAbility
         StartCoroutine(Attack());
     }
 
-    IEnumerator Attack()
+    protected IEnumerator Attack()
     {
         isAttacking = true;
         //Leaves room for start animation

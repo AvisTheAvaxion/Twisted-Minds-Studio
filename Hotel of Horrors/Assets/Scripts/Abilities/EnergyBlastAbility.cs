@@ -31,10 +31,11 @@ public class EnergyBlastAbility : PlayerAbility
         Projectile projectile = blast.GetComponent<Projectile>();
         if (projectile) projectile.Initialize(ability);
 
-        StartCoroutine(Attack());
+        attackCoroutine = StartCoroutine(Attack());
     }
 
-    IEnumerator Attack()
+    Coroutine attackCoroutine;
+    protected IEnumerator Attack()
     {
         blast.gameObject.SetActive(true);
 
@@ -86,7 +87,20 @@ public class EnergyBlastAbility : PlayerAbility
         blast.gameObject.SetActive(false);
 
         isAttacking = false;
+        attackCoroutine = null;
+    }
 
+    public override void CancelAbility()
+    {
+        isAttacking = false;
 
+        if (attackCoroutine != null)
+        {
+            lineRenderer.enabled = false;
+            collider2D.enabled = false;
+            blastEnd.gameObject.SetActive(false);
+            blast.gameObject.SetActive(false);
+            StopCoroutine(attackCoroutine);
+        }
     }
 }

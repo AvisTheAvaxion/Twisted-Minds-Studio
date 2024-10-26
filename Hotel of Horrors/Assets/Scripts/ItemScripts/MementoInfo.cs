@@ -7,6 +7,17 @@ using UnityEngine;
 public class MementoInfo : UseableInfo
 {
     [SerializeField] GameObject specialAbility;
+    [SerializeField] bool canMove = true;
+    [SerializeField] bool canAttackToo = true;
+
+    public bool CanMove()
+    {
+        return canMove;
+    }
+    public bool CanAttackToo()
+    {
+        return canAttackToo;
+    }
     public override void Use()
     {
         Debug.Log($"Memento {GetName()} Used");

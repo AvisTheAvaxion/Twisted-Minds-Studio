@@ -6,6 +6,8 @@ public class CameraShake : MonoBehaviour
 {
     [SerializeField] Transform camera;
 
+    Vector3 originalCamPos;
+
     bool interruptable;
 
     Coroutine shakeCoroutine;
@@ -46,7 +48,7 @@ public class CameraShake : MonoBehaviour
 
     IEnumerator Shake(float frequency, float smoothing, float length)
     {
-        Vector3 originalCamPos = camera.localPosition;
+        originalCamPos = camera.localPosition;
         float t = 0;
         while(t < length)
         {
@@ -57,5 +59,16 @@ public class CameraShake : MonoBehaviour
         }
         camera.localPosition = originalCamPos;
         interruptable = true;
+        shakeCoroutine = null;
+    }
+
+    public void CancelShake()
+    {
+        if (shakeCoroutine != null)
+        {
+            StopCoroutine(shakeCoroutine);
+            camera.localPosition = originalCamPos;
+            interruptable = true;
+        }
     }
 }

@@ -9,6 +9,10 @@ public class ScalpelAbility : WeaponAbility
     [SerializeField] float launchForce = 4f;
     [SerializeField] GameObject arc;
 
+    public override void CancelAbility()
+    {
+    }
+
     public override void Use(ActionController controller, Weapon weapon)
     {
         this.weapon = weapon;

@@ -114,7 +114,7 @@ public class ElevatorMenuManager : MonoBehaviour
             fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
             yield return null;
         }
-        player.canMove = true;
+        player.SetCanMove(true);
         elevatorBackground.SetActive(false);
     }
     #endregion

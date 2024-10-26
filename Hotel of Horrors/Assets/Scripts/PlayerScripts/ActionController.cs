@@ -353,7 +353,7 @@ public class ActionController : MonoBehaviour
                 meleeStrike.Init(this, inventory.CurrentWeapon, attackNumber, "Enemy", cameraShake, meleeDir);
 
                 playerMovement.MeleeLunge(meleeDirection.up, 0.4f);
-                playerMovement.canMove = false;
+                playerMovement.SetCanMove(false);
             }
         } 
         else
@@ -376,7 +376,7 @@ public class ActionController : MonoBehaviour
 
         isAttacking = false;
 
-        playerMovement.canMove = true;
+        playerMovement.SetCanMove(true);
 
         /*attackNumber++;
 
@@ -503,6 +503,8 @@ public class ActionController : MonoBehaviour
     {
         float timer = 0;
         canDoSpecialAbility = false;
+
+        if (playerGUI != null) playerGUI.UpdateMementoCooldown(1);
 
         yield return new WaitUntil(() => !currentSpecialAbility.isAttacking);
 

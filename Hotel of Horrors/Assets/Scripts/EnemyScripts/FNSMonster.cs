@@ -81,6 +81,8 @@ public class FNSMonster : BossStateMachine
 
     protected override void Fight()
     {
+        if (isDying) return;
+
         if(!isAttacking && canAttack)
             Move();
 
@@ -94,12 +96,12 @@ public class FNSMonster : BossStateMachine
                 break;
         }
 
-        if(bossHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThresholdToNextStage && currentStageIndex < stages.Length - 1)
+        /*if(bossHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThresholdToNextStage && currentStageIndex < stages.Length - 1)
         {
             print(stages[currentStageIndex].cutscene);
             OnDialogueStart(stages[currentStageIndex].cutscene);
             Disenrage();
-        }
+        }*/
     }
 
     void Fight_Stage1()
@@ -178,10 +180,7 @@ public class FNSMonster : BossStateMachine
         ai.SetSpeed(currentSettings.walkSpeed);
         arrived = !ai.MoveTowardsTarget(playerPos);
 
-        if (afterImage == null) 
-            CheckToRotate(ai.CurrentDir, null);
-        else
-            CheckToRotate(ai.CurrentDir);
+        CheckToRotate(ai.CurrentDir, afterImage);
     }
 
     Coroutine chargeCoroutine;
@@ -207,11 +206,8 @@ public class FNSMonster : BossStateMachine
         {
             moveDir = Vector2.Lerp(moveDir, GetDirTowardsPlayer(), currentSettings.chargeSensitivity * Time.deltaTime * 10);
             rb.velocity = moveDir * currentSettings.chargeSpeed * Time.fixedDeltaTime * 10;
-            
-            if (afterImage == null)
-                CheckToRotate(moveDir, null);
-            else
-                CheckToRotate(moveDir, afterImage);
+
+            CheckToRotate(moveDir, afterImage);
 
             yield return null;
 
@@ -282,12 +278,16 @@ public class FNSMonster : BossStateMachine
     {
         enraged = true;
         currentSettings = enragedAttackSettings;
+
+        if (enrageSprite) enrageSprite.SetActive(true);
     }
 
     protected override void Disenrage()
     {
         enraged = false;
         currentSettings = normalAttackSettings;
+
+        if (enrageSprite) enrageSprite.SetActive(false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -329,7 +329,7 @@ public class FNSMonster : BossStateMachine
         if (bossFightStarted)
         {
             int choiceMade = (int)FindObjectOfType<DialogueManager>().GetLastPlayerChoice();
-            print("Choice Made: " + choiceMade);
+            //print("Choice Made: " + choiceMade);
             if (!isDying)
             {
                 if (stages[currentStageIndex].correctChoice != choiceMade)
@@ -339,7 +339,11 @@ public class FNSMonster : BossStateMachine
                 currentAttack = 0;
                 currentStageIndex++;
 
-                Stun(1f, true);
+                Stun(0.5f, true);
+
+                isAttacking = false;
+                isCharging = false;
+
                 //currentState = States.Fighting;
             } else
             {
@@ -350,7 +354,7 @@ public class FNSMonster : BossStateMachine
 
         } else
         {
-            Stun(1f, true);
+            Stun(0.5f, true);
             bossFightStarted = true;
 
             isAttacking = false;
@@ -358,28 +362,31 @@ public class FNSMonster : BossStateMachine
 
             bossHealth.ShowHealthBar();
 
-            //dialogueSegmentStarted = false;
+            dialogueSegmentStarted = false;
         }
     }
 
     protected override IEnumerator DeathSequence()
     {
-        rb.velocity = Vector2.zero;
         cancelCharge = true;
-        animator.SetBool("isWalking", false);
-
         yield return null;
+        if (stunCoroutine != null) StopCoroutine(stunCoroutine);
+        animator.SetBool("ChargeStun", false);
+        animator.SetBool("isWalking", false);
+        rb.velocity = Vector2.zero;
+        animator.ResetTrigger("Slam");
+        animator.SetTrigger("Death");
+        Disenrage();
 
         if (!dialogueSegmentStarted)
         {
-            OnDialogueStart(stages[currentStageIndex].cutscene);
+            OnDialogueStart(stages[stages.Length - 1].cutscene);
         }
         bossHealth.HideHealthBar();
 
         currentState = States.Death;
 
-
-        yield return new WaitUntil(() => !dialogueSegmentStarted);
+        //yield return new WaitUntil(() => !dialogueSegmentStarted);
 
         //SceneManager.LoadScene("EndDemo");
     }
@@ -426,16 +433,23 @@ public class FNSMonster : BossStateMachine
 
     protected override IEnumerator DialogueStart(Dialogue.Dialog cutscene)
     {
+        //Cancel anything happening already
         cancelCharge = true;
+        yield return null;
+        if(stunCoroutine != null) StopCoroutine(stunCoroutine);
+        animator.SetBool("ChargeStun", false);
+        animator.SetBool("isWalking", false);
+        rb.velocity = Vector2.zero;
+
         dialogueSegmentStarted = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         DialogueManager.SetCutscene(cutscene);
         currentState = States.Dialogue;
     }
 
     protected override IEnumerator DialogueEnd()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         OnDialogueEnd();
     }
 

@@ -63,13 +63,15 @@ public class BossHealth : MonoBehaviour, IHealth
 
         if (stats.GetHealthValue() <= 0)
         {
-            transform.SendMessage("OnDeath");
+            boss.OnDeath();
             //Destroy(gameObject);
         }else
         {
             canTakeDamage = false;
             boss.Stun(stunLength, false);
             StartCoroutine(IFrame());
+
+            boss.CheckHealth();
         }
         return true;
     }

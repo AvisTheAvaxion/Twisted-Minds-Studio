@@ -33,8 +33,10 @@ public class PlayerMovement : MonoBehaviour
     //public float collisionOffset = 0.05f;
     //public ContactFilter2D movementFilter;
     //List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
-    [HideInInspector]public bool canMove;
-    [HideInInspector]public bool canDash;
+    //[HideInInspector]
+    public bool canMove;
+    [HideInInspector]
+    public bool canDash;
     bool inCutscene;
 
     [Header("Dashing Modifiers")]
@@ -97,25 +99,25 @@ public class PlayerMovement : MonoBehaviour
                 if (angle > -45 && angle <= 45 && !direction.Equals("North"))
                 {
                     //back
-                    direction = "North";
+                    //direction = "North";
                     //animator.runtimeAnimatorController = backController;
                 }
                 else if (angle <= -45 && angle > -135 && !direction.Equals("West"))
                 {
                     //left
-                    direction = "West";
+                    //direction = "West";
                     //animator.runtimeAnimatorController = leftController;
                 }
                 else if (angle <= -135 || angle > 135 && !direction.Equals("South"))
                 {
                     //forward
-                    direction = "South";
+                    //direction = "South";
                     //animator.runtimeAnimatorController = forwardController;
                 }
                 else if (angle <= 135 && angle > 45 && !direction.Equals("East"))
                 {
                     //right
-                    direction = "East";
+                    //direction = "East";
                     //animator.runtimeAnimatorController = rightController;
                 }
 
@@ -124,18 +126,30 @@ public class PlayerMovement : MonoBehaviour
                     direction = "East";
                     spriteRenderer.flipX = true;
 
-                    Vector3 scale = afterImage.transform.localScale;
+                    /*Vector3 scale = afterImage.transform.localScale;
                     scale.x *= 1;
-                    afterImage.transform.localScale = scale;
+                    afterImage.transform.localScale = scale;*/
+
+                    if (afterImage != null)
+                    {
+                        ParticleSystemRenderer psr = afterImage.GetComponent<ParticleSystemRenderer>();
+                        if (psr != null) psr.flip = new Vector3(1, 0, 0);
+                    }
                 }
                 else
                 {
                     direction = "West";
                     spriteRenderer.flipX = false;
 
-                    Vector3 scale = afterImage.transform.localScale;
+                    /*Vector3 scale = afterImage.transform.localScale;
                     scale.x = -1;
-                    afterImage.transform.localScale = scale;
+                    afterImage.transform.localScale = scale;*/
+
+                    if (afterImage != null)
+                    {
+                        ParticleSystemRenderer psr = afterImage.GetComponent<ParticleSystemRenderer>();
+                        if (psr != null) psr.flip = new Vector3(0, 0, 0);
+                    }
                 }
             }
 
@@ -222,12 +236,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (movementVector.y >= 0.1f)
         {
-            direction = "North";
+            //direction = "North";
             //animator.runtimeAnimatorController = backController;
         }
         else if (movementVector.y <= -0.1f)
         {
-            direction = "South";
+            //direction = "South";
             //animator.runtimeAnimatorController = forwardController;
         }
         
@@ -236,12 +250,24 @@ public class PlayerMovement : MonoBehaviour
             direction = "West";
             spriteRenderer.flipX = false;
             //animator.runtimeAnimatorController = leftController;
+
+            if (afterImage != null)
+            {
+                ParticleSystemRenderer psr = afterImage.GetComponent<ParticleSystemRenderer>();
+                if (psr != null) psr.flip = new Vector3(0, 0, 0);
+            }
         }
         else if (movementVector.x >= 0.1f)
         {
             direction = "East";
             spriteRenderer.flipX = true;
             //animator.runtimeAnimatorController = rightController;
+
+            if (afterImage != null)
+            {
+                ParticleSystemRenderer psr = afterImage.GetComponent<ParticleSystemRenderer>();
+                if (psr != null) psr.flip = new Vector3(1, 0, 0);
+            }
         }
 
         if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
@@ -262,14 +288,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (dashPartcileSpawn && dashParticles[0]) Destroy(Instantiate(dashParticles[0], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
 
-                direction = "North";
+                //direction = "North";
                 //animator.runtimeAnimatorController = backController;
             }
             else if (movementVector.y <= -0.1f)
             {
                 if (dashPartcileSpawn && dashParticles[1]) Destroy(Instantiate(dashParticles[1], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
 
-                direction = "South";
+                //direction = "South";
                 //animator.runtimeAnimatorController = forwardController;
             }
             else if (movementVector.x <= -0.1f)
@@ -400,5 +426,10 @@ public class PlayerMovement : MonoBehaviour
 
         TogglePlayerControls(true);
         inCutscene = false;
+    }
+
+    public void SetCanMove(bool canMove)
+    {
+        if (!inCutscene) this.canMove = canMove;
     }
 }

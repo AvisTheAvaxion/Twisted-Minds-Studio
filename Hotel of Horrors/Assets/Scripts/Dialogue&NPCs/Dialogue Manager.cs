@@ -376,12 +376,20 @@ public class DialogueManager : MonoBehaviour
                 OnDialogueUpdate();
                 currentLine--;
             }
-            else if (lines[currentLine].EndsWith("$TimeScale") || lines[currentLine].StartsWith("$TimeScale"))
+            else if (lines[currentLine].EndsWith("$PauseTime") || lines[currentLine].StartsWith("$PauseTime"))
             {
                 int timeStartIndex = lines[currentLine].IndexOf('(');
                 int timeEndIndex = lines[currentLine].IndexOf(')');
-                string timeOutInfo = lines[currentLine].Substring(timeStartIndex + 1, timeEndIndex - timeStartIndex - 1);
-                Time.timeScale = float.Parse(timeOutInfo);
+                string timeInfo = lines[currentLine].Substring(timeStartIndex + 1, timeEndIndex - timeStartIndex - 1);
+                bool pauseBool = bool.Parse(timeInfo);
+                if (pauseBool)
+                {
+                    GameTime.PauseTime(false);
+                }
+                else
+                {
+                    GameTime.UnpauseTime();
+                }
                 currentLine++;
                 OnDialogueUpdate();
                 currentLine--;

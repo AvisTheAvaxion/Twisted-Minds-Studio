@@ -74,7 +74,7 @@ public class Objectives
         "SetCutscene|DrHarrisQuest3",
         "Talk|DrHarris(Q3)|HarrisRoom",
         "Talk|FrankJersey(Quest)|DrFrankOffice",
-        "KillSpecific|FrankNSteinMonster",
+        "KillSpecific|1|FrankNSteinMonster",
         "ClearFloor"
     };
 

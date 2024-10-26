@@ -376,12 +376,13 @@ public class DialogueManager : MonoBehaviour
                 OnDialogueUpdate();
                 currentLine--;
             }
-            else if (lines[currentLine].EndsWith("$PauseTime") || lines[currentLine].StartsWith("$PauseTime"))
+            else if (lines[currentLine].EndsWith("$ChronoStop") || lines[currentLine].StartsWith("$ChronoStop"))
             {
                 int timeStartIndex = lines[currentLine].IndexOf('(');
                 int timeEndIndex = lines[currentLine].IndexOf(')');
                 string timeInfo = lines[currentLine].Substring(timeStartIndex + 1, timeEndIndex - timeStartIndex - 1);
                 bool pauseBool = bool.Parse(timeInfo);
+                Debug.Log(timeInfo + " " + pauseBool);
                 if (pauseBool)
                 {
                     GameTime.PauseTime(false);

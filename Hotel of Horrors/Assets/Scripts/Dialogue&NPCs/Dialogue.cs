@@ -351,10 +351,10 @@ public class Dialogue
     //Once the player has enough emotional energy
     string[] DrHarrisQuest1 = new string[]
     {
-        "$PauseTime(True)",
+        "$ChronoStop(True)",
         "Blaze: I've defeated all of these monsters but found nothing but goop.",
         "Blaze: Hopefully this is what he's talking about.",
-        "$PauseTime(False)",
+        "$ChronoStop(False)",
     };
 
     string[] DrHarrisQuest2 = new string[]
@@ -391,10 +391,10 @@ public class Dialogue
 
     string[] DrHarrisQuest3 = new string[]
     {
-        "$PauseTime(True)",
+        "$ChronoStop(True)",
         "Blaze: The blood bag is full now",
         "Blaze: I should head back",
-        "$PauseTime(False)",
+        "$ChronoStop(False)",
     };
 
     string[] DrHarrisQuest4 = new string[]

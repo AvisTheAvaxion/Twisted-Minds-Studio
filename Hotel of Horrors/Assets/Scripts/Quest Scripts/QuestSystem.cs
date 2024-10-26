@@ -331,12 +331,12 @@ public class QuestSystem : MonoBehaviour
                     break;
                 case 7:
                     SetQuestTitle("The Big Day");
-                    SetQuestDesc("Get the patient's jersy");
+                    SetQuestDesc("Get the patient's jersey");
                     TeleportGameobject("FrankJersey(Quest)", new Vector2(63.3892f, -28.0588f));
                     break;
                 case 8:
+                    SetQuestTitle("Confrontation");
                     TeleportGameobject("FrankJersey(Quest)", new Vector2(55.19f, -27.79f));
-                    TeleportGameobject("FrankJersey", new Vector2(55.19f, -27.79f));
                     currentFloor.UnlockToBossDoor();
                     break;
                 case 9:

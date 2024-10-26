@@ -480,7 +480,7 @@ public class Dialogue
         "$FadeIn(255,255,255)",
         "$Kill(FNSMonster_IntroCutscene)",
         "$Tele(FrankNSteinMonster,18.31,-47.401)",
-        "$Tele(FrankNStein,17.535,-45.04)",
+        "$Tele(FrankNStein,16.466,-44.5)",
         "$Kill(FrankNStein_Intro)",
         "$FadeOut(255,255,255)",
         "$ToggleUI(True)",

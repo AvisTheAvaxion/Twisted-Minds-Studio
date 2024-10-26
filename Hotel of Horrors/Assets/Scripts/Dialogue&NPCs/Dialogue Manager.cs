@@ -738,13 +738,19 @@ public class DialogueManager : MonoBehaviour
 
     public void SkipCutscene()
     {
-        currentState = CutsceneState.Skipping;
+        if (currentState != CutsceneState.Picking || currentState != CutsceneState.Moving || currentState != CutsceneState.Waiting)
+        {
+            currentState = CutsceneState.Skipping;
+        }
     }
 
     public void DevSkipCutscene()
     {
-        currentState = CutsceneState.Skipping;
-        InstaSkip = true;
+        if (currentState != CutsceneState.Picking || currentState != CutsceneState.Moving || currentState != CutsceneState.Waiting)
+        {
+            currentState = CutsceneState.Skipping;
+            InstaSkip = true;
+        }
     }
 
     public CutsceneState getCutsceneState()

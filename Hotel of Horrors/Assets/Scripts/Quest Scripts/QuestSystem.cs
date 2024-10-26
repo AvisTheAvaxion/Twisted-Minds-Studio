@@ -241,6 +241,8 @@ public class QuestSystem : MonoBehaviour
                 return questType;
             case "Talk":
                 GameObject npc = GameObject.Find(parts[1]);
+                if(parts.Length > 2)
+                    currentFloor.AddToGuaranteeRooms(parts[2]);
                 questType = new Talk(npc);
                 return questType;
             case "TripTrigger":
@@ -257,6 +259,7 @@ public class QuestSystem : MonoBehaviour
                 return questType;
             case "Traverse":
                 questType = new Traverse(parts[1]);
+                currentFloor.AddToGuaranteeRooms(parts[1]);
                 return questType;
             #endregion
             #region Auxilary Functions
@@ -402,6 +405,7 @@ public class QuestSystem : MonoBehaviour
             if (floor == currentSave.floorNum)
             {
                 objectiveNum = currentSave.objectiveNum;
+                currentFloor.ClearGuaranteeRooms();
                 LoadObjective();
             }
         }

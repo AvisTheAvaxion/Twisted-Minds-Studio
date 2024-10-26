@@ -28,6 +28,7 @@ public class Room : MonoBehaviour
         new RoomModifierWeight(1, RoomModifiers.increasedMovementSpeed),
         new RoomModifierWeight(1, RoomModifiers.moreEnemies)
     };
+    public bool removeDoorsUponEntering = true;
 
     //[HideInInspector]
     public Door[] doors;
@@ -87,6 +88,26 @@ public class Room : MonoBehaviour
             }
         }
         return otherDoors.Count > 0 ? otherDoors[Random.Range(0, otherDoors.Count)] : null;
+    }
+
+    public bool CheckAvailableDoors(Door.DoorLocations targetLocation)
+    {
+        List<Door> otherDoors = new List<Door>();
+        foreach (Door door in doorsAvailable)
+        {
+            if (door.doorLocation.Equals(targetLocation))
+            {
+                return true;
+            }
+            else if (!(targetLocation == Door.DoorLocations.North && door.doorLocation == Door.DoorLocations.South) &&
+                !(targetLocation == Door.DoorLocations.South && door.doorLocation == Door.DoorLocations.North) &&
+                !(targetLocation == Door.DoorLocations.East && door.doorLocation == Door.DoorLocations.West) &&
+                !(targetLocation == Door.DoorLocations.West && door.doorLocation == Door.DoorLocations.East))
+            {
+                otherDoors.Add(door);
+            }
+        }
+        return otherDoors.Count > 0;
     }
 
     public void MakeElevatorDoor()

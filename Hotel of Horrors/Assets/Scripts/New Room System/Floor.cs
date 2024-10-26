@@ -20,8 +20,6 @@ public class Floor : MonoBehaviour
     [SerializeField] int traversalsForReset = 5;
     int roomTraversals = 0;
 
-    bool bossDefeated;
-
     //chance gained to spawn each room for every EE picked up
     [SerializeField] float mediumChanceGained = 0.02f;
     [SerializeField] float hardChanceGained = 0.01f;
@@ -39,6 +37,7 @@ public class Floor : MonoBehaviour
     [SerializeField] float mindRoomChance = 0f;
     [SerializeField] float hallwayChance = 0f;
     [SerializeField] float peacefulRoomChance = 0f;
+    [SerializeField] float guaranteeRoomChance = 80;
 
     [Header("Boss Room")]
     [SerializeField] DirectDoor toBossDoor;
@@ -49,6 +48,8 @@ public class Floor : MonoBehaviour
 
     string currentRoom;
     int enemiesToKill = 0;
+
+    Queue<Room> roomGuarantees = new Queue<Room>();
 
     [SerializeField]ElevatorMenuManager elevator;
     public GameObject elevatorCanvas;
@@ -169,7 +170,15 @@ public class Floor : MonoBehaviour
             roomTraversals = 0;
         }*/
 
-        if (mindRoomChance > Random.Range(0, 100f))
+        if(roomGuarantees.Count > 0 && roomGuarantees.Peek().CheckAvailableDoors(targetOrientation) && guaranteeRoomChance > Random.Range(0, 100f))
+        {
+            possibleRooms.Clear();
+            
+            possibleRooms.Add(roomGuarantees.Dequeue());
+
+            if (debug) print("Travelling to Guaranteed Room");
+        }
+        else if (mindRoomChance > Random.Range(0, 100f))
         {
             possibleRooms.Clear();
             possibleRooms.Add(roomsByName["Mind Room"]);
@@ -220,7 +229,7 @@ public class Floor : MonoBehaviour
         do
         {
             findAttempts++;
-            print("possible rooms: " + possibleRooms.Count);
+            //print("possible rooms: " + possibleRooms.Count);
             
             //if there are no rooms left of the desired difficulty
             if(possibleRooms.Count < 1 || findAttempts > 100)
@@ -233,7 +242,7 @@ public class Floor : MonoBehaviour
 
             int next = prng.Next();
             int i = next % possibleRooms.Count;
-            if (debug) print("Chosen room index: " + i);
+            //if (debug) print("Chosen room index: " + i);
             if (i < possibleRooms.Count)
             {
                 doorLink = possibleRooms[i].GetTargetDoor(targetOrientation);
@@ -243,7 +252,8 @@ public class Floor : MonoBehaviour
 
         } while (doorLink == null);
 
-        doorLink.associatedRoom.doorsAvailable.Remove(doorLink);
+        if(doorLink.associatedRoom.removeDoorsUponEntering)
+            doorLink.associatedRoom.doorsAvailable.Remove(doorLink);
         currentRoom = doorLink.associatedRoom.roomName;
 
         //questSys.QuestEvent(QuestSystem.QuestEventType.RoomEnter, currentRoom);
@@ -350,6 +360,17 @@ public class Floor : MonoBehaviour
             ResetDoorLinks();
             roomTraversals = 0;
         }
+    }
+
+    public void AddToGuaranteeRooms(string roomName)
+    {
+        roomGuarantees.Enqueue(roomsByName[roomName]);
+
+        if (debug) print($"Added {roomName} to guaranteed rooms queue (Count {roomGuarantees.Count})");
+    }
+    public void ClearGuaranteeRooms()
+    {
+        roomGuarantees.Clear();
     }
 
     public void UnlockToBossDoor()

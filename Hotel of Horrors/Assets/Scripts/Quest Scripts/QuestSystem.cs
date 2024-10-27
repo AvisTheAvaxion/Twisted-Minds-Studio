@@ -14,8 +14,8 @@ public class QuestSystem : MonoBehaviour
 
     QuestType currentObjective;
     Objectives objectives;
-    bool objectiveSet = false;
-    bool floorCleared = false;
+    [SerializeField] bool objectiveSet = false;
+    [SerializeField] bool floorCleared = false;
 
     DialogueManager dialogueManager;
     PlayerInventory inventory;
@@ -278,7 +278,7 @@ public class QuestSystem : MonoBehaviour
         {
             switch(objective)
             {
-                case 0:
+                case 1:
                     SetQuestTitle("Explore");
                     break;
             }

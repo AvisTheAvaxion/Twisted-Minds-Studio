@@ -176,11 +176,11 @@ public class Dialogue
     {
         "$PlaySong|StienTheme",
         "$Move(Varren,-15.75,-14.29)",
-        "Varren: Oh? And who might you be?||HOLY SHIT$Prompt",
+        "Varren: Oh? And who might you be?|Hide my name|HOLY SH- $Prompt",
         "Blaze: No one.$OptionA",
-        "Blaze: AAAHHHHHHHHH.$OptionB",
         "Blaze: Who are you? Where did you come from? $OptionA",
         "Varren: Me? I'm a... resident of this lovely establishment. $OptionA",
+        "Blaze: AAAHHHHHHHHH.$OptionB",
         "Blaze: A GHOST!!! $OptionB",
         "Varren: Calm down kid, I'm not a ghost. $OptionB",
         "Varren: I'm just another person trapped here like you. $OptionB",
@@ -256,7 +256,7 @@ public class Dialogue
         "Blaze: This room.",
         "Blaze: It feels... Strange.",
         " : You feel a strange pull towards the chair.",
-        " : Maybe something will happen if you interact with it."
+        " : Maybe something will happen if you interact with it with the <b>'F'</b> key."
     };
 
     string[] CombatTutorial = new string[]
@@ -319,7 +319,7 @@ public class Dialogue
     string[] AStrangeMan = new string[]
     {
         "Blaze: Some strange guy? And is this an office?",
-        " : Press <b>F</b> to interact with others."
+        " : Press <b>F</b> to interact with him."
     };
 
     string[] DrHarrisQuestIntro = new string[]

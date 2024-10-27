@@ -17,6 +17,7 @@ public class DirectDoor : MonoBehaviour
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] Image fadeImage;
 
+    SerializationManager serialization;
 
     public enum DoorOrientations
     {
@@ -28,6 +29,7 @@ public class DirectDoor : MonoBehaviour
 
     private void Start()
     {
+        serialization = FindObjectOfType<SerializationManager>();
         floor = FindObjectOfType<Floor>();
         associatedRoom = GetComponentInParent<Room>();
 
@@ -84,6 +86,7 @@ public class DirectDoor : MonoBehaviour
         //takes the player to the next door
         if (sceneTransition)
         {
+            serialization.SaveData();
             SceneManager.LoadScene(sceneToLoad);
         }
         else

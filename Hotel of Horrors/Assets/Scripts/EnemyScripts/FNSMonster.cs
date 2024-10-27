@@ -77,7 +77,6 @@ public class FNSMonster : BossStateMachine
 
     protected override void Death()
     {
-        questSystem.QuestEvent(QuestSystem.QuestEventType.EnemyDeath, name);
     }
 
     protected override void Fight()

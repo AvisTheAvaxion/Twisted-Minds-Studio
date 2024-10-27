@@ -158,6 +158,7 @@ public abstract class BossStateMachine : MonoBehaviour
         if (currentState != States.Death)
         {
             isDying = true;
+            questSystem.QuestEvent(QuestSystem.QuestEventType.EnemyDeath, name);
             StartCoroutine(DeathSequence());
         }
     }

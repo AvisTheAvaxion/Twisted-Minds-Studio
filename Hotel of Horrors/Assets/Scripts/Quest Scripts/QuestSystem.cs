@@ -33,35 +33,12 @@ public class QuestSystem : MonoBehaviour
         floorCleared = false;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        /*if (PlayerPrefs.HasKey("idkWhatWeAreSavingThisAs"))
-            //This might be it's own function
-            //depending on how Ben is doing data persistancy with multiple save files
-        {
-            try
-            {
-                floor = PlayerPrefs.GetInt("QuestFloor");
-                objectiveNum = PlayerPrefs.GetInt("Objective");
-            }
-            catch (Exception e)
-            {
-                Debug.Log("[Quest System] No save found!");
-                floor = 0;
-                objectiveNum = 0;
-            }
-            LoadObjective();
-        }*/
-    }
-
     private void Update()
     {
         if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None && objectiveSet == false && floorCleared == false)
         {
             LoadObjective();
         }
-
     }
 
     //This method should be called whenever a relevant game event occurs and see if quest conditions have been fulfilled
@@ -86,21 +63,7 @@ public class QuestSystem : MonoBehaviour
                 }
                 break;
             case QuestEventType.EnemyDeath:
-                if(currentObjective.GetType() == typeof(Kill))
-                {
-                    Kill kill = (Kill)currentObjective;
-                    kill.IncrementAmountKilled();
-
-                    if(kill.GetAmountKilled() >= kill.GetTotal())
-                    {
-                        NextQuest();
-                    }
-                    else
-                    {
-                        currentObjective = kill;
-                    }
-                }
-                else if(currentObjective.GetType() == typeof(KillSpecific))
+                if (currentObjective.GetType() == typeof(KillSpecific))
                 {
                     KillSpecific killSpecific = (KillSpecific)currentObjective;
                     killSpecific.IncrementAmountKilled(objectName);
@@ -114,6 +77,21 @@ public class QuestSystem : MonoBehaviour
                         currentObjective = killSpecific;
                     }
                 }
+                else if (currentObjective.GetType() == typeof(Kill))
+                {
+                    Kill kill = (Kill)currentObjective;
+                    kill.IncrementAmountKilled();
+
+                    if(kill.GetAmountKilled() >= kill.GetTotal())
+                    {
+                        NextQuest();
+                    }
+                    else
+                    {
+                        currentObjective = kill;
+                    }
+                }
+                
                 break;
             case QuestEventType.NpcInteraction:
                 if (currentObjective.GetType() == typeof(Talk))
@@ -206,6 +184,7 @@ public class QuestSystem : MonoBehaviour
     //Should be called whenever the user wants to set the currentObjective after changing the floor and ObjectiveNum accordingly
     void LoadObjective()
     {
+        Debug.Log(objectiveNum);
         string quest = objectives.getObjective(floor, objectiveNum);
         currentObjective = ParseQuestString(quest);
         objectiveSet = true;
@@ -286,6 +265,7 @@ public class QuestSystem : MonoBehaviour
         {
             objectiveSet = true;
         }
+
         return questType;
     }
 

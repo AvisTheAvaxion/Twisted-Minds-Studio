@@ -11,18 +11,14 @@ public class Dialogue
             #region Floor 0
             case "WakeUpTutorial":
                 return WakeUpTutorial;
-            case "SameRoomAgain":
-                return SameRoomAgain;
+            case "VarrenEncounter":
+                return VarrenEncounter;
             case "InventoryTutorial":
                 return InventoryTutorial;
             case "MindRoom":
                 return MindRoom;
             case "CombatTutorial":
                 return CombatTutorial;
-            case "FirstMonster":
-                return FirstMonster;
-            case "VarrenEncounter":
-                return VarrenEncounter;
             #endregion
             #region Floor 1
             case "DrSteinBossDoor":
@@ -31,6 +27,8 @@ public class Dialogue
                 return DrSteinBossDoor1;
             case "DrSteinBossDoor2":
                 return DrSteinBossDoor2;
+            case "AStrangeMan":
+                return AStrangeMan;
             case "DrHarrisQuestIntro":
                 return DrHarrisQuestIntro;
             case "DrHarrisQuest1":
@@ -62,17 +60,16 @@ public class Dialogue
         Empty,
         #region Floor 0
         WakeUpTutorial,
-        SameRoomAgain,
+        VarrenEncounter,
         InventoryTutorial,
         MindRoom,
         CombatTutorial,
-        FirstMonster,
-        VarrenEncounter,
         #endregion
         #region Floor 1
         DrSteinBossDoor,
         DrSteinBossDoor1,
         DrSteinBossDoor2,
+        AStrangeMan,
         DrHarrisQuestIntro,
         DrHarrisQuest1,
         DrHarrisQuest2,
@@ -175,65 +172,6 @@ public class Dialogue
         "Blaze: I wonder if there is anything useful around here?"
     };
 
-    string[] SameRoomAgain = new string[]
-    {
-        //Blaze ends up in same room after leaving
-        "Blaze: Huh? I could've sworn I just left this room."
-    };
-
-    string[] InventoryTutorial = new string[]
-    {
-        "Blaze: Hmmm, this room is different.",
-        "Blaze: I don't see anyone here either. Maybe, I'll find someone in the next room.",
-        "Blaze: This dagger should be useful for defending myself, I should keep it out, just in case",
-    };
-
-    string[] FirstMonster = new string[]
-    {
-        //Blaze sees a monster in a room
-        "Blaze: Nope."
-        //Blazee leaves
-    };
-
-    string[] MindRoom = new string[]
-    {
-        "Blaze: This room.",
-        "Blaze: It feels... Strange.",
-        " : You feel a strange pull towards the chair.",
-        " : Maybe something will happen if you interact with it."
-    };
-
-    string[] CombatTutorial = new string[]
-    {
-        //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
-        "$Move(Player,20.265,2.898)",
-        "Blaze: A monster!",
-        "Blaze: This is a good time to try testing my dagger",
-        //Blaze charges at the cleaning lady, who dodges the attack
-        "$Move(Player,20.265,2.282)",
-        "$Tele(SlimeLady,20.26,3.09)",
-        "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
-        "Blaze: You can talk?",
-        "Monster: Why wouldn't I be able to? My name is Samantha, and yours?|Say my name|Hide my name|$Prompt",
-        "Blaze: Blaze.$OptionA",
-        "Blaze: What's it matter to you.$OptionB",
-        "Samantha: Well it's certainly nice to meet you, but please do try to refrain from attacking me for no reason$OptionA",
-        "Samantha: One finds it helps to make friends$OptionB",
-        "Samantha: Now, before you get going, perhaps I should show you how to properly fight.",
-        "Samantha: To start, just try attacking with the dagger",
-        " : Press left-click repeatadly to complete an attack combo",
-        "Samantha: Good!",
-        "Samantha: Now, let's try using your dash to quickly move about",
-        " : Press shift to dash",
-        "Samantha: Excellent, dashing can also be used to avoid attacks and quickly get behind enemies.",
-        "Samantha: Now, let's test out that ability of yours.",
-        " : Press E to use your ability.",
-        "Samantha: Amazing! If you would like to change abilities or upgrade weapons, you can do so in the mind room.",
-        "Samantha: Well, i've got duties to attend to, take care! And don't let the Vampire scare you."
-    };
-
-    
-
     string[] VarrenEncounter = new string[]
     {
         "$PlaySong|StienTheme",
@@ -305,6 +243,51 @@ public class Dialogue
         "Blaze: Well, I guess I should get moving.",
         "$Kill(Varren)"
     };
+
+    string[] InventoryTutorial = new string[]
+    {
+        "Blaze: Hmmm, this room is different.",
+        "Blaze: I don't see anyone here either. Maybe, I'll find someone in the next room.",
+        "Blaze: This dagger should be useful for defending myself, I should keep it out, just in case",
+    };
+
+    string[] MindRoom = new string[]
+    {
+        "Blaze: This room.",
+        "Blaze: It feels... Strange.",
+        " : You feel a strange pull towards the chair.",
+        " : Maybe something will happen if you interact with it."
+    };
+
+    string[] CombatTutorial = new string[]
+    {
+        //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
+        "$Move(Player,20.265,2.898)",
+        "Blaze: A monster!",
+        "Blaze: This is a good time to try testing my dagger",
+        //Blaze charges at the cleaning lady, who dodges the attack
+        "$Move(Player,20.265,2.282)",
+        "$Tele(SlimeLady,20.26,3.09)",
+        "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
+        "Blaze: You can talk?",
+        "Monster: Why wouldn't I be able to? My name is Samantha, and yours?|Say my name|Hide my name|$Prompt",
+        "Blaze: Blaze.$OptionA",
+        "Blaze: What's it matter to you.$OptionB",
+        "Samantha: Well it's certainly nice to meet you, but please do try to refrain from attacking me for no reason$OptionA",
+        "Samantha: One finds it helps to make friends$OptionB",
+        "Samantha: Now, before you get going, perhaps I should show you how to properly fight.",
+        "Samantha: To start, just try attacking with the dagger",
+        " : Press left-click repeatadly to complete an attack combo",
+        "Samantha: Good!",
+        "Samantha: Now, let's try using your dash to quickly move about",
+        " : Press shift to dash",
+        "Samantha: Excellent, dashing can also be used to avoid attacks and quickly get behind enemies.",
+        "Samantha: Now, let's test out that ability of yours.",
+        " : Press E to use your ability.",
+        "Samantha: Amazing! If you would like to change abilities or upgrade weapons, you can do so in the mind room.",
+        "Samantha: Well, i've got duties to attend to, take care! And don't let the Vampire scare you."
+    };
+
     #endregion
     #region Floor 1 Dialog
     #region Side Quest
@@ -331,6 +314,12 @@ public class Dialogue
         " : Muffled sobbing can be heard from behind the door.",
         "Dr. Stein: I failed...",
         "Dr. Stein: Sniffle..."
+    };
+
+    string[] AStrangeMan = new string[]
+    {
+        "Blaze: Some strange guy? And is this an office?",
+        " : Press <b>F</b> to interact with others."
     };
 
     string[] DrHarrisQuestIntro = new string[]

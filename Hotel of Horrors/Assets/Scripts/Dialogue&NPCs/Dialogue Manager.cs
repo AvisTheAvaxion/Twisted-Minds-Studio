@@ -249,7 +249,7 @@ public class DialogueManager : MonoBehaviour
             }
             else if (lines[currentLine].EndsWith("$Move") || lines[currentLine].StartsWith("$Move"))
             {
-                currentState = CutsceneState.Waiting;
+                currentState = CutsceneState.Moving;
                 int moveStartIndex = lines[currentLine].IndexOf('(');
                 int moveEndIndex = lines[currentLine].IndexOf(')');
                 string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);

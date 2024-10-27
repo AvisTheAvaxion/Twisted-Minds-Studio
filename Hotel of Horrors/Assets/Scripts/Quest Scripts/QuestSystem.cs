@@ -254,8 +254,6 @@ public class QuestSystem : MonoBehaviour
             case "ClearFloor":
                 floorCleared = true;
                 SetRequiredGameState(floor, objectiveNum);
-                floor++;
-                objectiveNum = 0;
                 break;
              #endregion
         }
@@ -352,6 +350,12 @@ public class QuestSystem : MonoBehaviour
         objectiveNum++;
         objectiveSet = false;
         LoadObjective();
+    }
+
+    public void NextFloor()
+    {
+        objectiveNum = 0;
+        floor++;
     }
 
     //Call to set the quest

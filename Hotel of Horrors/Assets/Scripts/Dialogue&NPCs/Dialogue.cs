@@ -183,16 +183,9 @@ public class Dialogue
 
     string[] InventoryTutorial = new string[]
     {
-        "Blaze: Nice, a different room.",
-        " : Press the <b>'TAB'</b> key to open your inventory.",
-        " : On the left side of the inventory are tabs that can be opened by <b>Left Clicking</b>",
-        " : These three tabs hold, from top to bottom <b><color=#936A00>Weapons</color>, <color=#5B100A>Items</color>, and <color=#507830>Special Abilities</color></b>",
-        " : As you explore you will find many things lying around, when you want to <b>equip</b> something just click the item and then the UI button labeled <b>'Equip'</b>",
-        " : I don't see anyone here either. Maybe, I'll find someone in the next room.",
-        " : This dagger should be useful for defending myself, I should keep it out, just in case",
-        " : Press tab to open your inventory.",
-        " : Use the headers on the left side to equip the dagger.",
-        " : You can also equip items and view abilities in the inventory"
+        "Blaze: Hmmm, this room is different.",
+        "Blaze: I don't see anyone here either. Maybe, I'll find someone in the next room.",
+        "Blaze: This dagger should be useful for defending myself, I should keep it out, just in case",
     };
 
     string[] FirstMonster = new string[]
@@ -304,6 +297,11 @@ public class Dialogue
          //"Varren: (disappears into smoke)",
         "Varren: Cya later kiddo",
         "$Move(Varren,-11.57,-14.3)",
+        " : Press the <b>'TAB'</b> key to open your inventory.",
+        " : On the left side of the inventory are tabs that can be opened by <b>Left Clicking</b>",
+        " : These three tabs hold, from top to bottom <b><color=#936A00>Weapons</color>, <color=#5B100A>Items</color>, and <color=#507830>Special Abilities</color></b>",
+        " : As you explore you will find many things lying around, when you want to <b>equip</b> something just click the item and then the UI button labeled <b>'Equip'</b>",
+        " : This dagger should be useful for defending myself, I should keep it out, just in case",
         "Blaze: Well, I guess I should get moving.",
         "$Kill(Varren)"
     };

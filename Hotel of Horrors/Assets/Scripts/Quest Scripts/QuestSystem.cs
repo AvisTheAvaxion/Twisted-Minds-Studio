@@ -273,6 +273,7 @@ public class QuestSystem : MonoBehaviour
                 break;
             case "ClearFloor":
                 floorCleared = true;
+                SetRequiredGameState(floor, objectiveNum);
                 break;
              #endregion
         }
@@ -340,6 +341,8 @@ public class QuestSystem : MonoBehaviour
                     currentFloor.UnlockToBossDoor();
                     break;
                 case 9:
+                    SetQuestTitle("The Second Floor");
+                    SetQuestDesc("Go to the elevator");
                     break;
             }
         }

@@ -70,6 +70,7 @@ public abstract class BossStateMachine : MonoBehaviour
 
     protected bool dialogueSegmentStarted = false;
     public event EventHandler OnBossDialogue;
+    protected QuestSystem questSystem;
 
     private void Start()
     {
@@ -77,6 +78,7 @@ public abstract class BossStateMachine : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         bossHealth = GetComponent<BossHealth>();
 
+        questSystem = FindObjectOfType<QuestSystem>();
         floor = FindObjectOfType<Floor>();
 
         if (cameraShake == null) cameraShake = FindObjectOfType<CameraShake>();

@@ -368,6 +368,8 @@ public class FNSMonster : BossStateMachine
 
     protected override IEnumerator DeathSequence()
     {
+        currentState = States.Death;
+
         cancelCharge = true;
         yield return null;
         if (stunCoroutine != null) StopCoroutine(stunCoroutine);
@@ -380,11 +382,10 @@ public class FNSMonster : BossStateMachine
 
         if (!dialogueSegmentStarted)
         {
+            print(stages[stages.Length - 1].cutscene);
             OnDialogueStart(stages[stages.Length - 1].cutscene);
         }
         bossHealth.HideHealthBar();
-
-        currentState = States.Death;
 
         //yield return new WaitUntil(() => !dialogueSegmentStarted);
 
@@ -433,6 +434,8 @@ public class FNSMonster : BossStateMachine
 
     protected override IEnumerator DialogueStart(Dialogue.Dialog cutscene)
     {
+        dialogueSegmentStarted = true;
+
         //Cancel anything happening already
         cancelCharge = true;
         yield return null;
@@ -441,7 +444,6 @@ public class FNSMonster : BossStateMachine
         animator.SetBool("isWalking", false);
         rb.velocity = Vector2.zero;
 
-        dialogueSegmentStarted = true;
         yield return new WaitForSeconds(0.1f);
         DialogueManager.SetCutscene(cutscene);
         currentState = States.Dialogue;

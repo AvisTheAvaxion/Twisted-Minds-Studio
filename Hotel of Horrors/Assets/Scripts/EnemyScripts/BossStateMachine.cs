@@ -117,7 +117,7 @@ public abstract class BossStateMachine : MonoBehaviour
 
     public virtual void CheckHealth()
     {
-        if (bossHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThresholdToNextStage && currentStageIndex < stages.Length - 1)
+        if (bossHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThresholdToNextStage && currentStageIndex < stages.Length - 1 && !dialogueSegmentStarted)
         {
             print(stages[currentStageIndex].cutscene);
             OnDialogueStart(stages[currentStageIndex].cutscene);
@@ -153,8 +153,11 @@ public abstract class BossStateMachine : MonoBehaviour
         if (Floor.maxFloorUnlocked <= Floor.currentFloor)
             Floor.maxFloorUnlocked = Floor.currentFloor + 1;
 
-        isDying = true;
-        StartCoroutine(DeathSequence());
+        if (currentState != States.Death)
+        {
+            isDying = true;
+            StartCoroutine(DeathSequence());
+        }
     }
 
     protected abstract void Enrage();

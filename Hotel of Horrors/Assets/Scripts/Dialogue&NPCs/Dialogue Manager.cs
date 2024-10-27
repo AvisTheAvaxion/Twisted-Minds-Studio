@@ -1,14 +1,8 @@
-using NUnit.Framework.Constraints;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Reflection;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 using Color = UnityEngine.Color;
 
 public class DialogueManager : MonoBehaviour
@@ -608,9 +602,9 @@ public class DialogueManager : MonoBehaviour
     IEnumerator Timer(float time)
     {
         yield return new WaitForSeconds(time);
-        currentState = CutsceneState.Continue;
         playerAudio.NextLine(currentLine);
 
+        //Auto move to the next line
         currentLine++;
         OnDialogueUpdate();
     }
@@ -810,20 +804,11 @@ public class DialogueManager : MonoBehaviour
     {
         auto = !auto;
         skipTimer = skipCooldown;
-        /*if (currentState != CutsceneState.Picking || currentState != CutsceneState.Moving || currentState != CutsceneState.Waiting)
-        {
-            currentState = CutsceneState.Skipping;
-        }*/
     }
 
     public void DevSkipCutscene()
     {
         instaSkip = !instaSkip;
-        /*if (currentState != CutsceneState.Picking || currentState != CutsceneState.Moving || currentState != CutsceneState.Waiting)
-        {
-            currentState = CutsceneState.Skipping;
-            instaSkip = true;
-        }*/
     }
 
     public CutsceneState getCutsceneState()

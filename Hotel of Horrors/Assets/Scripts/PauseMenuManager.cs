@@ -8,16 +8,16 @@ public class PauseMenuManager : MonoBehaviour
 {
     bool paused;
 
-    [SerializeField] Canvas canvas;
-    [SerializeField] GameObject PauseScreen;
-    [SerializeField] GameObject Settings;
+    [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject pauseScreen;
+    [SerializeField] GameObject settings;
 
     [SerializeField] DialogueManager dialogueManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        canvas.gameObject.SetActive(false);
+        pauseMenu.SetActive(false);
 
         paused = false;
     }
@@ -47,21 +47,26 @@ public class PauseMenuManager : MonoBehaviour
         paused = true;
         Time.timeScale = 0;
 
-        canvas.gameObject.SetActive(true);
-        PauseScreen.SetActive(true);
-        Settings.SetActive(false);
+        pauseMenu.SetActive(true);
+        pauseScreen.SetActive(true);
+        settings.SetActive(false);
     }
     public void UnPause()
     {
         paused = false;
         Time.timeScale = 1;
-        canvas.gameObject.SetActive(false);
+        pauseMenu.SetActive(false);
     }
 
     public void OpenSettings()
     {
-        Settings.SetActive(true);
-        PauseScreen.SetActive(false);
+        settings.SetActive(true);
+        pauseScreen.SetActive(false);
+    }
+    public void CloseSettings()
+    {
+        settings.SetActive(false);
+        pauseScreen.SetActive(true);
     }
 
     public void MainMenu()

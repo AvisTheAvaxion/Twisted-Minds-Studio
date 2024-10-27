@@ -17,13 +17,17 @@ public class NPCBehavior : MonoBehaviour
     {
         if (interactionCount == 0)
         {
-            interactionCount++;
             return npcDialog;
         }
         else
         {
             return replacementDialog;
         }
+    }
+
+    public void IncrementInteractionCount()
+    {
+        interactionCount++;
     }
 
     public List<Dialogue.Dialog> GetNPCDialogList()

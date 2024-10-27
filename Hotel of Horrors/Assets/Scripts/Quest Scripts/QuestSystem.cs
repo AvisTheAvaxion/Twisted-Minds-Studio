@@ -47,6 +47,7 @@ public class QuestSystem : MonoBehaviour
         if(currentObjective == null)
         {
             Debug.LogWarning("Quest Event ERROR. CurrentObjective is currently NULL");
+            return;
         }
 
         switch (EventType)
@@ -317,6 +318,7 @@ public class QuestSystem : MonoBehaviour
                     break;
                 case 8:
                     SetQuestTitle("Confrontation");
+                    SetQuestDesc("");
                     TeleportGameobject("FrankJersey(Quest)", new Vector2(55.19f, -27.79f));
                     currentFloor.UnlockToBossDoor();
                     break;

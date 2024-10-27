@@ -253,6 +253,7 @@ MonoBehaviour:
     modifier: 4
   - weight: 1
     modifier: 3
+  removeDoorsUponEntering: 1
   doors: []
   doorsAvailable: []
 --- !u!114 &34735703
@@ -3521,6 +3522,7 @@ MonoBehaviour:
     modifier: 4
   - weight: 1
     modifier: 3
+  removeDoorsUponEntering: 1
   doors: []
   doorsAvailable: []
 --- !u!114 &440814281
@@ -6620,6 +6622,7 @@ MonoBehaviour:
     modifier: 4
   - weight: 1
     modifier: 3
+  removeDoorsUponEntering: 1
   doors: []
   doorsAvailable: []
 --- !u!114 &810045714
@@ -13055,6 +13058,7 @@ MonoBehaviour:
   mindRoomChance: 0
   hallwayChance: 0
   peacefulRoomChance: 0
+  guaranteeRoomChance: 80
   toBossDoor: {fileID: 0}
   fromBossDoor: {fileID: 0}
   elevator: {fileID: 0}
@@ -13272,6 +13276,7 @@ MonoBehaviour:
     modifier: 4
   - weight: 1
     modifier: 3
+  removeDoorsUponEntering: 1
   doors: []
   doorsAvailable: []
 --- !u!114 &1320463094
@@ -18923,6 +18928,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1879097622508302454, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
+      propertyPath: dialogueManager
+      value: 
+      objectReference: {fileID: 1251596423}
     - target: {fileID: 2383543522033775856, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
       propertyPath: m_Pivot.x
       value: 0

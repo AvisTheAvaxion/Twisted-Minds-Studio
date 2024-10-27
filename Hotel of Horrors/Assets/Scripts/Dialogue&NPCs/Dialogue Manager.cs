@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
@@ -34,9 +35,11 @@ public class DialogueManager : MonoBehaviour
 
     int currentLine = 0;
 
-    [SerializeField] float skipCooldown = 5f;
-    float skipTimer = 5f;
-    [SerializeField] bool InstaSkip;
+    [SerializeField] float skipCooldown;
+    float skipTimer;
+    bool InstaSkip;
+    bool skip;
+
 
     [SerializeField] Dictionary<string, string> emotions = new Dictionary<string, string>();
 
@@ -65,6 +68,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
+        skipTimer = skipCooldown;
         questSystem = FindObjectOfType<QuestSystem>();
         if (dialogueGUI)
         {
@@ -91,7 +95,6 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && currentState == CutsceneState.Continue)
         {
             OnDialogueUpdate();
@@ -112,7 +115,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                skipTimer = skipTimer - Time.deltaTime;
+                skipTimer -= Time.deltaTime;
                 if (skipTimer < 0)
                 {
                     OnDialogueUpdate();
@@ -339,6 +342,7 @@ public class DialogueManager : MonoBehaviour
                 int timerEndIndex = lines[currentLine].IndexOf(')');
                 string timerInfo = lines[currentLine].Substring(timerStartIndex + 1, timerEndIndex - timerStartIndex - 1);
                 StartCoroutine(Timer(float.Parse(timerInfo)));
+
             }
             else if (lines[currentLine].EndsWith("$FadeIn") || lines[currentLine].StartsWith("$FadeIn"))
             {
@@ -396,7 +400,7 @@ public class DialogueManager : MonoBehaviour
                 currentLine--;
             }
             #endregion
-            #region Invetory Functions
+            #region Inventory Functions
             else if (lines[currentLine].EndsWith("$GiveWeapon") || lines[currentLine].StartsWith("$GiveWeapon"))
             {
 
@@ -510,6 +514,10 @@ public class DialogueManager : MonoBehaviour
             #endregion
             else
             {
+                if (skip || InstaSkip)
+                {
+                    currentState = CutsceneState.Skipping;
+                }
                 if (dialogueGUI)
                 {
                     dialogueGUI.ToggleGUI(true);
@@ -538,6 +546,7 @@ public class DialogueManager : MonoBehaviour
             ResetCamera();
             movement.EndCutscene();
             InstaSkip = false;
+            skip = false;
             currentLine = 0;
         }
         currentLine++;
@@ -676,6 +685,10 @@ public class DialogueManager : MonoBehaviour
         }
         OnDialogueUpdate();
         currentState = CutsceneState.Continue;
+        if (skip || InstaSkip)
+        {
+            currentState = CutsceneState.Skipping;
+        }
     }
     public void ButtonTwoSelect()
     {
@@ -690,6 +703,10 @@ public class DialogueManager : MonoBehaviour
         }
         OnDialogueUpdate();
         currentState = CutsceneState.Continue;
+        if (skip || InstaSkip)
+        {
+            currentState = CutsceneState.Skipping;
+        }
     }
 
     void UpdateImage(string name)
@@ -738,18 +755,21 @@ public class DialogueManager : MonoBehaviour
 
     public void SkipCutscene()
     {
-        if (currentState != CutsceneState.Picking || currentState != CutsceneState.Moving || currentState != CutsceneState.Waiting)
+        if (currentState != CutsceneState.Picking && currentState != CutsceneState.Moving && currentState != CutsceneState.Waiting)
         {
             currentState = CutsceneState.Skipping;
+            skip = true;
+            InstaSkip = false;
         }
     }
 
     public void DevSkipCutscene()
     {
-        if (currentState != CutsceneState.Picking || currentState != CutsceneState.Moving || currentState != CutsceneState.Waiting)
+        if (currentState != CutsceneState.Picking && currentState != CutsceneState.Moving && currentState != CutsceneState.Waiting)
         {
             currentState = CutsceneState.Skipping;
             InstaSkip = true;
+            skip = false;
         }
     }
 

@@ -15,9 +15,11 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [SerializeField] CameraShake cameraShake;
     [SerializeField] FlashColor flashColor;
     [SerializeField] PlayerGUI playerGUI;
+    [SerializeField] GameObject playerVisuals;
     [SerializeField] float iFramesTime;
     [SerializeField] float stunTime;
     [SerializeField] float flashColorLength = 0.2f;
+    [SerializeField] float iFrameFlashRate = 10;
 
     [SerializeField] PlayerAudio playerAudio;
 
@@ -58,7 +60,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
                 SceneManager.LoadScene("Death Screen");
             }
 
-            GiveIFrames(iFramesTime);
+            GiveIFrames(iFramesTime, true);
             Stun(stunTime);
 
             return true;
@@ -86,7 +88,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
                 SceneManager.LoadScene("Death Screen");
             }
 
-            GiveIFrames(iFramesTime);
+            GiveIFrames(iFramesTime, true);
             Stun(stunLength);
 
             return true;
@@ -106,15 +108,36 @@ public class PlayerHealth : MonoBehaviour, IHealth
         return stats.AddEffect(effect);
     }
 
-    public void GiveIFrames(float length)
+    public void GiveIFrames(float length, bool flash)
     {
-        StartCoroutine(GiveIFramesSequence(length));
+        StartCoroutine(GiveIFramesSequence(length, flash));
     }
-    IEnumerator GiveIFramesSequence(float length)
+    IEnumerator GiveIFramesSequence(float length, bool flash)
     {
         canGetHit = false;
 
-        yield return new WaitForSeconds(length);
+        float t = 0;
+        float flashTime = 0;
+
+        float flashLength = 1f / iFrameFlashRate;
+
+        while(t < length)
+        {
+            if (flash)
+            {
+                if (flashTime > flashLength)
+                {
+                    playerVisuals.SetActive(!playerVisuals.activeSelf);
+                    flashTime = 0;
+                }
+            }
+
+            yield return null;
+            t += Time.deltaTime;
+            flashTime += Time.deltaTime;
+        }
+
+        playerVisuals.SetActive(true);
 
         canGetHit = true;
     }

@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] StatsController stats;
     [SerializeField] AfterImage afterImage;
     ParticleSystemRenderer afterimage_psr;
+    [SerializeField] Image dashCooldownIcon;
     [SerializeField] PlayerAudio playerAudio;
 
     [Header("Movement Modifiers")]
@@ -332,7 +333,7 @@ public class PlayerMovement : MonoBehaviour
             if (afterImage != null)
                 afterImage.StartEffect(dashDistance / dashSpeed / 1.25f);
 
-            playerHealth.GiveIFrames(iFrameDistForDash / dashSpeed);
+            playerHealth.GiveIFrames(iFrameDistForDash / dashSpeed, false);
         }
     }
     #endregion
@@ -340,8 +341,38 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator DashCooldown()
     {
         canDash = false;
-        yield return new WaitForSeconds(dashCooldown);
+
+        if (dashCooldownIcon)
+        {
+            dashCooldownIcon.transform.parent.gameObject.SetActive(true);
+            dashCooldownIcon.fillAmount = 0;
+        }
+
+        float t = 0;
+        while(t < dashCooldown)
+        {
+            if(dashCooldownIcon)
+            {
+                dashCooldownIcon.fillAmount = t / dashCooldown;
+            }
+            yield return null;
+            t += Time.deltaTime;
+        }
+
+        if (dashCooldownIcon)
+        {
+            dashCooldownIcon.fillAmount = 1;
+        }
+
+        //yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (dashCooldownIcon)
+        {
+            dashCooldownIcon.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     //Player attacked so switch to attack mode

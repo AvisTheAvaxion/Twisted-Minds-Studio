@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 7966828728596328411}
   - component: {fileID: 1945688253193568734}
   - component: {fileID: 2092338393393940312}
+  - component: {fileID: 4925823571714936389}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -353,16 +354,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8490620325508692427}
-  forwardController: {fileID: 9100000, guid: 13499059f41c9714b92670e2af4ed617, type: 2}
-  backController: {fileID: 22100000, guid: fedf8c41bf4814346ba75df154cc180d, type: 2}
-  leftController: {fileID: 22100000, guid: 6db841b6193a4584e9963f412b78d6ec, type: 2}
-  rightController: {fileID: 22100000, guid: 6265696c0b67f8049a2e33a39ae0c149, type: 2}
   spriteRenderer: {fileID: 4134056278113837131}
   player: {fileID: 1870587051542624426}
   rb: {fileID: 6971638880832592741}
   playerHealth: {fileID: 0}
   stats: {fileID: 9195956232266042739}
   afterImage: {fileID: 625345098585316788}
+  dashCooldownIcon: {fileID: 0}
   playerAudio: {fileID: 7378853798895269659}
   movementSpeed: 0.5
   drag: 0.705
@@ -370,7 +368,7 @@ MonoBehaviour:
   normalLayer: 13
   canMove: 0
   canDash: 0
-  dashCooldown: 1
+  dashCooldown: 0.6
   dashDistance: 1.5
   dashSpeed: 10
   iFrameDistForDash: 1.5
@@ -523,11 +521,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 3194915936490214647}
   cameraShake: {fileID: 7305724931220426512}
-  flashColor: {fileID: 7325452528091289218}
+  flashColor: {fileID: 4925823571714936389}
   playerGUI: {fileID: 0}
+  playerVisuals: {fileID: 8695758954049435623}
   iFramesTime: 1
   stunTime: 0.25
   flashColorLength: 0.2
+  iFrameFlashRate: 10
   playerAudio: {fileID: 0}
 --- !u!114 &7966828728596328411
 MonoBehaviour:
@@ -541,6 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c936dadd319b92744be10cefeacbc76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonPrompt: {fileID: 0}
   mindRoomCanvas: {fileID: 0}
 --- !u!114 &1945688253193568734
 MonoBehaviour:
@@ -590,6 +591,22 @@ MonoBehaviour:
   obstructionDetectionThreshold: 0.1
   maxObstructionChangeDir: 0
   minObstructionChangeDir: -0.8
+--- !u!114 &4925823571714936389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870587051542624426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19514a7b63bef574dacbbaf16bda2cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 447d690840723f1478fe148e4a36576d, type: 2}
+  defaultMaterial: {fileID: 0}
+  spriteRenderers:
+  - {fileID: 4134056278113837131}
 --- !u!1 &2597693920358613910
 GameObject:
   m_ObjectHideFlags: 0
@@ -6438,7 +6455,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8695758954049435623}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19514a7b63bef574dacbbaf16bda2cc3, type: 3}
   m_Name: 

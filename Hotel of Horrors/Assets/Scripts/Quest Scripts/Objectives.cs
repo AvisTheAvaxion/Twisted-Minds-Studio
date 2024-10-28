@@ -31,6 +31,7 @@ public class Objectives
 
     public enum ObjectiveTriggers
     {
+        SlimeLadyMeeting,
         VarrenTrigger,
         InventoryTutorialTrigger,
         CombatTutorialTrigger,
@@ -53,7 +54,7 @@ public class Objectives
     //Test for the tutorial floor. Uses a lot of TripTrigger Quest since the room detection doesn't work like it does in a normal floor.
     string[] Floor0 = new string[] {
         "SetCutscene|WakeUpTutorial",
-        "TripTrigger|VarrenTrigger",
+        "TripTrigger|SlimeLadyMeeting",
         "SetCutscene|VarrenEncounter",
         "TripTrigger|InventoryTutorialTrigger",
         "SetCutscene|InventoryTutorial",

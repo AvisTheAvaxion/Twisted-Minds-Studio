@@ -11,14 +11,32 @@ public class Dialogue
             #region Floor 0
             case "WakeUpTutorial":
                 return WakeUpTutorial;
+            case "SlimeLadyReplacement":
+                return SlimeLadyReplacement;
+            case "MeetingTheSlimeLady":
+                return MeetingTheSlimeLady;
+            case "InventoryIntro":
+                return InventoryIntro;
+            case "InventroyOpening":
+                return InventroyOpening;
+            case "InventoryExplaination":
+                return InventoryExplaination;
+            case "StrangeRoom":
+                return StrangeRoom;
+            case "CombatIntro":
+                return CombatIntro;
+            case "CombatDodging":
+                return CombatDodging;
+            case "CombatDodgingDone":
+                return CombatDodgingDone;
+            case "CombatTableBreaker":
+                return CombatTableBreaker;
+            case "CombatEnemyInbound":
+                return CombatEnemyInbound;
+            case "TutorialOver":
+                return TutorialOver;
             case "VarrenEncounter":
                 return VarrenEncounter;
-            case "InventoryTutorial":
-                return InventoryTutorial;
-            case "MindRoom":
-                return MindRoom;
-            case "CombatTutorial":
-                return CombatTutorial;
             #endregion
             #region Floor 1
             case "DrSteinBossDoor":
@@ -60,10 +78,19 @@ public class Dialogue
         Empty,
         #region Floor 0
         WakeUpTutorial,
+        SlimeLadyReplacement,
+        MeetingTheSlimeLady,
+        InventoryIntro,
+        InventroyOpening,
+        InventoryExplaination,
+        StrangeRoom,
+        CombatIntro,
+        CombatDodging,
+        CombatDodgingDone,
+        CombatTableBreaker,
+        CombatEnemyInbound,
+        TutorialOver,
         VarrenEncounter,
-        InventoryTutorial,
-        MindRoom,
-        CombatTutorial,
         #endregion
         #region Floor 1
         DrSteinBossDoor,
@@ -172,18 +199,132 @@ public class Dialogue
         "Blaze: I wonder if there is anything useful around here?"
     };
 
+    //This dialog should allow the player to skip to the VarrenEncounter
+    string[] MeetingTheSlimeLady = new string[]
+    {
+        "???: Oh, dear a new guest.",
+        "Blaze: Guest?",
+        "???: Don't worry deary, all will be explained in due time.",
+        "???: Just go out the door to the right and I'll show you the ropes!",
+        "???: Or are you confident you don't need my tutoring?|Teach me please|No thank you $Prompt",
+        "Blaze: I don't really get what is going on but sure! $OptionA",
+        "???: Alright deary, just go through the door on the right and we'll begin. $OptionA",
+        "Blaze: No thank you, I'm sure I can figure stuff out on my own $OptionB",
+        "???: Alright deary, just go through the door on the right and you're free to go $OptionB",
+    };
+
+    string[] SlimeLadyReplacement = new string[]
+    {
+        "???: Hurry along now dear."
+    };
+
+    //This cutscene should allow the player to skip to CombatIntro
+    string[] InventoryIntro = new string[]
+    {
+        "???: First things first, the <b>inventory</b>.",
+        "???: Do you know how to use the inventory or should we just move on?|What inventory|Just move on $Prompt",
+        "Blaze: Inventory? $OptionA",
+        "???: Oh dear, you don't know? $OptionA",
+        "???: Don't worry honey, move on to the next room and I'll show you what's what! $OptionA",
+        "Blaze: Of course I know about the inventory! $OptionB",
+        "???: Ok deary, I'm just making sure. $OptionB",
+        "???: Move on to the next room deary. I got more stuff to show you still. $OptionB",
+    };
+
+    string[] InventroyOpening = new string[]
+    {
+        "???: First things first. Press <b>tab</b> for me would you honey.",
+        "$Pause",
+        "$GiveWeapon(Dagger)",
+        "$GiveAbility(EnergyArc)",
+        " : You got <color=#507830><b>Energy Arc</b></color> and a <color=#936A00><b>Dagger</b></color>!",
+        "$Resume",
+        "???: Now, press <b>tab</b> to see the nice stuff I gave you.",
+    };
+
+    string[] InventoryExplaination = new string[]
+    {
+        "???: This here is your inventory! Everything you can use will end up here.",
+        "???: If there's ever something you want to equip, you just gotta select it then click the <b>equip button</b>.",
+        "???: And if there's something you don't want, just select it and press that <b>red trash button</b>.",
+        "???: The same logic applies across every tab so now you know how to use your inventory!",
+        "???: Now, go into the next room deary. I got more stuff set up there."
+    };
+
+    string[] StrangeRoom = new string[]
+    {
+        "???: Where's the green lady? Shouldn't she be here?",
+        "Blaze: This room.",
+        "Blaze: It feels... Strange.",
+        " : You feel a strange pull towards the chair.",
+        " : Maybe something will happen if you interact with it with the <b>'F'</b> key."
+    };
+
+    //This should allow the player to skip to TutorialOver
+    string[] CombatIntro = new string[]
+    {
+        "???: Next up, <b>combat</b>.",
+        "???: Do you know how to fight or should we just move on?|I'm no fighter|Just move on $Prompt",
+        "Blaze: I'm not much of a fighter. $OptionA",
+        "???: Oh deary, you gotta fight down here to stay safe. $OptionA",
+        "???: I'll train you a bit so that you're a good fighter so go into the next room and I'll show you! $OptionA",
+        "Blaze: I'm sure I can handle myself! $OptionB",
+        "???: Ok dear, how dependable. $OptionB",
+        "???: Then you are good to go. $OptionB",
+    };
+
+    string[] CombatDodging = new string[]
+    {
+        "???: In this room, bullets will shoot towards you.",
+        "Blaze: WHAT?!",
+        "???: Don't worry sweetie, as long as you dash at the right time you'll be fine.",
+        "Blaze: Dash?",
+        "???: Yes, pressing <b> Shift, Space, or Right Clicking</b> will give you a burst of speed!",
+        "???: You will also be safe from getting hit for a small window at the start of a dash!",
+        "???: Try it out!!",
+    };
+
+    string[] CombatDodgingDone = new string[]
+    {
+        "???: Good job! Move on now, I still got a little more to show you.",
+    };
+
+    string[] CombatTableBreaker = new string[]
+    {
+        "???: Now it is time to teach you how to fight.",
+        "???: I have placed a couple tables over there. Go break them.",
+        "Blaze: What's the point of doing this?",
+        "???: Dearie, all the best stuff is in tables, just try it and see!",
+    };
+
+    string[] CombatEnemyInbound = new string[]
+    {
+        "Blaze: Whoa, why is this stuff <b>in</b> a table?",
+        "???: Nobody knows, that's just how it is.",
+        "???: Anyway, now that you have yourself some nice loot...",
+        "???: Now is the time for you to make use of it!",
+        "???: Just so you know, this is the real deal. If you are in danger I won't help you."
+    };
+
+    string[] TutorialOver = new string[]
+    {
+        "???: I have nothing left to teach you.",
+        "???: I'm sure that you'll be safe out but still, be careful.",
+        "???: Varren has been waiting for you since you got here. Don't keep him waiting any longer.",
+        "Blaze: Varren? Does he know me? Did he bring me here?",
+        "???: You'll understand the situation soon enough, go out the door on the right and best of luck."
+    };
+
     string[] VarrenEncounter = new string[]
     {
         "$PlaySong|StienTheme",
         "$Move(Varren,-15.75,-14.29)",
-        "Varren: Oh? And who might you be?|Hide my name|HOLY SH- $Prompt",
+        "???: Oh? And who might you be?|Hide my name|HOLY SH- $Prompt",
         "Blaze: No one.$OptionA",
         "Blaze: Who are you? Where did you come from? $OptionA",
-        "Varren: Me? I'm a... resident of this lovely establishment. $OptionA",
-        "Blaze: AAAHHHHHHHHH.$OptionB",
-        "Blaze: A GHOST!!! $OptionB",
-        "Varren: Calm down kid, I'm not a ghost. $OptionB",
-        "Varren: I'm just another person trapped here like you. $OptionB",
+        "???: Me? I'm Varren, a... resident of this lovely establishment. $OptionA",
+        "Blaze: AAAHHHHHHHHH. A GHOST!!! $OptionB",
+        "???: Calm down kid, I'm Varren, just another person trapped here like you. $OptionB",
         "$Emote|Protag|Angry",
         //Line above is a test line
         "Blaze: Where are we?",
@@ -191,7 +332,7 @@ public class Dialogue
         "Blaze: What do you mean? Isn't this a barn?",
         "$Emote|Protag|Surprised",
         //Line above is a test line
-        "Varren: It's a hotel, and it's where you'll be spending the rest of your days, trapped here for eternity because of all of the terrible things you've done.|He must be joking|What things $Prompt",
+        "Varren: It's a hotel, and it's where you'll be trapped for eternity because of all of the terrible things you've done.|He must be joking|What things $Prompt",
         "Blaze: Are you pulling my leg?$OptionA",
         "Blaze: I think I'd remember dying.$OptionA",
         "Blaze: What terrible things?$OptionB",
@@ -200,7 +341,7 @@ public class Dialogue
         "Blaze: But why would I be sent to a hotel?$OptionB",
         "Varren: Haven't you noticed how this place seems off? The rooms shifting, the lack of windows, the monsters?",
         "Blaze: Yes but-",
-        "Varren: Welcome to hell. You died. You're stuck here for eternity to be forever haunted by those... things. There is no exit, no escape. The atrocities you've committed have condemned you here for eternity.",
+        "Varren: Welcome to hell. You died. You're stuck here to be forever haunted by those... things. There is no exit, no escape. Your atrocities have condemned you to this place.",
         "Blaze: But there has to be some kind of a mistake. I don't remember committing any atrocities or dying, maybe if I look around for long enough then I can find an exit, or the person who trapped us here?",
         "Varren: You're going to fail. I've searched every nook and cranny of this place. I'm sorry, but there's no way out kid.",
         "Blaze: Maybe you missed a spot?",
@@ -209,8 +350,8 @@ public class Dialogue
         "$Pause",
         "$Emote|Varren|Angry",
         "Varren: <b>NO!!!</b>",
-        "Varren: <i>(Sigh)</i>",
-        "Varren: <i>(stubborn little ****)</i>",
+        "Varren: <i*Sigh*</i>",
+        "Varren: <i>stubborn little...</i>",
         "Varren: There aren't any hidden rooms",
         "Varren: There is no one watching us",
         "Varren: And there certantly aren't any exits.",
@@ -227,69 +368,11 @@ public class Dialogue
         "Blaze: Well just giving up and just sitting here isn't going to accomplish anything.$OptionA",
         "Blaze: There's no way I can stay in this stinky place.$OptionB",
         "Varren: Your stubbornness is quite amusing, take this",
-        "$Pause",
-        "$GiveWeapon(Dagger)",
-        " : You got a Dagger!",
-        "$Resume",
         "Varren: You can't die here, but you still can feel pain. Let's see how far you get before you give up.",
-         //"Varren: (disappears into smoke)",
         "Varren: Cya later kiddo",
         "$Move(Varren,-11.57,-14.3)",
-        " : Press the <b>'TAB'</b> key to open your inventory.",
-        " : On the left side of the inventory are tabs that can be opened by <b>Left Clicking</b>",
-        " : These three tabs hold, from top to bottom <b><color=#936A00>Weapons</color>, <color=#5B100A>Items</color>, and <color=#507830>Special Abilities</color></b>",
-        " : As you explore you will find many things lying around, when you want to <b>equip</b> something just click the item and then the UI button labeled <b>'Equip'</b>",
-        " : This dagger should be useful for defending myself, I should keep it out, just in case",
         "Blaze: Well, I guess I should get moving.",
         "$Kill(Varren)"
-    };
-
-    string[] InventoryTutorial = new string[]
-    {
-        "Blaze: Hmmm, this room is different.",
-        "Blaze: I don't see anyone here either. Maybe, I'll find someone in the next room.",
-        "Blaze: This dagger should be useful for defending myself, I should keep it out, just in case",
-    };
-
-    string[] MindRoom = new string[]
-    {
-        "Blaze: This room.",
-        "Blaze: It feels... Strange.",
-        " : You feel a strange pull towards the chair.",
-        " : Maybe something will happen if you interact with it with the <b>'F'</b> key."
-    };
-
-    string[] CombatTutorial = new string[]
-    {
-        //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
-        "$Move(Player,20.265,2.898)",
-        "Blaze: A monster!",
-        "Blaze: This is a good time to try testing my dagger",
-        //Blaze charges at the cleaning lady, who dodges the attack
-        "$Move(Player,20.265,2.282)",
-        "$Tele(SlimeLady,20.26,3.09)",
-        "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
-        "Blaze: You can talk?",
-        "Monster: Why wouldn't I be able to? My name is Samantha, and yours?|Say my name|Hide my name|$Prompt",
-        "Blaze: Blaze.$OptionA",
-        "Blaze: What's it matter to you.$OptionB",
-        "Samantha: Well it's certainly nice to meet you, but please do try to refrain from attacking me for no reason.$OptionA",
-        "Samantha: One finds it helps to make friends.$OptionB",
-        "Samantha: Now, before you get going, perhaps I should tell you how to properly fight.",
-        "Samantha: To start, pressing <b>Left Click</b> will allow you to attack.",
-        "Samantha : Pressing left-click repeatadly to complete an attack combo.",
-        "Samantha : Depending on the weapon equiped the combo will change!",
-        "Samantha: Now, pressing <b>Shift or Space</b> keys allow you to dash.",
-        "Samantha: <b>Right Clicking</b> can be used to dash as well.",
-        "Samantha: Dashing can be used to avoid attacks and quickly get behind enemies.",
-        "Samantha: Finally, pressing the <b>'E'</b> key will allow you to use your equiped ability",
-        "Samantha: If you would like to change abilities or upgrade weapons, you can do so in the mind room.",
-        "Samantha: Since you don't have one now, I'll just give you one to try out",
-        "$Pause",
-        "$GiveAbility(EnergyArc)",
-        " : You got Energy Arc!",
-        "$Resume",
-        "Samantha: Well, i've got duties to attend to, take care! Don't let the Vampire scare you."
     };
 
     #endregion

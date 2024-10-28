@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MindRoomInteraction : MonoBehaviour
 {
+    [SerializeField] GameObject buttonPrompt;
     [SerializeField] GameObject mindRoomCanvas;
     bool inRangeOfChair;
     private void OnCollisionEnter2D(Collision2D collision)
@@ -12,6 +13,7 @@ public class MindRoomInteraction : MonoBehaviour
         {
             inRangeOfChair = true;
 
+            if (buttonPrompt) buttonPrompt.SetActive(true);
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
@@ -19,6 +21,8 @@ public class MindRoomInteraction : MonoBehaviour
         if (collision.gameObject.tag.Equals("MindRoomChair"))
         {
             inRangeOfChair = false;
+
+            if (buttonPrompt) buttonPrompt.SetActive(false);
         }
     }
 

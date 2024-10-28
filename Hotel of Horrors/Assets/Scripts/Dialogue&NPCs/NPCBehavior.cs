@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class NPCBehavior : MonoBehaviour
 {
+    [SerializeField] GameObject buttonPrompt;
     [Header("State Fields")]
     [SerializeField] Dialogue.Dialog npcDialog = Dialogue.Dialog.None;
     [SerializeField] Dialogue.Dialog replacementDialog = Dialogue.Dialog.None;
@@ -38,5 +39,10 @@ public class NPCBehavior : MonoBehaviour
     public bool CheckForMultipleDialogs()
     {
         return allowMultipleDialogs;
+    }
+
+    public void ToggleButtonPrompt(bool toggle)
+    {
+        if (buttonPrompt) buttonPrompt.SetActive(toggle);
     }
 }

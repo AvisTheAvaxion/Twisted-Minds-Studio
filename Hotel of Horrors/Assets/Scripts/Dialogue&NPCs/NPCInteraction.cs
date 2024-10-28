@@ -38,6 +38,7 @@ public class NPCInteraction : MonoBehaviour
                 npcDialog = activeBehavior.GetNPCDialog();
             }
             npcName = collision.gameObject.name;
+            activeBehavior.ToggleButtonPrompt(true);
         }
     }
 
@@ -54,7 +55,9 @@ public class NPCInteraction : MonoBehaviour
             {
                 npcDialog = Dialogue.Dialog.None;
             }
+            activeBehavior.ToggleButtonPrompt(false);
             npcName = null;
+            activeBehavior = null;
         }
     }
 
@@ -66,6 +69,7 @@ public class NPCInteraction : MonoBehaviour
             questSys.QuestEvent(QuestSystem.QuestEventType.NpcInteraction, npcName);
 
             activeBehavior.IncrementInteractionCount();
+            activeBehavior.ToggleButtonPrompt(false);
         }
         else if(npcDialogList != null)
         {

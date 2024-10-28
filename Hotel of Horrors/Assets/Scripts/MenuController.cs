@@ -42,7 +42,9 @@ public class MenuController : MonoBehaviour
             selectedFileNum = PlayerPrefs.GetInt("SaveFile");
 
         serialization = FindObjectOfType<SerializationManager>();
-        LoadSaveFiles();
+
+        if(loadGamePage != null)
+            LoadSaveFiles();
     }
 
     public void UpdateGUI()
@@ -120,8 +122,10 @@ public class MenuController : MonoBehaviour
     }
     public void ConfirmLoadSaveFile()
     {
-        if(selectedFileNum >= 0)
+        if (selectedFileNum >= 0)
             LoadGame(selectedFileNum);
+        else
+            NewGame();
     }
 
     public void GoToMainMenu()
@@ -178,7 +182,7 @@ public class MenuController : MonoBehaviour
 
         nextSaveFileNum = saveNum;
 
-        if(saveFilesContainer.childCount > 0)
+        if(saves.Length > 0)
         {
             noSavesMessage.SetActive(false);
         } 

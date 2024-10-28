@@ -158,7 +158,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -140}
-  m_SizeDelta: {x: 558.0428, y: 247.75}
+  m_SizeDelta: {x: 1081.4436, y: 247.75}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &253559582
 MonoBehaviour:
@@ -182,8 +182,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: You Were Defeated
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e6e954d8234df43448a711e93ff3ea9e, type: 2}
-  m_sharedMaterial: {fileID: 2668247931226269678, guid: e6e954d8234df43448a711e93ff3ea9e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 06e33e2d6951a52489a63125387830c7, type: 2}
+  m_sharedMaterial: {fileID: 7231916679454080225, guid: 06e33e2d6951a52489a63125387830c7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 256219516}
   - component: {fileID: 256219515}
   - component: {fileID: 256219519}
+  - component: {fileID: 256219520}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -372,8 +373,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ec546c349c1204ab995f0433268f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuObj: {fileID: 409918947}
-  settingsObj: {fileID: 0}
+  mainMenuPage: {fileID: 0}
+  settingsPage: {fileID: 0}
+  loadGamePage: {fileID: 0}
+  saveFilesContainer: {fileID: 0}
+  saveFilePrefab: {fileID: 0}
+  noSavesMessage: {fileID: 0}
+--- !u!114 &256219520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256219514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 203233bdcf789be4e8e13cb8ee4a840d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &257384840
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,6 +403,7 @@ GameObject:
   - component: {fileID: 257384844}
   - component: {fileID: 257384843}
   - component: {fileID: 257384842}
+  - component: {fileID: 257384845}
   m_Layer: 5
   m_Name: Retry Button
   m_TagString: Untagged
@@ -459,7 +477,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 256219519}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: PlayGame
+        m_MethodName: ConfirmLoadSaveFile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -476,7 +494,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257384840}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -507,6 +525,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257384840}
   m_CullTransparentMesh: 1
+--- !u!114 &257384845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257384840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ab1a7e669010064f99f230efc589240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textHandler: {fileID: 754627366}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  mouseHoverColor: {r: 0.6603774, g: 0.51121926, b: 0.003114995, a: 1}
+  mouseClickColor: {r: 0.6037736, g: 0.3716716, b: 0, a: 1}
+  selectionIcon: {fileID: 0}
+  animator: {fileID: 0}
+  startSelected: 0
 --- !u!1 &401545333
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,6 +556,7 @@ GameObject:
   - component: {fileID: 401545337}
   - component: {fileID: 401545336}
   - component: {fileID: 401545335}
+  - component: {fileID: 401545338}
   m_Layer: 5
   m_Name: Return To Menu Button
   m_TagString: Untagged
@@ -609,7 +647,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401545333}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -640,6 +678,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401545333}
   m_CullTransparentMesh: 1
+--- !u!114 &401545338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401545333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ab1a7e669010064f99f230efc589240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textHandler: {fileID: 616858057}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  mouseHoverColor: {r: 0.6603774, g: 0.51121926, b: 0.003114995, a: 1}
+  mouseClickColor: {r: 0.6037736, g: 0.3716716, b: 0, a: 1}
+  selectionIcon: {fileID: 0}
+  animator: {fileID: 0}
+  startSelected: 0
 --- !u!1 &409918947
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,8 +863,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Main Menu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e6e954d8234df43448a711e93ff3ea9e, type: 2}
-  m_sharedMaterial: {fileID: 2668247931226269678, guid: e6e954d8234df43448a711e93ff3ea9e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 61b2f736855b7bc488f96212ebcaa8e6, type: 2}
+  m_sharedMaterial: {fileID: 7792040278827938528, guid: 61b2f736855b7bc488f96212ebcaa8e6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -940,8 +997,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Try Again
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e6e954d8234df43448a711e93ff3ea9e, type: 2}
-  m_sharedMaterial: {fileID: 2668247931226269678, guid: e6e954d8234df43448a711e93ff3ea9e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 61b2f736855b7bc488f96212ebcaa8e6, type: 2}
+  m_sharedMaterial: {fileID: 7792040278827938528, guid: 61b2f736855b7bc488f96212ebcaa8e6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1027,6 +1084,7 @@ GameObject:
   - component: {fileID: 905983674}
   - component: {fileID: 905983673}
   - component: {fileID: 905983672}
+  - component: {fileID: 905983675}
   m_Layer: 5
   m_Name: Quit Button
   m_TagString: Untagged
@@ -1051,7 +1109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -250}
+  m_AnchoredPosition: {x: 0, y: -187}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &905983672
@@ -1117,7 +1175,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905983670}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1148,6 +1206,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905983670}
   m_CullTransparentMesh: 1
+--- !u!114 &905983675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905983670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ab1a7e669010064f99f230efc589240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textHandler: {fileID: 1868781979}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  mouseHoverColor: {r: 0.6603774, g: 0.51121926, b: 0.003114995, a: 1}
+  mouseClickColor: {r: 0.6037736, g: 0.3716716, b: 0, a: 1}
+  selectionIcon: {fileID: 0}
+  animator: {fileID: 0}
+  startSelected: 0
 --- !u!1 &1380124093
 GameObject:
   m_ObjectHideFlags: 0
@@ -1453,10 +1530,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit to Desktop
+  m_text: Quit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e6e954d8234df43448a711e93ff3ea9e, type: 2}
-  m_sharedMaterial: {fileID: 2668247931226269678, guid: e6e954d8234df43448a711e93ff3ea9e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 61b2f736855b7bc488f96212ebcaa8e6, type: 2}
+  m_sharedMaterial: {fileID: 7792040278827938528, guid: 61b2f736855b7bc488f96212ebcaa8e6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

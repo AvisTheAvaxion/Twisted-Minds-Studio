@@ -713,6 +713,9 @@ public class EnemyStateMachine : MonoBehaviour
                 Vector2 dirToPlayer = GetDirToPlayer();
                 Gizmos.DrawLine(rayCastOrigin.position, rayCastOrigin.position + (Vector3)(dirToPlayer * distToPlayer));
             }
+
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRadius);
         }
     }
 }

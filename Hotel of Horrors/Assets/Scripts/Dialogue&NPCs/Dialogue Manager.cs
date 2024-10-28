@@ -1,50 +1,37 @@
-using NUnit.Framework.Constraints;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Reflection;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 using Color = UnityEngine.Color;
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("Plug-In Variables")]
+    [Header("Variables")]
     [SerializeField] Dialogue.Dialog cutscene;
+    [Space(2)]
+    [Header("Functionality Plug-Ins")]
     [SerializeField] PlayerMovement movement;
     [SerializeField] PlayerInventory inventory;
     [SerializeField] NewAudioManager AudioManager;
     [SerializeField] PlayerAudio playerAudio;
-    [SerializeField] Image ProfilePic;
     [SerializeField] Image WhiteFade;
     [SerializeField] List<Sprite> CharacterPics;
-    [Header("Text Plug-In Variables")]
-    [SerializeField] GameObject uiCanvas;
-    [SerializeField] GameObject dialogUI;
+    [Header("Visual Plug-Ins")]
+    [SerializeField] GameObject playerGUI;
     [SerializeField] DialogueGUI dialogueGUI;
-    [SerializeField] TMPro.TMP_Text textBox;
-    [SerializeField] TMPro.TMP_Text nameBox;
-    [SerializeField] TMPro.TMP_Text buttonOneText;
-    [SerializeField] TMPro.TMP_Text buttonTwoText;
 
     Dialogue dialogue = new Dialogue();
     QuestSystem questSystem;
 
-    bool skipCutscene = false;
-
     string[] lines;
-
-    bool inCutscene = false;
 
     int currentLine = 0;
 
-    [SerializeField] float skipCooldown = 5f;
+    [SerializeField] float skipCooldown = 3f;
     float skipTimer = 5f;
-    [SerializeField] bool InstaSkip;
+    [SerializeField] bool instaSkip;
+    [SerializeField] bool auto;
 
     [SerializeField] Dictionary<string, string> emotions = new Dictionary<string, string>();
 
@@ -69,75 +56,55 @@ public class DialogueManager : MonoBehaviour
     PlayerChoice currentChoice = PlayerChoice.None;
     PlayerChoice lastChoice = PlayerChoice.None;
 
-    CutsceneState currentState = CutsceneState.Continue;
+    CutsceneState currentState = CutsceneState.None;
 
     private void Awake()
     {
-        /*PlayerMovement movement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        canvas = GameObject.Find("CanvasDialogue");
-        dialogUI = GameObject.Find("DialogeBG");
-        uiCanvas = GameObject.Find("Player UI");
-        textBox = GameObject.Find("TextBox").GetComponent<TMPro.TMP_Text>();
-        nameBox = GameObject.Find("NameBox").GetComponent<TMPro.TMP_Text>();
-        buttonOneText = GameObject.Find("ButtonOneText").GetComponent<TMPro.TMP_Text>();
-        buttonTwoText = GameObject.Find("ButtonTwoText").GetComponent<TMPro.TMP_Text>();*/
         questSystem = FindObjectOfType<QuestSystem>();
-        ButtonSwitch(false);
-        CanvasSwitch(false);
-        
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //SetCutscene(Dialogue.Dialog.VarrenEncounter);
+        if (dialogueGUI)
+        {
+            dialogueGUI.ToggleButtons(false);
+            dialogueGUI.ToggleGUI(false);
+        }
     }
 
     void StartCutScene(string dialogueName, int line)
     {
+        currentState = CutsceneState.Continue;
         movement.StartCutscene();
-        CanvasSwitch(true);
-        uiCanvas.SetActive(false);
         lines = dialogue.getDialogue(dialogueName);
         currentLine = line;
-        inCutscene = true;
-        nameBox.text = "";
-        textBox.text = "";
+        playerGUI.SetActive(false);
+
+        auto = false;
+        instaSkip = false;
+        skipTimer = skipCooldown;
+
+        if (dialogueGUI)
+        {
+            dialogueGUI.ToggleGUI(false);
+            dialogueGUI.SetDialogue("", "");
+        }
         OnDialogueUpdate();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && inCutscene && currentState == CutsceneState.Continue)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)
+            || (auto && skipTimer < 0) || instaSkip) &&
+            currentState == CutsceneState.Continue)
         {
+            skipTimer = skipCooldown;
+
             OnDialogueUpdate();
         }
         else if (currentState == CutsceneState.Moving)
         {
             MoveCharacter();
         }
-        else if (currentState == CutsceneState.Skipping)
-        {
-            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) && inCutscene)
-            {
-                OnDialogueUpdate();
-            }
-            if (InstaSkip)
-            {
-                OnDialogueUpdate();
-            }
-            else
-            {
-                skipTimer = skipTimer - Time.deltaTime;
-                if (skipTimer < 0)
-                {
-                    OnDialogueUpdate();
-                    skipTimer = skipCooldown;
-                }
-            }
-        }
+
+        skipTimer -= Time.deltaTime;
     }
 
     void OnDialogueUpdate()
@@ -149,43 +116,54 @@ public class DialogueManager : MonoBehaviour
             #region Audio Functions
             if (lines[currentLine].StartsWith("$PlayEffect"))
             {
+                currentState = CutsceneState.Waiting;
+
                 string[] sound = lines[currentLine].Split("|");
                 AudioManager.PlayEffect(sound[1]);
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
 
             }
             else if (lines[currentLine].StartsWith("$PlaySong"))
             {
+                currentState = CutsceneState.Waiting;
+
                 string[] sound = lines[currentLine].Split("|");
                 AudioManager.PlaySong(sound[1]);
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
             else if (lines[currentLine].StartsWith("$Pause"))
             {
+                currentState = CutsceneState.Waiting;
+
                 AudioManager.Pause();
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
             else if (lines[currentLine].StartsWith("$Resume"))
             {
+                currentState = CutsceneState.Waiting;
+
                 AudioManager.Play();
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
 
             #endregion
             #region Choice Functions
             else if (lines[currentLine].EndsWith("$Prompt"))
             {
-                CanvasSwitch(true);
                 currentState = CutsceneState.Picking;
-                ButtonSwitch(true);
+
                 string startString = lines[currentLine].Replace("$Prompt", "");
                 string[] splitString = startString.Split('|');
                 string promptText = splitString[0];
@@ -193,60 +171,78 @@ public class DialogueManager : MonoBehaviour
                 string bTwoText = splitString[2];
                 string outputName = promptText.Split(':')[0];
                 string outputText = promptText.Split(":")[1];
-                if(dialogueGUI)
+                if (dialogueGUI)
                 {
+                    dialogueGUI.ToggleButtons(true);
+                    dialogueGUI.ToggleGUI(true);
                     dialogueGUI.SetDialogue(outputName, outputText, bOneText, bTwoText);
                 }
-                //textBox.text = outputText;
-                //nameBox.text = outputName;
-                //buttonOneText.text = bOneText;
-                //buttonTwoText.text = bTwoText;
 
                 playerAudio.NextLine(currentLine);
-                UpdateImage();
+                UpdateImage(outputName);
+
+                currentLine++;
             }
             else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceOne)
             {
+                currentState = CutsceneState.Continue;
+
                 lastChoice = PlayerChoice.ChoiceOne;
                 string optionAText = lines[currentLine].Replace("$OptionA", "");
                 string outputText = optionAText.Split(":")[1];
                 string outputName = optionAText.Split(':')[0];
-                textBox.text = outputText;
-                nameBox.text = outputName;
+                if (dialogueGUI)
+                {
+                    dialogueGUI.SetDialogue(outputName, outputText);
+                }
                 playerAudio.NextLine(currentLine);
-                UpdateImage();
+                UpdateImage(outputName);
+
+                currentLine++;
             }
             else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceOne)
             {
+                currentState = CutsceneState.Continue;
+
                 lastChoice = PlayerChoice.ChoiceOne;
                 while (currentLine < lines.Length && lines[currentLine].Contains("$OptionB"))
                 {
                     currentLine++;
                 }
+
+                //Auto move to the next line
                 OnDialogueUpdate();
-                currentLine--;
             }
             else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceTwo)
             {
+                currentState = CutsceneState.Continue;
+
                 lastChoice = PlayerChoice.ChoiceTwo;
                 string optionBText = lines[currentLine].Replace("$OptionB", "");
                 string outputText = optionBText.Split(":")[1];
                 string optionBName = optionBText.Split(':')[0];
-                textBox.text = outputText;
-                nameBox.text = optionBName;
+                if (dialogueGUI)
+                {
+                    dialogueGUI.SetDialogue(optionBName, outputText);
+                }
 
                 playerAudio.NextLine(currentLine);
-                UpdateImage();
+                UpdateImage(optionBName);
+
+                currentLine++;
             }
             else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceTwo)
             {
+                currentState = CutsceneState.Continue;
+
                 lastChoice = PlayerChoice.ChoiceTwo;
                 while (currentLine < lines.Length && lines[currentLine].Contains("$OptionA"))
                 {
                     currentLine++;
                 }
+
+                //Auto move to the next line
                 OnDialogueUpdate();
-                currentLine--;
             }
             #endregion
             #region Cutscene Functions
@@ -266,7 +262,7 @@ public class DialogueManager : MonoBehaviour
             }
             else if (lines[currentLine].EndsWith("$Move") || lines[currentLine].StartsWith("$Move"))
             {
-                currentState = CutsceneState.Waiting;
+                currentState = CutsceneState.Moving;
                 int moveStartIndex = lines[currentLine].IndexOf('(');
                 int moveEndIndex = lines[currentLine].IndexOf(')');
                 string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
@@ -279,6 +275,7 @@ public class DialogueManager : MonoBehaviour
             }
             else if (lines[currentLine].EndsWith("$Tele") || lines[currentLine].StartsWith("$Tele"))
             {
+                currentState = CutsceneState.Waiting;
                 int teleStartIndex = lines[currentLine].IndexOf('(');
                 int teleEndIndex = lines[currentLine].IndexOf(')');
                 string teleInfo = lines[currentLine].Substring(teleStartIndex + 1, teleEndIndex - teleStartIndex - 1);
@@ -286,22 +283,26 @@ public class DialogueManager : MonoBehaviour
                 Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
                 playerAudio.NextLine(currentLine);
                 GameObject.Find(splitString[0]).transform.position = target;
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
             else if (lines[currentLine].EndsWith("$Kill") || lines[currentLine].StartsWith("$Kill"))
             {
+                currentState = CutsceneState.Waiting;
                 int killStartIndex = lines[currentLine].IndexOf('(');
                 int killEndIndex = lines[currentLine].IndexOf(')');
                 string killInfo = lines[currentLine].Substring(killStartIndex + 1, killEndIndex - killStartIndex - 1);
                 Destroy(GameObject.Find(killInfo));
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
             else if (lines[currentLine].EndsWith("$AfterImage") || lines[currentLine].StartsWith("$AfterImage"))
             {
+                currentState = CutsceneState.Waiting;
                 int imageStartIndex = lines[currentLine].IndexOf('(');
                 int imageEndIndex = lines[currentLine].IndexOf(')');
                 string imageInfo = lines[currentLine].Substring(imageStartIndex + 1, imageEndIndex - imageStartIndex - 1);
@@ -315,29 +316,33 @@ public class DialogueManager : MonoBehaviour
                 {
                     character.transform.GetChild(0).GetComponent<AfterImage>().StopEffect();
                 }
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
             else if (lines[currentLine].EndsWith("$BossPoof") || lines[currentLine].StartsWith("$BossPoof"))
             {
+                currentState = CutsceneState.Waiting;
                 int poofStartIndex = lines[currentLine].IndexOf('(');
                 int poofEndIndex = lines[currentLine].IndexOf(')');
                 string poofInfo = lines[currentLine].Substring(poofStartIndex + 1, poofEndIndex - poofStartIndex - 1);
                 GameObject character = GameObject.Find(poofInfo);
                 character.GetComponent<BossHelper>().BossDeathEffects();
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
-            else if(lines[currentLine].EndsWith("$Animate") || lines[currentLine].StartsWith("$Animate"))
+            else if (lines[currentLine].EndsWith("$Animate") || lines[currentLine].StartsWith("$Animate"))
             {
+                currentState = CutsceneState.Waiting;
                 int animateStartIndex = lines[currentLine].IndexOf('(');
                 int animateEndIndex = lines[currentLine].IndexOf(')');
                 string aniamateInfo = lines[currentLine].Substring(animateStartIndex + 1, animateEndIndex - animateStartIndex - 1);
                 string[] splitString = aniamateInfo.Split(",");
                 Animator animator = GameObject.Find(splitString[0]).GetComponent<Animator>();
-                if(splitString.Length > 2)
+                if (splitString.Length > 2)
                 {
                     animator.SetBool(splitString[1], bool.Parse(splitString[2]));
                 }
@@ -345,9 +350,10 @@ public class DialogueManager : MonoBehaviour
                 {
                     animator.SetTrigger(splitString[1]);
                 }
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
             else if (lines[currentLine].EndsWith("$Timer") || lines[currentLine].StartsWith("$Timer"))
             {
@@ -379,26 +385,49 @@ public class DialogueManager : MonoBehaviour
             }
             else if (lines[currentLine].EndsWith("$UnlockToBoss") || lines[currentLine].StartsWith("$UnlockToBoss"))
             {
+                currentState = CutsceneState.Waiting;
                 Floor floor = FindObjectOfType<Floor>();
                 floor.UnlockToBossDoor();
+
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
             }
             else if (lines[currentLine].EndsWith("$UnlockFromBoss") || lines[currentLine].StartsWith("$UnlockFromBoss"))
             {
+                currentState = CutsceneState.Waiting;
                 Floor floor = FindObjectOfType<Floor>();
                 floor.UnlockFromBossDoor();
+
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
             }
-            else if (lines[currentLine].EndsWith("$TimeScale") || lines[currentLine].StartsWith("$TimeScale"))
+            else if (lines[currentLine].EndsWith("$ChronoStop") || lines[currentLine].StartsWith("$ChronoStop"))
             {
                 int timeStartIndex = lines[currentLine].IndexOf('(');
                 int timeEndIndex = lines[currentLine].IndexOf(')');
-                string timeOutInfo = lines[currentLine].Substring(timeStartIndex + 1, timeEndIndex - timeStartIndex - 1);
-                Time.timeScale = float.Parse(timeOutInfo);
+                string timeInfo = lines[currentLine].Substring(timeStartIndex + 1, timeEndIndex - timeStartIndex - 1);
+                bool pauseBool = bool.Parse(timeInfo);
+                Debug.Log(timeInfo + " " + pauseBool);
+                if (pauseBool)
+                {
+                    GameTime.PauseTime(false);
+                }
+                else
+                {
+                    GameTime.UnpauseTime();
+                }
+
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
             }
             #endregion
-            #region Invetory Functions
+            #region Inventory Functions
             else if (lines[currentLine].EndsWith("$GiveWeapon") || lines[currentLine].StartsWith("$GiveWeapon"))
             {
-
+                currentState = CutsceneState.Waiting;
                 WeaponInfo desiredWeaponInfo = null;
 
                 int giveStartIndex = lines[currentLine].IndexOf('(');
@@ -418,9 +447,14 @@ public class DialogueManager : MonoBehaviour
                     Weapon desiredWeapon = new Weapon(desiredWeaponInfo);
                     inventory.AddWeapon(desiredWeapon);
                 }
+
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
             }
             else if (lines[currentLine].EndsWith("$GiveItem") || lines[currentLine].StartsWith("$GiveItem"))
             {
+                currentState = CutsceneState.Waiting;
                 ItemInfo desiredItemInfo = null;
 
                 int giveStartIndex = lines[currentLine].IndexOf('(');
@@ -441,9 +475,14 @@ public class DialogueManager : MonoBehaviour
                     Item desiredItem = new Item(desiredItemInfo, Int32.Parse(splitString[1]));
                     inventory.AddItem(desiredItem);
                 }
+
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
             }
             else if (lines[currentLine].EndsWith("$GiveAbility") || lines[currentLine].StartsWith("$GiveAbility"))
             {
+                currentState = CutsceneState.Waiting;
                 AbilityInfo desiredAbilityInfo = null;
 
                 int giveStartIndex = lines[currentLine].IndexOf('(');
@@ -464,91 +503,115 @@ public class DialogueManager : MonoBehaviour
                     Ability desiredAbility = new Ability(desiredAbilityInfo);
                     inventory.AddPlayerAbility(desiredAbility);
                 }
+
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
             }
             #endregion
             #region Quest Functions
             else if (lines[currentLine].EndsWith("$SetQuest") || lines[currentLine].StartsWith("$SetQuest"))
             {
+                currentState = CutsceneState.Waiting;
                 int moveStartIndex = lines[currentLine].IndexOf('(');
                 int moveEndIndex = lines[currentLine].IndexOf(')');
                 string questInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
                 string[] splitString = questInfo.Split(',');
                 questSystem.SetQuest(Int32.Parse(splitString[0]), Int32.Parse(splitString[1]));
+
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
             }
             #endregion
             #region UI Functions
             else if (lines[currentLine].StartsWith("$Emote") || lines[currentLine].EndsWith("$Emote"))
             {
+                currentState = CutsceneState.Waiting;
+
                 try
                 {
                     emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
                 }
-                catch(ArgumentException)
+                catch (ArgumentException)
                 {
                     emotions.Remove(lines[currentLine].Split("|")[1]);
                     emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
                 }
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
             else if (lines[currentLine].StartsWith("$ToggleUI") || lines[currentLine].EndsWith("$ToggleUI"))
             {
+                currentState = CutsceneState.Waiting;
+
                 int toggleStartIndex = lines[currentLine].IndexOf('(');
                 int toggleEndIndex = lines[currentLine].IndexOf(')');
                 string toggleInfo = lines[currentLine].Substring(toggleStartIndex + 1, toggleEndIndex - toggleStartIndex - 1);
 
-                UISwitch(bool.Parse(toggleInfo));
+                if (dialogueGUI)
+                {
+                    dialogueGUI.ToggleGUI(bool.Parse(toggleInfo));
+                }
+
+                //Auto move to the next line
                 currentLine++;
                 OnDialogueUpdate();
-                currentLine--;
             }
             #endregion
             else
             {
-                CanvasSwitch(true);
-                //textBox.fontStyle = TMPro.FontStyles.Normal;
+                currentState = CutsceneState.Continue;
+                if (dialogueGUI)
+                {
+                    dialogueGUI.ToggleGUI(true);
+                }
                 currentChoice = PlayerChoice.None;
                 string[] dialogueLine = lines[currentLine].Split(':');
-                //nameBox.text = lines[currentLine].Split(':')[0];
-                //textBox.text = lines[currentLine].Split(':')[1];
-                if(dialogueGUI && dialogueLine.Length == 2)
+                if (dialogueGUI && dialogueLine.Length == 2)
                 {
                     dialogueGUI.SetDialogue(dialogueLine[0], dialogueLine[1]);
                 }
 
                 playerAudio.NextLine(currentLine);
-                UpdateImage();
+                UpdateImage(dialogueLine[0]);
+
+                currentLine++;
             }
         }
         //When there are no more lines of dialog to read.
-        else if (currentLine > lines.Length-1)
+        else if (currentLine > lines.Length - 1)
         {
-            currentState = CutsceneState.Continue;
-            CanvasSwitch(false);
-            ButtonSwitch(false);
-            uiCanvas.SetActive(true);
+            currentState = CutsceneState.None;
+            if (dialogueGUI)
+            {
+                dialogueGUI.ToggleButtons(false);
+                dialogueGUI.ToggleGUI(false);
+            }
+            playerGUI.SetActive(true);
             ResetCamera();
             movement.EndCutscene();
-            inCutscene = false;
-            InstaSkip = false;
-            currentLine = 0;
+            instaSkip = false;
+            auto = false;
         }
-        currentLine++;
     }
 
     #region Cutscene Visual Effects
     IEnumerator Timer(float time)
     {
         yield return new WaitForSeconds(time);
-        currentState = CutsceneState.Continue;
         playerAudio.NextLine(currentLine);
+
+        //Auto move to the next line
+        currentLine++;
         OnDialogueUpdate();
     }
 
     IEnumerator FadeIn(float r, float g, float b)
     {
-        Debug.Log("Test FadeIn");
+        //Debug.Log("Test FadeIn");
         WhiteFade.gameObject.SetActive(true);
         r /= 255f;
         g /= 255f;
@@ -564,14 +627,16 @@ public class DialogueManager : MonoBehaviour
         color.r = r; color.g = g; color.b = b;
         color.a = 1f;
         WhiteFade.color = color;
-        currentState = CutsceneState.Continue;
         yield return new WaitForSeconds(.3f);
+
+        //Auto move to the next line
+        currentLine++;
         OnDialogueUpdate();
     }
 
     IEnumerator FadeOut(float r, float g, float b)
     {
-        Debug.Log("Test Fadeout");
+        //Debug.Log("Test Fadeout");
         r /= 255f;
         g /= 255f;
         b /= 255f;
@@ -587,7 +652,9 @@ public class DialogueManager : MonoBehaviour
         color.a = 0f;
         WhiteFade.color = color;
         WhiteFade.gameObject.SetActive(false);
-        currentState = CutsceneState.Continue;
+
+        //Auto move to the next line
+        currentLine++;
         OnDialogueUpdate();
     }
     #endregion
@@ -600,15 +667,16 @@ public class DialogueManager : MonoBehaviour
         {
             //Debug.Log($"{interpol} | Camera:{cameraTransform.position} | target: {target}");
             cameraTransform.position = Vector3.Lerp(cameraTransform.position, target, interpol);
-            
+
             interpol += 0.01f;
             yield return new WaitForSeconds(time);
         }
         cameraTransform.position = target;
         playerAudio.NextLine(currentLine);
+
+        //Auto move to the next line
+        currentLine++;
         OnDialogueUpdate();
-        if(currentState != CutsceneState.Moving)
-            currentState = CutsceneState.Continue;
     }
 
     void ResetCamera()
@@ -625,7 +693,7 @@ public class DialogueManager : MonoBehaviour
         characterAnimator = character.GetComponent<Animator>();
         characterAI.SetSpeed(speed);
         characterAI.SetCanMove(true);
-        if(character.name == "Player")
+        if (character.name == "Player")
         {
             characterAI.enabled = true;
         }
@@ -639,14 +707,16 @@ public class DialogueManager : MonoBehaviour
             characterAI.SetCanMove(false);
             characterAI.SetTarget(null);
             characterAnimator.SetBool("isWalking", false);
-            if(characterAI.gameObject.name == "Player")
+            if (characterAI.gameObject.name == "Player")
             {
-                characterAI.enabled=false;
+                characterAI.enabled = false;
             }
+
+            //Auto move to the next line
+            currentLine++;
             OnDialogueUpdate();
-            currentState = CutsceneState.Continue;
         }
-        else if(characterAnimator != null)
+        else if (characterAnimator != null)
         {
             //print("Moving character for cutscene");
             characterAnimator.SetBool("isWalking", true);
@@ -660,50 +730,41 @@ public class DialogueManager : MonoBehaviour
     public void ButtonOneSelect()
     {
         currentChoice = PlayerChoice.ChoiceOne;
-        ButtonSwitch(false);
+        if (dialogueGUI)
+        {
+            dialogueGUI.ToggleButtons(true);
+        }
         while (lines[currentLine].Contains("$OptionB"))
         {
             currentLine++;
         }
         OnDialogueUpdate();
-        currentState = CutsceneState.Continue;
+        //currentState = CutsceneState.Continue;
     }
     public void ButtonTwoSelect()
     {
         currentChoice = PlayerChoice.ChoiceTwo;
-        ButtonSwitch(false);
+        if (dialogueGUI)
+        {
+            dialogueGUI.ToggleButtons(true);
+        }
         while (lines[currentLine].Contains("$OptionA"))
         {
             currentLine++;
         }
         OnDialogueUpdate();
-        currentState = CutsceneState.Continue;
+        //currentState = CutsceneState.Continue;
     }
 
-    void ButtonSwitch(bool isButtonOn)
-    {
-        buttonOneText.transform.parent.gameObject.SetActive(isButtonOn);
-        buttonTwoText.transform.parent.gameObject.SetActive(isButtonOn);
-    }
-
-    void CanvasSwitch(bool isCanvasOn)
-    {
-        dialogUI.SetActive(isCanvasOn);
-    }
-    void UISwitch(bool isUIOn)
-    {
-        dialogUI.SetActive(isUIOn);
-    }
-
-    void UpdateImage()
+    void UpdateImage(string name)
     {
         string myEmote = "";
 
-        emotions.TryGetValue(nameBox.text, out myEmote);
+        emotions.TryGetValue(name, out myEmote);
 
         if (myEmote == null) { myEmote = "Neutral"; }
 
-        myEmote = nameBox.text + myEmote;
+        myEmote = name + myEmote;
 
         if (dialogueGUI)
             dialogueGUI.SetProfilePic(null);
@@ -714,7 +775,8 @@ public class DialogueManager : MonoBehaviour
             {
                 if (dialogueGUI)
                     dialogueGUI.SetProfilePic(sprite);
-                ProfilePic.sprite = sprite;
+                else
+                    dialogueGUI.SetProfilePic(null);
             }
         }
     }
@@ -730,7 +792,7 @@ public class DialogueManager : MonoBehaviour
     {
         return lastChoice;
     }
-    
+
     public void SetCutscene(Dialogue.Dialog newDialog)
     {
         //Debug.Log("DialogManager: " + newDialog.ToString());
@@ -740,18 +802,18 @@ public class DialogueManager : MonoBehaviour
 
     public void SkipCutscene()
     {
-        currentState = CutsceneState.Skipping;
+        auto = !auto;
+        skipTimer = skipCooldown;
     }
 
     public void DevSkipCutscene()
     {
-        currentState = CutsceneState.Skipping;
-        InstaSkip = true;
+        instaSkip = !instaSkip;
     }
 
-    public bool getInCutscene()
+    public CutsceneState getCutsceneState()
     {
-        return inCutscene;
+        return currentState;
     }
     #endregion
 }

@@ -10,10 +10,10 @@ public class PlayerMovement : MonoBehaviour
     #region VariableDeclarations
     [Header("Animators/Controllers")]
     [SerializeField] Animator animator;
-    [SerializeField] RuntimeAnimatorController forwardController;
-    [SerializeField] AnimatorOverrideController backController;
-    [SerializeField] AnimatorOverrideController leftController;
-    [SerializeField] AnimatorOverrideController rightController;
+    //[SerializeField] RuntimeAnimatorController forwardController;
+    //[SerializeField] AnimatorOverrideController backController;
+    //[SerializeField] AnimatorOverrideController leftController;
+    //[SerializeField] AnimatorOverrideController rightController;
     [SerializeField] SpriteRenderer spriteRenderer;
 
     [Header ("Object References")]
@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] StatsController stats;
     [SerializeField] AfterImage afterImage;
+    ParticleSystemRenderer afterimage_psr;
     [SerializeField] PlayerAudio playerAudio;
 
     [Header("Movement Modifiers")]
@@ -33,8 +34,37 @@ public class PlayerMovement : MonoBehaviour
     //public float collisionOffset = 0.05f;
     //public ContactFilter2D movementFilter;
     //List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
-    [HideInInspector]public bool canMove;
-    [HideInInspector]public bool canDash;
+    //[HideInInspector]
+    public bool canMove;
+    [HideInInspector]
+    public bool canDash;
+    bool inAbility;
+    public bool InAbility
+    {
+        get
+        {
+            return inAbility;
+        }
+        set
+        {
+            if (value) rb.velocity = Vector2.zero;
+            inAbility = value;
+        }
+    }
+    bool inSpecial;
+    public bool InSpecial
+    {
+        get
+        {
+            return inSpecial;
+        }
+        set
+        {
+            if (value) rb.velocity = Vector2.zero;
+            inSpecial = value;
+        }
+    }
+
     bool inCutscene;
 
     [Header("Dashing Modifiers")]
@@ -73,6 +103,9 @@ public class PlayerMovement : MonoBehaviour
         attackController = GetComponent<ActionController>();
         playerHealth = GetComponent<PlayerHealth>();
 
+        if(afterImage != null)
+         afterimage_psr = afterImage.GetComponent<ParticleSystemRenderer>();
+
         if (animator == null)
             animator = GetComponent<Animator>();
 
@@ -80,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("Dashing", false);
 
         canMove = canDash = true;
+        inSpecial = inAbility = false;
 
         gameObject.layer = normalLayer;
     }
@@ -97,25 +131,25 @@ public class PlayerMovement : MonoBehaviour
                 if (angle > -45 && angle <= 45 && !direction.Equals("North"))
                 {
                     //back
-                    direction = "North";
+                    //direction = "North";
                     //animator.runtimeAnimatorController = backController;
                 }
                 else if (angle <= -45 && angle > -135 && !direction.Equals("West"))
                 {
                     //left
-                    direction = "West";
+                    //direction = "West";
                     //animator.runtimeAnimatorController = leftController;
                 }
                 else if (angle <= -135 || angle > 135 && !direction.Equals("South"))
                 {
                     //forward
-                    direction = "South";
+                    //direction = "South";
                     //animator.runtimeAnimatorController = forwardController;
                 }
                 else if (angle <= 135 && angle > 45 && !direction.Equals("East"))
                 {
                     //right
-                    direction = "East";
+                    //direction = "East";
                     //animator.runtimeAnimatorController = rightController;
                 }
 
@@ -124,22 +158,34 @@ public class PlayerMovement : MonoBehaviour
                     direction = "East";
                     spriteRenderer.flipX = true;
 
-                    Vector3 scale = afterImage.transform.localScale;
+                    /*Vector3 scale = afterImage.transform.localScale;
                     scale.x *= 1;
-                    afterImage.transform.localScale = scale;
+                    afterImage.transform.localScale = scale;*/
+
+                    if (afterImage != null)
+                    {
+                        ParticleSystemRenderer psr = afterImage.GetComponent<ParticleSystemRenderer>();
+                        if (psr != null) psr.flip = new Vector3(1, 0, 0);
+                    }
                 }
                 else
                 {
                     direction = "West";
                     spriteRenderer.flipX = false;
 
-                    Vector3 scale = afterImage.transform.localScale;
+                    /*Vector3 scale = afterImage.transform.localScale;
                     scale.x = -1;
-                    afterImage.transform.localScale = scale;
+                    afterImage.transform.localScale = scale;*/
+
+                    if (afterImage != null)
+                    {
+                        ParticleSystemRenderer psr = afterImage.GetComponent<ParticleSystemRenderer>();
+                        if (psr != null) psr.flip = new Vector3(0, 0, 0);
+                    }
                 }
             }
 
-            if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
+            if (canMove && (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f))
             {
                 animator.SetBool("isWalking", true);
             }
@@ -158,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
     #region MovementLogic
     private void FixedUpdate()
     {
-        if (canMove)
+        if (canMove && !inAbility && !inSpecial)
         {
             if (isDashing)
             {
@@ -218,30 +264,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void AnimateMovement()
+    public void AnimateMovement()
     {
-        if (movementVector.y >= 0.1f)
-        {
-            direction = "North";
-            //animator.runtimeAnimatorController = backController;
-        }
-        else if (movementVector.y <= -0.1f)
-        {
-            direction = "South";
-            //animator.runtimeAnimatorController = forwardController;
-        }
-        
         if (movementVector.x <= -0.1f)
         {
             direction = "West";
             spriteRenderer.flipX = false;
-            //animator.runtimeAnimatorController = leftController;
+
+            if (afterimage_psr != null) afterimage_psr.flip = new Vector3(0, 0, 0);
         }
         else if (movementVector.x >= 0.1f)
         {
             direction = "East";
             spriteRenderer.flipX = true;
-            //animator.runtimeAnimatorController = rightController;
+
+            if (afterimage_psr != null) afterimage_psr.flip = new Vector3(1, 0, 0);
         }
 
         if (movementVector.x <= -0.1f || movementVector.x >= 0.1f || movementVector.y <= -0.1f || movementVector.y >= 0.1f)
@@ -261,30 +298,22 @@ public class PlayerMovement : MonoBehaviour
             if (movementVector.y >= 0.1f)
             {
                 if (dashPartcileSpawn && dashParticles[0]) Destroy(Instantiate(dashParticles[0], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
-
-                direction = "North";
-                //animator.runtimeAnimatorController = backController;
             }
             else if (movementVector.y <= -0.1f)
             {
                 if (dashPartcileSpawn && dashParticles[1]) Destroy(Instantiate(dashParticles[1], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
-
-                direction = "South";
-                //animator.runtimeAnimatorController = forwardController;
             }
             else if (movementVector.x <= -0.1f)
             {
                 if (dashPartcileSpawn && dashParticles[2]) Destroy(Instantiate(dashParticles[2], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
 
                 direction = "West";
-                //animator.runtimeAnimatorController = leftController;
             }
             else if (movementVector.x >= 0.1f)
             {
                 if (dashPartcileSpawn && dashParticles[3]) Destroy(Instantiate(dashParticles[3], dashPartcileSpawn.position, dashPartcileSpawn.rotation), 1f);
 
                 direction = "East";
-                //animator.runtimeAnimatorController = rightController;
             } else
             {
                 return; 
@@ -391,6 +420,8 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("Dashing", false);
 
         TogglePlayerControls(false);
+        attackController.StartCutscene();
+
         inCutscene = true;
     }
 
@@ -400,5 +431,10 @@ public class PlayerMovement : MonoBehaviour
 
         TogglePlayerControls(true);
         inCutscene = false;
+    }
+
+    public void SetCanMove(bool canMove)
+    {
+        if (!inCutscene) this.canMove = canMove;
     }
 }

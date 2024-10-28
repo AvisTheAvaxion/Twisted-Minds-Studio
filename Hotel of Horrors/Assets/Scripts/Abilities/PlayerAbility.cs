@@ -14,4 +14,7 @@ public abstract class PlayerAbility : MonoBehaviour
     protected Ability ability;
 
     public abstract void Use(ActionController controller, Ability ability);
+
+    public abstract void CancelAbility();
+    //protected abstract IEnumerator Attack();
 }

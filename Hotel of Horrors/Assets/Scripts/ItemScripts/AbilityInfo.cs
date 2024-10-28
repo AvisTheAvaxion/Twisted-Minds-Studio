@@ -21,6 +21,8 @@ public class AbilityInfo : UseableInfo
     [SerializeField] GameObject playerAbility;
     [SerializeField] UpgradeInfo[] upgradeInfos;
     [SerializeField] AnimatorOverrideController animatorOverride;
+    [SerializeField] bool canMove = true;
+    [SerializeField] bool canAttackToo = false;
 
     [Header("Ability Settings (Not all Settings apply to every Ability)")]
     [SerializeField] float cooldown;
@@ -44,6 +46,15 @@ public class AbilityInfo : UseableInfo
     public GameObject GetPlayerAbility()
     {
         return playerAbility;
+    }
+
+    public bool CanMove()
+    {
+        return canMove;
+    }
+    public bool CanAttackToo()
+    {
+        return canAttackToo;
     }
 
     public float GetCooldown()

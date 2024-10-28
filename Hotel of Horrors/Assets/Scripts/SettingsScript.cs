@@ -7,7 +7,7 @@ public class SettingsScript : MonoBehaviour
 {
     [SerializeField] Toggle fullScreenToggle;
     [SerializeField] CanvasScaler scaler;
-    [SerializeField] GameObject mainMenu;
+    //[SerializeField] GameObject mainMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -24,14 +24,14 @@ public class SettingsScript : MonoBehaviour
             Screen.SetResolution(1920, 1080, true);
             Screen.fullScreen = true;
             GlobalSettings.isFullScreen = true;
-            scaler.scaleFactor = 1f;
+            //scaler.scaleFactor = 1f;
         }
         else
         {
             Screen.SetResolution(768, 432, false);
             Screen.fullScreen = false;
             GlobalSettings.isFullScreen = false;
-            scaler.scaleFactor = 0.40f;
+            //scaler.scaleFactor = 0.40f;
         }
     }
 }

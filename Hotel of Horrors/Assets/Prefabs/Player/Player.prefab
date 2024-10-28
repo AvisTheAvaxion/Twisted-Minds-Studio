@@ -444,6 +444,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a98a851f20b9e2e45a3070820834a653, type: 2}
   - {fileID: 11400000, guid: 443298fbf7198194eaae9855fc69c2fd, type: 2}
   - {fileID: 11400000, guid: 9a98759d1d2861745afe927a3961c6e8, type: 2}
+  - {fileID: 11400000, guid: 31432a5f94ff44a4ab7ac394af1f14bd, type: 2}
+  - {fileID: 11400000, guid: 0f596a3f06822674cbf49b5c083bed93, type: 2}
   itemInventorySize: 12
   weaponInventorySize: 12
   playerHealth: {fileID: 0}
@@ -461,6 +463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcInRange: 0
+  lastRandomInt: -1
 --- !u!114 &9195956232266042739
 MonoBehaviour:
   m_ObjectHideFlags: 0

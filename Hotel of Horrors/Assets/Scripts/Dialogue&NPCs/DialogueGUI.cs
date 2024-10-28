@@ -8,6 +8,7 @@ public class DialogueGUI : MonoBehaviour
 {
     [SerializeField] Transform choiceTransform;
     [SerializeField] GameObject profilePicObj;
+    [SerializeField] GameObject GUI;
     [SerializeField] Image profilePic;
     [SerializeField] TMP_Text buttonOneText;
     [SerializeField] TMP_Text buttonTwoText;
@@ -45,6 +46,17 @@ public class DialogueGUI : MonoBehaviour
         Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPos);
 
         choiceTransform.position = screenPos;
+    }
+
+    public void ToggleButtons(bool isButtonsOn)
+    {
+        buttonOneText.gameObject.SetActive(isButtonsOn);
+        buttonTwoText.gameObject.SetActive(isButtonsOn);
+    }
+
+    public void ToggleGUI(bool isGUIOn)
+    {
+        GUI.SetActive(isGUIOn);
     }
 
     public void SetProfilePic(Sprite picture)

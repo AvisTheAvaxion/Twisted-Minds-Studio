@@ -76,7 +76,7 @@ public class WeaponUpgradeGUI : MonoBehaviour
 
         if(upgradedWeapon != null)
         {
-            costText.text = "EE Cost: " + upgradeEECost;
+            costText.text = upgradeEECost.ToString();
         }
         else
         {

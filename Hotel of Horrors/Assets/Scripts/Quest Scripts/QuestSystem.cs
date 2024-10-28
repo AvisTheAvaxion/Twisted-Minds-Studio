@@ -14,8 +14,8 @@ public class QuestSystem : MonoBehaviour
 
     QuestType currentObjective;
     Objectives objectives;
-    bool objectiveSet = false;
-    bool floorCleared = false;
+    [SerializeField] bool objectiveSet = false;
+    [SerializeField] bool floorCleared = false;
 
     DialogueManager dialogueManager;
     PlayerInventory inventory;
@@ -33,35 +33,12 @@ public class QuestSystem : MonoBehaviour
         floorCleared = false;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        /*if (PlayerPrefs.HasKey("idkWhatWeAreSavingThisAs"))
-            //This might be it's own function
-            //depending on how Ben is doing data persistancy with multiple save files
-        {
-            try
-            {
-                floor = PlayerPrefs.GetInt("QuestFloor");
-                objectiveNum = PlayerPrefs.GetInt("Objective");
-            }
-            catch (Exception e)
-            {
-                Debug.Log("[Quest System] No save found!");
-                floor = 0;
-                objectiveNum = 0;
-            }
-            LoadObjective();
-        }*/
-    }
-
     private void Update()
     {
-        if (dialogueManager.getInCutscene() == false && objectiveSet == false && floorCleared == false)
+        if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None && objectiveSet == false && floorCleared == false)
         {
             LoadObjective();
         }
-
     }
 
     //This method should be called whenever a relevant game event occurs and see if quest conditions have been fulfilled
@@ -70,6 +47,7 @@ public class QuestSystem : MonoBehaviour
         if(currentObjective == null)
         {
             Debug.LogWarning("Quest Event ERROR. CurrentObjective is currently NULL");
+            return;
         }
 
         switch (EventType)
@@ -86,21 +64,7 @@ public class QuestSystem : MonoBehaviour
                 }
                 break;
             case QuestEventType.EnemyDeath:
-                if(currentObjective.GetType() == typeof(Kill))
-                {
-                    Kill kill = (Kill)currentObjective;
-                    kill.IncrementAmountKilled();
-
-                    if(kill.GetAmountKilled() >= kill.GetTotal())
-                    {
-                        NextQuest();
-                    }
-                    else
-                    {
-                        currentObjective = kill;
-                    }
-                }
-                else if(currentObjective.GetType() == typeof(KillSpecific))
+                if (currentObjective.GetType() == typeof(KillSpecific))
                 {
                     KillSpecific killSpecific = (KillSpecific)currentObjective;
                     killSpecific.IncrementAmountKilled(objectName);
@@ -114,6 +78,21 @@ public class QuestSystem : MonoBehaviour
                         currentObjective = killSpecific;
                     }
                 }
+                else if (currentObjective.GetType() == typeof(Kill))
+                {
+                    Kill kill = (Kill)currentObjective;
+                    kill.IncrementAmountKilled();
+
+                    if(kill.GetAmountKilled() >= kill.GetTotal())
+                    {
+                        NextQuest();
+                    }
+                    else
+                    {
+                        currentObjective = kill;
+                    }
+                }
+                
                 break;
             case QuestEventType.NpcInteraction:
                 if (currentObjective.GetType() == typeof(Talk))
@@ -206,6 +185,7 @@ public class QuestSystem : MonoBehaviour
     //Should be called whenever the user wants to set the currentObjective after changing the floor and ObjectiveNum accordingly
     void LoadObjective()
     {
+        Debug.Log(objectiveNum);
         string quest = objectives.getObjective(floor, objectiveNum);
         currentObjective = ParseQuestString(quest);
         objectiveSet = true;
@@ -241,6 +221,8 @@ public class QuestSystem : MonoBehaviour
                 return questType;
             case "Talk":
                 GameObject npc = GameObject.Find(parts[1]);
+                if(parts.Length > 2)
+                    currentFloor.AddToGuaranteeRooms(parts[2]);
                 questType = new Talk(npc);
                 return questType;
             case "TripTrigger":
@@ -257,6 +239,7 @@ public class QuestSystem : MonoBehaviour
                 return questType;
             case "Traverse":
                 questType = new Traverse(parts[1]);
+                currentFloor.AddToGuaranteeRooms(parts[1]);
                 return questType;
             #endregion
             #region Auxilary Functions
@@ -270,6 +253,7 @@ public class QuestSystem : MonoBehaviour
                 break;
             case "ClearFloor":
                 floorCleared = true;
+                SetRequiredGameState(floor, objectiveNum);
                 break;
              #endregion
         }
@@ -282,6 +266,7 @@ public class QuestSystem : MonoBehaviour
         {
             objectiveSet = true;
         }
+
         return questType;
     }
 
@@ -291,7 +276,7 @@ public class QuestSystem : MonoBehaviour
         {
             switch(objective)
             {
-                case 0:
+                case 1:
                     SetQuestTitle("Explore");
                     break;
             }
@@ -328,15 +313,18 @@ public class QuestSystem : MonoBehaviour
                     break;
                 case 7:
                     SetQuestTitle("The Big Day");
-                    SetQuestDesc("Get the patient's jersy");
+                    SetQuestDesc("Get the patient's jersey");
                     TeleportGameobject("FrankJersey(Quest)", new Vector2(63.3892f, -28.0588f));
                     break;
                 case 8:
+                    SetQuestTitle("Confrontation");
+                    SetQuestDesc("");
                     TeleportGameobject("FrankJersey(Quest)", new Vector2(55.19f, -27.79f));
-                    TeleportGameobject("FrankJersey", new Vector2(55.19f, -27.79f));
                     currentFloor.UnlockToBossDoor();
                     break;
                 case 9:
+                    SetQuestTitle("The Second Floor");
+                    SetQuestDesc("Go to the elevator");
                     break;
             }
         }
@@ -362,6 +350,12 @@ public class QuestSystem : MonoBehaviour
         objectiveNum++;
         objectiveSet = false;
         LoadObjective();
+    }
+
+    public void NextFloor()
+    {
+        objectiveNum = 0;
+        floor++;
     }
 
     //Call to set the quest
@@ -402,6 +396,7 @@ public class QuestSystem : MonoBehaviour
             if (floor == currentSave.floorNum)
             {
                 objectiveNum = currentSave.objectiveNum;
+                currentFloor.ClearGuaranteeRooms();
                 LoadObjective();
             }
         }

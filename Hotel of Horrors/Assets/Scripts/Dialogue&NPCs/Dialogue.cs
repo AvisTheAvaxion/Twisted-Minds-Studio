@@ -11,18 +11,14 @@ public class Dialogue
             #region Floor 0
             case "WakeUpTutorial":
                 return WakeUpTutorial;
-            case "SameRoomAgain":
-                return SameRoomAgain;
+            case "VarrenEncounter":
+                return VarrenEncounter;
             case "InventoryTutorial":
                 return InventoryTutorial;
             case "MindRoom":
                 return MindRoom;
             case "CombatTutorial":
                 return CombatTutorial;
-            case "FirstMonster":
-                return FirstMonster;
-            case "VarrenEncounter":
-                return VarrenEncounter;
             #endregion
             #region Floor 1
             case "DrSteinBossDoor":
@@ -31,6 +27,8 @@ public class Dialogue
                 return DrSteinBossDoor1;
             case "DrSteinBossDoor2":
                 return DrSteinBossDoor2;
+            case "AStrangeMan":
+                return AStrangeMan;
             case "DrHarrisQuestIntro":
                 return DrHarrisQuestIntro;
             case "DrHarrisQuest1":
@@ -62,17 +60,16 @@ public class Dialogue
         Empty,
         #region Floor 0
         WakeUpTutorial,
-        SameRoomAgain,
+        VarrenEncounter,
         InventoryTutorial,
         MindRoom,
         CombatTutorial,
-        FirstMonster,
-        VarrenEncounter,
         #endregion
         #region Floor 1
         DrSteinBossDoor,
         DrSteinBossDoor1,
         DrSteinBossDoor2,
+        AStrangeMan,
         DrHarrisQuestIntro,
         DrHarrisQuest1,
         DrHarrisQuest2,
@@ -175,77 +172,15 @@ public class Dialogue
         "Blaze: I wonder if there is anything useful around here?"
     };
 
-    string[] SameRoomAgain = new string[]
-    {
-        //Blaze ends up in same room after leaving
-        "Blaze: Huh? I could've sworn I just left this room."
-    };
-
-    string[] InventoryTutorial = new string[]
-    {
-        "Blaze: Nice, a different room.",
-        " : Press the <b>'TAB'</b> key to open your inventory.",
-        " : On the left side of the inventory are tabs that can be opened by <b>Left Clicking</b>",
-        " : These three tabs hold, from top to bottom <b><color=#936A00>Weapons</color>, <color=#5B100A>Items</color>, and <color=#507830>Special Abilities</color></b>",
-        " : As you explore you will find many things lying around, when you want to <b>equip</b> something just click the item and then the UI button labeled <b>'Equip'</b>",
-        " : I don't see anyone here either. Maybe, I'll find someone in the next room.",
-        " : This dagger should be useful for defending myself, I should keep it out, just in case",
-        " : Press tab to open your inventory.",
-        " : Use the headers on the left side to equip the dagger.",
-        " : You can also equip items and view abilities in the inventory"
-    };
-
-    string[] FirstMonster = new string[]
-    {
-        //Blaze sees a monster in a room
-        "Blaze: Nope."
-        //Blazee leaves
-    };
-
-    string[] MindRoom = new string[]
-    {
-        "Blaze: This room.",
-        "Blaze: It feels... Strange.",
-        " : You feel a strange pull towards the chair.",
-        " : Maybe something will happen if you interact with it."
-    };
-
-    string[] CombatTutorial = new string[]
-    {
-        //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
-        "$Move(Player,20.265,2.898)",
-        "Blaze: A monster!",
-        "Blaze: This is a good time to try testing my dagger",
-        //Blaze charges at the cleaning lady, who dodges the attack
-        "$Move(Player,20.265,2.282)",
-        "$Tele(SlimeLady,20.26,3.09)",
-        "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
-        "Blaze: You can talk?",
-        "Monster: Why wouldn't I be able to? My name is Samantha, and yours?|Blaze|What's it matter to you|$Prompt",
-        "Samantha: Well it's certainly nice to meet you, but please do try to refrain from attacking me for no reason$OptionA",
-        "Samantha: One finds it helps to make friends$OptionB",
-        "Samantha: Now, before you get going, perhaps I should show you how to properly fight.",
-        "Samantha: To start, just try attacking with the dagger",
-        " : Press left-click repeatadly to complete an attack combo",
-        "Samantha: Good!",
-        "Samantha: Now, let's try using your dash to quickly move about",
-        " : Press shift to dash",
-        "Samantha: Excellent, dashing can also be used to avoid attacks and quickly get behind enemies.",
-        "Samantha: Now, let's test out that ability of yours.",
-        " : Press E to use your ability.",
-        "Samantha: Amazing! If you would like to change abilities or upgrade weapons, you can do so in the mind room.",
-        "Samantha: Well, i've got duties to attend to, take care! And don't let the Vampire scare you."
-    };
-
-    
-
     string[] VarrenEncounter = new string[]
     {
         "$PlaySong|StienTheme",
         "$Move(Varren,-15.75,-14.29)",
-        "Varren: Oh? And who might you be?|No one|AHHHHH$Prompt",
+        "Varren: Oh? And who might you be?|Hide my name|HOLY SH- $Prompt",
+        "Blaze: No one.$OptionA",
         "Blaze: Who are you? Where did you come from? $OptionA",
         "Varren: Me? I'm a... resident of this lovely establishment. $OptionA",
+        "Blaze: AAAHHHHHHHHH.$OptionB",
         "Blaze: A GHOST!!! $OptionB",
         "Varren: Calm down kid, I'm not a ghost. $OptionB",
         "Varren: I'm just another person trapped here like you. $OptionB",
@@ -256,8 +191,10 @@ public class Dialogue
         "Blaze: What do you mean? Isn't this a barn?",
         "$Emote|Protag|Surprised",
         //Line above is a test line
-        "Varren: It's a hotel, and it's where you'll be spending the rest of your days, trapped here for eternity because of all of the terrible things you've done.|Are you pulling my leg?|What terrible things?$Prompt",
+        "Varren: It's a hotel, and it's where you'll be spending the rest of your days, trapped here for eternity because of all of the terrible things you've done.|He must be joking|What things $Prompt",
+        "Blaze: Are you pulling my leg?$OptionA",
         "Blaze: I think I'd remember dying.$OptionA",
+        "Blaze: What terrible things?$OptionB",
         "Varren: Murder, theft, being an all around terrible person.$OptionB",
         "Varren: Whatever horrible deeds you've commited, you're now stuck here as punishment.$OptionB",
         "Blaze: But why would I be sent to a hotel?$OptionB",
@@ -286,7 +223,9 @@ public class Dialogue
         "$Resume",
         "Varren: Since we're stuck here why don't you go ahead and tell me what it is you've done to end up here?",
         "Blaze: I really don't remember. There has to be some sort of mix-up here. I'm going to find whoever put us here and prove that there is a way out.",
-        "Varren: There's no convincing you is there kid?|Well just giving up and just sitting here isn't going to accomplish anything.|There's no way I can stay in this stinky place$Prompt",
+        "Varren: There's no convincing you is there kid?|Giving up does nothing|I refuse to stay here $Prompt",
+        "Blaze: Well just giving up and just sitting here isn't going to accomplish anything.$OptionA",
+        "Blaze: There's no way I can stay in this stinky place.$OptionB",
         "Varren: Your stubbornness is quite amusing, take this",
         "$Pause",
         "$GiveWeapon(Dagger)",
@@ -296,9 +235,63 @@ public class Dialogue
          //"Varren: (disappears into smoke)",
         "Varren: Cya later kiddo",
         "$Move(Varren,-11.57,-14.3)",
+        " : Press the <b>'TAB'</b> key to open your inventory.",
+        " : On the left side of the inventory are tabs that can be opened by <b>Left Clicking</b>",
+        " : These three tabs hold, from top to bottom <b><color=#936A00>Weapons</color>, <color=#5B100A>Items</color>, and <color=#507830>Special Abilities</color></b>",
+        " : As you explore you will find many things lying around, when you want to <b>equip</b> something just click the item and then the UI button labeled <b>'Equip'</b>",
+        " : This dagger should be useful for defending myself, I should keep it out, just in case",
         "Blaze: Well, I guess I should get moving.",
         "$Kill(Varren)"
     };
+
+    string[] InventoryTutorial = new string[]
+    {
+        "Blaze: Hmmm, this room is different.",
+        "Blaze: I don't see anyone here either. Maybe, I'll find someone in the next room.",
+        "Blaze: This dagger should be useful for defending myself, I should keep it out, just in case",
+    };
+
+    string[] MindRoom = new string[]
+    {
+        "Blaze: This room.",
+        "Blaze: It feels... Strange.",
+        " : You feel a strange pull towards the chair.",
+        " : Maybe something will happen if you interact with it with the <b>'F'</b> key."
+    };
+
+    string[] CombatTutorial = new string[]
+    {
+        //See's Slime Lady tries to target, Slime Lady realizes he has no idea what he's doing and teaches the player basic combat controls
+        "$Move(Player,20.265,2.898)",
+        "Blaze: A monster!",
+        "Blaze: This is a good time to try testing my dagger",
+        //Blaze charges at the cleaning lady, who dodges the attack
+        "$Move(Player,20.265,2.282)",
+        "$Tele(SlimeLady,20.26,3.09)",
+        "Monster: Oh dear, I don't think you're going to hit anything if you charge at them like that",
+        "Blaze: You can talk?",
+        "Monster: Why wouldn't I be able to? My name is Samantha, and yours?|Say my name|Hide my name|$Prompt",
+        "Blaze: Blaze.$OptionA",
+        "Blaze: What's it matter to you.$OptionB",
+        "Samantha: Well it's certainly nice to meet you, but please do try to refrain from attacking me for no reason.$OptionA",
+        "Samantha: One finds it helps to make friends.$OptionB",
+        "Samantha: Now, before you get going, perhaps I should tell you how to properly fight.",
+        "Samantha: To start, pressing <b>Left Click</b> will allow you to attack.",
+        "Samantha : Pressing left-click repeatadly to complete an attack combo.",
+        "Samantha : Depending on the weapon equiped the combo will change!",
+        "Samantha: Now, pressing <b>Shift or Space</b> keys allow you to dash.",
+        "Samantha: <b>Right Clicking</b> can be used to dash as well.",
+        "Samantha: Dashing can be used to avoid attacks and quickly get behind enemies.",
+        "Samantha: Finally, pressing the <b>'E'</b> key will allow you to use your equiped ability",
+        "Samantha: If you would like to change abilities or upgrade weapons, you can do so in the mind room.",
+        "Samantha: Since you don't have one now, I'll just give you one to try out",
+        "$Pause",
+        "$GiveAbility(EnergyArc)",
+        " : You got Energy Arc!",
+        "$Resume",
+        "Samantha: Well, i've got duties to attend to, take care! Don't let the Vampire scare you."
+    };
+
     #endregion
     #region Floor 1 Dialog
     #region Side Quest
@@ -327,6 +320,12 @@ public class Dialogue
         "Dr. Stein: Sniffle..."
     };
 
+    string[] AStrangeMan = new string[]
+    {
+        "Blaze: Some strange guy? And is this an office?",
+        " : Press <b>F</b> to interact with him."
+    };
+
     string[] DrHarrisQuestIntro = new string[]
     {
         //The player enters the outpatient room, Doctor Dr. Harris is standing inside with a clipboard
@@ -351,10 +350,10 @@ public class Dialogue
     //Once the player has enough emotional energy
     string[] DrHarrisQuest1 = new string[]
     {
-        "$TimeScale(0)",
+        "$ChronoStop(True)",
         "Blaze: I've defeated all of these monsters but found nothing but goop.",
         "Blaze: Hopefully this is what he's talking about.",
-        "$TimeScale(1)",
+        "$ChronoStop(False)",
     };
 
     string[] DrHarrisQuest2 = new string[]
@@ -369,8 +368,10 @@ public class Dialogue
         "Blaze: The goop! It turned into what we needed!",
         "Dr. Harris: Goop? I appreciate your hard work, but please do be sure you are getting enough rest.",
         "Dr. Harris: If you would like I can talk to the doctor about prescribing you some sleep medications.",
-        "Dr. Harris: We can't have you making mistakes on the job now, can we?|No Thanks|That would be nice|$Prompt",
+        "Dr. Harris: We can't have you making mistakes on the job now, can we?|No way|Yes please|$Prompt",
+        "Blaze: No Thanks.$OptionA",
         "Dr. Harris: Suit yourself.$OptionA",
+        "Dr. Harris: That would be nice.$OptionB",
         "Dr. Harris: I will be sure to get you some.$OptionB",
         "Dr. Harris: The next thing on the list is rimblenut, I'll do that one, and O- Blood.",
         "Dr. Harris: For this one, you'll need something to collect the blood in, so let's see here.",
@@ -391,10 +392,10 @@ public class Dialogue
 
     string[] DrHarrisQuest3 = new string[]
     {
-        "$TimeScale(0)",
+        "$ChronoStop(True)",
         "Blaze: The blood bag is full now",
         "Blaze: I should head back",
-        "$TimeScale(1)",
+        "$ChronoStop(False)",
     };
 
     string[] DrHarrisQuest4 = new string[]
@@ -480,7 +481,7 @@ public class Dialogue
         "$FadeIn(255,255,255)",
         "$Kill(FNSMonster_IntroCutscene)",
         "$Tele(FrankNSteinMonster,18.31,-47.401)",
-        "$Tele(FrankNStein,17.535,-45.04)",
+        "$Tele(FrankNStein,16.466,-44.5)",
         "$Kill(FrankNStein_Intro)",
         "$FadeOut(255,255,255)",
         "$ToggleUI(True)",
@@ -495,8 +496,10 @@ public class Dialogue
         "$Animate(FrankNSteinMonster,StartIntermediate)",
         "Blaze: You have to accept your son is dead.",
         "Dr. Frank N. Stein: No! He's right in front of me!",
-        "Dr. Frank N. Stein: Can't you see.|He wouldn't have wanted this|That's not him|$Prompt",
+        "Dr. Frank N. Stein: Can't you see.|This isnt right|Its a monster|$Prompt",
+        "Blaze: He wouldn't have wanted this.$OptionA",
         "Dr. Frank N. Stein: No... You're wrong... $OptionA",
+        "Blaze: That's not him.$OptionB",
         "Dr. Frank N. Stein: Nonsense! $OptionB",
         "$Animate(FrankNSteinMonster,Intermediate,False)",
         //"Need to have him enrage if option b is chosen
@@ -508,8 +511,10 @@ public class Dialogue
         "Blaze: Can't you see he's in pain? Please, stop this.",
         "Dr. Frank N. Stein: He... He's fine. He's healthy!",
         "Dr. Frank N. Stein: He's never been this fit in his life!",
-        "Dr. Frank N. Stein: He looks weak to me|You have to stop this|He doesn't resent you for missing his game.|$Prompt",
+        "Dr. Frank N. Stein: He looks weak to me|Stop this|He doesnt hate you|$Prompt",
+        "Blaze: You have to stop this.$OptionA",
         "Dr. Frank N. Stein: Than let me show you his true power! $OptionA",
+        "Blaze: He doesn't resent you for missing his game.$OptionB",
         "Dr. Frank N. Stein: No! I'm finally with my son again! $OptionB",
         "Dr. Frank N. Stein: I- I'm sorry. $OptionC",
         //"Enrage if option A or B is chosen
@@ -575,8 +580,10 @@ public class Dialogue
         " : All that remains is a helmet.",
         "$Tele(Varren,18.39,-52.89)",
         "$Move(Varren,20.28,-50.79)",
-        "Varren: Huh.|AHHHH THE GHOST|You Again? $Prompt",
+        "Varren: Huh.|HOLY F-|Ugh $Prompt",
+        "Blaze: AHHHH THE GHOST!$OptionA",
         "Varren: I'm not a ghost. $OptionA",
+        "Blaze: You Again?$OptionB",
         "Varren: Who else would it be? $OptionB",
         "Varren: You managed to defeat Stien, I'm impressed.",
         "Blaze: He just seemed like he was being to hard on himself.",
@@ -593,11 +600,13 @@ public class Dialogue
         "Varren: What?",
         "Blaze: You said it's left behind when someone passes on!",
         "Blaze: So there IS a way out!",
-        "Varren: Technically, but don't expect to return the real world alive.|Oh|I will find a way out $Prompt",
+        "Varren: Technically, but don't expect to return the real world alive.|...|I will... $Prompt",
+        "Blaze: Oh...$OptionA",
         "Varren: Well, good luck with your futile attempt to leave this place! $OptionA",
+        "Blaze: I will find a way out.$OptionB",
         "Varren: Your resolve still isn't broken? $OptionB",
         "Blaze: It's gonna take more than that to discourage me!",
-        "Varren: Well, it only get's harder from here.",
+        "Varren: Well, it only gets harder from here.",
         "Varren: Come find me at an elavator when you're ready to go to floor 2.",
         "Varren: I can't wait to see you fail.",
         "$Move(Varren,18.39,-52.89)",

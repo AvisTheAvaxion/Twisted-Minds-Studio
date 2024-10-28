@@ -13,5 +13,5 @@ public abstract class SpecialAbility : MonoBehaviour
     protected ActionController controller;
 
     public abstract void Use(ActionController controller);
-    public abstract void CancelUse();
+    public abstract void CancelAbility();
 }

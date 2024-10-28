@@ -11,6 +11,8 @@ public class NPCInteraction : MonoBehaviour
     Dialogue.Dialog npcDialog;
     string npcName;
 
+    NPCBehavior activeBehavior;
+
 
     List<Dialogue.Dialog> npcDialogList;
     [SerializeField]int lastRandomInt = -1;
@@ -26,14 +28,14 @@ public class NPCInteraction : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("NPC") && collision.GetComponent<NPCBehavior>() != null)
         {
-            NPCBehavior behavior = collision.GetComponent<NPCBehavior>();
-            if (behavior.CheckForMultipleDialogs())
+            activeBehavior = collision.GetComponent<NPCBehavior>();
+            if (activeBehavior.CheckForMultipleDialogs())
             {
-                npcDialogList = behavior.GetNPCDialogList();
+                npcDialogList = activeBehavior.GetNPCDialogList();
             }
             else
             {
-                npcDialog = behavior.GetNPCDialog();
+                npcDialog = activeBehavior.GetNPCDialog();
             }
             npcName = collision.gameObject.name;
         }
@@ -62,6 +64,8 @@ public class NPCInteraction : MonoBehaviour
         {
             FindObjectOfType<DialogueManager>().SetCutscene(npcDialog);
             questSys.QuestEvent(QuestSystem.QuestEventType.NpcInteraction, npcName);
+
+            activeBehavior.IncrementInteractionCount();
         }
         else if(npcDialogList != null)
         {

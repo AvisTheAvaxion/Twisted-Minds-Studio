@@ -37,7 +37,7 @@ public class InventoryGUI : MonoBehaviour
     ItemSlot[] itemSlots;
     ItemSlot[] weaponSlots;
     List<ItemSlot> abilitySlots;
-
+    DialogueManager dialogueManager;
     public int tab { get; private set; }
 
     public int selectedItemIndex { get; private set; }
@@ -49,6 +49,7 @@ public class InventoryGUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        dialogueManager = FindObjectOfType<DialogueManager>();
         inventory = FindObjectOfType<PlayerInventory>();
 
         abilitySlots = new List<ItemSlot>();
@@ -349,33 +350,36 @@ public class InventoryGUI : MonoBehaviour
 
     void OnToggleInventory()
     {
-        if (inventoryUI.activeSelf == true)
+        if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None)
         {
-            for (int i = 0; i < itemSlots.Length; i++)
+            if (inventoryUI.activeSelf == true)
             {
-                itemSlots[i].SelectImage(false);
+                for (int i = 0; i < itemSlots.Length; i++)
+                {
+                    itemSlots[i].SelectImage(false);
+                }
+                for (int i = 0; i < weaponSlots.Length; i++)
+                {
+                    weaponSlots[i].SelectImage(false);
+                }
+
+                inventoryUI.SetActive(false);
+                itemToolTip.gameObject.SetActive(false);
+                Cursor.visible = false;
+
+                GameTime.UnpauseTime();
             }
-            for (int i = 0; i < weaponSlots.Length; i++)
+            else
             {
-                weaponSlots[i].SelectImage(false);
+                inventoryUI.SetActive(true);
+                Cursor.visible = true;
+
+                if (!initialized) Start();
+
+                UpdateGUI();
+
+                GameTime.PauseTime(false);
             }
-
-            inventoryUI.SetActive(false);
-            itemToolTip.gameObject.SetActive(false);
-            Cursor.visible = false;
-
-            GameTime.UnpauseTime();
-        }
-        else
-        {
-            inventoryUI.SetActive(true);
-            Cursor.visible = true;
-
-            if (!initialized) Start();
-
-            UpdateGUI();
-
-            GameTime.PauseTime(false);
         }
     }
 

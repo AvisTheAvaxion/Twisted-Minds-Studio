@@ -56,7 +56,7 @@ public class FootballHelmetAbility : SpecialAbility
         isAttacking = false;
     }
 
-    public override void CancelUse()
+    public override void CancelAbility()
     {
         if (durationCoroutine != null)
         {

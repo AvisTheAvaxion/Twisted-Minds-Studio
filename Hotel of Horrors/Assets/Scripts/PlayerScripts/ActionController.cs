@@ -63,9 +63,7 @@ public class ActionController : MonoBehaviour
     //Current weapon equipped in the inventory
     //Weapon currentWeapon;
     WeaponAbility currentWeaponAbility;
-
     public PlayerAbility currentPlayerAbitlity;
-
     public SpecialAbility currentSpecialAbility;
 
     public int attackNumber { get; private set; }
@@ -353,7 +351,7 @@ public class ActionController : MonoBehaviour
                 meleeStrike.Init(this, inventory.CurrentWeapon, attackNumber, "Enemy", cameraShake, meleeDir);
 
                 playerMovement.MeleeLunge(meleeDirection.up, 0.4f);
-                playerMovement.canMove = false;
+                playerMovement.SetCanMove(false);
             }
         } 
         else
@@ -372,33 +370,17 @@ public class ActionController : MonoBehaviour
     {
         playerAnimator.SetBool("isAttacking", false);
         playerAnimator.runtimeAnimatorController = defaultController;
-        //playerAnimator.SetLayerWeight(1, 0); //Disables the attack layer on the player animator
 
         isAttacking = false;
 
-        playerMovement.canMove = true;
-
-        /*attackNumber++;
-
-        attackNumber = attackNumber % 3;
-
-        if (!attackButtonPressed || playerMovement.IsDashing)
-        {
-            attackNumber = 0;
-        }*/
-
-        //if (hand) hand.rotation = Quaternion.identity;
+        playerMovement.SetCanMove(true);
 
         if (inventory.CurrentWeapon != null)
         {
-            //if (attackNumber == 0)
-            //{
-                //attackButtonPressed = false;
             if(attackNumber == 2)
                 StartCoroutine(AttackCooldown(1 / (inventory.CurrentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed))));
             else
                 StartCoroutine(AttackCooldown(1 / (inventory.CurrentWeapon.GetInfo().GetAttackSpeed() + stats.GetCurrentValue(Stat.StatType.AttackSpeed)) / 2));
-            //}
         }
         else
         {
@@ -453,14 +435,30 @@ public class ActionController : MonoBehaviour
         canDoPlayerAbility = false;
         //playerAudio.PlayAbility(currentPlayerAbitlity.ToString());
 
-        if (inventory.CurrentAbility.GetInfo().GetOverrideController() != null) 
+        if (inventory.CurrentAbility.GetInfo().GetOverrideController() != null)
+        {
             playerAnimator.runtimeAnimatorController = inventory.CurrentAbility.GetInfo().GetOverrideController();
-        playerAnimator.SetBool("isAbilitying", true);
+            playerAnimator.SetBool("isAbilitying", true);
+        }
 
-        yield return new WaitUntil(() => !currentPlayerAbitlity.isAttacking);
+        if (playerGUI != null) playerGUI.UpdateFreeSlotCooldown(1);
+
+        if (!inventory.CurrentAbility.GetInfo().CanAttackToo()) isAttacking = true;
+        if (!inventory.CurrentAbility.GetInfo().CanMove()) playerMovement.InAbility = true;
+
+        while (currentPlayerAbitlity.isAttacking)
+        {
+            //if(!inventory.CurrentAbility.GetInfo().CanMove())
+            //    playerMovement.canMove = inventory.CurrentAbility.GetInfo().CanMove();
+            yield return null;
+        }
+
+        if (!inventory.CurrentAbility.GetInfo().CanAttackToo()) isAttacking = false;
+        if (!inventory.CurrentAbility.GetInfo().CanMove()) playerMovement.InAbility = false;
 
         playerAnimator.SetBool("isAbilitying", false);
         playerAnimator.runtimeAnimatorController = defaultController;
+        playerMovement.AnimateMovement();
 
         if (playerGUI != null) playerGUI.UpdateFreeSlotCooldown(1);
 
@@ -477,7 +475,6 @@ public class ActionController : MonoBehaviour
     IEnumerator WeaponAbilityCooldown(float cooldown)
     {
         float timer = 0;
-        //canDoWeaponAbility = false;
 
         yield return new WaitUntil(() => !currentWeaponAbility.isAttacking);
 
@@ -487,14 +484,20 @@ public class ActionController : MonoBehaviour
             yield return null;
         }
 
-        //canDoWeaponAbility = true;
     }
     IEnumerator SpecialAbilityCooldown(float cooldown)
     {
         float timer = 0;
         canDoSpecialAbility = false;
 
+        if (playerGUI != null) playerGUI.UpdateMementoCooldown(1);
+
+        if (!inventory.CurrentMemento.CanAttackToo()) isAttacking = true;
+        if (!inventory.CurrentMemento.CanMove()) playerMovement.InSpecial = true;
         yield return new WaitUntil(() => !currentSpecialAbility.isAttacking);
+        if (!inventory.CurrentMemento.CanAttackToo()) isAttacking = false;
+        if (!inventory.CurrentMemento.CanMove()) playerMovement.InSpecial = false;
+        playerMovement.AnimateMovement();
 
         if (playerGUI != null) playerGUI.UpdateMementoCooldown(1);
 
@@ -530,6 +533,25 @@ public class ActionController : MonoBehaviour
     public void ShakeCamera(float frequency, float length, bool interruptable = true)
     {
         cameraShake.ShakeCamera(frequency, 0.5f, length, interruptable);
+    }
+
+    public void StartCutscene()
+    {
+        if(!canDoPlayerAbility)
+        {
+            currentPlayerAbitlity.CancelAbility();
+            cameraShake.CancelShake();
+        }
+        if (!canDoSpecialAbility)
+        {
+            currentSpecialAbility.CancelAbility();
+            cameraShake.CancelShake();
+        }
+        if(currentWeaponAbility != null)
+        {
+            currentWeaponAbility.CancelAbility();
+            cameraShake.CancelShake();
+        }
     }
 }
 

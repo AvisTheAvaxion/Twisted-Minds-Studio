@@ -42,21 +42,20 @@ public abstract class BossStateMachine : MonoBehaviour
     [SerializeField] protected CameraShake cameraShake;
     [SerializeField] protected bool flipToRotate;
     [SerializeField] Transform transformToFlip;
-    [Header("Drop Settings")]
+    /*[Header("Drop Settings")]
     [SerializeField] MementoInfo mementoInfo;
     [SerializeField] int emotionalEnergyWorth = 500;
     [SerializeField] GameObject holderPrefab;
     [SerializeField] float dropRadius = 0.2f;
     [SerializeField] float startHeight = 0.2f;
-    [SerializeField] float upwardsVelocity = 0.2f;
+    [SerializeField] float upwardsVelocity = 0.2f;*/
     [Header("Dialogue Settings")]
     [SerializeField] protected DialogueManager DialogueManager;
     [SerializeField] protected Dialogue.Dialog openCutscene;
 
-
-
     [Header("Boss Stages")]
     [SerializeField] protected Stage[] stages;
+    [SerializeField] protected GameObject enrageSprite;
 
     protected int currentStageIndex;
 
@@ -71,6 +70,7 @@ public abstract class BossStateMachine : MonoBehaviour
 
     protected bool dialogueSegmentStarted = false;
     public event EventHandler OnBossDialogue;
+    protected QuestSystem questSystem;
 
     private void Start()
     {
@@ -78,6 +78,7 @@ public abstract class BossStateMachine : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         bossHealth = GetComponent<BossHealth>();
 
+        questSystem = FindObjectOfType<QuestSystem>();
         floor = FindObjectOfType<Floor>();
 
         if (cameraShake == null) cameraShake = FindObjectOfType<CameraShake>();
@@ -88,6 +89,7 @@ public abstract class BossStateMachine : MonoBehaviour
 
         Init();
     }
+
 
     private void Update()
     {
@@ -115,6 +117,16 @@ public abstract class BossStateMachine : MonoBehaviour
 
     protected abstract void Init();
 
+    public virtual void CheckHealth()
+    {
+        if (bossHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThresholdToNextStage && currentStageIndex < stages.Length - 1 && !dialogueSegmentStarted)
+        {
+            print(stages[currentStageIndex].cutscene);
+            OnDialogueStart(stages[currentStageIndex].cutscene);
+            Disenrage();
+        }
+    }
+
     protected abstract void Fight();
     protected abstract void Idle();
     public void OnDialogueStart(Dialogue.Dialog cutscene)
@@ -127,7 +139,7 @@ public abstract class BossStateMachine : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
 
-        if (!DialogueManager.getInCutscene()) 
+        if (DialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None) 
         { 
             currentState = States.DialogueEnd;
             StartCoroutine(DialogueEnd());
@@ -138,19 +150,23 @@ public abstract class BossStateMachine : MonoBehaviour
     public abstract void Stun(float stunLength, bool overrideCurrent);
     protected abstract void Death();
     protected abstract IEnumerator DeathSequence();
-    protected virtual void OnDeath()
+    public virtual void OnDeath()
     {
         if (Floor.maxFloorUnlocked <= Floor.currentFloor)
             Floor.maxFloorUnlocked = Floor.currentFloor + 1;
 
-        isDying = true;
-        StartCoroutine(DeathSequence());
+        if (currentState != States.Death)
+        {
+            isDying = true;
+            questSystem.QuestEvent(QuestSystem.QuestEventType.EnemyDeath, name);
+            StartCoroutine(DeathSequence());
+        }
     }
 
     protected abstract void Enrage();
     protected abstract void Disenrage();
 
-    protected virtual void SpawnMemento()
+    /*protected virtual void SpawnMemento()
     {
         GameObject go = Instantiate(holderPrefab, transform.position, Quaternion.identity);
         MementoData data = go.GetComponent<MementoData>();
@@ -161,7 +177,7 @@ public abstract class BossStateMachine : MonoBehaviour
             rb.Initialize(startHeight, UnityEngine.Random.Range(0f, upwardsVelocity));
             rb.AddForce(GetRandomDir() * dropRadius * 2, ForceMode2D.Impulse);
         }
-    }
+    }*/
 
     /// <summary>
     /// Flips the sprite if necessary

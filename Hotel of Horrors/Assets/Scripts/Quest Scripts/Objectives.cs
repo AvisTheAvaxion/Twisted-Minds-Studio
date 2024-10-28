@@ -45,7 +45,7 @@ public class Objectives
         return "Collect|{total}";
         return "KillSpecific|{total}|{enemyName}";
         return "Kill|{total}";
-        return "Talk|{npc}";
+        return "Talk|{npc}|{roomName}";
         return "FindMultiple|{s}"; //s is a string of objects seperated by "|" (obj1|ob2|ob3)
         return "FindObject|{objectName}";
     */
@@ -66,15 +66,15 @@ public class Objectives
 
     string[] Floor1 = new string[]
     {
-        "Talk|DrHarris(Intro)",
+        "Talk|DrHarris(Intro)|HarrisRoom",
         "Collect|200",
         "SetCutscene|DrHarrisQuest1",
-        "Talk|DrHarris(Q2)",
+        "Talk|DrHarris(Q2)|HarrisRoom",
         "Kill|20",
         "SetCutscene|DrHarrisQuest3",
-        "Talk|DrHarris(Q3)",
-        "Talk|FrankJerset(Quest)",
-        "KillSpecific|FrankNSteinMonster",
+        "Talk|DrHarris(Q3)|HarrisRoom",
+        "Talk|FrankJersey(Quest)|DrFrankOffice",
+        "KillSpecific|1|FrankNSteinMonster",
         "ClearFloor"
     };
 

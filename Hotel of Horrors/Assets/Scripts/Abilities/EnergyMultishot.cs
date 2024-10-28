@@ -9,6 +9,10 @@ public class EnergyMultishot : PlayerAbility
     [SerializeField] BasicShooter shooter;
     [SerializeField] float shootDelay = 0.25f;
 
+    public override void CancelAbility()
+    {
+    }
+
     public override void Use(ActionController controller, Ability ability)
     {
         this.ability = ability;
@@ -20,7 +24,7 @@ public class EnergyMultishot : PlayerAbility
         StartCoroutine(Attack());
     }
 
-    IEnumerator Attack()
+    protected IEnumerator Attack()
     {
         isAttacking = true;
         shooter.Attack(ability, shootDelay, controller.CrosshairPosition);

@@ -125,8 +125,16 @@ public class SerializedClass
         this.questSaves = questSaves;
         if(questSystem.FloorNum < this.questSaves.Length)
         {
-            questSaves[questSystem.FloorNum - 1].floorNum = questSystem.FloorNum;
-            questSaves[questSystem.FloorNum - 1].objectiveNum = questSystem.ObjectiveNum;
+            if (questSystem.FloorNum == 0)
+            {
+                questSaves[questSystem.FloorNum].floorNum = questSystem.FloorNum;
+                questSaves[questSystem.FloorNum].objectiveNum = questSystem.ObjectiveNum;
+            }
+            else
+            {
+                questSaves[questSystem.FloorNum - 1].floorNum = questSystem.FloorNum;
+                questSaves[questSystem.FloorNum - 1].objectiveNum = questSystem.ObjectiveNum;
+            }
         }
 
     }

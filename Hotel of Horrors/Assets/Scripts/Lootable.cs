@@ -20,6 +20,7 @@ public class Lootable : MonoBehaviour
     [Header("Other Settings")]
     [SerializeField] float health = 10;
     [SerializeField] GameObject[] destroyedPieces;
+    QuestSystem questSystem;
 
     CustomRigidbody2D[] rigidBodies;
 
@@ -31,6 +32,7 @@ public class Lootable : MonoBehaviour
     {
         currentHealth = health;
 
+        questSystem = FindObjectOfType<QuestSystem>();
         rigidBodies = GetComponentsInChildren<CustomRigidbody2D>();
     }
 
@@ -99,6 +101,7 @@ public class Lootable : MonoBehaviour
                     rigidBody.AddForce(new Vector3(dir.x, dir.y, 0.5f), ForceMode2D.Impulse);
                 }
             }
+            questSystem.QuestEvent(QuestSystem.QuestEventType.LootableBroken, null);
             Destroy(gameObject);
         }
     }

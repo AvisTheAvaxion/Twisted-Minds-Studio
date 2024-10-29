@@ -106,7 +106,11 @@ public class ActionController : MonoBehaviour
 
             attackNumber = 0;
 
-            if (currentWeaponAbility != null) Destroy(currentWeaponAbility.gameObject);
+            if (currentWeaponAbility != null)
+            {
+                if (currentWeaponAbility.isAttacking) currentWeaponAbility.CancelAbility();
+                Destroy(currentWeaponAbility.gameObject);
+            }
 
             if (weapon.GetInfo().GetWeaponAbility() != null)
             {
@@ -126,13 +130,17 @@ public class ActionController : MonoBehaviour
 
     public void UnequipPlayerAbility()
     {
-        if (currentPlayerAbitlity != null) Destroy(currentPlayerAbitlity.gameObject);
+        if (currentPlayerAbitlity != null)
+        {
+            if (currentPlayerAbitlity.isAttacking) currentPlayerAbitlity.CancelAbility();
+            Destroy(currentPlayerAbitlity.gameObject);
+        }
     }
     public void EquipPlayerAbility(Ability ability)
     {
         if (ability != null)
         {
-            if (currentPlayerAbitlity != null) Destroy(currentPlayerAbitlity.gameObject);
+            UnequipPlayerAbility();
 
             if (ability.GetInfo().GetPlayerAbility() != null)
             {
@@ -146,7 +154,11 @@ public class ActionController : MonoBehaviour
     {
         if (mententos != null)
         {
-            if (currentSpecialAbility != null) Destroy(currentSpecialAbility.gameObject);
+            if (currentSpecialAbility != null)
+            {
+                if (currentSpecialAbility.isAttacking) currentSpecialAbility.CancelAbility();
+                Destroy(currentSpecialAbility.gameObject);
+            }
 
             if (mententos.GetSpecialAbility() != null)
             {

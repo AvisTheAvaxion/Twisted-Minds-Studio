@@ -38,6 +38,7 @@ public class InventoryGUI : MonoBehaviour
     ItemSlot[] weaponSlots;
     List<ItemSlot> abilitySlots;
     DialogueManager dialogueManager;
+    QuestSystem questSystem;
     public int tab { get; private set; }
 
     public int selectedItemIndex { get; private set; }
@@ -49,6 +50,7 @@ public class InventoryGUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        questSystem = FindObjectOfType<QuestSystem>();
         dialogueManager = FindObjectOfType<DialogueManager>();
         inventory = FindObjectOfType<PlayerInventory>();
 
@@ -378,6 +380,7 @@ public class InventoryGUI : MonoBehaviour
 
                 UpdateGUI();
 
+                questSystem.QuestEvent(QuestSystem.QuestEventType.InventoryOpened, null);
                 GameTime.PauseTime(false);
             }
         }

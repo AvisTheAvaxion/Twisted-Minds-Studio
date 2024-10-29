@@ -58,7 +58,7 @@ public class QuestSystem : MonoBehaviour
                     Traverse traverse = (Traverse)currentObjective;
                     if (traverse.GetRoomName() == objectName)
                     {
-                        Debug.Log("Room Get");
+                        //Debug.Log("Room Get");
                         NextQuest();
                     }
                 }
@@ -104,15 +104,44 @@ public class QuestSystem : MonoBehaviour
                     }
                 }
                 break;
+            case QuestEventType.CutsceneEnd:
+                if (currentObjective.GetType() == typeof(SetCutscene))
+                {
+                    SetCutscene cutscene = (SetCutscene)currentObjective;
+                    if (cutscene.GetCutsceneName() == objectName)
+                    {
+                        //Debug.Log("Cutscene " + objectName + " Over");
+                        NextQuest();
+                    }
+                }
+                break;
+            case QuestEventType.LootableBroken:
+                if (currentObjective.GetType() == typeof(BreakLootable))
+                {
+                    BreakLootable qEvent = (BreakLootable)currentObjective;
+                    qEvent.Increment();
+                    if (qEvent.ConditionReached())
+                    {
+                        //Debug.Log("Cutscene " + objectName + " Over");
+                        NextQuest();
+                    }
+                }
+                break;
             case QuestEventType.TripTrigger:
                 if(currentObjective.GetType() == typeof(TripTrigger))
                 {
                     TripTrigger trigger = (TripTrigger)currentObjective;
                     if(trigger.GetExpectedTriggerName() == objectName)
                     {
-                        Debug.Log("Quest " + objectName + " Happening");
+                        //Debug.Log("Quest " + objectName + " Happening");
                         NextQuest();
                     }
+                }
+                break;
+            case QuestEventType.InventoryOpened:
+                if (currentObjective.GetType() == typeof(OpenInventory))
+                {
+                    NextQuest();
                 }
                 break;
             case QuestEventType.ItemObtained:
@@ -185,17 +214,16 @@ public class QuestSystem : MonoBehaviour
     //Should be called whenever the user wants to set the currentObjective after changing the floor and ObjectiveNum accordingly
     void LoadObjective()
     {
-        Debug.Log(objectiveNum);
         string quest = objectives.getObjective(floor, objectiveNum);
         currentObjective = ParseQuestString(quest);
         objectiveSet = true;
-        SetRequiredGameState(floor, objectiveNum);
     }
 
     //Helper method for LoadObjective. Takes in a string and returns the relevent QuestType.
     //Can also start cutscenes, Although it is a bit of a recursion mess.
     QuestType ParseQuestString(string questString)
     {
+        
         QuestType questType = null;
         string[] parts = questString.Split('|');
         switch (parts[0])
@@ -237,6 +265,9 @@ public class QuestSystem : MonoBehaviour
             case "Collect":
                 questType = new Collect(int.Parse(parts[1]));
                 return questType;
+            case "BreakLootable":
+                questType = new BreakLootable(int.Parse(parts[1]));
+                return questType;
             case "Traverse":
                 questType = new Traverse(parts[1]);
                 currentFloor.AddToGuaranteeRooms(parts[1]);
@@ -246,10 +277,12 @@ public class QuestSystem : MonoBehaviour
             case "SetCutscene":
                 Dialogue.Dialog dialog;
                 Enum.TryParse(parts[1], true, out dialog);
-                Debug.Log("QuestSystem: " + dialog.ToString() + " String: " + questString + " Part: " + parts[1] + " ObjectiveNum: " + objectiveNum);
+                //Debug.Log("QuestSystem: " + dialog.ToString() + " String: " + questString + " Part: " + parts[1] + " ObjectiveNum: " + objectiveNum);
+                questType = new SetCutscene(dialog.ToString());
                 dialogueManager.SetCutscene(dialog);
-                objectiveNum++;
-                questType = ParseQuestString(objectives.getObjective(floor, objectiveNum));
+                break;
+            case "OpenInventory":
+                questType = new OpenInventory();
                 break;
             case "ClearFloor":
                 floorCleared = true;
@@ -272,12 +305,62 @@ public class QuestSystem : MonoBehaviour
 
     void SetRequiredGameState(int floor, int objective)
     {
-        if(floor == 0)
+        int playerChoice = 0;
+        if (floor == 0)
         {
             switch(objective)
             {
-                case 1:
+                case 0:
                     SetQuestTitle("Explore");
+                    break;
+                case 3:
+                    playerChoice = (int)dialogueManager.GetLastPlayerChoice();
+                    if (playerChoice == 1) //Player wants to do tutorial
+                    {
+                        SetQuestTitle("Continue");
+                        SetQuestDesc("Follow the green lady");
+                        TeleportGameobject("East Door To Varren Intro", new Vector2(6.971862f, -6.34f), false);
+                        TeleportGameobject("East Door To InventoryTut", new Vector2(6.971862f, -0.6041539f), false);
+                    }
+                    else if(playerChoice == 2) // Player wants to skip tutorial
+                    {
+                        SetQuest(0, 13);
+                        LoadObjective();
+                        //Do nothing with doors, door to varren is in accessable place from start
+                        //SetQuest to the last quest
+                    }
+                    break;
+                case 5:
+                    playerChoice = (int)dialogueManager.GetLastPlayerChoice();
+                    
+                    if (playerChoice == 1) //Player wants to do Inventroy Tutorial
+                    {
+                        TeleportGameobject("South Door To InventoryTutorial", new Vector2(-0.009889603f, -1.899884f), false);
+                        TeleportGameobject("South Door To MindRoom", new Vector2(5.14f, -1.899884f), false);
+                    }
+                    else if (playerChoice == 2) // Player wants to move to next tutorial
+                    {
+                        SetQuest(0, 8);
+                        LoadObjective();
+                        //Do nothing with doors, door to mindroom is in accessable place from start
+                        //Set quest to the Talk to SlimeLady(CombatIntro)
+                    }
+                    break;
+                case 10:
+                    playerChoice = (int)dialogueManager.GetLastPlayerChoice();
+                    if (playerChoice == 1) //Player wants to do Combat Tutorial
+                    {
+                        TeleportGameobject("East Door To Varren Intro2", new Vector2(6.971862f, -6.34f), false);
+                        TeleportGameobject("East Door To CombatTut", new Vector2(6.971862f, -0.6041539f), false);
+                        //Activate Shooters in the room somehow
+                    }
+                    else if (playerChoice == 2) // Player wants to move to end tutorial
+                    {
+                        SetQuestTitle("Explore");
+                        SetQuestDesc("Seek a way out of this place");
+                        //Do nothing with doors, door to varren is in accessable place from start
+                        //SetQuest to the last quest
+                    }
                     break;
             }
         }
@@ -287,7 +370,7 @@ public class QuestSystem : MonoBehaviour
             {
                 case 0:
                     SetQuestTitle("Explore Floor 1");
-                    TeleportGameobject("DrHarris(Intro)", new Vector2(55.19f, -27.79f));
+                    TeleportGameobject("DrHarris(Intro)", new Vector2(55.19f, -27.79f), true);
                     break;
                 case 1:
                     Collect collect = (Collect)currentObjective;
@@ -297,8 +380,8 @@ public class QuestSystem : MonoBehaviour
                 case 3:
                     SetQuestTitle("Herb Delivery");
                     SetQuestDesc("Return to Dr. Harris");
-                    TeleportGameobject("DrHarris(Intro)", new Vector2(51f, -27f));
-                    TeleportGameobject("DrHarris(Q2)", new Vector2(55.19f, -27.79f));
+                    TeleportGameobject("DrHarris(Intro)", new Vector2(51f, -27f), true);
+                    TeleportGameobject("DrHarris(Q2)", new Vector2(55.19f, -27.79f), true);
                     break;
                 case 4:
                     Kill kill = (Kill)currentObjective;
@@ -308,18 +391,18 @@ public class QuestSystem : MonoBehaviour
                 case 6:
                     SetQuestTitle("Blood Delivery");
                     SetQuestDesc("Return to Dr. Harris");
-                    TeleportGameobject("DrHarris(Q2)", new Vector2(51f, -27f));
-                    TeleportGameobject("DrHarris(Q3)", new Vector2(55.19f, -27.79f));
+                    TeleportGameobject("DrHarris(Q2)", new Vector2(51f, -27f), true);
+                    TeleportGameobject("DrHarris(Q3)", new Vector2(55.19f, -27.79f), true);
                     break;
                 case 7:
                     SetQuestTitle("The Big Day");
                     SetQuestDesc("Get the patient's jersey");
-                    TeleportGameobject("FrankJersey(Quest)", new Vector2(63.3892f, -28.0588f));
+                    TeleportGameobject("FrankJersey(Quest)", new Vector2(63.3892f, -28.0588f), true);
                     break;
                 case 8:
                     SetQuestTitle("Confrontation");
                     SetQuestDesc("");
-                    TeleportGameobject("FrankJersey(Quest)", new Vector2(55.19f, -27.79f));
+                    TeleportGameobject("FrankJersey(Quest)", new Vector2(55.19f, -27.79f), true);
                     currentFloor.UnlockToBossDoor();
                     break;
                 case 9:
@@ -329,9 +412,17 @@ public class QuestSystem : MonoBehaviour
             }
         }
     }
-    void TeleportGameobject(string desiredObjectName, Vector2 worldPosition)
+
+    void TeleportGameobject(string desiredObjectName, Vector2 position, bool globalCords)
     {
-        GameObject.Find(desiredObjectName).transform.position = worldPosition;
+        if (globalCords)
+        {
+            GameObject.Find(desiredObjectName).transform.position = position;
+        }
+        else
+        {
+            GameObject.Find(desiredObjectName).transform.localPosition = position;
+        }
     }
 
     void SetQuestTitle(string newTitle)
@@ -373,7 +464,10 @@ public class QuestSystem : MonoBehaviour
         NpcInteraction = 2,
         ItemObtained = 3,
         EnergyCollected = 4,
-        TripTrigger = 5
+        TripTrigger = 5,
+        CutsceneEnd = 6,
+        InventoryOpened = 7,
+        LootableBroken = 8,
     }
 
     #region Inventory Event Detectors

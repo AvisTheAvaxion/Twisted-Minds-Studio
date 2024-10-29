@@ -16,7 +16,7 @@ public class NPCBehavior : MonoBehaviour
 
     public Dialogue.Dialog GetNPCDialog()
     {
-        if (interactionCount == 0)
+        if (interactionCount == 0 || replacementDialog == Dialogue.Dialog.None)
         {
             return npcDialog;
         }

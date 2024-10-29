@@ -12,7 +12,7 @@ public class CutSceneTrigger : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            Debug.Log("Starting cutscene");
+            //Debug.Log("Starting cutscene");
             DialogueManager.SetCutscene(cutscene);
 
             Destroy(this.gameObject);
@@ -23,7 +23,7 @@ public class CutSceneTrigger : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            Debug.Log("Starting cutscene");
+            //Debug.Log("Starting cutscene");
             DialogueManager.SetCutscene(cutscene);
 
             Destroy(this.gameObject);
@@ -34,7 +34,7 @@ public class CutSceneTrigger : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            Debug.Log("Starting cutscene");
+            //Debug.Log("Starting cutscene");
             DialogueManager.SetCutscene(cutscene);
 
             Destroy(this.gameObject);

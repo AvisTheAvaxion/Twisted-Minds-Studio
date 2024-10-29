@@ -334,22 +334,60 @@ MonoBehaviour:
   dropRadius: 0.5
   upwardsVelocity: 0.2
   startHeight: 0.2
-  minDropAmount: 1
-  maxDropAmount: 3
+  dropCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.07717
+      outSlope: 2.07717
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.24683261
+      value: 0.51271325
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.11360056
+    - serializedVersion: 3
+      time: 0.7278328
+      value: 1.0125797
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.046220407
+      outSlope: -0.046220407
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minDropAmount: 0
+  maxDropAmount: 2
   itemHolderPrefab: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
   itemDrops:
   - item: {fileID: 11400000, guid: 87abba7aeb32e974d82b5874c674719d, type: 2}
     minCount: 1
     maxCount: 1
     weight: 1
-  - item: {fileID: 11400000, guid: 31f7daa77a838a545bf97e2afc5375a3, type: 2}
-    minCount: 1
-    maxCount: 1
-    weight: 0.01
   - item: {fileID: 11400000, guid: 4d6c791063494ee43bb3e49368530d56, type: 2}
     minCount: 1
     maxCount: 1
-    weight: 0.5
+    weight: 1
   - item: {fileID: 11400000, guid: 478c776851dc9004ab6ab5cddae20f28, type: 2}
     minCount: 1
     maxCount: 1
@@ -357,7 +395,11 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: ac3ab661bcdfda444b86dd893de0156d, type: 2}
     minCount: 1
     maxCount: 1
-    weight: 0.2
+    weight: 0.7
+  - item: {fileID: 11400000, guid: f9b67a3ac3470e04a8af490f8ee0f876, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 0.05
   emotionalEnergyPrefab: {fileID: 98322870789914543, guid: 88afadea5fb2250408442fb5baf50973, type: 3}
   deathLayer: 16
   enemyVisuals: {fileID: 4891665340419228868}
@@ -427,8 +469,24 @@ MonoBehaviour:
     type: 0
     defaultValue: 25
     hasMax: 1
-    maxValue: 25
-  stats: []
+    maxValue: 30
+  stats:
+  - type: 4
+    defaultValue: 1.5
+    hasMax: 0
+    maxValue: 0
+  - type: 3
+    defaultValue: 0.5
+    hasMax: 0
+    maxValue: 0
+  - type: 5
+    defaultValue: 0.5
+    hasMax: 0
+    maxValue: 0
+  - type: 6
+    defaultValue: 0.5
+    hasMax: 0
+    maxValue: 0
 --- !u!61 &2626282256757693886
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -48,7 +48,7 @@ public class EnemyHealth : MonoBehaviour, IHealth
     {
         if (!canTakeDamage || enemyMovement.CurrentState == EnemyStateMachine.States.Death) return false;
 
-        stats.TakeDamage(amount, effect);
+        stats.TakeDamage(amount - stats.GetCurrentValue(Stat.StatType.Defense), effect);
 
         if(debug) print("Health: " + stats.GetHealthValue());
 

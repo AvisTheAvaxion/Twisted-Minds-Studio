@@ -83,6 +83,7 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] protected float dropRadius = 0.5f;
     [SerializeField] protected float upwardsVelocity = 0.2f;
     [SerializeField] protected float startHeight = 0.2f;
+    [SerializeField] protected AnimationCurve dropCurve;
     [SerializeField] protected int minDropAmount, maxDropAmount;
     [SerializeField] protected GameObject itemHolderPrefab;
     [SerializeField] protected ItemDrop[] itemDrops;
@@ -264,7 +265,7 @@ public class EnemyStateMachine : MonoBehaviour
     {
         if (itemDrops == null || itemDrops.Length == 0) return;
 
-        int dropAmount = Random.Range(minDropAmount, maxDropAmount + 1);
+        int dropAmount = Mathf.RoundToInt(Mathf.Lerp(minDropAmount, maxDropAmount, dropCurve.Evaluate(Random.Range(0, 1f))));
         float weightTotal = 0;
         for (int i = 0; i < itemDrops.Length; i++)
         {
@@ -577,7 +578,7 @@ public class EnemyStateMachine : MonoBehaviour
     protected IEnumerator WaitBeforeAttacking(float minWait, float maxWait)
     {
         canAttack = false;
-        yield return new WaitForSeconds(Random.Range(minWait, maxWait));
+        yield return new WaitForSeconds(Mathf.Max(0, Random.Range(minWait, maxWait)));
         canAttack = true;
     }
 

@@ -32,16 +32,16 @@ public class Objectives
     public enum ObjectiveTriggers
     {
         SlimeLadyMeeting,
+        SlimeLadyInventory,
+        SlimeLadyCombat,
         VarrenTrigger,
-        InventoryTutorialTrigger,
-        CombatTutorialTrigger,
-        MindRoomTrigger
     }
 
     /*  Cheat sheet for string formatting
     * 
     *   return "QuestTitle|{Quest Title}"
     *   return "QuestDesc|{Breif Quest Description}"
+    *   return "SetCutscene|{Cutscene name}"
     *   return "Traverse|{roomName}";
         return "Collect|{total}";
         return "KillSpecific|{total}|{enemyName}";
@@ -55,13 +55,20 @@ public class Objectives
     string[] Floor0 = new string[] {
         "SetCutscene|WakeUpTutorial",
         "TripTrigger|SlimeLadyMeeting",
-        "SetCutscene|VarrenEncounter",
-        "TripTrigger|InventoryTutorialTrigger",
-        "SetCutscene|InventoryTutorial",
-        "TripTrigger|MindRoomTrigger",
-        "SetCutscene|MindRoom",
-        "TripTrigger|CombatTutorialTrigger",
-        "SetCutscene|CombatTutorial",
+        "SetCutscene|MeetingTheSlimeLady",
+        "TripTrigger|SlimeLadyInventory",
+        "SetCutscene|InventoryIntro",
+        "Talk|SlimeLady(InventoryExplanation)",
+        "OpenInventory",
+        "SetCutscene|InventoryExplaination",
+        "TripTrigger|SlimeLadyCombat",
+        "SetCutscene|CombatIntro",
+        "Talk|SlimeLady(CombatExplanation)",
+        "BreakLootable|3",
+        "SetCutscene|CombatEnemyInbound",
+        //Gotta have enemies spawn and have the player kill them.
+        //After that play cutscene TutorialOver and let the leave to the varren room.
+        //VarrenEncounter wont be an objective for this. dont really see a point to it.
         "ClearFloor"
     };
 

@@ -227,3 +227,69 @@ public class KillSpecific : QuestType
     #endregion
 }
 
+public class SetCutscene : QuestType
+{
+    public SetCutscene(string name)
+    {
+        cutsceneName = name;
+    }
+
+    string cutsceneName;
+
+    public string GetCutsceneName()
+    {
+        return cutsceneName;
+    }
+
+    public override string ToSaveString()
+    {
+        return $"SetCutscene|{cutsceneName}";
+    }
+}
+public class OpenInventory : QuestType
+{
+    public OpenInventory()
+    {
+    }
+
+    public override string ToSaveString()
+    {
+        return $"OpenInventory";
+    }
+}
+public class BreakLootable : QuestType
+{
+    public BreakLootable(int total)
+    {
+        this.total = total;
+    }
+
+    int total;
+    int currentAmount = 0;
+    
+
+    public int GetTotal()
+    {
+        return total;
+    }
+
+    public int GetCurrentAmount()
+    {
+        return currentAmount;
+    }
+
+    public void Increment()
+    {
+        currentAmount++;
+    }
+
+    public bool ConditionReached()
+    {
+        return currentAmount >= total;
+    }
+
+    public override string ToSaveString()
+    {
+        return $"BreakLootable|{total}";
+    }
+}

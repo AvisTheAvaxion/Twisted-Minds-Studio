@@ -74,7 +74,7 @@ public class DialogueManager : MonoBehaviour
         movement.StartCutscene();
         lines = dialogue.getDialogue(dialogueName);
         currentLine = line;
-        playerGUI.SetActive(false);
+        //playerGUI.SetActive(false);
 
         auto = false;
         instaSkip = false;
@@ -187,7 +187,6 @@ public class DialogueManager : MonoBehaviour
             {
                 currentState = CutsceneState.Continue;
 
-                lastChoice = PlayerChoice.ChoiceOne;
                 string optionAText = lines[currentLine].Replace("$OptionA", "");
                 string outputText = optionAText.Split(":")[1];
                 string outputName = optionAText.Split(':')[0];
@@ -204,7 +203,6 @@ public class DialogueManager : MonoBehaviour
             {
                 currentState = CutsceneState.Continue;
 
-                lastChoice = PlayerChoice.ChoiceOne;
                 while (currentLine < lines.Length && lines[currentLine].Contains("$OptionB"))
                 {
                     currentLine++;
@@ -217,7 +215,6 @@ public class DialogueManager : MonoBehaviour
             {
                 currentState = CutsceneState.Continue;
 
-                lastChoice = PlayerChoice.ChoiceTwo;
                 string optionBText = lines[currentLine].Replace("$OptionB", "");
                 string outputText = optionBText.Split(":")[1];
                 string optionBName = optionBText.Split(':')[0];
@@ -235,7 +232,6 @@ public class DialogueManager : MonoBehaviour
             {
                 currentState = CutsceneState.Continue;
 
-                lastChoice = PlayerChoice.ChoiceTwo;
                 while (currentLine < lines.Length && lines[currentLine].Contains("$OptionA"))
                 {
                     currentLine++;
@@ -365,7 +361,7 @@ public class DialogueManager : MonoBehaviour
             }
             else if (lines[currentLine].EndsWith("$FadeIn") || lines[currentLine].StartsWith("$FadeIn"))
             {
-                Debug.Log("Fade In Test");
+                //Debug.Log("Fade In Test");
                 currentState = CutsceneState.Waiting;
                 int fadeInStartIndex = lines[currentLine].IndexOf('(');
                 int fadeInEndIndex = lines[currentLine].IndexOf(')');
@@ -375,7 +371,7 @@ public class DialogueManager : MonoBehaviour
             }
             else if (lines[currentLine].EndsWith("$FadeOut") || lines[currentLine].StartsWith("$FadeOut"))
             {
-                Debug.Log("Fade Out Test");
+                //Debug.Log("Fade Out Test");
                 currentState = CutsceneState.Waiting;
                 int fadeOutStartIndex = lines[currentLine].IndexOf('(');
                 int fadeOutEndIndex = lines[currentLine].IndexOf(')');
@@ -585,6 +581,7 @@ public class DialogueManager : MonoBehaviour
         else if (currentLine > lines.Length - 1)
         {
             currentState = CutsceneState.None;
+            questSystem.QuestEvent(QuestSystem.QuestEventType.CutsceneEnd, cutscene.ToString());
             if (dialogueGUI)
             {
                 dialogueGUI.ToggleButtons(false);
@@ -730,6 +727,7 @@ public class DialogueManager : MonoBehaviour
     public void ButtonOneSelect()
     {
         currentChoice = PlayerChoice.ChoiceOne;
+        lastChoice = PlayerChoice.ChoiceOne;
         if (dialogueGUI)
         {
             dialogueGUI.ToggleButtons(true);
@@ -744,6 +742,7 @@ public class DialogueManager : MonoBehaviour
     public void ButtonTwoSelect()
     {
         currentChoice = PlayerChoice.ChoiceTwo;
+        lastChoice = PlayerChoice.ChoiceTwo;
         if (dialogueGUI)
         {
             dialogueGUI.ToggleButtons(true);

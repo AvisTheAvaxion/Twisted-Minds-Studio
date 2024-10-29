@@ -218,7 +218,7 @@ public class Dialogue
         "???: Hurry along now dear."
     };
 
-    //This cutscene should allow the player to skip to CombatIntro
+    //This cutscene should allow the player to skip to StrangeRoom
     string[] InventoryIntro = new string[]
     {
         "???: First things first, the <b>inventory</b>.",
@@ -227,19 +227,20 @@ public class Dialogue
         "???: Oh dear, you don't know? $OptionA",
         "???: Don't worry honey, move on to the next room and I'll show you what's what! $OptionA",
         "Blaze: Of course I know about the inventory! $OptionB",
-        "???: Ok deary, I'm just making sure. $OptionB",
+        "???: Okay deary, I'm just making sure. $OptionB",
         "???: Move on to the next room deary. I got more stuff to show you still. $OptionB",
-    };
-
-    string[] InventroyOpening = new string[]
-    {
-        "???: First things first. Press <b>tab</b> for me would you honey.",
+        "???: Oh, and take this.",
         "$Pause",
         "$GiveWeapon(Dagger)",
         "$GiveAbility(EnergyArc)",
         " : You got <color=#507830><b>Energy Arc</b></color> and a <color=#936A00><b>Dagger</b></color>!",
         "$Resume",
-        "???: Now, press <b>tab</b> to see the nice stuff I gave you.",
+        "???: You're gonna need this."
+    };
+
+    string[] InventroyOpening = new string[]
+    {
+        "???: First things first. Press <b>tab</b> for me would you honey.",
     };
 
     string[] InventoryExplaination = new string[]
@@ -253,8 +254,8 @@ public class Dialogue
 
     string[] StrangeRoom = new string[]
     {
-        "???: Where's the green lady? Shouldn't she be here?",
-        "Blaze: This room.",
+        "Blaze: Where's the green lady? Shouldn't she be here?",
+        "Blaze: This room...",
         "Blaze: It feels... Strange.",
         " : You feel a strange pull towards the chair.",
         " : Maybe something will happen if you interact with it with the <b>'F'</b> key."
@@ -292,9 +293,19 @@ public class Dialogue
     string[] CombatTableBreaker = new string[]
     {
         "???: Now it is time to teach you how to fight.",
+        "???: Close your eyes for just a moment. I need to get something out.",
+        "ToggleUI(False)",
+        "$FadeIn(0,0,0)",
+        "$Tele(Table1,40.14,0.8)",
+        "$Tele(Table2,40.84,0.1199999)",
+        "$Tele(Table3,41.879,0.83)",
+        "$Timer(1)",
+        "$ToggleUI(True)",
+        "???: Now open your eyes!",
+        "$FadeOut(0,0,0)",
         "???: I have placed a couple tables over there. Go break them.",
         "Blaze: What's the point of doing this?",
-        "???: Dearie, all the best stuff is in tables, just try it and see!",
+        "???: Dearie, all the best stuff is in tables, just <b>Left Click</b> on them. try it and see!",
     };
 
     string[] CombatEnemyInbound = new string[]
@@ -318,7 +329,8 @@ public class Dialogue
     string[] VarrenEncounter = new string[]
     {
         "$PlaySong|StienTheme",
-        "$Move(Varren,-15.75,-14.29)",
+        "$Tele(Varren,43.462,-15.558)",
+        "$Move(Varren,39.21,-15.66)",
         "???: Oh? And who might you be?|Hide my name|HOLY SH- $Prompt",
         "Blaze: No one.$OptionA",
         "Blaze: Who are you? Where did you come from? $OptionA",
@@ -350,7 +362,7 @@ public class Dialogue
         "$Pause",
         "$Emote|Varren|Angry",
         "Varren: <b>NO!!!</b>",
-        "Varren: <i*Sigh*</i>",
+        "Varren: <i>*Sigh*</i>",
         "Varren: <i>stubborn little...</i>",
         "Varren: There aren't any hidden rooms",
         "Varren: There is no one watching us",
@@ -370,7 +382,7 @@ public class Dialogue
         "Varren: Your stubbornness is quite amusing, take this",
         "Varren: You can't die here, but you still can feel pain. Let's see how far you get before you give up.",
         "Varren: Cya later kiddo",
-        "$Move(Varren,-11.57,-14.3)",
+        "$Move(Varren,43.462,-15.558)",
         "Blaze: Well, I guess I should get moving.",
         "$Kill(Varren)"
     };

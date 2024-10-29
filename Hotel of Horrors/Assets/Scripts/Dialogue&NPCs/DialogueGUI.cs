@@ -21,7 +21,7 @@ public class DialogueGUI : MonoBehaviour
     private void Start()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
-        profilePicObj.SetActive(false);
+        //profilePicObj.SetActive(false);
     }
 
     public void SetDialogue(string nameText, string dialogueText)

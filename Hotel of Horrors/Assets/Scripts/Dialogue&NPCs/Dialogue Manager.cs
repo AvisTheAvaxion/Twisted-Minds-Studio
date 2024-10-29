@@ -179,7 +179,6 @@ public class DialogueManager : MonoBehaviour
                 }
 
                 playerAudio.NextLine(currentLine);
-                UpdateImage(outputName);
 
                 currentLine++;
             }
@@ -195,7 +194,6 @@ public class DialogueManager : MonoBehaviour
                     dialogueGUI.SetDialogue(outputName, outputText);
                 }
                 playerAudio.NextLine(currentLine);
-                UpdateImage(outputName);
 
                 currentLine++;
             }
@@ -224,7 +222,6 @@ public class DialogueManager : MonoBehaviour
                 }
 
                 playerAudio.NextLine(currentLine);
-                UpdateImage(optionBName);
 
                 currentLine++;
             }
@@ -525,7 +522,20 @@ public class DialogueManager : MonoBehaviour
             {
                 currentState = CutsceneState.Waiting;
 
-                try
+                int emoteStartIndex = lines[currentLine].IndexOf('(');
+                int emoteEndIndex = lines[currentLine].IndexOf(')');
+                string emoteInfo = lines[currentLine].Substring(emoteStartIndex + 1, emoteEndIndex - emoteStartIndex - 1);
+                Sprite emote = null;
+                foreach(Sprite sprite in CharacterPics)
+                {
+                    if(sprite.name == emoteInfo)
+                    {
+                        emote = sprite;
+                        break;
+                    }
+                }
+                dialogueGUI.SetProfilePic(emote);
+                /*try
                 {
                     emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
                 }
@@ -533,7 +543,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     emotions.Remove(lines[currentLine].Split("|")[1]);
                     emotions.Add(lines[currentLine].Split("|")[1], lines[currentLine].Split("|")[2]);
-                }
+                }*/
 
                 //Auto move to the next line
                 currentLine++;
@@ -572,7 +582,6 @@ public class DialogueManager : MonoBehaviour
                 }
 
                 playerAudio.NextLine(currentLine);
-                UpdateImage(dialogueLine[0]);
 
                 currentLine++;
             }
@@ -755,7 +764,7 @@ public class DialogueManager : MonoBehaviour
         //currentState = CutsceneState.Continue;
     }
 
-    void UpdateImage(string name)
+    /*void UpdateImage(string name)
     {
         string myEmote = "";
 
@@ -778,7 +787,7 @@ public class DialogueManager : MonoBehaviour
                     dialogueGUI.SetProfilePic(null);
             }
         }
-    }
+    }*/
     #endregion]
 
     #region Public Methods

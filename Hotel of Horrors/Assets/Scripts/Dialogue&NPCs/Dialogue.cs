@@ -190,10 +190,11 @@ public class Dialogue
     #region Tutorial Dialog
     string[] WakeUpTutorial = new string[]
     {
-        "$Emote|Protag|Surprised",
+        "$Emote(Blaze_Shocked)",
         "Blaze: Ughhh",
         "Blaze: What? Where am I?",
         "Blaze: *looks around* Is this a... barn?",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Well, just standing here isn't going to accomplish anything",
         " : Use <b>WASD</b> to move",
         "Blaze: I wonder if there is anything useful around here?"
@@ -202,49 +203,66 @@ public class Dialogue
     //This dialog should allow the player to skip to the VarrenEncounter
     string[] MeetingTheSlimeLady = new string[]
     {
+        "$Emote(Null)",
         "???: Oh, dear a new guest.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Guest?",
+        "$Emote(Null)",
         "???: Don't worry deary, all will be explained in due time.",
         "???: Just go out the door to the right and I'll show you the ropes!",
         "???: Or are you confident you don't need my tutoring?|Teach me please|No thank you $Prompt",
+        "$Emote(Blaze_Neutral)",
         "Blaze: I don't really get what is going on but sure! $OptionA",
+        "$Emote(Null)",
         "???: Alright deary, just go through the door on the right and we'll begin. $OptionA",
+        "$Emote(Blaze_Neutral)",
         "Blaze: No thank you, I'm sure I can figure stuff out on my own $OptionB",
+        "$Emote(Null)",
         "???: Alright deary, just go through the door on the right and you're free to go $OptionB",
     };
 
     string[] SlimeLadyReplacement = new string[]
     {
+        "$Emote(Null)",
         "???: Hurry along now dear."
     };
 
     //This cutscene should allow the player to skip to StrangeRoom
     string[] InventoryIntro = new string[]
     {
+        "$Emote(Null)",
         "???: First things first, the <b>inventory</b>.",
         "???: Do you know how to use the inventory or should we just move on?|What inventory|Just move on $Prompt",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Inventory? $OptionA",
+        "$Emote(Null)",
         "???: Oh dear, you don't know? $OptionA",
         "???: Don't worry honey, move on to the next room and I'll show you what's what! $OptionA",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Of course I know about the inventory! $OptionB",
+        "$Emote(Null)",
         "???: Okay deary, I'm just making sure. $OptionB",
         "???: Move on to the next room deary. I got more stuff to show you still. $OptionB",
         "???: Oh, and take this.",
         "$Pause",
         "$GiveWeapon(Dagger)",
         "$GiveAbility(EnergyArc)",
+        "$Emote(Blaze_Happy)",
         " : You got <color=#507830><b>Energy Arc</b></color> and a <color=#936A00><b>Dagger</b></color>!",
         "$Resume",
+        "$Emote(Null)",
         "???: You're gonna need this."
     };
 
     string[] InventroyOpening = new string[]
     {
+        "$Emote(Null)",
         "???: First things first. Press <b>tab</b> for me would you honey.",
     };
 
     string[] InventoryExplaination = new string[]
     {
+        "$Emote(Null)",
         "???: This here is your inventory! Everything you can use will end up here.",
         "???: If there's ever something you want to equip, you just gotta select it then click the <b>equip button</b>.",
         "???: And if there's something you don't want, just select it and press that <b>red trash button</b>.",
@@ -254,9 +272,11 @@ public class Dialogue
 
     string[] StrangeRoom = new string[]
     {
+        "$Emote(Blaze_Happy)",
         "Blaze: Where's the green lady? Shouldn't she be here?",
         "Blaze: This room...",
         "Blaze: It feels... Strange.",
+        "$Emote(Blaze_Shocked_Eyeless)",
         " : You feel a strange pull towards the chair.",
         " : Maybe something will happen if you interact with it with the <b>'F'</b> key."
     };
@@ -264,22 +284,32 @@ public class Dialogue
     //This should allow the player to skip to TutorialOver
     string[] CombatIntro = new string[]
     {
+        "$Emote(Null)",
         "???: Next up, <b>combat</b>.",
         "???: Do you know how to fight or should we just move on?|I'm no fighter|Just move on $Prompt",
+        "$Emote(Blaze_Neutral)",
         "Blaze: I'm not much of a fighter. $OptionA",
+        "$Emote(Null)",
         "???: Oh deary, you gotta fight down here to stay safe. $OptionA",
         "???: I'll train you a bit so that you're a good fighter so go into the next room and I'll show you! $OptionA",
+        "$Emote(Blaze_Happy)",
         "Blaze: I'm sure I can handle myself! $OptionB",
+        "$Emote(Null)",
         "???: Ok dear, how dependable. $OptionB",
         "???: Then you are good to go. $OptionB",
     };
 
     string[] CombatDodging = new string[]
     {
+        "$Emote(Null)",
         "???: In this room, bullets will shoot towards you.",
+        "$Emote(Blaze_Shocked)",
         "Blaze: WHAT?!",
+        "$Emote(Null)",
         "???: Don't worry sweetie, as long as you dash at the right time you'll be fine.",
+        "$Emote(Blaze_Surprised)",
         "Blaze: Dash?",
+        "$Emote(Null)",
         "???: Yes, pressing <b> Shift, Space, or Right Clicking</b> will give you a burst of speed!",
         "???: You will also be safe from getting hit for a small window at the start of a dash!",
         "???: Try it out!!",
@@ -287,11 +317,13 @@ public class Dialogue
 
     string[] CombatDodgingDone = new string[]
     {
+        "$Emote(Null)",
         "???: Good job! Move on now, I still got a little more to show you.",
     };
 
     string[] CombatTableBreaker = new string[]
     {
+        "$Emote(Null)",
         "???: Now it is time to teach you how to fight.",
         "???: Close your eyes for just a moment. I need to get something out.",
         "ToggleUI(False)",
@@ -304,13 +336,17 @@ public class Dialogue
         "???: Now open your eyes!",
         "$FadeOut(0,0,0)",
         "???: I have placed a couple tables over there. Go break them.",
+        "$Emote(Neutral)",
         "Blaze: What's the point of doing this?",
+        "$Emote(Null)",
         "???: Dearie, all the best stuff is in tables, just <b>Left Click</b> on them. try it and see!",
     };
 
     string[] CombatEnemyInbound = new string[]
     {
+        "$Emote(Blaze_Surprised)",
         "Blaze: Whoa, why is this stuff <b>in</b> a table?",
+        "$Emote(Null)",
         "???: Nobody knows, that's just how it is.",
         "???: Anyway, now that you have yourself some nice loot...",
         "???: Now is the time for you to make use of it!",
@@ -319,10 +355,13 @@ public class Dialogue
 
     string[] TutorialOver = new string[]
     {
+        "$Emote(Null)",
         "???: I have nothing left to teach you.",
         "???: I'm sure that you'll be safe out but still, be careful.",
         "???: Varren has been waiting for you since you got here. Don't keep him waiting any longer.",
+        "$Emote(Blaze_Angry)",
         "Blaze: Varren? Does he know me? Did he bring me here?",
+        "$Emote(Null)",
         "???: You'll understand the situation soon enough, go out the door on the right and best of luck."
     };
 
@@ -331,58 +370,85 @@ public class Dialogue
         "$PlaySong|StienTheme",
         "$Tele(Varren,43.462,-15.558)",
         "$Move(Varren,39.21,-15.66)",
+        "$Emote(Varren_Surprised)",
         "???: Oh? And who might you be?|Hide my name|HOLY SH- $Prompt",
+        "$Emote(Blaze_Neutral)",
         "Blaze: No one.$OptionA",
         "Blaze: Who are you? Where did you come from? $OptionA",
+        "$Emote(Varren_EvilSmile)",
         "???: Me? I'm Varren, a... resident of this lovely establishment. $OptionA",
+        "$Emote(Blaze_Shocked)",
         "Blaze: AAAHHHHHHHHH. A GHOST!!! $OptionB",
+        "$Emote(Varren_MildlyAnnoyed)",
         "???: Calm down kid, I'm Varren, just another person trapped here like you. $OptionB",
-        "$Emote|Protag|Angry",
+        "$Emote(Blaze_Neutral)",
         //Line above is a test line
         "Blaze: Where are we?",
+        "$Emote(Varren_MildlyAnnoyed)",
         "Varren: Hell of course! You died! Where else did you think you would end up?",
+        "$Emote(Blaze_Surprised)",
         "Blaze: What do you mean? Isn't this a barn?",
-        "$Emote|Protag|Surprised",
         //Line above is a test line
+        "$Emote(Varren_EvilSmile)",
         "Varren: It's a hotel, and it's where you'll be trapped for eternity because of all of the terrible things you've done.|He must be joking|What things $Prompt",
+        "$Emote(Blaze_Shocked)",
         "Blaze: Are you pulling my leg?$OptionA",
         "Blaze: I think I'd remember dying.$OptionA",
+        "$Emote(Blaze_Shocked)",
         "Blaze: What terrible things?$OptionB",
+        "$Emote(Varren_Neutral)",
         "Varren: Murder, theft, being an all around terrible person.$OptionB",
         "Varren: Whatever horrible deeds you've commited, you're now stuck here as punishment.$OptionB",
+        "$Emote(Blaze_Shocked)",
         "Blaze: But why would I be sent to a hotel?$OptionB",
+        "$Emote(Varren_MildlyAnnoyed)",
         "Varren: Haven't you noticed how this place seems off? The rooms shifting, the lack of windows, the monsters?",
+        "$Emote(Blaze_Shocked)",
         "Blaze: Yes but-",
+        "$Emote(Varren_EvilSmile)",
         "Varren: Welcome to hell. You died. You're stuck here to be forever haunted by those... things. There is no exit, no escape. Your atrocities have condemned you to this place.",
+        "$Emote(Blaze_Shocked)",
         "Blaze: But there has to be some kind of a mistake. I don't remember committing any atrocities or dying, maybe if I look around for long enough then I can find an exit, or the person who trapped us here?",
+        "$Emote(Varren_MildlyAnnoyed)",
         "Varren: You're going to fail. I've searched every nook and cranny of this place. I'm sorry, but there's no way out kid.",
+        "$Emote(Blaze_Shocked)",
         "Blaze: Maybe you missed a spot?",
+        "$Emote(Varren_Neutral)",
         "Varren: No.",
+        "$Emote(Blaze_Shocked)",
         "Blaze: Maybe there is a hidden room?",
         "$Pause",
-        "$Emote|Varren|Angry",
+        "$Emote(Varren_Angry)",
         "Varren: <b>NO!!!</b>",
+        "$Emote(Varren_MildlyAnnoyed)",
         "Varren: <i>*Sigh*</i>",
         "Varren: <i>stubborn little...</i>",
-        "Varren: There aren't any hidden rooms",
-        "Varren: There is no one watching us",
+        "$Emote(Varren_Neutral)",
+        "Varren: There aren't any hidden rooms.",
+        "Varren: There is no one watching us.",
         "Varren: And there certantly aren't any exits.",
         "Varren: Once you arrive, there is no way to leave. You're stuck here.",
         "Varren: Forever.",
         "Varren: <b>And Ever.</b>",
         "Varren: <b><u>And Ever...</b></u>",
         "Varren: ...",
-        "$Emote|Varren|Neutral",
         "$Resume",
+        "$Emote(Varren_SoftSmiles)",
         "Varren: Since we're stuck here why don't you go ahead and tell me what it is you've done to end up here?",
-        "Blaze: I really don't remember. There has to be some sort of mix-up here. I'm going to find whoever put us here and prove that there is a way out.",
+        "$Emote(Blaze_Shocked)",
+        "Blaze: I really don't remember. There has to be some sort of mix-up here.",
+        "Blaze: I'm going to find whoever put us here and prove that there is a way out.",
+        "$Emote(Varren_MildlyAnnoyed)",
         "Varren: There's no convincing you is there kid?|Giving up does nothing|I refuse to stay here $Prompt",
+        "$Emote(Blaze_Shocked)",
         "Blaze: Well just giving up and just sitting here isn't going to accomplish anything.$OptionA",
         "Blaze: There's no way I can stay in this stinky place.$OptionB",
-        "Varren: Your stubbornness is quite amusing, take this",
-        "Varren: You can't die here, but you still can feel pain. Let's see how far you get before you give up.",
+        "$Emote(Varren_EvilSmile)",
+        "Varren: Your stubbornness is quite amusing...",
+        "Varren: You can't die here, but you can still feel pain. Let's see how far you get before you give up.",
         "Varren: Cya later kiddo",
         "$Move(Varren,43.462,-15.558)",
+        "$Emote(Blaze_Shocked)",
         "Blaze: Well, I guess I should get moving.",
         "$Kill(Varren)"
     };

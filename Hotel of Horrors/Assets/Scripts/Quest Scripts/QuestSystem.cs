@@ -363,7 +363,14 @@ public class QuestSystem : MonoBehaviour
                     }
                     break;
                 case 13: //Spawn Enemies for combat tutorial
+                    LockDirectDoors();
+                    Kill kill = (Kill)currentObjective;
+                    SetQuestTitle("Fight");
+                    SetQuestDesc($"Fight the strange enemies: {kill.GetAmountKilled()}/{kill.GetTotal()}");
                     ActivateSpawner("Combat Tutorial");
+                    break;
+                case 14:
+
                     break;
             }
         }
@@ -433,7 +440,47 @@ public class QuestSystem : MonoBehaviour
         EnemySpawner spawner = GameObject.Find(roomName).transform.GetComponentInChildren<EnemySpawner>();
         spawner.isActiviated = true;
     }
+    #region Door Methods
+    void LockDoors()
+    {
+        Door[] allDoors = FindObjectsOfType<Door>();
 
+        foreach (Door d in allDoors)
+        {
+            d.LockGate(true);
+        }
+    }
+
+    void UnlockDoors()
+    {
+        Door[] allDoors = FindObjectsOfType<Door>();
+
+        foreach (Door d in allDoors)
+        {
+            d.LockGate(false);
+        }
+    }
+    void LockDirectDoors()
+    {
+        DirectDoor[] allDoors = FindObjectsOfType<DirectDoor>();
+
+        foreach (DirectDoor d in allDoors)
+        {
+            d.LockDoor();
+        }
+    }
+
+    void UnlockDirectDoors()
+    {
+        DirectDoor[] allDoors = FindObjectsOfType<DirectDoor>();
+
+        foreach (DirectDoor d in allDoors)
+        {
+            d.UnlockDoor();
+        }
+    }
+    #endregion
+    #region Quest GUI
     void SetQuestTitle(string newTitle)
     {
         questGUI.SetQuestTitle(newTitle);
@@ -443,7 +490,7 @@ public class QuestSystem : MonoBehaviour
     {
         questGUI.SetQuestDesc(newDescription);
     }
-
+    #endregion
     //Call when the player has fulfilled the conditions to move to the next objective
     public void NextQuest()
     {

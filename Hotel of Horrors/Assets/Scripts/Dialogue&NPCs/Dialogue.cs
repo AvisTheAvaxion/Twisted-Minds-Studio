@@ -196,8 +196,10 @@ public class Dialogue
         "Blaze: *looks around* Is this a... barn?",
         "$Emote(Blaze_Neutral)",
         "Blaze: Well, just standing here isn't going to accomplish anything",
+        "$Emote(Null)",
         " : Use <b>WASD</b> to move",
-        "Blaze: I wonder if there is anything useful around here?"
+        "Blaze: I wonder if there is anything useful around here?",
+        "$Emote(Blaze_Neutral)",
     };
 
     //This dialog should allow the player to skip to the VarrenEncounter
@@ -238,7 +240,7 @@ public class Dialogue
         "$Emote(Null)",
         "???: Oh dear, you don't know? $OptionA",
         "???: Don't worry honey, move on to the next room and I'll show you what's what! $OptionA",
-        "$Emote(Blaze_Neutral)",
+        "$Emote(Blaze_Happy)",
         "Blaze: Of course I know about the inventory! $OptionB",
         "$Emote(Null)",
         "???: Okay deary, I'm just making sure. $OptionB",
@@ -265,7 +267,7 @@ public class Dialogue
 
     string[] StrangeRoom = new string[]
     {
-        "$Emote(Blaze_Happy)",
+        "$Emote(Blaze_Surprised)",
         "Blaze: Where's the green lady? Shouldn't she be here?",
         "Blaze: This room...",
         "Blaze: It feels... Strange.",
@@ -329,7 +331,7 @@ public class Dialogue
         "???: Now open your eyes!",
         "$FadeOut(0,0,0)",
         "???: I have placed a couple tables over there. Go break them.",
-        "$Emote(Neutral)",
+        "$Emote(Blaze_Neutral)",
         "Blaze: What's the point of doing this?",
         "$Emote(Null)",
         "???: Dearie, all the best stuff is in tables, just <b>Left Click</b> on them. try it and see!",
@@ -347,9 +349,9 @@ public class Dialogue
         "???: Oh, and take this.",
         "$Pause",
         "$GiveWeapon(Dagger)",
-        "$GiveAbility(EnergyMultishot)",
+        "$GiveAbility(Multishot)",
         "$Emote(Blaze_Happy)",
-        " : You got <color=#507830><b>Energy Multishot</b></color>!",
+        " : You got <color=#507830><b>Multishot</b></color>!",
         "$Resume",
         "$Emote(Null)",
         "???: Be sure to equip this, you'll need it."

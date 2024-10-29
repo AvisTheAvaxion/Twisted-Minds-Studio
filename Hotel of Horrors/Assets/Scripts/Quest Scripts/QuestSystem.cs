@@ -362,6 +362,9 @@ public class QuestSystem : MonoBehaviour
                         //SetQuest to the last quest
                     }
                     break;
+                case 13: //Spawn Enemies for combat tutorial
+                    ActivateSpawner("Combat Tutorial");
+                    break;
             }
         }
         else if(floor == 1)
@@ -423,6 +426,12 @@ public class QuestSystem : MonoBehaviour
         {
             GameObject.Find(desiredObjectName).transform.localPosition = position;
         }
+    }
+
+    void ActivateSpawner(string roomName)
+    {
+        EnemySpawner spawner = GameObject.Find(roomName).transform.GetComponentInChildren<EnemySpawner>();
+        spawner.isActiviated = true;
     }
 
     void SetQuestTitle(string newTitle)

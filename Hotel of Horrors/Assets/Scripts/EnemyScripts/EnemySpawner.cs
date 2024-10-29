@@ -37,7 +37,6 @@ public class EnemySpawner : MonoBehaviour
         spawnArea = GetComponent<PolygonCollider2D>();
         floor = FindObjectOfType<Floor>();
         myRoom = GetComponentInParent<Room>();
-
     }
 
     void Update()

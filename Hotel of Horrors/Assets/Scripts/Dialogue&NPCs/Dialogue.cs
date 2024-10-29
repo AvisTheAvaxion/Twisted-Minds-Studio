@@ -243,15 +243,6 @@ public class Dialogue
         "$Emote(Null)",
         "???: Okay deary, I'm just making sure. $OptionB",
         "???: Move on to the next room deary. I got more stuff to show you still. $OptionB",
-        "???: Oh, and take this.",
-        "$Pause",
-        "$GiveWeapon(Dagger)",
-        "$GiveAbility(EnergyArc)",
-        "$Emote(Blaze_Happy)",
-        " : You got <color=#507830><b>Energy Arc</b></color> and a <color=#936A00><b>Dagger</b></color>!",
-        "$Resume",
-        "$Emote(Null)",
-        "???: You're gonna need this."
     };
 
     string[] InventroyOpening = new string[]
@@ -262,12 +253,14 @@ public class Dialogue
 
     string[] InventoryExplaination = new string[]
     {
+        "$TogglePlayerUI(True)",
         "$Emote(Null)",
         "???: This here is your inventory! Everything you can use will end up here.",
         "???: If there's ever something you want to equip, you just gotta select it then click the <b>equip button</b>.",
         "???: And if there's something you don't want, just select it and press that <b>red trash button</b>.",
         "???: The same logic applies across every tab so now you know how to use your inventory!",
-        "???: Now, go into the next room deary. I got more stuff set up there."
+        "???: Now, go into the next room deary. I got more stuff set up there.",
+        "$TogglePlayerUI(False)",
     };
 
     string[] StrangeRoom = new string[]
@@ -350,7 +343,16 @@ public class Dialogue
         "???: Nobody knows, that's just how it is.",
         "???: Anyway, now that you have yourself some nice loot...",
         "???: Now is the time for you to make use of it!",
-        "???: Just so you know, this is the real deal. If you are in danger I won't help you."
+        "???: Just so you know, this is the real deal. If you are in danger I won't help you.",
+        "???: Oh, and take this.",
+        "$Pause",
+        "$GiveWeapon(Dagger)",
+        "$GiveAbility(EnergyMultishot)",
+        "$Emote(Blaze_Happy)",
+        " : You got <color=#507830><b>Energy Multishot</b></color>!",
+        "$Resume",
+        "$Emote(Null)",
+        "???: Be sure to equip this, you'll need it."
     };
 
     string[] TutorialOver = new string[]

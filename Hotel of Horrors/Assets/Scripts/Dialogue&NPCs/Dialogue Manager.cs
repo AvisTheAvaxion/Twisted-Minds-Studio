@@ -74,7 +74,7 @@ public class DialogueManager : MonoBehaviour
         movement.StartCutscene();
         lines = dialogue.getDialogue(dialogueName);
         currentLine = line;
-        //playerGUI.SetActive(false);
+        playerGUI.SetActive(false);
 
         auto = false;
         instaSkip = false;
@@ -561,6 +561,20 @@ public class DialogueManager : MonoBehaviour
                 {
                     dialogueGUI.ToggleGUI(bool.Parse(toggleInfo));
                 }
+
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
+            }
+            else if (lines[currentLine].StartsWith("$TogglePlayerUI") || lines[currentLine].EndsWith("$TogglePlayerUI"))
+            {
+                currentState = CutsceneState.Waiting;
+
+                int toggleStartIndex = lines[currentLine].IndexOf('(');
+                int toggleEndIndex = lines[currentLine].IndexOf(')');
+                string toggleInfo = lines[currentLine].Substring(toggleStartIndex + 1, toggleEndIndex - toggleStartIndex - 1);
+
+                playerGUI.SetActive(bool.Parse(toggleInfo));
 
                 //Auto move to the next line
                 currentLine++;

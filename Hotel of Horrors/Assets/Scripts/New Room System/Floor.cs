@@ -390,4 +390,9 @@ public class Floor : MonoBehaviour
         mediumChance = save.mediumRoomChance;
         hardChance = save.hardRoomChance;
     }
+
+    public void SetCurrentRoom(string roomName)
+    {
+        currentRoom = roomName;
+    }
 }

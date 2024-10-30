@@ -324,7 +324,7 @@ public class QuestSystem : MonoBehaviour
                     }
                     else if(playerChoice == 2) // Player wants to skip tutorial
                     {
-                        SetQuest(0, 13);
+                        SetQuest(0, 14);
                         LoadObjective();
                         //Do nothing with doors, door to varren is in accessable place from start
                         //SetQuest to the last quest
@@ -370,7 +370,9 @@ public class QuestSystem : MonoBehaviour
                     ActivateSpawner("Combat Tutorial");
                     break;
                 case 14:
-
+                    UnlockDirectDoors();
+                    SetQuestTitle("Explore");
+                    SetQuestDesc("Seek a way out of this place");
                     break;
             }
         }

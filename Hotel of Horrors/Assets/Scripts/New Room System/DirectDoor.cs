@@ -27,6 +27,8 @@ public class DirectDoor : MonoBehaviour
 
     public DoorOrientations doorLocation;
     DoorOrientations targetOrientation;
+    DirectDoor correspondingDoor;
+    Room correspondingRoom;
 
     private void Start()
     {
@@ -37,7 +39,13 @@ public class DirectDoor : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
-        if(fadeImage == null)
+        if (spawnLocation)
+        {
+            correspondingDoor = spawnLocation.parent.GetComponent<DirectDoor>();
+            correspondingRoom = correspondingDoor.transform.parent.GetComponent<Room>();
+        }
+        
+        if (fadeImage == null)
             fadeImage = GameObject.Find("Fade to Black Image").GetComponent<Image>();
 
         switch (doorLocation)
@@ -65,6 +73,10 @@ public class DirectDoor : MonoBehaviour
         if (!locked && collision.gameObject.tag.Equals("Player"))
         {
             StartCoroutine(TeleportPlayer(collision.gameObject));
+            if (!sceneTransition)
+            {
+                floor.SetCurrentRoom(correspondingRoom.roomName);
+            }
         }
     }
 

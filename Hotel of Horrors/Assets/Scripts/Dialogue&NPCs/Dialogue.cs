@@ -190,6 +190,7 @@ public class Dialogue
     #region Tutorial Dialog
     string[] WakeUpTutorial = new string[]
     {
+        "$PlaySong|Tutorial",
         "$Emote(Blaze_Shocked)",
         "Blaze: Ughhh",
         "Blaze: What? Where am I?",
@@ -371,7 +372,7 @@ public class Dialogue
 
     string[] VarrenEncounter = new string[]
     {
-        "$PlaySong|StienTheme",
+        //"$PlaySong|StienTheme",
         "$Tele(Varren,43.462,-15.558)",
         "$Move(Varren,39.21,-15.66)",
         "$Emote(Varren_Surprised)",

@@ -313,8 +313,8 @@ MonoBehaviour:
   aggroRadius: 1.72
   contactDamage: 0
   contactKnockback: 0
-  attackCooldownMin: 1
-  attackCooldownMax: 2
+  attackCooldownMin: 1.5
+  attackCooldownMax: 2.5
   hitStopLength: 0.05
   maxDistanceToNavigate: 3
   contWalkRightAfterAttack: 0
@@ -400,6 +400,10 @@ MonoBehaviour:
     minCount: 1
     maxCount: 1
     weight: 0.05
+  - item: {fileID: 11400000, guid: a226a13a06d1a57448080f67b5e5acc7, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 0.7
   emotionalEnergyPrefab: {fileID: 98322870789914543, guid: 88afadea5fb2250408442fb5baf50973, type: 3}
   deathLayer: 16
   enemyVisuals: {fileID: 4891665340419228868}

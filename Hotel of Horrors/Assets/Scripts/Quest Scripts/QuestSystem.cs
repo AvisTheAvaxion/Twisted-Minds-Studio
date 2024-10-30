@@ -550,6 +550,7 @@ public class QuestSystem : MonoBehaviour
                 objectiveNum = currentSave.objectiveNum;
                 currentFloor.ClearGuaranteeRooms();
                 LoadObjective();
+                SetRequiredGameState(floor, ObjectiveNum);
             }
         }
     }

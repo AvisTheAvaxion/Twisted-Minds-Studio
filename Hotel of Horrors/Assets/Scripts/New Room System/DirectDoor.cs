@@ -73,7 +73,7 @@ public class DirectDoor : MonoBehaviour
         if (!locked && collision.gameObject.tag.Equals("Player"))
         {
             StartCoroutine(TeleportPlayer(collision.gameObject));
-            if (!sceneTransition)
+            if (!sceneTransition && correspondingRoom != null)
             {
                 floor.SetCurrentRoom(correspondingRoom.roomName);
             }

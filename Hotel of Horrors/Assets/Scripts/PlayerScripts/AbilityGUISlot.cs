@@ -36,7 +36,7 @@ public class AbilityGUISlot : MonoBehaviour, IPointerClickHandler
     public void UpdateImage(AbilityInfo abilityInfo)
     {
         abilityImage.sprite = abilityInfo.GetSprite();
-        canvasGroup.alpha = 0.5f;
+        canvasGroup.alpha = 0.3f;
     }
     public void UpdateImage(Ability ability)
     {

@@ -18,14 +18,20 @@ public class AudioSlider : MonoBehaviour
 
     public void SfxUpdate()
     {
-        Debug.Log(sfxSlider.value);
-        NewAudioManager.SFXVolume(sfxSlider.value);
+        Debug.Log(Normalize(sfxSlider));
+        NewAudioManager.SFXVolume(Normalize(sfxSlider));
         NewAudioManager.PlayEffect("NextLine");
     }
 
     public void BgmUpdate()
     {
-        Debug.Log(BgmSlider.value);
-        NewAudioManager.BackgroundVolume(BgmSlider.value);
+        Debug.Log(Normalize(BgmSlider));
+        NewAudioManager.BackgroundVolume(Normalize(BgmSlider));
+    }
+
+    private float Normalize(Slider slider)
+    {
+        float myValue = slider.value / 20f;
+        return myValue;
     }
 }

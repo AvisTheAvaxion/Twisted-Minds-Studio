@@ -12,8 +12,8 @@ public class AudioSlider : MonoBehaviour
 
     private void Start()
     {
-        sfxSlider.value = NewAudioManager.SFXVolume();
-        BgmSlider.value = NewAudioManager.BackgroundVolume();
+        sfxSlider.value = NewAudioManager.SFXVolume() * 20;
+        BgmSlider.value = NewAudioManager.BackgroundVolume() * 20;
     }
 
     public void SfxUpdate()

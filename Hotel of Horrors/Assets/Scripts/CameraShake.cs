@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraShake : MonoBehaviour
 {
     [SerializeField] Transform camera;
+    [SerializeField] float dampener = 0.8f;
 
     Vector3 originalCamPos;
 
@@ -18,7 +19,10 @@ public class CameraShake : MonoBehaviour
         this.interruptable = interruptable;
 
         if (shakeCoroutine != null)
+        {
+            camera.localPosition = originalCamPos;
             StopCoroutine(shakeCoroutine);
+        }
 
         shakeCoroutine = StartCoroutine(Shake(frequency, smoothing, length));
     }
@@ -30,7 +34,10 @@ public class CameraShake : MonoBehaviour
         this.interruptable = interruptable;
 
         if (shakeCoroutine != null)
+        {
+            camera.localPosition = originalCamPos;
             StopCoroutine(shakeCoroutine);
+        }
 
         shakeCoroutine = StartCoroutine(Shake(frequency, 0.5f, 0.2f));
     }
@@ -41,7 +48,10 @@ public class CameraShake : MonoBehaviour
         this.interruptable = interruptable;
 
         if (shakeCoroutine != null)
+        {
+            camera.localPosition = originalCamPos;
             StopCoroutine(shakeCoroutine);
+        }
 
         shakeCoroutine = StartCoroutine(Shake(frequency, 0.5f, length));
     }
@@ -52,7 +62,7 @@ public class CameraShake : MonoBehaviour
         float t = 0;
         while(t < length)
         {
-            Vector2 shakeVector = Random.insideUnitCircle * frequency;
+            Vector2 shakeVector = Random.insideUnitCircle * frequency * dampener;
             camera.localPosition = Vector3.Lerp(camera.localPosition, originalCamPos + new Vector3(shakeVector.x, shakeVector.y, 0), smoothing * Time.deltaTime * 15f);
             yield return null;
             t += Time.deltaTime;

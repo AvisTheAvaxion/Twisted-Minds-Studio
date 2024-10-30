@@ -10382,7 +10382,7 @@ MonoBehaviour:
   openCutscene: 11
   stages:
   - stage: 1
-    healthThresholdToNextStage: 150
+    healthThresholdToNextStage: 250
     attackSequence: 000000000000000001000000
     cutscene: 27
     correctChoice: 1
@@ -10488,7 +10488,7 @@ MonoBehaviour:
     type: 0
     defaultValue: 150
     hasMax: 1
-    maxValue: 300
+    maxValue: 500
   stats: []
 --- !u!61 &7819676505427196098
 BoxCollider2D:

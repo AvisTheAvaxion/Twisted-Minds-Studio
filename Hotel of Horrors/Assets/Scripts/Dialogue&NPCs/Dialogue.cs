@@ -501,7 +501,7 @@ public class Dialogue
         "Blaze: Surgery?",
         "Dr. Harris: Did the nurse not tell you anything? I'm afraid the good doctor's son won't make it if we aren't on schedule.",
         "Blaze: His son? What happened to him?",
-        "Dr. Harris: A horrendous accident! The poor lad took a hard hid during the semifinals.",
+        "Dr. Harris: A horrendous accident! The poor lad took a hard hit during the semifinals.",
         "Blaze: The semifinals?",
         "Dr. Harris: Indeed, but don't fret my boy. I am fully confident in the abilities of Dr. Stein, and that's where we come in.",
         "Dr. Harris: Now let's see here, first off we need bandages and antiseptic, I'll handle that, you just collect some rootweed and numblumbitantrilia.",

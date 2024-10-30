@@ -246,7 +246,6 @@ public class DialogueManager : MonoBehaviour
                 int moveEndIndex = lines[currentLine].IndexOf(')');
                 string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
                 string[] splitString = moveInfo.Split(',');
-                playerAudio.NextLine(currentLine);
 
                 Vector3 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
                 Transform objTransform = GameObject.Find(splitString[0]).transform;
@@ -260,7 +259,6 @@ public class DialogueManager : MonoBehaviour
                 int moveEndIndex = lines[currentLine].IndexOf(')');
                 string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
                 string[] splitString = moveInfo.Split(',');
-                playerAudio.NextLine(currentLine);
 
                 //print("Start character move for cutscene");
                 Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
@@ -274,7 +272,6 @@ public class DialogueManager : MonoBehaviour
                 string teleInfo = lines[currentLine].Substring(teleStartIndex + 1, teleEndIndex - teleStartIndex - 1);
                 string[] splitString = teleInfo.Split(',');
                 Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
-                playerAudio.NextLine(currentLine);
                 GameObject.Find(splitString[0]).transform.position = target;
 
                 //Auto move to the next line
@@ -622,7 +619,6 @@ public class DialogueManager : MonoBehaviour
     IEnumerator Timer(float time)
     {
         yield return new WaitForSeconds(time);
-        playerAudio.NextLine(currentLine);
 
         //Auto move to the next line
         currentLine++;
@@ -692,7 +688,6 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(time);
         }
         cameraTransform.position = target;
-        playerAudio.NextLine(currentLine);
 
         //Auto move to the next line
         currentLine++;

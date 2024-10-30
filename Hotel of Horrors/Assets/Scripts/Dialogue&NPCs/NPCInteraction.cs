@@ -55,7 +55,8 @@ public class NPCInteraction : MonoBehaviour
             {
                 npcDialog = Dialogue.Dialog.None;
             }
-            activeBehavior.ToggleButtonPrompt(false);
+            if(activeBehavior != null)
+                activeBehavior.ToggleButtonPrompt(false);
             npcName = null;
             activeBehavior = null;
         }

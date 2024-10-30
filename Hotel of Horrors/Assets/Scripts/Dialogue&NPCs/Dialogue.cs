@@ -508,7 +508,7 @@ public class Dialogue
         "Blaze: Rootfeet and numblubi... what?",
         "Dr. Harris: Rootweed, and.. forget it. You should be able to find some from defeating monsters.",
         "Dr. Harris: Come find me when you've got at least 20 pieces of each, don't keep me waiting.",
-        "Dr. Harris: Todaloo!",
+        "Dr. Harris: Toodaloo!",
         //Dr. Harris walks off into a different room
         //Collect quest where the player needs to get emotional energy
     };
@@ -551,7 +551,7 @@ public class Dialogue
         "Dr. Harris: Victor, the good Doctors son, lost a lot of blood after the accident",
         "Dr. Harris: We will need to replinish it if he hopes to play in the finals.",
         "Dr. Harris: That's enough questions for now. We must hurry if we want to save our star athlete in time!",
-        "Dr. Harris: Todaloo!",
+        "Dr. Harris: Toodaloo!",
         //(Dr. Harris leaves the room)
         //Player must kill enemies using the scapel
     };
@@ -584,7 +584,7 @@ public class Dialogue
         "Dr. Harris: I'll be waiting for you in the operatin room.",
         "Blaze: Wait, your scapel",
         "Dr. Harris: Hold onto it my dear boy. Our job is not yet complete",
-        "Dr. Harris: Todaloo!",
+        "Dr. Harris: Toodaloo!",
         //The player needs to go to Dr. Stein's office and grab the jersey
     };
 

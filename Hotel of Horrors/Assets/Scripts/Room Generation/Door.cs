@@ -89,7 +89,7 @@ public class Door : MonoBehaviour
                     if (linkedDoor == null)
                     {
                         //make the floor run the logic for getting the next room
-                        linkedDoor = floor.getDoorLink(targetOrientation);
+                        linkedDoor = floor.getDoorLink(targetOrientation, this);
                     }
 
                     StartCoroutine(TeleportPlayer(player));
@@ -120,9 +120,9 @@ public class Door : MonoBehaviour
 
         //generates a potential elevator room spawn
         floor.IncreaseElevatorChance();
-        if (linkedDoor.associatedRoom.category == Room.RoomCategories.easy ||
+        if ((linkedDoor.associatedRoom.category == Room.RoomCategories.easy ||
             linkedDoor.associatedRoom.category == Room.RoomCategories.medium ||
-            linkedDoor.associatedRoom.category == Room.RoomCategories.hard)
+            linkedDoor.associatedRoom.category == Room.RoomCategories.hard) && linkedDoor.associatedRoom.enemySpawner.AreEnemiesRemaining())
         {
             linkedDoor.associatedRoom.MakeElevatorDoor();
         }

@@ -17,7 +17,7 @@ public class Floor : MonoBehaviour
 
     [SerializeField] int floorNumber = 1;
 
-    [SerializeField] int traversalsForReset = 5;
+    [SerializeField] int traversalsForReset = 12;
     int roomTraversals = 0;
 
     //chance gained to spawn each room for every EE picked up
@@ -38,6 +38,8 @@ public class Floor : MonoBehaviour
     [SerializeField] float hallwayChance = 0f;
     [SerializeField] float peacefulRoomChance = 0f;
     [SerializeField] float guaranteeRoomChance = 80;
+    [Tooltip("The chance for a freshly linked door's linked door to be the door just entered")]
+    [SerializeField] float bidirectionalDoorPairChance = 65;
 
     [Header("Boss Room")]
     [SerializeField] DirectDoor toBossDoor;
@@ -156,7 +158,7 @@ public class Floor : MonoBehaviour
     /// Runs the logic for finding the next room to take the player
     /// </summary>
     /// <returns>The next room's spawn location to teleport the player to</returns>
-    public Door getDoorLink(Door.DoorLocations targetOrientation)
+    public Door getDoorLink(Door.DoorLocations targetOrientation, Door currentDoor)
     {
         Door doorLink = null;
         float difficultyRoll = Random.Range(0f, 100f);
@@ -255,6 +257,15 @@ public class Floor : MonoBehaviour
         if(doorLink.associatedRoom.removeDoorsUponEntering)
             doorLink.associatedRoom.doorsAvailable.Remove(doorLink);
         currentRoom = doorLink.associatedRoom.roomName;
+
+        if(bidirectionalDoorPairChance > Random.Range(0, 100f))
+        {
+            doorLink.linkedDoor = currentDoor;
+            if(currentDoor.associatedRoom.doorsAvailable.Contains(currentDoor))
+            {
+                currentDoor.associatedRoom.doorsAvailable.Remove(currentDoor);
+            }
+        }
 
         //questSys.QuestEvent(QuestSystem.QuestEventType.RoomEnter, currentRoom);
 

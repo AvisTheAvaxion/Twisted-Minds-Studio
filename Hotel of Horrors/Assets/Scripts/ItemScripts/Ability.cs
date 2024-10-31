@@ -82,13 +82,13 @@ public class Ability
 
         AbilityInfo.UpgradeInfo upgradeInfo = GetInfo().GetUpgradeInfo(currentLevel - 1);
 
-        damage *= 1 + upgradeInfo.percentageIncrease;
-        cooldown *= 1 - upgradeInfo.percentageIncrease;
-        duration *= 1 + upgradeInfo.percentageIncrease;
-        size *= 1 + upgradeInfo.percentageIncrease;
-        range *= 1 + upgradeInfo.percentageIncrease;
+        damage *= 1 + (upgradeInfo.percentageIncrease / 100f);
+        cooldown *= 1 - (upgradeInfo.percentageIncrease / 100f);
+        duration *= 1 + (upgradeInfo.percentageIncrease / 100f);
+        size *= 1 + (upgradeInfo.percentageIncrease / 100f);
+        range *= 1 + (upgradeInfo.percentageIncrease / 100f);
 
-        deflectionResistance *= 1 + upgradeInfo.percentageIncrease;
+        deflectionResistance *= 1 + (upgradeInfo.percentageIncrease / 100f);
 
         currentLevel++;
 

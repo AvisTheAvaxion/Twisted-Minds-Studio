@@ -382,7 +382,7 @@ public class QuestSystem : MonoBehaviour
             {
                 case 0:
                     SetQuestTitle("Explore Floor 1");
-                    TeleportGameobject("DrHarris(Intro)", new Vector2(55.19f, -27.79f), true);
+                    TeleportGameobject("DrHarris_Intro", new Vector2(56.11f, -26.8f), true);
                     break;
                 case 1:
                     Collect collect = (Collect)currentObjective;
@@ -392,8 +392,8 @@ public class QuestSystem : MonoBehaviour
                 case 3:
                     SetQuestTitle("Herb Delivery");
                     SetQuestDesc("Return to Dr. Harris");
-                    TeleportGameobject("DrHarris(Intro)", new Vector2(51f, -27f), true);
-                    TeleportGameobject("DrHarris(Q2)", new Vector2(55.19f, -27.79f), true);
+                    TeleportGameobject("DrHarris_Intro", new Vector2(51f, -27f), true);
+                    TeleportGameobject("DrHarris_Q2", new Vector2(56.11f, -26.8f), true);
                     break;
                 case 4:
                     Kill kill = (Kill)currentObjective;
@@ -403,12 +403,13 @@ public class QuestSystem : MonoBehaviour
                 case 6:
                     SetQuestTitle("Blood Delivery");
                     SetQuestDesc("Return to Dr. Harris");
-                    TeleportGameobject("DrHarris(Q2)", new Vector2(51f, -27f), true);
-                    TeleportGameobject("DrHarris(Q3)", new Vector2(55.19f, -27.79f), true);
+                    TeleportGameobject("DrHarris_Q2", new Vector2(51f, -27f), true);
+                    TeleportGameobject("DrHarris_Q4", new Vector2(56.11f, -26.8f), true);
                     break;
                 case 7:
                     SetQuestTitle("The Big Day");
                     SetQuestDesc("Get the patient's jersey");
+                    TeleportGameobject("DrHarris_Q4", new Vector2(51f, -27f), true);
                     TeleportGameobject("FrankJersey(Quest)", new Vector2(63.3892f, -28.0588f), true);
                     break;
                 case 8:

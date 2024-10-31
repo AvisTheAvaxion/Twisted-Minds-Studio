@@ -40,6 +40,7 @@ public class Floor : MonoBehaviour
     [SerializeField] float guaranteeRoomChance = 80;
     [Tooltip("The chance for a freshly linked door's linked door to be the door just entered")]
     [SerializeField] float bidirectionalDoorPairChance = 65;
+    [SerializeField] float connectToSameRoomChance = 5;
 
     [Header("Boss Room")]
     [SerializeField] DirectDoor toBossDoor;
@@ -249,7 +250,17 @@ public class Floor : MonoBehaviour
             {
                 doorLink = possibleRooms[i].GetTargetDoor(targetOrientation);
                 if (doorLink == null)
+                {
                     possibleRooms.RemoveAt(i);
+                }
+                else
+                {
+                    if(doorLink.associatedRoom.roomName == currentRoom && 
+                        (doorLink.associatedRoom.doorsAvailable.Count <= 1 || connectToSameRoomChance < Random.Range(0, 100f)))
+                    {
+                        doorLink = null;
+                    }
+                }
             }
 
         } while (doorLink == null);

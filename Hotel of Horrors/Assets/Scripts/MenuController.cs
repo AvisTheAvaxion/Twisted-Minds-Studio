@@ -30,7 +30,8 @@ public class MenuController : MonoBehaviour
 
         GameTime.UnpauseTime();
 
-        settingsPage.LoadSettings();
+        if(settingsPage)
+            settingsPage.LoadSettings();
         /*Screen.SetResolution(1920, 1080, true);
         Screen.fullScreen = true;
         GlobalSettings.isFullScreen = true;

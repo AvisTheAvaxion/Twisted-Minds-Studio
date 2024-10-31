@@ -495,20 +495,26 @@ public class Dialogue
     string[] DrHarrisQuestIntro = new string[]
     {
         //The player enters the outpatient room, Doctor Dr. Harris is standing inside with a clipboard
+        "$Animate(DrHarris_Intro,Talk1,true)",
         "Dr. Harris: There you are! You must be my new assistant!",
         "Blaze: Assistant?",
         "Dr. Harris: Yes. Come along now, we have a lot to do. We need to get everything ready for the surgery.",
         "Blaze: Surgery?",
         "Dr. Harris: Did the nurse not tell you anything? I'm afraid the good doctor's son won't make it if we aren't on schedule.",
         "Blaze: His son? What happened to him?",
+        "$Animate(DrHarris_Intro,Talk1,false)",
+        "$Animate(DrHarris_Intro,Talk2,true)",
         "Dr. Harris: A horrendous accident! The poor lad took a hard hit during the semifinals.",
         "Blaze: The semifinals?",
         "Dr. Harris: Indeed, but don't fret my boy. I am fully confident in the abilities of Dr. Stein, and that's where we come in.",
         "Dr. Harris: Now let's see here, first off we need bandages and antiseptic, I'll handle that, you just collect some rootweed and numblumbitantrilia.",
+        "$Animate(DrHarris_Intro,Talk2,false)",
+        "$Animate(DrHarris_Intro,Talk1,true)",
         "Blaze: Rootfeet and numblubi... what?",
         "Dr. Harris: Rootweed, and.. forget it. You should be able to find some from defeating monsters.",
         "Dr. Harris: Come find me when you've got at least 20 pieces of each, don't keep me waiting.",
         "Dr. Harris: Toodaloo!",
+        "$Animate(DrHarris_Intro,Talk1,false)"
         //Dr. Harris walks off into a different room
         //Collect quest where the player needs to get emotional energy
     };
@@ -525,6 +531,7 @@ public class Dialogue
     string[] DrHarrisQuest2 = new string[]
     {
         //After collecting enough emotional energy (the goop), the player walks into a room where the doctor is
+        "$Animate(DrHarris_Q2,Talk1,true)",
         "Dr. Harris: Ah! Just in time. I was wondering what was taking you so long.",
         "Blaze: I couldn't find anything but this goop.",
         "Dr. Harris: Such a hard worker too! This should be more than enough. Keep this up and I'll be sure to put in a good word with the doctor.",
@@ -539,6 +546,8 @@ public class Dialogue
         "Dr. Harris: Suit yourself.$OptionA",
         "Dr. Harris: That would be nice.$OptionB",
         "Dr. Harris: I will be sure to get you some.$OptionB",
+        "$Animate(DrHarris_Q2,Talk1,false)",
+        "$Animate(DrHarris_Q2,Talk2,true)",
         "Dr. Harris: The next thing on the list is rimblenut, I'll do that one, and O- Blood.",
         "Dr. Harris: For this one, you'll need something to collect the blood in, so let's see here.",
         " : Dr. Harris digs through his bag, which holds a collection of perfectly normal medical instruments...",
@@ -547,11 +556,14 @@ public class Dialogue
         "Dr. Harris: Ah, this should make it easier. When you encounter the monsters, use this scalpel.",
         "Dr. Harris: Severing the arteries should make collecting the blood we need a breeze.",
         "Dr. Harris: As usual, come and find me when you're done.",
+        "$Animate(DrHarris_Q2,Talk2,false)",
+        "$Animate(DrHarris_Q2,Talk1,true)",
         "Blaze: Why do we need all this bood",
         "Dr. Harris: Victor, the good Doctors son, lost a lot of blood after the accident",
         "Dr. Harris: We will need to replinish it if he hopes to play in the finals.",
         "Dr. Harris: That's enough questions for now. We must hurry if we want to save our star athlete in time!",
         "Dr. Harris: Toodaloo!",
+        "$Animate(DrHarris_Q2,Talk1,false)",
         //(Dr. Harris leaves the room)
         //Player must kill enemies using the scapel
     };
@@ -567,13 +579,18 @@ public class Dialogue
     string[] DrHarrisQuest4 = new string[]
     {
         //(Blaze enters a room with Dr. Dr. Harris)
+        "$Animate(DrHarris_Q4,Talk1,true)",
         "Dr. Harris: Ah good, you're here.",
         "Blaze: Is everything okay?",
+        "$Animate(DrHarris_Q4,Talk1,false)",
+        "$Animate(DrHarris_Q4,Talk2,true)",
         "Dr. Harris: I'm afraid the good doctor's son isn't doing as well as we hoped.",
         "Blaze: Did the rootfeet and numblistuff not work?",
         "Dr. Harris: The treatment wasn't as effective as we had hoped.",
         "Dr. Harris: In fact, I was only barely able to deliver the ingredients before the patient died.",
         "Blaze: He died?",
+        "$Animate(DrHarris_Q4,Talk2,false)",
+        "$Animate(DrHarris_Q4,Talk1,true)",
         "Dr. Harris: ...",
         "Dr. Harris: Nonesense. Not if I have anything to say about it.",
         "Dr. Harris: I'm sure the good doctor has everything under control.",
@@ -585,6 +602,7 @@ public class Dialogue
         "Blaze: Wait, your scapel",
         "Dr. Harris: Hold onto it my dear boy. Our job is not yet complete",
         "Dr. Harris: Toodaloo!",
+        "$Animate(DrHarris_Q4,Talk1,false)",
         //The player needs to go to Dr. Stein's office and grab the jersey
     };
 

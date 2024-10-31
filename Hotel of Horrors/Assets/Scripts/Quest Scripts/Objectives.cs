@@ -76,13 +76,13 @@ public class Objectives
 
     string[] Floor1 = new string[]
     {
-        "Talk|DrHarris(Intro)|HarrisRoom",
+        "Talk|DrHarris_Intro|HarrisRoom",
         "Collect|200",
         "SetCutscene|DrHarrisQuest1",
-        "Talk|DrHarris(Q2)|HarrisRoom",
+        "Talk|DrHarris_Q2|HarrisRoom",
         "Kill|20",
         "SetCutscene|DrHarrisQuest3",
-        "Talk|DrHarris(Q3)|HarrisRoom",
+        "Talk|DrHarris_Q4|HarrisRoom",
         "Talk|FrankJersey(Quest)|DrFrankOffice",
         "KillSpecific|1|FrankNSteinMonster",
         "ClearFloor"

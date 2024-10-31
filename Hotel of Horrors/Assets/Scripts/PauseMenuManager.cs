@@ -10,13 +10,15 @@ public class PauseMenuManager : MonoBehaviour
 
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject pauseScreen;
-    [SerializeField] GameObject settings;
+    [SerializeField] SettingsScript settings;
 
     [SerializeField] DialogueManager dialogueManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        settings.LoadSettings();
+
         pauseMenu.SetActive(false);
 
         paused = false;
@@ -51,7 +53,7 @@ public class PauseMenuManager : MonoBehaviour
 
         pauseMenu.SetActive(true);
         pauseScreen.SetActive(true);
-        settings.SetActive(false);
+        settings.gameObject.SetActive(false);
     }
     public void UnPause()
     {
@@ -64,12 +66,12 @@ public class PauseMenuManager : MonoBehaviour
 
     public void OpenSettings()
     {
-        settings.SetActive(true);
+        settings.gameObject.SetActive(true);
         pauseScreen.SetActive(false);
     }
     public void CloseSettings()
     {
-        settings.SetActive(false);
+        settings.gameObject.SetActive(false);
         pauseScreen.SetActive(true);
     }
 

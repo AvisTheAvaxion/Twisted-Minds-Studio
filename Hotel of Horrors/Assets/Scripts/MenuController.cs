@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class MenuController : MonoBehaviour
 {
     [SerializeField] GameObject mainMenuPage;
-    [SerializeField] GameObject settingsPage;
+    [SerializeField] SettingsScript settingsPage;
     [SerializeField] GameObject loadGamePage;
 
     [SerializeField] Transform saveFilesContainer;
@@ -30,10 +30,11 @@ public class MenuController : MonoBehaviour
 
         GameTime.UnpauseTime();
 
-        Screen.SetResolution(1920, 1080, true);
+        settingsPage.LoadSettings();
+        /*Screen.SetResolution(1920, 1080, true);
         Screen.fullScreen = true;
         GlobalSettings.isFullScreen = true;
-        gameObject.GetComponent<CanvasScaler>().scaleFactor = 1f;
+        gameObject.GetComponent<CanvasScaler>().scaleFactor = 1f;*/
 
         saveFilesGUI = new List<SaveFileGUI>();
 
@@ -136,7 +137,7 @@ public class MenuController : MonoBehaviour
     public void ToggleSettings()
     {
         mainMenuPage.SetActive(!mainMenuPage.activeSelf);
-        settingsPage.SetActive(!settingsPage.activeSelf);
+        settingsPage.gameObject.SetActive(!settingsPage.gameObject.activeSelf);
     }
 
     public void QuitGame()

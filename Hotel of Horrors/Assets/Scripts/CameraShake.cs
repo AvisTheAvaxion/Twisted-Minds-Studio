@@ -58,6 +58,8 @@ public class CameraShake : MonoBehaviour
 
     IEnumerator Shake(float frequency, float smoothing, float length)
     {
+        if (PlayerPrefs.HasKey("Dampener")) dampener = PlayerPrefs.GetFloat("Dampener");
+
         originalCamPos = camera.localPosition;
         float t = 0;
         while(t < length)

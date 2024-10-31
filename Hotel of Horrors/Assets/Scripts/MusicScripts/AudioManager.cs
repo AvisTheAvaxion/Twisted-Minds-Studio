@@ -17,7 +17,7 @@ public class NewAudioManager : MonoBehaviour
     void Awake()
     {
         if (PlayerPrefs.HasKey("SFXVolume")) { volumes = Load(); }
-        else { volumes = new float[3] { 1f, 1f, 1f }; }
+        else { volumes = new float[3] { 0.5f, 0.3f, 1f }; }
 
         bgmSource.volume = volumes[0];
         effectSource.volume = volumes[1];

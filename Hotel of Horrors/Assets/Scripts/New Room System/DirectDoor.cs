@@ -13,7 +13,9 @@ public class DirectDoor : MonoBehaviour
     public Room associatedRoom;
     public Transform spawnLocation;
 
+    [SerializeField] bool lockAfterEntering;
     [SerializeField] Animator animator;
+    [SerializeField] Animator lockedGateAnimator;
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] Image fadeImage;
 
@@ -38,6 +40,9 @@ public class DirectDoor : MonoBehaviour
         associatedRoom = GetComponentInParent<Room>();
 
         animator = GetComponent<Animator>();
+
+        if (locked) LockDoor();
+        else UnlockDoor();
 
         if (spawnLocation)
         {
@@ -75,6 +80,10 @@ public class DirectDoor : MonoBehaviour
             StartCoroutine(TeleportPlayer(collision.gameObject));
             if (!sceneTransition && correspondingRoom != null)
             {
+                if(lockAfterEntering && correspondingDoor)
+                {
+                    correspondingDoor.LockDoor();
+                }
                 floor.SetCurrentRoom(correspondingRoom.roomName);
             }
         }
@@ -127,13 +136,16 @@ public class DirectDoor : MonoBehaviour
     public void LockDoor()
     {
         locked = true;
-        if(animator)
-            animator.SetBool("Locked", true);
+        if (lockedGateAnimator)
+        {
+            lockedGateAnimator.gameObject.SetActive(true);
+            lockedGateAnimator.SetBool("Close", true);
+        }
     }
     public void UnlockDoor()
     {
         locked = false;
-        if (animator)
-            animator.SetBool("Locked", false);
+        if (lockedGateAnimator)
+            lockedGateAnimator.SetBool("Close", false);
     }
 }

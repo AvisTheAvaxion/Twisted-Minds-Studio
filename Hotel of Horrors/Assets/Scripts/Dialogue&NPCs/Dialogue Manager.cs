@@ -112,6 +112,72 @@ public class DialogueManager : MonoBehaviour
         //While their are still lines of dialog left to read.
         if (currentLine < lines.Length)
         {
+            if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceOne)
+            {
+                currentState = CutsceneState.Continue;
+
+                while (currentLine < lines.Length && lines[currentLine].Contains("$OptionB"))
+                {
+                    print("Skipping lines with OptionB");
+                    currentLine++;
+                }
+
+                //Auto move to the next line
+                //OnDialogueUpdate();
+            }
+            else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceTwo)
+            {
+                currentState = CutsceneState.Continue;
+
+                while (currentLine < lines.Length && lines[currentLine].Contains("$OptionA"))
+                {
+                    print("Skipping lines with OptionA");
+                    currentLine++;
+                }
+
+                //Auto move to the next line
+                //OnDialogueUpdate();
+            }
+
+            string currentLineString = lines[currentLine];
+
+            if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceOne)
+            {
+                currentState = CutsceneState.Continue;
+
+                currentLineString = lines[currentLine].Replace("$OptionA", "");
+                print(currentLineString);
+
+                /*string outputText = optionAText.Split(":")[1];
+                string outputName = optionAText.Split(':')[0];
+                if (dialogueGUI)
+                {
+                    dialogueGUI.SetDialogue(outputName, outputText);
+                }
+                playerAudio.NextLine(currentLine);
+
+                currentLine++;*/
+            }
+            else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceTwo)
+            {
+                currentState = CutsceneState.Continue;
+
+                currentLineString = lines[currentLine].Replace("$OptionB", "");
+                print(currentLineString);
+
+                /*string outputText = optionBText.Split(":")[1];
+                string optionBName = optionBText.Split(':')[0];
+                if (dialogueGUI)
+                {
+                    dialogueGUI.SetDialogue(optionBName, outputText);
+                }
+
+                playerAudio.NextLine(currentLine);
+
+                currentLine++;*/
+            }
+
+
             //Parse the line for relevent information and do corresponding actions
             #region Audio Functions
             if (lines[currentLine].StartsWith("$PlayEffect"))
@@ -160,7 +226,7 @@ public class DialogueManager : MonoBehaviour
 
             #endregion
             #region Choice Functions
-            else if (lines[currentLine].EndsWith("$Prompt"))
+            if (lines[currentLine].EndsWith("$Prompt"))
             {
                 currentState = CutsceneState.Picking;
 
@@ -181,61 +247,6 @@ public class DialogueManager : MonoBehaviour
                 playerAudio.NextLine(currentLine);
 
                 currentLine++;
-            }
-            else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceOne)
-            {
-                currentState = CutsceneState.Continue;
-
-                string optionAText = lines[currentLine].Replace("$OptionA", "");
-                string outputText = optionAText.Split(":")[1];
-                string outputName = optionAText.Split(':')[0];
-                if (dialogueGUI)
-                {
-                    dialogueGUI.SetDialogue(outputName, outputText);
-                }
-                playerAudio.NextLine(currentLine);
-
-                currentLine++;
-            }
-            else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceOne)
-            {
-                currentState = CutsceneState.Continue;
-
-                while (currentLine < lines.Length && lines[currentLine].Contains("$OptionB"))
-                {
-                    currentLine++;
-                }
-
-                //Auto move to the next line
-                OnDialogueUpdate();
-            }
-            else if (lines[currentLine].EndsWith("$OptionB") && currentChoice == PlayerChoice.ChoiceTwo)
-            {
-                currentState = CutsceneState.Continue;
-
-                string optionBText = lines[currentLine].Replace("$OptionB", "");
-                string outputText = optionBText.Split(":")[1];
-                string optionBName = optionBText.Split(':')[0];
-                if (dialogueGUI)
-                {
-                    dialogueGUI.SetDialogue(optionBName, outputText);
-                }
-
-                playerAudio.NextLine(currentLine);
-
-                currentLine++;
-            }
-            else if (lines[currentLine].EndsWith("$OptionA") && currentChoice == PlayerChoice.ChoiceTwo)
-            {
-                currentState = CutsceneState.Continue;
-
-                while (currentLine < lines.Length && lines[currentLine].Contains("$OptionA"))
-                {
-                    currentLine++;
-                }
-
-                //Auto move to the next line
-                OnDialogueUpdate();
             }
             #endregion
             #region Cutscene Functions
@@ -585,8 +596,8 @@ public class DialogueManager : MonoBehaviour
                 {
                     dialogueGUI.ToggleGUI(true);
                 }
-                currentChoice = PlayerChoice.None;
-                string[] dialogueLine = lines[currentLine].Split(':');
+                //currentChoice = PlayerChoice.None;
+                string[] dialogueLine = currentLineString.Split(':');
                 if (dialogueGUI && dialogueLine.Length == 2)
                 {
                     dialogueGUI.SetDialogue(dialogueLine[0], dialogueLine[1]);

@@ -319,8 +319,8 @@ public class QuestSystem : MonoBehaviour
                     {
                         SetQuestTitle("Continue");
                         SetQuestDesc("Follow the green lady");
-                        TeleportGameobject("East Door To Varren Intro", new Vector2(6.971862f, -6.34f), false);
-                        TeleportGameobject("East Door To InventoryTut", new Vector2(6.971862f, -0.6041539f), false);
+                        TeleportGameobject("East Door To Varren Intro", new Vector2(6.694f, -6.34f), false);
+                        TeleportGameobject("East Door To InventoryTut", new Vector2(6.694f, -0.6041539f), false);
                     }
                     else if(playerChoice == 2) // Player wants to skip tutorial
                     {
@@ -335,7 +335,7 @@ public class QuestSystem : MonoBehaviour
                     
                     if (playerChoice == 1) //Player wants to do Inventroy Tutorial
                     {
-                        TeleportGameobject("South Door To InventoryTutorial", new Vector2(-0.009889603f, -1.899884f), false);
+                        TeleportGameobject("South Door To InventoryTutorial", new Vector2(-0.009889603f, -2.072f), false);
                         TeleportGameobject("South Door To MindRoom", new Vector2(5.14f, -1.899884f), false);
                     }
                     else if (playerChoice == 2) // Player wants to move to next tutorial
@@ -350,8 +350,8 @@ public class QuestSystem : MonoBehaviour
                     playerChoice = (int)dialogueManager.GetLastPlayerChoice();
                     if (playerChoice == 1) //Player wants to do Combat Tutorial
                     {
-                        TeleportGameobject("East Door To Varren Intro2", new Vector2(6.971862f, -6.34f), false);
-                        TeleportGameobject("East Door To CombatTut", new Vector2(6.971862f, -0.6041539f), false);
+                        TeleportGameobject("East Door To Varren Intro2", new Vector2(6.674f, -6.34f), false);
+                        TeleportGameobject("East Door To CombatTut", new Vector2(6.674f, -0.6041539f), false);
                         //Activate Shooters in the room somehow
                     }
                     else if (playerChoice == 2) // Player wants to move to end tutorial

@@ -13,7 +13,10 @@ public class QuestTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        quest.QuestEvent(QuestSystem.QuestEventType.TripTrigger, objective.ToString());
-        Destroy(this.gameObject);
+        if (collision.tag == "Player")
+        {
+            quest.QuestEvent(QuestSystem.QuestEventType.TripTrigger, objective.ToString());
+            Destroy(this.gameObject);
+        }
     }
 }

@@ -18,6 +18,7 @@ public class DirectDoor : MonoBehaviour
     [SerializeField] Animator lockedGateAnimator;
     [SerializeField] float doorTransitionLength = 0.5f;
     [SerializeField] Image fadeImage;
+    [SerializeField] bool canUnlockAfterLocking = true;
 
     QuestSystem questSystem;
     SerializationManager serialization;
@@ -47,7 +48,8 @@ public class DirectDoor : MonoBehaviour
         if (spawnLocation)
         {
             correspondingDoor = spawnLocation.parent.GetComponent<DirectDoor>();
-            correspondingRoom = correspondingDoor.transform.parent.GetComponent<Room>();
+            if(correspondingDoor)
+                correspondingRoom = correspondingDoor.transform.parent.GetComponent<Room>();
         }
         
         if (fadeImage == null)
@@ -144,6 +146,8 @@ public class DirectDoor : MonoBehaviour
     }
     public void UnlockDoor()
     {
+        if (locked && !canUnlockAfterLocking) return;
+
         locked = false;
         if (lockedGateAnimator)
             lockedGateAnimator.SetBool("Close", false);

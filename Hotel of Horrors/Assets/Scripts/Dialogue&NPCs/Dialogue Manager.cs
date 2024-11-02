@@ -118,7 +118,7 @@ public class DialogueManager : MonoBehaviour
 
                 while (currentLine < lines.Length && lines[currentLine].Contains("$OptionB"))
                 {
-                    print("Skipping lines with OptionB");
+                    //print("Skipping lines with OptionB");
                     currentLine++;
                 }
 
@@ -131,7 +131,7 @@ public class DialogueManager : MonoBehaviour
 
                 while (currentLine < lines.Length && lines[currentLine].Contains("$OptionA"))
                 {
-                    print("Skipping lines with OptionA");
+                    //print("Skipping lines with OptionA");
                     currentLine++;
                 }
 
@@ -146,7 +146,7 @@ public class DialogueManager : MonoBehaviour
                 currentState = CutsceneState.Continue;
 
                 currentLineString = lines[currentLine].Replace("$OptionA", "");
-                print(currentLineString);
+                //print(currentLineString);
 
                 /*string outputText = optionAText.Split(":")[1];
                 string outputName = optionAText.Split(':')[0];
@@ -163,7 +163,7 @@ public class DialogueManager : MonoBehaviour
                 currentState = CutsceneState.Continue;
 
                 currentLineString = lines[currentLine].Replace("$OptionB", "");
-                print(currentLineString);
+                //print(currentLineString);
 
                 /*string outputText = optionBText.Split(":")[1];
                 string optionBName = optionBText.Split(':')[0];

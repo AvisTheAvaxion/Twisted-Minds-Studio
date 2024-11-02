@@ -2394,6 +2394,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
+  canUnlockAfterLocking: 1
   doorLocation: 1
 --- !u!1001 &117606495
 PrefabInstance:
@@ -2507,6 +2508,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 1418103812}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  canUnlockAfterLocking: 1
   doorLocation: 0
 --- !u!1 &153502854
 GameObject:
@@ -4744,6 +4746,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 239562684}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  canUnlockAfterLocking: 0
   doorLocation: 0
 --- !u!1 &259262525
 GameObject:
@@ -5482,6 +5485,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4094848050660363272, guid: b29c081c5bd7ae74988c1b6d37f130e5, type: 3}
   m_PrefabInstance: {fileID: 375138402}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &390787152 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1275390386457410727, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+  m_PrefabInstance: {fileID: 1705218709}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &396752996
 PrefabInstance:
@@ -7352,6 +7360,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
+  canUnlockAfterLocking: 0
   doorLocation: 1
 --- !u!1001 &547653110
 PrefabInstance:
@@ -10250,6 +10259,118 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
+--- !u!1001 &759459640
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 810045712}
+    m_Modifications:
+    - target: {fileID: 728013206573451939, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3622474358983214661, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3622474358983214661, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: doorLocation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.331
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.046454903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5613467346823850656, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      propertyPath: m_Name
+      value: EastDoorToVarrenCombatTut
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3622474358983214661, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5613467346823850656, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 759459644}
+  m_SourcePrefab: {fileID: 100100000, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+--- !u!4 &759459641 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3682086752175103043, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+  m_PrefabInstance: {fileID: 759459640}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &759459642 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1275390386457410727, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+  m_PrefabInstance: {fileID: 759459640}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &759459643 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5613467346823850656, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+  m_PrefabInstance: {fileID: 759459640}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &759459644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759459643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779d897c317dd484aa1d03ab4ff98546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneTransition: 0
+  sceneToLoad: 0
+  locked: 0
+  associatedRoom: {fileID: 0}
+  spawnLocation: {fileID: 1486710987}
+  lockAfterEntering: 1
+  animator: {fileID: 0}
+  lockedGateAnimator: {fileID: 759459642}
+  doorTransitionLength: 0.5
+  fadeImage: {fileID: 889050100}
+  canUnlockAfterLocking: 1
+  doorLocation: 0
 --- !u!1 &780544133
 GameObject:
   m_ObjectHideFlags: 0
@@ -11678,6 +11799,7 @@ Transform:
   - {fileID: 876050917}
   - {fileID: 1939643583}
   - {fileID: 2005228457}
+  - {fileID: 759459641}
   - {fileID: 1615407643}
   - {fileID: 809293442}
   - {fileID: 661922894}
@@ -14252,6 +14374,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
+  canUnlockAfterLocking: 0
   doorLocation: 1
 --- !u!1 &910436088
 GameObject:
@@ -15984,6 +16107,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
+  canUnlockAfterLocking: 0
   doorLocation: 1
 --- !u!1 &924162483 stripped
 GameObject:
@@ -16119,6 +16243,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 949418604}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
+  canUnlockAfterLocking: 0
   doorLocation: 0
 --- !u!95 &949418604 stripped
 Animator:
@@ -19698,6 +19823,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4094848050660363272, guid: b29c081c5bd7ae74988c1b6d37f130e5, type: 3}
   m_PrefabInstance: {fileID: 1135557960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1137649408 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1275390386457410727, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
+  m_PrefabInstance: {fileID: 2125674879}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1151344935
 PrefabInstance:
@@ -23546,6 +23676,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 1925531126}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  canUnlockAfterLocking: 0
   doorLocation: 0
 --- !u!4 &1486710987 stripped
 Transform:
@@ -23665,6 +23796,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 592449555}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  canUnlockAfterLocking: 0
   doorLocation: 0
 --- !u!1 &1489556239
 GameObject:
@@ -24796,7 +24928,8 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
-  doorLocation: 1
+  canUnlockAfterLocking: 1
+  doorLocation: 0
 --- !u!1001 &1550662646
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24902,7 +25035,8 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
-  doorLocation: 1
+  canUnlockAfterLocking: 1
+  doorLocation: 0
 --- !u!1001 &1583915321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26236,6 +26370,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
+  canUnlockAfterLocking: 0
   doorLocation: 2
 --- !u!1001 &1705218709
 PrefabInstance:
@@ -26299,7 +26434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5613467346823850656, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
       propertyPath: m_Name
-      value: East Door
+      value: EastDoorCombatTutLocked
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3622474358983214661, guid: 5ec6a321d408a584082ccbe72510265e, type: 3}
@@ -27109,6 +27244,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
+  canUnlockAfterLocking: 1
   doorLocation: 0
 --- !u!1 &1780394873
 GameObject:
@@ -30483,6 +30619,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 1286141858}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  canUnlockAfterLocking: 0
   doorLocation: 0
 --- !u!1 &2005228456 stripped
 GameObject:
@@ -30508,14 +30645,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneTransition: 0
   sceneToLoad: 0
-  locked: 0
+  locked: 1
   associatedRoom: {fileID: 0}
   spawnLocation: {fileID: 1486710987}
   lockAfterEntering: 1
   animator: {fileID: 0}
-  lockedGateAnimator: {fileID: 0}
+  lockedGateAnimator: {fileID: 390787152}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
+  canUnlockAfterLocking: 0
   doorLocation: 0
 --- !u!1 &2006838875
 GameObject:
@@ -34992,6 +35130,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 0}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 889050100}
+  canUnlockAfterLocking: 0
   doorLocation: 2
 --- !u!1001 &2059232847
 PrefabInstance:
@@ -35103,6 +35242,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 2059232849}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  canUnlockAfterLocking: 1
   doorLocation: 0
 --- !u!4 &2059232852 stripped
 Transform:
@@ -35257,9 +35397,10 @@ MonoBehaviour:
   spawnLocation: {fileID: 0}
   lockAfterEntering: 0
   animator: {fileID: 830740224}
-  lockedGateAnimator: {fileID: 0}
+  lockedGateAnimator: {fileID: 830740224}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  canUnlockAfterLocking: 1
   doorLocation: 0
 --- !u!1 &2071254536
 GameObject:
@@ -35893,6 +36034,7 @@ MonoBehaviour:
   lockedGateAnimator: {fileID: 340853630}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  canUnlockAfterLocking: 0
   doorLocation: 0
 --- !u!1001 &2079839714
 PrefabInstance:
@@ -36182,14 +36324,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneTransition: 0
   sceneToLoad: 0
-  locked: 0
+  locked: 1
   associatedRoom: {fileID: 1293017671}
   spawnLocation: {fileID: 3512548663305953613}
   lockAfterEntering: 1
   animator: {fileID: 0}
-  lockedGateAnimator: {fileID: 0}
+  lockedGateAnimator: {fileID: 1137649408}
   doorTransitionLength: 0.5
   fadeImage: {fileID: 0}
+  canUnlockAfterLocking: 1
   doorLocation: 0
 --- !u!1 &2130288804
 GameObject:

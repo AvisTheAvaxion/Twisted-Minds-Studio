@@ -346,6 +346,12 @@ public class QuestSystem : MonoBehaviour
                         //Set quest to the Talk to SlimeLady(CombatIntro)
                     }
                     break;
+                case 6:
+                    LockDirectDoors();
+                    break;
+                case 7:
+                    UnlockDirectDoors();
+                    break;
                 case 10:
                     playerChoice = (int)dialogueManager.GetLastPlayerChoice();
                     if (playerChoice == 1) //Player wants to do Combat Tutorial
@@ -370,6 +376,8 @@ public class QuestSystem : MonoBehaviour
                     ActivateSpawner("Combat Tutorial");
                     break;
                 case 14:
+                    TeleportGameobject("EastDoorCombatTutLocked", new Vector2(3.331f, -4.62f), false);
+                    TeleportGameobject("EastDoorToVarrenCombatTut", new Vector2(3.331f, 1.881f), false);
                     UnlockDirectDoors();
                     SetQuestTitle("Explore");
                     SetQuestDesc("Seek a way out of this place");

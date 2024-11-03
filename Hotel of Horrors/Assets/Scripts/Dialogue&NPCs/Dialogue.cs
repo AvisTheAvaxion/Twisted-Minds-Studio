@@ -49,14 +49,20 @@ public class Dialogue
                 return AStrangeMan;
             case "DrHarrisQuestIntro":
                 return DrHarrisQuestIntro;
+            case "DrHarrisIntroReplacement":
+                return DrHarrisIntroReplacement;
             case "DrHarrisQuest1":
                 return DrHarrisQuest1;
             case "DrHarrisQuest2":
                 return DrHarrisQuest2;
+            case "DrHarrisQ2Replacement":
+                return DrHarrisQ2Replacement;
             case "DrHarrisQuest3":
                 return DrHarrisQuest3;
             case "DrHarrisQuest4":
                 return DrHarrisQuest4;
+            case "DrHarrisQ4Replacement":
+                return DrHarrisQ4Replacement;
             case "DrHarrisQuest5":
                 return DrHarrisQuest5;
             case "SteinIntro":
@@ -98,10 +104,13 @@ public class Dialogue
         DrSteinBossDoor2,
         AStrangeMan,
         DrHarrisQuestIntro,
+        DrHarrisIntroReplacement,
         DrHarrisQuest1,
         DrHarrisQuest2,
+        DrHarrisQ2Replacement,
         DrHarrisQuest3,
         DrHarrisQuest4,
+        DrHarrisQ4Replacement,
         DrHarrisQuest5,
         SteinIntro,
         SteinScene1,
@@ -195,36 +204,36 @@ public class Dialogue
         "Blaze: Ughhh",
         "Blaze: What? Where am I?",
         "Blaze: *looks around* Is this a... barn?",
-        "$Emote(Blaze_Neutral)",
+        "$Emote(Blaze_Angry)",
         "Blaze: Well, just standing here isn't going to accomplish anything",
         "$Emote(Blaze_Neutral)",
         "Blaze: I wonder if there is anything useful around here?",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         " : Use <b>WASD</b> to move",
     };
 
     //This dialog should allow the player to skip to the VarrenEncounter
     string[] MeetingTheSlimeLady = new string[]
     {
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_Meeting,Talk,true)",
         "???: Oh, dear a new guest.",
         "$Emote(Blaze_Neutral)",
         "$Animate(SlimeLady_Meeting,Talk,false)",
         "Blaze: Guest?",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_Meeting,Talk,true)",
         "???: Don't worry deary, all will be explained in due time.",
         "???: My name is Samantha. Just go out the door to the right and I'll show you the ropes!",
         "Samantha: Or are you confident you don't need my tutoring?|Teach me please|No thank you $Prompt",
         "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: I don't really get what is going on but sure! $OptionA",
-        "$Emote(Null) $OptionA",
+        "$Emote(SlimeLady) $OptionA",
         "Samantha: Alright deary, come along now. $OptionA",
         "$Emote(Blaze_Neutral) $OptionB",
         "$Animate(SlimeLady_Meeting,Pose1,false) $OptionB",
         "Blaze: No thank you, I'm sure I can figure stuff out on my own $OptionB",
-        "$Emote(Null) $OptionB",
+        "$Emote(SlimeLady) $OptionB",
         "$Animate(SlimeLady_Meeting,Talk,true) $OptionB",
         "$Animate(SlimeLady_Meeting,Pose2,true) $OptionB",
         "Samantha: Alright deary, just go through the door on the right and you're free to go whenever $OptionB",
@@ -248,28 +257,28 @@ public class Dialogue
 
     string[] SlimeLadyReplacement = new string[]
     {
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "Samantha: Hurry along now dear."
     };
 
     //This cutscene should allow the player to skip to StrangeRoom
     string[] InventoryIntro = new string[]
     {
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_InventoryIntro,Talk,true)",
         "Samantha: First things first, the <b>inventory</b>.",
         "Samantha: Do you know how to use the inventory or should we just move on?|What inventory|Just move on $Prompt",
         "$Emote(Blaze_Neutral)",
         "$Animate(SlimeLady_InventoryIntro,Talk,false)",
         "Blaze: Inventory? $OptionA",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_InventoryIntro,Talk,true)",
         "Samantha: Oh dear, you don't know? $OptionA",
         "Samantha: Don't worry honey, let's move on to the next room and I'll show you what's what! $OptionA",
         "$Emote(Blaze_Happy)",
         "$Animate(SlimeLady_InventoryIntro,Talk,false)",
         "Blaze: Of course I know about the inventory! $OptionB",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_InventoryIntro,Talk,true)",
         "Samantha: Okay deary, I'm just making sure. $OptionB",
         "Samantha: Let's move on to the next room deary. I got more stuff to show you still. $OptionB",
@@ -281,7 +290,7 @@ public class Dialogue
 
     string[] InventroyOpening = new string[]
     {
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_InventoryExplanation,Talk,true)",
         "Samantha: First things first. Press <b>tab</b> for me would you honey.",
         "$Animate(SlimeLady_InventoryExplanation,Talk,false)",
@@ -290,7 +299,7 @@ public class Dialogue
     string[] InventoryExplaination = new string[]
     {
         "$TogglePlayerUI(True)",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "Samantha: This here is your inventory! Everything you can use will end up here.",
         "Samantha: If there's ever something you want to equip, you just gotta select it then click the <b>equip button</b>.",
         "Samantha: And if there's something you don't want, just select it and press that <b>red trash button</b>.",
@@ -316,21 +325,21 @@ public class Dialogue
     //This should allow the player to skip to TutorialOver
     string[] CombatIntro = new string[]
     {
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_CombatIntro,Talk,true)",
         "Samantha: Next up, <b>combat</b>.",
         "Samantha: Do you know how to fight or should we just move on?|I'm no fighter|Just move on $Prompt",
         "$Emote(Blaze_Neutral)",
         "$Animate(SlimeLady_CombatIntro,Talk,false)",
         "Blaze: I'm not much of a fighter. $OptionA",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_CombatIntro,Talk,true)",
         "Samantha: Oh deary, you gotta fight down here to stay safe. $OptionA",
         "Samantha: I'll train you a bit so that you're a good fighter. Let's move to the next room and I'll show you! $OptionA",
         "$Emote(Blaze_Happy) $OptionB",
         "$Animate(SlimeLady_CombatIntro,Talk,false) $OptionB",
         "Blaze: I'm sure I can handle myself! $OptionB",
-        "$Emote(Null) $OptionB",
+        "$Emote(SlimeLady) $OptionB",
         "$Animate(SlimeLady_CombatIntro,Talk,true) $OptionB",
         "Samantha: Ok dear, how dependable. $OptionB",
         "Samantha: Then you are good to go. $OptionB",
@@ -342,15 +351,15 @@ public class Dialogue
 
     string[] CombatDodging = new string[]
     {
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "Samantha: In this room, bullets will shoot towards you.",
         "$Emote(Blaze_Shocked)",
         "Blaze: WHAT?!",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "Samantha: Don't worry sweetie, as long as you dash at the right time you'll be fine.",
         "$Emote(Blaze_Surprised)",
         "Blaze: Dash?",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "Samantha: Yes, pressing <b> Shift, Space, or Right Clicking</b> will give you a burst of speed!",
         "Samantha: You will also be safe from getting hit for a small window at the start of a dash!",
         "Samantha: Try it out!!",
@@ -358,13 +367,13 @@ public class Dialogue
 
     string[] CombatDodgingDone = new string[]
     {
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "Samantha: Good job! Move on now, I still got a little more to show you.",
     };
 
     string[] CombatTableBreaker = new string[]
     {
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_CombatExplanation,Talk,true)",
         "Samantha: Now it is time to teach you how to fight.",
         "Samantha: Close your eyes for just a moment. I need to get something out.",
@@ -383,7 +392,7 @@ public class Dialogue
         "$Emote(Blaze_Neutral)",
         "$Animate(SlimeLady_CombatExplanation,Talk,false)",
         "Blaze: What's the point of doing this?",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_CombatExplanation,Talk,true)",
         "Samantha: Dearie, all the best stuff is in tables, just <b>Left Click</b> on them. try it and see!",
         "$Animate(SlimeLady_CombatExplanation,Talk,false)",
@@ -393,7 +402,7 @@ public class Dialogue
     {
         "$Emote(Blaze_Surprised)",
         "Blaze: Whoa, why is this stuff <b>in</b> a table?",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_CombatExplanation,Pose2,true)",
         "$Animate(SlimeLady_CombatExplanation,Talk,true)",
         "Samantha: Nobody knows, that's just how it is.",
@@ -409,7 +418,7 @@ public class Dialogue
         "$Emote(Blaze_Happy)",
         " : You got <color=#507830><b>Multishot</b></color>!",
         "$Resume",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "Samantha: Be sure to equip this, you'll need it.",
         "$Animate(SlimeLady_CombatExplanation,Pose3,false)",
         "$Animate(SlimeLady_CombatExplanation,Talk,false)",
@@ -417,7 +426,7 @@ public class Dialogue
 
     string[] TutorialOver = new string[]
     {
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_CombatExplanation,Talk,true)",
         "Samantha: I have nothing left to teach you.",
         "Samantha: I'm sure that you'll be safe out but still, be careful.",
@@ -425,7 +434,7 @@ public class Dialogue
         "$Emote(Blaze_Angry)",
         "$Animate(SlimeLady_CombatExplanation,Talk,false)",
         "Blaze: Varren? Does he know me? Did he bring me here?",
-        "$Emote(Null)",
+        "$Emote(SlimeLady)",
         "$Animate(SlimeLady_CombatExplanation,Talk,true)",
         "$Animate(SlimeLady_CombatExplanation,Pose2,true)",
         "Samantha: You'll understand the situation soon enough, go out the door on the right and best of luck.",
@@ -590,21 +599,32 @@ public class Dialogue
     {
         //The player enters the outpatient room, Doctor Dr. Harris is standing inside with a clipboard
         "$Animate(DrHarris_Intro,Talk1,true)",
+        "$Emote(DrHarris)",
         "Dr. Harris: There you are! You must be my new assistant!",
+        "$Emote(Blaze_Surprised)",
         "Blaze: Assistant?",
+        "$Emote(DrHarris)",
         "Dr. Harris: Yes. Come along now, we have a lot to do. We need to get everything ready for the surgery.",
+        "$Emote(Blaze_Shocked)",
         "Blaze: Surgery?",
+        "$Emote(DrHarris)",
         "Dr. Harris: Did the nurse not tell you anything? I'm afraid the good doctor's son won't make it if we aren't on schedule.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: His son? What happened to him?",
         "$Animate(DrHarris_Intro,Talk1,false)",
         "$Animate(DrHarris_Intro,Talk2,true)",
+        "$Emote(DrHarris)",
         "Dr. Harris: A horrendous accident! The poor lad took a hard hit during the semifinals.",
+        "$Emote(Blaze_Surprised)",
         "Blaze: The semifinals?",
+        "$Emote(DrHarris)",
         "Dr. Harris: Indeed, but don't fret my boy. I am fully confident in the abilities of Dr. Stein, and that's where we come in.",
         "Dr. Harris: Now let's see here, first off we need bandages and antiseptic, I'll handle that, you just collect some rootweed and numblumbitantrilia.",
         "$Animate(DrHarris_Intro,Talk2,false)",
         "$Animate(DrHarris_Intro,Talk1,true)",
+        "$Emote(Blaze_Surprised)",
         "Blaze: Rootfeet and numblubi... what?",
+        "$Emote(DrHarris)",
         "Dr. Harris: Rootweed, and.. forget it. You should be able to find some from defeating monsters.",
         "Dr. Harris: Come find me when you've got at least 20 pieces of each, don't keep me waiting.",
         "Dr. Harris: Toodaloo!",
@@ -613,10 +633,18 @@ public class Dialogue
         //Collect quest where the player needs to get emotional energy
     };
 
+    string[] DrHarrisIntroReplacement = new string[]
+    {
+        "$Emote(DrHarris)",
+        "Dr. Harris: What are you waiting for boy?",
+        "Dr. Harris: Herbs don't collect themselves, get going!"
+    };
+
     //Once the player has enough emotional energy
     string[] DrHarrisQuest1 = new string[]
     {
         "$ChronoStop(True)",
+        "$Emote(Blaze_Angry)",
         "Blaze: I've defeated all of these monsters but found nothing but goop.",
         "Blaze: Hopefully this is what he's talking about.",
         "$ChronoStop(False)",
@@ -626,33 +654,50 @@ public class Dialogue
     {
         //After collecting enough emotional energy (the goop), the player walks into a room where the doctor is
         "$Animate(DrHarris_Q2,Talk1,true)",
+        "$Emote(DrHarris)",
         "Dr. Harris: Ah! Just in time. I was wondering what was taking you so long.",
+        "$Emote(Blaze_Angry)",
         "Blaze: I couldn't find anything but this goop.",
+        "$Emote(DrHarris)",
         "Dr. Harris: Such a hard worker too! This should be more than enough. Keep this up and I'll be sure to put in a good word with the doctor.",
+        "$Emote(Null)",
         " : *As you hand Dr. Harris the goop, it imidiately changes into a bundle of dried plant stems and a collection of purple flower heads*",
+        "$Emote(Blaze_Surprised)",
         "Blaze: How did you do that?",
+        "$Emote(DrHarris)",
         "Dr. Harris: Do what?",
+        "$Emote(Blaze_Shcoked)",
         "Blaze: The goop! It turned into what we needed!",
+        "$Emote(DrHarris)",
         "Dr. Harris: Goop? I appreciate your hard work, but please do be sure you are getting enough rest.",
         "Dr. Harris: If you would like I can talk to the doctor about prescribing you some sleep medications.",
         "Dr. Harris: We can't have you making mistakes on the job now, can we?|No way|Yes please|$Prompt",
+        "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: No Thanks.$OptionA",
+        "$Emote(DrHarris) $OptionA",
         "Dr. Harris: Suit yourself.$OptionA",
-        "Dr. Harris: That would be nice.$OptionB",
+        "$Emote(Blaze_Happy) $OptionB",
+        "Blaze: That would be nice.$OptionB",
+        "$Emote(DrHarris) $OptionB",
         "Dr. Harris: I will be sure to get you some.$OptionB",
         "$Animate(DrHarris_Q2,Talk1,false)",
         "$Animate(DrHarris_Q2,Talk2,true)",
+        "$Emote(DrHarris)",
         "Dr. Harris: The next thing on the list is rimblenut, I'll do that one, and O- Blood.",
         "Dr. Harris: For this one, you'll need something to collect the blood in, so let's see here.",
+        "$Emote(Null)",
         " : Dr. Harris digs through his bag, which holds a collection of perfectly normal medical instruments...",
         " : and the most bizarre of ingredients...",
         " : before pulling out a scalpel.",
+        "$Emote(DrHarris)",
         "Dr. Harris: Ah, this should make it easier. When you encounter the monsters, use this scalpel.",
         "Dr. Harris: Severing the arteries should make collecting the blood we need a breeze.",
         "Dr. Harris: As usual, come and find me when you're done.",
         "$Animate(DrHarris_Q2,Talk2,false)",
         "$Animate(DrHarris_Q2,Talk1,true)",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Why do we need all this bood",
+        "$Emote(DrHarris)",
         "Dr. Harris: Victor, the good Doctors son, lost a lot of blood after the accident",
         "Dr. Harris: We will need to replinish it if he hopes to play in the finals.",
         "Dr. Harris: That's enough questions for now. We must hurry if we want to save our star athlete in time!",
@@ -662,10 +707,19 @@ public class Dialogue
         //Player must kill enemies using the scapel
     };
 
+    string[] DrHarrisQ2Replacement = new string[]
+    {
+        "$Emote(DrHarris)",
+        "Dr. Harris: What are you waiting for boy?",
+        "Dr. Harris: The patient needs blood so go fetch some!"
+    };
+
     string[] DrHarrisQuest3 = new string[]
     {
         "$ChronoStop(True)",
+        "$Emote(Blaze_Happy)",
         "Blaze: The blood bag is full now",
+        "$Emote(Blaze_Neutral)",
         "Blaze: I should head back",
         "$ChronoStop(False)",
     };
@@ -674,30 +728,47 @@ public class Dialogue
     {
         //(Blaze enters a room with Dr. Dr. Harris)
         "$Animate(DrHarris_Q4,Talk1,true)",
+        "$Emote(DrHarris)",
         "Dr. Harris: Ah good, you're here.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Is everything okay?",
         "$Animate(DrHarris_Q4,Talk1,false)",
         "$Animate(DrHarris_Q4,Talk2,true)",
+        "$Emote(DrHarris)",
         "Dr. Harris: I'm afraid the good doctor's son isn't doing as well as we hoped.",
+        "$Emote(Blaze_Surprised)",
         "Blaze: Did the rootfeet and numblistuff not work?",
+        "$Emote(DrHarris)",
         "Dr. Harris: The treatment wasn't as effective as we had hoped.",
         "Dr. Harris: In fact, I was only barely able to deliver the ingredients before the patient died.",
+        "$Emote(Blaze_Shocked)",
         "Blaze: He died?",
         "$Animate(DrHarris_Q4,Talk2,false)",
         "$Animate(DrHarris_Q4,Talk1,true)",
+        "$Emote(DrHarris)",
         "Dr. Harris: ...",
-        "Dr. Harris: Nonesense. Not if I have anything to say about it.",
+        "Dr. Harris: Nonsense. Not if I have anything to say about it.",
         "Dr. Harris: I'm sure the good doctor has everything under control.",
         "Dr. Harris: You've been a great help. I'll be sure to inform the doctor of your exceptional performance.",
         "Dr. Harris: However, there is one thing that remains.",
         "Dr. Harris: Please fetch our young patents jersy from the good doctors office.",
         "Dr. Harris: He will need it for his big day!",
         "Dr. Harris: I'll be waiting for you in the operatin room.",
+        "$Emote(Blaze_Surprised)",
         "Blaze: Wait, your scapel",
+        "$Emote(DrHarris)",
         "Dr. Harris: Hold onto it my dear boy. Our job is not yet complete",
         "Dr. Harris: Toodaloo!",
         "$Animate(DrHarris_Q4,Talk1,false)",
         //The player needs to go to Dr. Stein's office and grab the jersey
+    };
+
+    string[] DrHarrisQ4Replacement = new string[]
+    {
+        "$Emote(DrHarris)",
+        "Dr. Harris: The patient died? What nonsense!",
+        "Dr. Harris: The good doctor says he can save him, so he shall!",
+        "Dr. Harris: Get the patient's jersey. He'll need it for his big day!"
     };
 
     //    (Blaze finds his way to the doctor's office (outpatient tileset room) inside they can grab the jersey
@@ -706,10 +777,13 @@ public class Dialogue
     string[] DrHarrisQuest5 = new string[]
     {
         //(Blaze finds the jersy
+        "$Emote(Blaze_Neutral)",
         "Blaze: This looks like the jersy.",
         "Phone: Bzzz",
+        "$Emote(Blaze_Surprised)",
         "Blaze: Wait, a phone, and it has service!",
         "Blaze: That creepy vampire was wrong! I can call someone and get out of here",
+        "$Emote(Null)",
         " : You try to call home, but instead of the phone rining, a pre-recorded message plays",
         "Victor: Dad, I can't wait for you to see me at the semi finals!",
         "Dr. Stein: Yeah...",

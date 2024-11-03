@@ -322,7 +322,7 @@ public class QuestSystem : MonoBehaviour
                     if (playerChoice == 1) //Player wants to do tutorial
                     {
                         SetQuestTitle("Continue");
-                        SetQuestDesc("Follow the green lady");
+                        SetQuestDesc("Follow the Samantha");
                         TeleportGameobject("East Door To Varren Intro", new Vector2(6.694f, -6.34f), false);
                         TeleportGameobject("East Door To InventoryTut", new Vector2(6.694f, -0.6041539f), false);
                     }
@@ -351,9 +351,13 @@ public class QuestSystem : MonoBehaviour
                     }
                     break;
                 case 6:
+                    SetQuestTitle("Inventory");
+                    SetQuestDesc($"Open your inventory");
                     LockDirectDoors();
                     break;
                 case 7:
+                    SetQuestTitle("Continue");
+                    SetQuestDesc("Follow the Samantha");
                     UnlockDirectDoors();
                     break;
                 case 10:
@@ -371,6 +375,11 @@ public class QuestSystem : MonoBehaviour
                         //Do nothing with doors, door to varren is in accessable place from start
                         //SetQuest to the last quest
                     }
+                    break;
+                case 11:
+                    BreakLootable breaking = (BreakLootable)currentObjective;
+                    SetQuestTitle("Table Smasher");
+                    SetQuestDesc($"Break the three tables: {breaking.GetCurrentAmount()}/{breaking.GetTotal()}");
                     break;
                 case 13: //Spawn Enemies for combat tutorial
                     LockDirectDoors();

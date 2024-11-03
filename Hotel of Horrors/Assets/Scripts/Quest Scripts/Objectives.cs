@@ -34,7 +34,6 @@ public class Objectives
         SlimeLadyMeeting,
         SlimeLadyInventory,
         SlimeLadyCombat,
-        VarrenTrigger,
     }
 
     /*  Cheat sheet for string formatting

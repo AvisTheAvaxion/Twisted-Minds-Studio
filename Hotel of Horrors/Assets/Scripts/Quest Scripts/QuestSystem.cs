@@ -29,6 +29,7 @@ public class QuestSystem : MonoBehaviour
         inventory = FindObjectOfType<PlayerInventory>();
         currentFloor = FindObjectOfType<Floor>();
         questGUI = FindObjectOfType<QuestGUI>();
+        questGUI.ToggleQuestGUI(false);
         inventory.OnItemCollect += ItemPickUpDetected;
         inventory.OnEnergyCollect += EnergyPickUpDetected;
         floorCleared = false;

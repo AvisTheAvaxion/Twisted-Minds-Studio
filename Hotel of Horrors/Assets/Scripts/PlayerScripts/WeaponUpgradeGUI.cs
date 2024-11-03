@@ -11,6 +11,7 @@ public class WeaponUpgradeGUI : MonoBehaviour
     [SerializeField] GameObject weaponsContainer;
     [SerializeField] GameObject upgradeGUI;
     [SerializeField] TMP_Text costText;
+    [SerializeField] GameObject costObj;
     [SerializeField] ItemToolTip itemToolTip;
 
     ItemSlot upgradeSlot;
@@ -76,10 +77,12 @@ public class WeaponUpgradeGUI : MonoBehaviour
 
         if(upgradedWeapon != null)
         {
+            costObj.SetActive(true);
             costText.text = upgradeEECost.ToString();
         }
         else
         {
+            costObj.SetActive(false);
             costText.text = "";
         }
     }

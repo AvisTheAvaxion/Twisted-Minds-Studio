@@ -10,13 +10,14 @@ public class QuestGUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI questTitleGUI;
     [SerializeField] TextMeshProUGUI questDescGUI;
 
-    void ToggleQuestGUI(bool isActive)
+    public void ToggleQuestGUI(bool isActive)
     {
         questGUI.SetActive(isActive);
     }
 
     public void SetQuestTitle(string title)
     {
+        if (title != "") ToggleQuestGUI(true);
         questTitleGUI.text = title;
     }
 

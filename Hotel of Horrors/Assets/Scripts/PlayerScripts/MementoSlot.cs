@@ -26,7 +26,7 @@ public class MementoSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void UpdateImage(MementoInfo memento, bool equipped)
     {
-        mementoImage.sprite = memento.GetSprite();
+        mementoImage.sprite = memento.GetDisplaySprite();
 
         //canvasGroup.alpha = equipped ? 1 : 0.35f;
     }
@@ -34,6 +34,7 @@ public class MementoSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         //throw new System.NotImplementedException();
+        mementoGUI.SetToolTip(this);
     }
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -43,6 +44,7 @@ public class MementoSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         //throw new System.NotImplementedException();
+        mementoGUI.SetToolTip(null);
     }
 
     public void ConnectTail(bool connect)

@@ -90,6 +90,9 @@ public class Door : MonoBehaviour
                     {
                         //make the floor run the logic for getting the next room
                         linkedDoor = floor.getDoorLink(targetOrientation, this);
+                    } else
+                    {
+                        floor.SetCurrentRoom(linkedDoor.associatedRoom.roomName);
                     }
 
                     StartCoroutine(TeleportPlayer(player));

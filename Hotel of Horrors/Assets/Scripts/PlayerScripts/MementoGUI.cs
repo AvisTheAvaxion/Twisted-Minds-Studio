@@ -13,6 +13,10 @@ public class MementoGUI : MonoBehaviour
     [SerializeField] Transform mementoSlotContainer;
     [SerializeField] TMP_Text emptyText;
     [SerializeField] Image equippedMementoImage;
+    [SerializeField] Transform mementoToolTip;
+    [SerializeField] TMP_Text toolTipName;
+    [SerializeField] TMP_Text toolTipDesc;
+    [SerializeField] Vector2 mementoToolTipOffset = new Vector2(0, -100);
 
     MementoSlot[] mementoSlots;
 
@@ -75,5 +79,34 @@ public class MementoGUI : MonoBehaviour
 
         UpdateGUI();
         playerGUI.UpdateHotbarGUI();
+    }
+
+    public void SetToolTip(MementoSlot slot)
+    {
+        if (slot != null)
+        {
+            MementoInfo memento = inventory.GetMemento(slot.transform.GetSiblingIndex());
+
+            if (memento != null)
+            {
+                mementoToolTip.gameObject.SetActive(true);
+
+                toolTipName.text = memento.GetName();
+                toolTipDesc.text = memento.GetDescription();
+                mementoToolTip.position = (Vector2)slot.transform.position + mementoToolTipOffset;
+            }
+            else
+            {
+                mementoToolTip.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            mementoToolTip.gameObject.SetActive(false);
+        }
+    }
+    public void DisableToolTip()
+    {
+        mementoToolTip.gameObject.SetActive(false);
     }
 }

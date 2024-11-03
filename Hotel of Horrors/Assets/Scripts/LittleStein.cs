@@ -15,7 +15,7 @@ public class LittleStein : MonoBehaviour
 
     public enum States
     {
-        Follow, Fighting, Death
+        Follow, Fighting, Death, Teleporting, Spawning
     }
 
     States currentState = States.Follow;
@@ -34,6 +34,8 @@ public class LittleStein : MonoBehaviour
     [SerializeField] BasicShooter shooter;
     [SerializeField] Transform pivot;
     [SerializeField] ParticleSystem walkParticles;
+    [SerializeField] ParticleSystem vfxParticles;
+    [SerializeField] SpriteRenderer[] spriteRenderers;
 
     [Header("Settings")]
     [SerializeField] LayerMask enemyMask;
@@ -44,6 +46,8 @@ public class LittleStein : MonoBehaviour
     [SerializeField] float timeBtwChecks = 1f;
     [SerializeField] float followRadius = 0.5f;
     [SerializeField] float maxDistanceFromPlayer = 4f;
+    [SerializeField] float dissolveRate = 0.5f;
+    [SerializeField] int frameRate = 16;
 
     Collider2D[] possibleTargets;
     Transform currentTarget;
@@ -70,6 +74,9 @@ public class LittleStein : MonoBehaviour
         //navigation.speed = moveSpeed / 10f;
 
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        currentState = States.Spawning;
+        StartCoroutine(Spawn());
     }
 
     public void SetPlayer(Transform player)
@@ -80,6 +87,11 @@ public class LittleStein : MonoBehaviour
     public void SetCurrentState(States state)
     {
         currentState = state;
+
+        if(currentState == States.Death)
+        {
+            StartCoroutine(Die());
+        }
     }
 
     private void Update()
@@ -100,12 +112,13 @@ public class LittleStein : MonoBehaviour
             case States.Death:
                 Death();
                 break;
+
         }
     }
 
     private void Death()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     private void Fight()
@@ -182,6 +195,8 @@ public class LittleStein : MonoBehaviour
 
                 navigation.SearchPath();
             }*/
+            currentState = States.Teleporting;
+            StartCoroutine(TeleportToPlayer());
         }
         else
         {
@@ -265,5 +280,110 @@ public class LittleStein : MonoBehaviour
         canAttack = false;
         yield return new WaitForSeconds(cooldown);
         canAttack = true;
+    }
+
+    IEnumerator Spawn()
+    {
+        float waitTime = 1f / frameRate;
+        WaitForSeconds wait = new WaitForSeconds(waitTime);
+        if (vfxParticles) vfxParticles.Play();
+        float t = 0;
+        while(t < dissolveRate)
+        {
+            for (int i = 0; i < spriteRenderers.Length; i++)
+            {
+                Color color = spriteRenderers[i].color;
+                color.a = Mathf.Lerp(0.6f, 1f, (t / dissolveRate));
+                spriteRenderers[i].color = color;
+            }
+            yield return wait;
+            t += waitTime;
+        }
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            Color color = spriteRenderers[i].color;
+            color.a = 1f;
+            spriteRenderers[i].color = color;
+        }
+        if (vfxParticles) vfxParticles.Stop();
+        currentState = States.Follow;
+    }
+    IEnumerator TeleportToPlayer()
+    {
+        float waitTime = 1f / frameRate;
+        WaitForSeconds wait = new WaitForSeconds(waitTime);
+        float t = 0;
+        if (vfxParticles) vfxParticles.Play();
+        while (t < dissolveRate)
+        {
+            for (int i = 0; i < spriteRenderers.Length; i++)
+            {
+                Color color = spriteRenderers[i].color;
+                color.a = Mathf.Lerp(1f, 0.6f, (t / dissolveRate) * (t / dissolveRate));
+                spriteRenderers[i].color = color;
+            }
+            yield return wait;
+            t += waitTime;
+        }
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            Color color = spriteRenderers[i].color;
+            color.a = 0f;
+            spriteRenderers[i].color = color;
+        }
+        transform.position = player.position;
+        yield return wait;
+
+        t = 0;
+        while (t < dissolveRate)
+        {
+            for (int i = 0; i < spriteRenderers.Length; i++)
+            {
+                Color color = spriteRenderers[i].color;
+                color.a = Mathf.Lerp(0.6f, 1f, (t / dissolveRate) * (t / dissolveRate));
+                spriteRenderers[i].color = color;
+            }
+            yield return wait;
+            t += waitTime;
+        }
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            Color color = spriteRenderers[i].color;
+            color.a = 1f;
+            spriteRenderers[i].color = color;
+        }
+        if (vfxParticles) vfxParticles.Stop();
+        currentState = States.Follow;
+    }
+    IEnumerator Die()
+    {
+        rb.velocity = Vector2.zero;
+        if (animator) animator.SetBool("isWalking", false);
+
+        float waitTime = 1f / frameRate;
+        GetComponent<Collider2D>().enabled = false;
+        WaitForSeconds wait = new WaitForSeconds(waitTime);
+        if(vfxParticles) vfxParticles.Play();
+        float t = 0;
+        while (t < dissolveRate)
+        {
+            for (int i = 0; i < spriteRenderers.Length; i++)
+            {
+                Color color = spriteRenderers[i].color;
+                color.a = Mathf.Lerp(1f, 0.6f, (t / dissolveRate) * (t / dissolveRate));
+                spriteRenderers[i].color = color;
+            }
+            yield return wait;
+            t += waitTime;
+        }
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            Color color = spriteRenderers[i].color;
+            color.a = 0f;
+            spriteRenderers[i].color = color;
+        }
+        if (vfxParticles) vfxParticles.Stop();
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
 }

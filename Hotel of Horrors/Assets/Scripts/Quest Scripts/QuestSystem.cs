@@ -16,6 +16,7 @@ public class QuestSystem : MonoBehaviour
     Objectives objectives;
     [SerializeField] bool objectiveSet = false;
     [SerializeField] bool floorCleared = false;
+    public bool FloorCleared { get => floorCleared; }
 
     DialogueManager dialogueManager;
     PlayerInventory inventory;
@@ -286,6 +287,8 @@ public class QuestSystem : MonoBehaviour
                 break;
             case "ClearFloor":
                 floorCleared = true;
+                ElevatorMenuManager elevatorMenu = FindObjectOfType<ElevatorMenuManager>();
+                if (elevatorMenu) elevatorMenu.AllowMoveToNextFloor();
                 SetRequiredGameState(floor, objectiveNum);
                 break;
              #endregion

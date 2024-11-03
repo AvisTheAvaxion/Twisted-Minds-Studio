@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f6b08e0f5b2e245928e6d55694703d, type: 3}
   m_Name: LittleStein
   m_EditorClassIdentifier: 
-  useableName: Little Stein
-  description: Me mento mori or smth idk
+  useableName: Football Helmet
+  description: A memento left behind from Dr. Frank infused with the strong emotions
+    and love he had for his son. Harnessing this emotional energy, it spawns Dr.
+    Frank's monster and it attacks any nearby enemies.
   maxStackAmount: 1
   sprite: {fileID: 21300000, guid: c67e13a6786088341a687e3364a241bb, type: 3}
-  displaySprite: {fileID: 21300000, guid: c67e13a6786088341a687e3364a241bb, type: 3}
+  displaySprite: {fileID: 21300000, guid: 8cbfe12686ba47b4a8a0a35f7ad45b05, type: 3}
   specialAbility: {fileID: 3450322748590292842, guid: dd4bc8a2dfdecdb45925af660bb267cd, type: 3}
+  canMove: 1
+  canAttackToo: 1

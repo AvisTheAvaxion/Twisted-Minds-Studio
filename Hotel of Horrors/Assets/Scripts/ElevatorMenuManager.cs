@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ElevatorMenuManager : MonoBehaviour
 {
@@ -11,9 +12,11 @@ public class ElevatorMenuManager : MonoBehaviour
     [SerializeField] GameObject loadMenu;
     [SerializeField] GameObject storeMenu;
     [SerializeField] GameObject savedText;
+    [SerializeField] float saveNotifyLength = 1.5f;
     [SerializeField] GameObject loadText;
     [SerializeField] GameObject elevatorBackground;
     [SerializeField] GameObject mindRoomMenu;
+    [SerializeField] GameObject nextLevelButton;
     [SerializeField] Image fadeImage;
     [SerializeField] float doorTransitionLength = 0.5f;
     [Header ("Class References")]
@@ -25,12 +28,24 @@ public class ElevatorMenuManager : MonoBehaviour
     protected ShopItem[] itemsForSale;
     int shopSize = 4;
     List<int> badIndexes = new List<int>();
-    [SerializeField] Button[] itemButtons;
+    [SerializeField] ItemShopSlot[] itemShopSlots;
+
+    QuestSystem questSystem;
 
     private void Start()
     {
         elevatorBackground.SetActive(false);
-        itemsForSale = new ShopItem[5];
+        itemsForSale = new ShopItem[4];
+
+        questSystem = FindObjectOfType<QuestSystem>();
+        if(questSystem.FloorCleared)
+        {
+            nextLevelButton.SetActive(true);
+        }
+        else
+        {
+            nextLevelButton.SetActive(false);
+        }
 
         ResetShop();
     }
@@ -49,19 +64,18 @@ public class ElevatorMenuManager : MonoBehaviour
         loadMenu.SetActive(false);
         storeMenu.SetActive(true);
 
-        
-
-        for (int i = 0; i < itemButtons.Length; i++)
+        for (int i = 0; i < itemShopSlots.Length; i++)
         {
             if (i >= shopSize)
             {
-                itemButtons[i].gameObject.SetActive(false);
+                itemShopSlots[i].gameObject.SetActive(false);
                 continue;
             }
 
+            itemShopSlots[i].SetShopItem(itemsForSale[i]);
 
-            itemButtons[i].GetComponent<Image>().sprite = itemsForSale[i].itemSold.GetSprite();
-            itemButtons[i].GetComponentInChildren<TMP_Text>().text = itemsForSale[i].itemSold.GetName() + " - " + itemsForSale[i].cost + "EE (" + itemsForSale[i].quantityAvailable + " left)";
+            //itemButtons[i].GetComponent<Image>().sprite = itemsForSale[i].itemSold.GetSprite();
+            //itemButtons[i].GetComponentInChildren<TMP_Text>().text = itemsForSale[i].itemSold.GetName() + " - " + itemsForSale[i].cost + "EE (" + itemsForSale[i].quantityAvailable + " left)";
         }
     }
 
@@ -74,12 +88,28 @@ public class ElevatorMenuManager : MonoBehaviour
         //storeMenu.SetActive(false);
     }
 
+    public void GoToNextFloor()
+    {
+        serializationManager.SaveData();
+
+        SceneManager.LoadScene("EndDemo");
+    }
+
     public void SaveGame()
     {
-        savedText.SetActive(true);
+        if (saveNotifyCoroutine != null) StopCoroutine(saveNotifyCoroutine);
+
+        saveNotifyCoroutine = StartCoroutine(SaveNotification());
 
         //save game here
         serializationManager.SaveData();
+    }
+    Coroutine saveNotifyCoroutine;
+    IEnumerator SaveNotification()
+    {
+        savedText.SetActive(true);
+        yield return new WaitForSeconds(saveNotifyLength);
+        savedText.SetActive(false);
     }
 
     public void ReturnToPrevRoom()
@@ -127,21 +157,20 @@ public class ElevatorMenuManager : MonoBehaviour
 
         if (itemsForSale[itemIndex].quantityAvailable >= 1 && inventory.emotionalEnergy >= itemsForSale[itemIndex].cost)
         {
-            
-
             inventory.AddItem(new Item(itemsForSale[itemIndex].itemSold, 1));
             inventory.SubtractEmotionialEnergy(itemsForSale[itemIndex].cost);
             itemsForSale[itemIndex].quantityAvailable--;
 
-            itemButtons[itemIndex].GetComponentInChildren<TMP_Text>().text = itemsForSale[itemIndex].itemSold.GetName() + " - " + itemsForSale[itemIndex].cost + "EE (" + itemsForSale[itemIndex].quantityAvailable + " left)";
+            itemShopSlots[itemIndex].SetShopItem(itemsForSale[itemIndex]);
+            //itemShopSlots[itemIndex].GetComponentInChildren<TMP_Text>().text = itemsForSale[itemIndex].itemSold.GetName() + " - " + itemsForSale[itemIndex].cost + "EE (" + itemsForSale[itemIndex].quantityAvailable + " left)";
         }
 
     }
 
     public void ResetShop()
     {
-        int maxToSell = 5;
-        if (shopItems.Length < 5)
+        int maxToSell = 4;
+        if (shopItems.Length < maxToSell)
             maxToSell = shopItems.Length;
 
         Random.seed = (int)System.DateTime.Now.Millisecond;
@@ -172,6 +201,10 @@ public class ElevatorMenuManager : MonoBehaviour
 
     #endregion
 
+    public void AllowMoveToNextFloor()
+    {
+        nextLevelButton.SetActive(true);
+    }
 }
 
 [System.Serializable]

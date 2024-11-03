@@ -19,7 +19,10 @@ public class CoffinMimic : EnemyStateMachine
     {
         attackCollider.enabled = true;
 
+
         Vector2 dirToPlayer = GetDirToPlayer();
+        CheckToRotate(dirToPlayer);
+
         rb.AddForce(dirToPlayer * lungeForce, ForceMode2D.Impulse);
     }
 

@@ -143,6 +143,10 @@ public class DirectDoor : MonoBehaviour
             lockedGateAnimator.gameObject.SetActive(true);
             lockedGateAnimator.SetBool("Close", true);
         }
+        if (animator)
+        {
+            animator.SetBool("Locked", true);
+        }
     }
     public void UnlockDoor()
     {
@@ -151,5 +155,10 @@ public class DirectDoor : MonoBehaviour
         locked = false;
         if (lockedGateAnimator)
             lockedGateAnimator.SetBool("Close", false);
+
+        if (animator)
+        {
+            animator.SetBool("Locked", false); ;
+        }
     }
 }

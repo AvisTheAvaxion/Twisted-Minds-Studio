@@ -322,7 +322,7 @@ public class QuestSystem : MonoBehaviour
                     if (playerChoice == 1) //Player wants to do tutorial
                     {
                         SetQuestTitle("Continue");
-                        SetQuestDesc("Follow the Samantha");
+                        SetQuestDesc("Follow Samantha");
                         TeleportGameobject("East Door To Varren Intro", new Vector2(6.694f, -6.34f), false);
                         TeleportGameobject("East Door To InventoryTut", new Vector2(6.694f, -0.6041539f), false);
                     }
@@ -357,7 +357,7 @@ public class QuestSystem : MonoBehaviour
                     break;
                 case 7:
                     SetQuestTitle("Continue");
-                    SetQuestDesc("Follow the Samantha");
+                    SetQuestDesc("Follow Samantha");
                     UnlockDirectDoors();
                     break;
                 case 10:
@@ -430,12 +430,12 @@ public class QuestSystem : MonoBehaviour
                 case 7:
                     SetQuestTitle("The Big Day");
                     SetQuestDesc("Get the patient's jersey");
-                    TeleportGameobject("DrHarris_Q4", new Vector2(51f, -27f), true);
                     TeleportGameobject("FrankJersey(Quest)", new Vector2(63.3892f, -28.0588f), true);
                     break;
                 case 8:
                     SetQuestTitle("Confrontation");
                     SetQuestDesc("");
+                    TeleportGameobject("DrHarris_Q4", new Vector2(51f, -27f), true);
                     TeleportGameobject("FrankJersey(Quest)", new Vector2(55.19f, -27.79f), true);
                     currentFloor.UnlockToBossDoor();
                     break;

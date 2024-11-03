@@ -24,6 +24,7 @@ public abstract class BossStateMachine : MonoBehaviour
 
     protected GameObject player;
     protected Rigidbody2D rb;
+    protected Collider2D collider;
     protected bool enraged;
     
     [System.Serializable]
@@ -76,6 +77,7 @@ public abstract class BossStateMachine : MonoBehaviour
     {
         player = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
+        collider = GetComponent<Collider2D>();
         bossHealth = GetComponent<BossHealth>();
 
         questSystem = FindObjectOfType<QuestSystem>();
@@ -131,6 +133,7 @@ public abstract class BossStateMachine : MonoBehaviour
     protected abstract void Idle();
     public void OnDialogueStart(Dialogue.Dialog cutscene)
     {
+        collider.enabled = false;
         currentState = States.DialogueStart;
         StartCoroutine(DialogueStart(cutscene));
     }
@@ -140,7 +143,8 @@ public abstract class BossStateMachine : MonoBehaviour
         rb.velocity = Vector3.zero;
 
         if (DialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None) 
-        { 
+        {
+            collider.enabled = true;
             currentState = States.DialogueEnd;
             StartCoroutine(DialogueEnd());
         }
@@ -152,6 +156,7 @@ public abstract class BossStateMachine : MonoBehaviour
     protected abstract IEnumerator DeathSequence();
     public virtual void OnDeath()
     {
+        collider.enabled = false;
         if (Floor.maxFloorUnlocked <= Floor.currentFloor)
             Floor.maxFloorUnlocked = Floor.currentFloor + 1;
 

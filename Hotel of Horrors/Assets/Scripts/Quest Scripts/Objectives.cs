@@ -34,6 +34,7 @@ public class Objectives
         SlimeLadyMeeting,
         SlimeLadyInventory,
         SlimeLadyCombat,
+        VarrenEncounter
     }
 
     /*  Cheat sheet for string formatting
@@ -67,6 +68,8 @@ public class Objectives
         "SetCutscene|CombatEnemyInbound",
         "Kill|3",
         "SetCutscene|TutorialOver",
+        "TripTrigger|VarrenEncounter",
+        "SetCutscene|VarrenEncounter",
         //Gotta have enemies spawn and have the player kill them.
         //After that play cutscene TutorialOver and let the leave to the varren room.
         //VarrenEncounter wont be an objective for this. dont really see a point to it.

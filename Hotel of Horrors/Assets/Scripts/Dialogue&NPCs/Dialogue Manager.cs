@@ -612,7 +612,6 @@ public class DialogueManager : MonoBehaviour
         else if (currentLine > lines.Length - 1)
         {
             currentState = CutsceneState.None;
-            questSystem.QuestEvent(QuestSystem.QuestEventType.CutsceneEnd, cutscene.ToString());
             if (dialogueGUI)
             {
                 dialogueGUI.ToggleButtons(false);
@@ -623,6 +622,7 @@ public class DialogueManager : MonoBehaviour
             movement.EndCutscene();
             instaSkip = false;
             auto = false;
+            questSystem.QuestEvent(QuestSystem.QuestEventType.CutsceneEnd, cutscene.ToString());
         }
     }
 

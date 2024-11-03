@@ -328,8 +328,10 @@ public class QuestSystem : MonoBehaviour
                     }
                     else if(playerChoice == 2) // Player wants to skip tutorial
                     {
-                        SetQuest(0, 14);
+                        SetQuest(0, 15);
                         LoadObjective();
+                        SetQuestTitle("Explore");
+                        SetQuestDesc("Seek a way out of this place");
                         //Do nothing with doors, door to varren is in accessable place from start
                         //SetQuest to the last quest
                     }
@@ -392,6 +394,10 @@ public class QuestSystem : MonoBehaviour
                     TeleportGameobject("EastDoorCombatTutLocked", new Vector2(3.331f, -4.62f), false);
                     TeleportGameobject("EastDoorToVarrenCombatTut", new Vector2(3.331f, 1.881f), false);
                     UnlockDirectDoors();
+                    SetQuestTitle("Explore");
+                    SetQuestDesc("Seek a way out of this place");
+                    break;
+                case 15:
                     SetQuestTitle("Explore");
                     SetQuestDesc("Seek a way out of this place");
                     break;

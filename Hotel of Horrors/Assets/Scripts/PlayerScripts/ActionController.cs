@@ -430,16 +430,16 @@ public class ActionController : MonoBehaviour
         attackNumber = attackNumber % 3;
 
         if (attackNumber == oldAttackNumber || attackNumber == 0) attackNumber = 0;
-        else
+        else if (!disableAttackControls)
         {
             SetMeleeDirection();
             StartCoroutine(Attack());
         }
 
-        if (attackButtonPressed && (autoAttack || (inventory.CurrentWeapon != null && inventory.CurrentWeapon.GetInfo().IsAutoAttack())))
+        /*if (attackButtonPressed && (autoAttack || (inventory.CurrentWeapon != null && inventory.CurrentWeapon.GetInfo().IsAutoAttack())))
         {
             StartCoroutine(Attack());
-        }
+        }*/
     }
     IEnumerator PlayerAbilityCooldown(float cooldown)
     {

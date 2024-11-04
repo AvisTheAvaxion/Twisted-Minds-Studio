@@ -213,10 +213,12 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     if(transform.parent.GetSiblingIndex() == weaponUpgradeGUI.ingredientIndices[0])
                     {
                         weaponUpgradeGUI.UnSetUpgradeIngredienSlot(0);
+                        SelectImage(true);
                     }
                     else if (transform.parent.GetSiblingIndex() == weaponUpgradeGUI.ingredientIndices[1])
                     {
                         weaponUpgradeGUI.UnSetUpgradeIngredienSlot(1);
+                        SelectImage(true);
                     } else 
                         weaponUpgradeGUI.SetUpgradeIngredientSlot(transform.parent.GetSiblingIndex());
                     break;

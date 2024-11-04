@@ -54,7 +54,7 @@ public class Floor : MonoBehaviour
 
     Queue<Room> roomGuarantees = new Queue<Room>();
 
-    [SerializeField]ElevatorMenuManager elevator;
+    public ElevatorMenuManager elevatorMenu { get; private set; }
     public GameObject elevatorCanvas;
     [SerializeField] bool debug;
 
@@ -80,7 +80,7 @@ public class Floor : MonoBehaviour
         roomsByCategory.Add("Mind Room", new List<Room>());
         roomsByCategory.Add("Hallway", new List<Room>());
 
-        elevator = FindObjectOfType<ElevatorMenuManager>();
+        elevatorMenu = FindObjectOfType<ElevatorMenuManager>();
 
         Random.InitState((int)System.DateTime.Now.Ticks);
 
@@ -151,8 +151,8 @@ public class Floor : MonoBehaviour
 
         emotionalEnergyGained = 0;
         SetEEGains(playerInventoryRef.emotionalEnergyGained);
-        if(elevator != null)
-            elevator.ResetShop();
+        if(elevatorMenu != null)
+            elevatorMenu.ResetShop();
     }
 
     /// <summary>
@@ -313,7 +313,7 @@ public class Floor : MonoBehaviour
             }
         }
 
-        elevator.ResetShop();
+        elevatorMenu.ResetShop();
     }
 
     public void AddEnemy()

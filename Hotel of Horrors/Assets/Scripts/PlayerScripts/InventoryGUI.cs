@@ -39,6 +39,8 @@ public class InventoryGUI : MonoBehaviour
     List<ItemSlot> abilitySlots;
     DialogueManager dialogueManager;
     QuestSystem questSystem;
+    ElevatorMenuManager elevatorMenu;
+
     public int tab { get; private set; }
 
     public int selectedItemIndex { get; private set; }
@@ -53,6 +55,7 @@ public class InventoryGUI : MonoBehaviour
         questSystem = FindObjectOfType<QuestSystem>();
         dialogueManager = FindObjectOfType<DialogueManager>();
         inventory = FindObjectOfType<PlayerInventory>();
+        elevatorMenu = FindObjectOfType<ElevatorMenuManager>();
 
         abilitySlots = new List<ItemSlot>();
         abilitySlots = abilitiesContainer.GetComponentsInChildren<ItemSlot>().ToList<ItemSlot>();
@@ -352,7 +355,7 @@ public class InventoryGUI : MonoBehaviour
 
     void OnToggleInventory()
     {
-        if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None)
+        if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None && !elevatorMenu.elevatorMenuOpen)
         {
             if (inventoryUI.activeSelf == true)
             {

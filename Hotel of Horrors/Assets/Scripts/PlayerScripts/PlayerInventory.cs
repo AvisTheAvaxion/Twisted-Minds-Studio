@@ -196,15 +196,9 @@ public class PlayerInventory : MonoBehaviour
     public bool AddItem(Item item)
     {
         //print("adding item: " + item.GetInfo().GetName());
-
         for (int i = 0; i < itemsInventory.Length; i++)
         {
-            if (itemsInventory[i] == null)
-            {
-                itemsInventory[i] = item;
-                return true;
-            } 
-            else if (itemsInventory[i].GetInfo().GetName() == item.GetInfo().GetName())
+            if (item != null && itemsInventory[i] != null && itemsInventory[i].GetInfo().GetName() == item.GetInfo().GetName())
             {
                 int newAmount = itemsInventory[i].AddAmount(item.CurrentAmount);
                 if (newAmount > 0)
@@ -215,13 +209,22 @@ public class PlayerInventory : MonoBehaviour
                 return true;
             }
         }
+
+        for (int i = 0; i < itemsInventory.Length; i++)
+        {
+            if (item != null && itemsInventory[i] == null)
+            {
+                itemsInventory[i] = item;
+                return true;
+            } 
+        }
         return false;
     }
     public bool AddWeapon(Weapon weapon)
     {
         for (int i = 0; i < weaponsInventory.Length; i++)
         {
-            if (weaponsInventory[i] == null)
+            if (weapon != null && weaponsInventory[i] == null)
             {
                 weaponsInventory[i] = weapon;
                 return true;
@@ -231,9 +234,10 @@ public class PlayerInventory : MonoBehaviour
     }
     public bool AddMemento(MementoInfo memento)
     {
-        if(!mementosInventory.Contains(memento))
+        if(memento != null && !mementosInventory.Contains(memento))
         {
             mementosInventory.Add(memento);
+            print("Added " + memento.GetName() + "- Count: " + mementosInventory.Count);
             return true;
         } else
         {
@@ -242,7 +246,7 @@ public class PlayerInventory : MonoBehaviour
     }
     public int AddPlayerAbility(Ability ability)
     {
-        if (!abilitiesInventory.Contains(ability))
+        if (ability != null && !abilitiesInventory.Contains(ability))
         {
             abilitiesInventory.Add(ability);
             return abilitiesInventory.Count - 1;

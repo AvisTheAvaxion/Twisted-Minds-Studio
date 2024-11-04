@@ -162,7 +162,7 @@ public class Door : MonoBehaviour
             yield return null;
         }
         
-        floor.elevatorCanvas.SetActive(true);
+        floor.elevatorMenu.OpenElevatorMenu();
         Cursor.visible = true;
 
         //fade to clear

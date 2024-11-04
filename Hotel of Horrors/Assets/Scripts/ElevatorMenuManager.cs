@@ -30,12 +30,16 @@ public class ElevatorMenuManager : MonoBehaviour
     List<int> badIndexes = new List<int>();
     [SerializeField] ItemShopSlot[] itemShopSlots;
 
+    public bool elevatorMenuOpen { get; private set; }
+
     QuestSystem questSystem;
 
     private void Start()
     {
         elevatorBackground.SetActive(false);
         itemsForSale = new ShopItem[4];
+
+        elevatorMenuOpen = false;
 
         questSystem = FindObjectOfType<QuestSystem>();
         if(questSystem.FloorCleared)
@@ -117,6 +121,12 @@ public class ElevatorMenuManager : MonoBehaviour
         StartCoroutine(GetFreshRoom());
     }
 
+    public void OpenElevatorMenu()
+    {
+        elevatorMenuOpen = true;
+        elevatorBackground.SetActive(true);
+    }
+
     public void LeaveMindMenu()
     {
         Cursor.visible = false;
@@ -125,9 +135,9 @@ public class ElevatorMenuManager : MonoBehaviour
 
     IEnumerator GetFreshRoom()
     {
-
+        elevatorMenuOpen = false;
         //audioManager.PlayEffect("DoorOpen");
-       
+
         // loop over 1 second - fade to black
         for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
         {

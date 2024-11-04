@@ -121,22 +121,22 @@ public class Weapon
                 if (keyword.Contains("damage"))
                 {
                     keyword = "damage";
-                    newWord = newWord.Replace("$" + keyword, $"<b>{string.Format("{0:0.0}", damage)}</b>");
+                    newWord = newWord.Replace("$" + keyword, $"<i>{string.Format("{0:0.0}", damage)}</i>");
                 }
                 else if (keyword.Contains("deflectionstrength"))
                 {
                     keyword = "deflectionstrength";
-                    newWord = newWord.Replace("$" + keyword, $"<b>{string.Format("{0:0.0}", deflectionStrength)}</b>");
+                    newWord = newWord.Replace("$" + keyword, $"<i>{string.Format("{0:0.0}", deflectionStrength)}</i>");
                 }
                 else if (keyword.Contains("knockback"))
                 {
                     keyword = "knockback";
-                    newWord = newWord.Replace("$" + keyword, $"<b>{string.Format("{0:0.0}", knockback)}</b>");
+                    newWord = newWord.Replace("$" + keyword, $"<i>{string.Format("{0:0.0}", knockback)}</i>");
                 }
                 else if (keyword.Contains("attackspeed"))
                 {
                     keyword = "attackspeed";
-                    newWord = newWord.Replace("$" + keyword, $"<b>{string.Format("{0:0.0}", attackSpeed)}</b>");
+                    newWord = newWord.Replace("$" + keyword, $"<i>{string.Format("{0:0.0}", attackSpeed)}</i>");
                 }
                 else if (keyword.Contains("range"))
                 {

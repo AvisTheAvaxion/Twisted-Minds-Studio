@@ -19,12 +19,16 @@ public class EnemySpawner : MonoBehaviour
 
     public bool waveActive;
 
+    [SerializeField] NewAudioManager audioManager;
+
     public Floor floor { get; private set; }
     public Room myRoom { get; private set; }
 
     private void Awake()
     {
         questSys = FindObjectOfType<QuestSystem>();
+
+        audioManager = FindObjectOfType<NewAudioManager>();
     }
 
     void Start()
@@ -63,6 +67,7 @@ public class EnemySpawner : MonoBehaviour
                 //GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
                 if (!waveActive)
                 {
+                    audioManager.PlayEffect("EnemySpawnNew-ModifiedModifiedModified");
                     SpawnWave();
                 }
             }

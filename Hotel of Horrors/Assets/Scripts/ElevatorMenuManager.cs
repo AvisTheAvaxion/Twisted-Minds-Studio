@@ -34,6 +34,7 @@ public class ElevatorMenuManager : MonoBehaviour
 
     QuestSystem questSystem;
 
+
     private void Start()
     {
         elevatorBackground.SetActive(false);
@@ -125,6 +126,8 @@ public class ElevatorMenuManager : MonoBehaviour
     {
         elevatorMenuOpen = true;
         elevatorBackground.SetActive(true);
+
+        audioManager.PlayEffect("ElevatorJam");
     }
 
     public void LeaveMindMenu()

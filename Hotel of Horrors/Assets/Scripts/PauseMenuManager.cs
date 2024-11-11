@@ -46,10 +46,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void Pause()
     {
-        Cursor.visible = true;
-
-        paused = true;
-        Time.timeScale = 0;
+        GameTime.PauseTime(false);
 
         pauseMenu.SetActive(true);
         pauseScreen.SetActive(true);
@@ -57,10 +54,7 @@ public class PauseMenuManager : MonoBehaviour
     }
     public void UnPause()
     {
-        Cursor.visible = false;
-
-        paused = false;
-        Time.timeScale = 1;
+        GameTime.UnpauseTime();
         pauseMenu.SetActive(false);
     }
 

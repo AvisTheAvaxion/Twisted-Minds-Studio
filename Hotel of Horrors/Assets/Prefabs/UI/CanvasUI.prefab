@@ -15187,6 +15187,7 @@ GameObject:
   - component: {fileID: 3630970173842223739}
   - component: {fileID: 1500079800343389056}
   - component: {fileID: 1879097622508302454}
+  - component: {fileID: 5852402134519839299}
   m_Layer: 5
   m_Name: CanvasUI
   m_TagString: Untagged
@@ -15469,6 +15470,19 @@ MonoBehaviour:
   pauseScreen: {fileID: 7527174640868060469}
   settings: {fileID: 7661218832082319534}
   dialogueManager: {fileID: 0}
+--- !u!114 &5852402134519839299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4781912082754897650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d747c31245c2c46924751dd38cd988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mindRoomObj: {fileID: 7238141845091300525}
 --- !u!1 &4795526431343818100
 GameObject:
   m_ObjectHideFlags: 0
@@ -25567,10 +25581,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7238141845091300525}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 5852402134519839299}
+        m_TargetAssemblyTypeName: MindRoomGUI, Assembly-CSharp
+        m_MethodName: CloseMindRoom
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -132,7 +132,7 @@ public class ElevatorMenuManager : MonoBehaviour
 
     public void LeaveMindMenu()
     {
-        Cursor.visible = false;
+        //Cursor.visible = false;
         mindRoomMenu.SetActive(false);
     }
 
@@ -158,6 +158,7 @@ public class ElevatorMenuManager : MonoBehaviour
             yield return null;
         }
         player.SetCanMove(true);
+        GameState.CurrentState = GameState.State.None;
         elevatorBackground.SetActive(false);
     }
     #endregion

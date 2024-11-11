@@ -12,16 +12,17 @@ public class GameTime : MonoBehaviour
     {
         Time.timeScale = 0;
 
-        paused = true;
+        GameState.IsPaused = true;
 
         if (interruptable)
             interruptable = interruptableIn;
     }
     public static void UnpauseTime()
     {
-        Time.timeScale = 1;
+        GameState.IsPaused = false;
 
-        paused = false;
+        if (GameState.CurrentState != GameState.State.Inventory)
+            Time.timeScale = 1;
 
         interruptable = true;
     }

@@ -36,6 +36,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] int weaponInventorySize = 12;
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] PlayerGUI playerGUI;
+    [SerializeField] NewAudioManager audioManager;
 
     ActionController actionController;
 
@@ -93,6 +94,7 @@ public class PlayerInventory : MonoBehaviour
             UseableInfo useable = data.GetItemData();
             int count = data.GetCount();
             OnItemCollect?.Invoke(useable.GetName(), EventArgs.Empty);
+            audioManager.PlayEffect("ItemPickup");
             if (useable.GetType() == typeof(ItemInfo))
             {
                 Item newItem = new Item((ItemInfo)useable, count);

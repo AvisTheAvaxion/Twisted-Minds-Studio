@@ -881,12 +881,11 @@ public class Dialogue
         "Blaze: Can't you see he's in pain? Please, stop this.",
         "Dr. Frank N. Stein: He... He's fine. He's healthy!",
         "Dr. Frank N. Stein: He's never been this fit in his life!",
-        "Dr. Frank N. Stein: He looks weak to me|Stop this|He doesn't hate you|$Prompt",
+        "Dr. Frank N. Stein: He looks weak to me|Stop this|$Prompt",
         "Blaze: You have to stop this.$OptionA",
         "Dr. Frank N. Stein: Than let me show you his true power! $OptionA",
         "Blaze: He doesn't resent you for missing his game.$OptionB",
         "Dr. Frank N. Stein: No! I'm finally with my son again! $OptionB",
-        "Dr. Frank N. Stein: I-I'm sorry. $OptionC",
         //"Enrage if option A or B is chosen
     };
 
@@ -986,7 +985,7 @@ public class Dialogue
         "$Emote(Blaze_Neutral)",
         "$Animate(Varren,Talk,false)",
         "Blaze: What's with the helmet?",
-        "Blaze: Normally when monsters are defeated, they just drop goop, and sometimes supplies.",
+        "Blaze: Normally when monsters are defeated, they just drop goop, and sometimes items.",
         "$Emote(Varren_MildyAnnoyed)",
         "$Animate(Varren,Talk,true)",
         "$Animate(Varren,Pose1,false)",

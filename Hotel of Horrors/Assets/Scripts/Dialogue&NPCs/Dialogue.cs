@@ -460,7 +460,8 @@ public class Dialogue
         "$Emote(Varren_MildlyAnnoyed)",
         "$Animate(Varren,Pose1,true)$OptionB",
         "$Animate(Varren,Talk,true)$OptionB",
-        "???: Calm down, kid, I'm Varren, just another person trapped here like you. $OptionB",
+        "???: Calm down kid, i'm not a ghost.",
+        "My name is Varren, i'm just another person trapped here like you. $OptionB",
         "$Animate(Varren,Pose1,false)$OptionB",
         "$Emote(Blaze_Neutral)",
         //Line above is a test line

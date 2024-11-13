@@ -10,7 +10,7 @@ public class InventoryGUI : MonoBehaviour
     PlayerInventory inventory;
 
     [SerializeField] PlayerGUI playerGUI;
-    [SerializeField] GameObject inventoryUI;
+    [SerializeField] public GameObject inventoryUI;
     [Header("UI Elements")]
     [SerializeField] GameObject weaponsContainer;
     [SerializeField] GameObject itemsContainer;
@@ -355,7 +355,7 @@ public class InventoryGUI : MonoBehaviour
 
     void OnToggleInventory()
     {
-        if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None && !elevatorMenu.elevatorMenuOpen)
+        if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None && !GameState.IsPaused && (GameState.CurrentState == GameState.State.None || GameState.CurrentState == GameState.State.Inventory))
         {
             if (inventoryUI.activeSelf == true)
             {
@@ -370,21 +370,23 @@ public class InventoryGUI : MonoBehaviour
 
                 inventoryUI.SetActive(false);
                 itemToolTip.gameObject.SetActive(false);
-                Cursor.visible = false;
 
-                GameTime.UnpauseTime();
+                GameState.CurrentState = GameState.State.None;
+
+                //GameTime.UnpauseTime();
             }
             else
             {
                 inventoryUI.SetActive(true);
-                Cursor.visible = true;
+
+                GameState.CurrentState = GameState.State.Inventory;
 
                 if (!initialized) Start();
 
                 UpdateGUI();
 
                 questSystem.QuestEvent(QuestSystem.QuestEventType.InventoryOpened, null);
-                GameTime.PauseTime(false);
+                //GameTime.PauseTime(false);
             }
         }
     }

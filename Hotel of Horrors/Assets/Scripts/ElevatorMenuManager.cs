@@ -34,6 +34,7 @@ public class ElevatorMenuManager : MonoBehaviour
 
     QuestSystem questSystem;
 
+
     private void Start()
     {
         elevatorBackground.SetActive(false);
@@ -125,11 +126,13 @@ public class ElevatorMenuManager : MonoBehaviour
     {
         elevatorMenuOpen = true;
         elevatorBackground.SetActive(true);
+
+        audioManager.PlayEffect("ElevatorJam");
     }
 
     public void LeaveMindMenu()
     {
-        Cursor.visible = false;
+        //Cursor.visible = false;
         mindRoomMenu.SetActive(false);
     }
 
@@ -155,6 +158,7 @@ public class ElevatorMenuManager : MonoBehaviour
             yield return null;
         }
         player.SetCanMove(true);
+        GameState.CurrentState = GameState.State.None;
         elevatorBackground.SetActive(false);
     }
     #endregion

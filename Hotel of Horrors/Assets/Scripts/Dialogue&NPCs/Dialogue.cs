@@ -305,8 +305,8 @@ public class Dialogue
         "Samantha: And if there's something you don't want, just select it and press that <b>red trash button</b>.",
         "Samantha: The same logic applies across every tab, so now you know how to use your inventory!",
         "Samantha: Now, go into the next room, deary. I got more stuff set up there.",
-        "$TogglePlayerUI(False)",
-        "$ChronoStop(False)",
+        "$ToggleInventoryUI(False)",
+        //"$ChronoStop(False)",
         "$Move(SlimeLady_InventoryExplanation,4.6,-14.184)",
         "$Kill(SlimeLady_InventoryExplanation)"
     };
@@ -460,7 +460,8 @@ public class Dialogue
         "$Emote(Varren_MildlyAnnoyed)",
         "$Animate(Varren,Pose1,true)$OptionB",
         "$Animate(Varren,Talk,true)$OptionB",
-        "???: Calm down, kid, I'm Varren, just another person trapped here like you. $OptionB",
+        "???: Calm down kid, i'm not a ghost.",
+        "My name is Varren, i'm just another person trapped here like you. $OptionB",
         "$Animate(Varren,Pose1,false)$OptionB",
         "$Emote(Blaze_Neutral)",
         //Line above is a test line
@@ -881,12 +882,11 @@ public class Dialogue
         "Blaze: Can't you see he's in pain? Please, stop this.",
         "Dr. Frank N. Stein: He... He's fine. He's healthy!",
         "Dr. Frank N. Stein: He's never been this fit in his life!",
-        "Dr. Frank N. Stein: He looks weak to me|Stop this|He doesn't hate you|$Prompt",
+        "Dr. Frank N. Stein: He looks weak to me|Stop this|$Prompt",
         "Blaze: You have to stop this.$OptionA",
         "Dr. Frank N. Stein: Than let me show you his true power! $OptionA",
         "Blaze: He doesn't resent you for missing his game.$OptionB",
         "Dr. Frank N. Stein: No! I'm finally with my son again! $OptionB",
-        "Dr. Frank N. Stein: I-I'm sorry. $OptionC",
         //"Enrage if option A or B is chosen
     };
 
@@ -986,7 +986,7 @@ public class Dialogue
         "$Emote(Blaze_Neutral)",
         "$Animate(Varren,Talk,false)",
         "Blaze: What's with the helmet?",
-        "Blaze: Normally when monsters are defeated, they just drop goop, and sometimes supplies.",
+        "Blaze: Normally when monsters are defeated, they just drop goop, and sometimes items.",
         "$Emote(Varren_MildyAnnoyed)",
         "$Animate(Varren,Talk,true)",
         "$Animate(Varren,Pose1,false)",

@@ -588,6 +588,32 @@ public class DialogueManager : MonoBehaviour
                 currentLine++;
                 OnDialogueUpdate();
             }
+            else if (lines[currentLine].StartsWith("$ToggleInventoryUI") || lines[currentLine].EndsWith("$ToggleInventoryUI"))
+            {
+                currentState = CutsceneState.Waiting;
+
+                int toggleStartIndex = lines[currentLine].IndexOf('(');
+                int toggleEndIndex = lines[currentLine].IndexOf(')');
+                string toggleInfo = lines[currentLine].Substring(toggleStartIndex + 1, toggleEndIndex - toggleStartIndex - 1);
+
+                bool active = bool.Parse(toggleInfo);
+                InventoryGUI inventoryGUI = FindObjectOfType<InventoryGUI>();
+                if(active)
+                {
+                    inventoryGUI.inventoryUI.SetActive(true);
+                    GameState.CurrentState = GameState.State.Inventory;
+                }
+                else
+                {
+                    inventoryGUI.inventoryUI.SetActive(false);
+                    GameState.CurrentState = GameState.State.None;
+                }
+                playerGUI.SetActive(bool.Parse(toggleInfo));
+
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
+            }
             #endregion
             else
             {

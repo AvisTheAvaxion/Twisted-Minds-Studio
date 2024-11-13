@@ -172,7 +172,7 @@ public class ActionController : MonoBehaviour
     #region Input Detection
     void OnAttack(InputValue inputValue)
     {
-        if (disableAttackControls || GameTime.paused) return;
+        if (disableAttackControls || (GameState.IsPaused && GameState.CurrentState != GameState.State.None)) return;
 
         if(isAttacking)
         {
@@ -206,7 +206,7 @@ public class ActionController : MonoBehaviour
     }
     void OnPrimaryAction(InputValue inputValue)
     {
-        if (disableAttackControls || GameTime.paused) return;
+        if (disableAttackControls || (GameState.IsPaused && GameState.CurrentState != GameState.State.None)) return;
 
         if (currentSpecialAbility != null && canDoSpecialAbility)
         {
@@ -216,7 +216,7 @@ public class ActionController : MonoBehaviour
     }
     void OnSecondaryAction(InputValue inputValue)
     {
-        if (disableAttackControls || GameTime.paused) return;
+        if (disableAttackControls || (GameState.IsPaused && GameState.CurrentState != GameState.State.None)) return;
 
         if (canDoPlayerAbility && canUseItem)
         {

@@ -147,30 +147,33 @@ public class Door : MonoBehaviour
 
     IEnumerator GoToElevator(GameObject player)
     {
-        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        player.GetComponent<Animator>().SetBool("isWalking", false);
-
-        player.GetComponent<PlayerMovement>().canMove = false;
-
-        //player.GetComponent<NewAudioManager>().PlayEffect("DoorOpen");
-
-        //fade to black
-        for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
+        if (!GameState.IsPaused && GameState.CurrentState == GameState.State.None)
         {
-            // set color with i as alpha
-            fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
-            yield return null;
-        }
-        
-        floor.elevatorMenu.OpenElevatorMenu();
-        Cursor.visible = true;
+            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            player.GetComponent<Animator>().SetBool("isWalking", false);
 
-        //fade to clear
-        for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)
-        {
-            // set color with i as alpha
-            fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
-            yield return null;
+            player.GetComponent<PlayerMovement>().canMove = false;
+
+            //player.GetComponent<NewAudioManager>().PlayEffect("DoorOpen");
+
+            //fade to black
+            for (float i = 0; i <= doorTransitionLength / 2f; i += Time.deltaTime)
+            {
+                // set color with i as alpha
+                fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
+                yield return null;
+            }
+
+            floor.elevatorMenu.OpenElevatorMenu();
+            GameState.CurrentState = GameState.State.ElevatorRoom;
+
+            //fade to clear
+            for (float i = doorTransitionLength / 2f; i >= 0; i -= Time.deltaTime)
+            {
+                // set color with i as alpha
+                fadeImage.color = new Color(0, 0, 0, i / (doorTransitionLength / 2f));
+                yield return null;
+            }
         }
     }
 

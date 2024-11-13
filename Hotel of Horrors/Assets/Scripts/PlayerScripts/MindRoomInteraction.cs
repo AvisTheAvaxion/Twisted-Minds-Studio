@@ -5,8 +5,14 @@ using UnityEngine;
 public class MindRoomInteraction : MonoBehaviour
 {
     [SerializeField] GameObject buttonPrompt;
-    [SerializeField] GameObject mindRoomCanvas;
+    [SerializeField] MindRoomGUI mindRoomGUI;
     bool inRangeOfChair;
+
+    private void Start()
+    {
+        mindRoomGUI = FindObjectOfType<MindRoomGUI>();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag.Equals("MindRoomChair"))
@@ -28,10 +34,9 @@ public class MindRoomInteraction : MonoBehaviour
 
     void OnInteract()
     {
-        if (inRangeOfChair)
+        if (!GameState.IsPaused && GameState.CurrentState == GameState.State.None && inRangeOfChair)
         {
-            mindRoomCanvas.SetActive(true);
-            Cursor.visible = true;
+            mindRoomGUI.OpenMindRoom();
         }
     }
 }

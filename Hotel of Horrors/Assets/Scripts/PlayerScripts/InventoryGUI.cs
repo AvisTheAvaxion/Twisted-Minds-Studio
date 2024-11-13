@@ -10,7 +10,7 @@ public class InventoryGUI : MonoBehaviour
     PlayerInventory inventory;
 
     [SerializeField] PlayerGUI playerGUI;
-    [SerializeField] GameObject inventoryUI;
+    [SerializeField] public GameObject inventoryUI;
     [Header("UI Elements")]
     [SerializeField] GameObject weaponsContainer;
     [SerializeField] GameObject itemsContainer;

@@ -5351,10 +5351,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2266716975560440699, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: m_Volume
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5196756706972270376, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: playerGUI
       value: 
       objectReference: {fileID: 870942615}
+    - target: {fileID: 5196756706972270376, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+      propertyPath: audioManager
+      value: 
+      objectReference: {fileID: 1206856878}
     - target: {fileID: 5196756706972270376, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
       propertyPath: playerHealth
       value: 
@@ -10204,7 +10212,7 @@ PrefabInstance:
       objectReference: {fileID: 1206856878}
     - target: {fileID: 5566431202147579643, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
       propertyPath: CharacterPics.Array.size
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5566431202147579643, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
       propertyPath: CharacterPics.Array.data[0]
@@ -10258,6 +10266,10 @@ PrefabInstance:
       propertyPath: CharacterPics.Array.data[12]
       value: 
       objectReference: {fileID: 21300000, guid: ac064304d0e90d64d905beae01296f96, type: 3}
+    - target: {fileID: 5566431202147579643, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
+      propertyPath: CharacterPics.Array.data[13]
+      value: 
+      objectReference: {fileID: 21300000, guid: 6d1f4b644b1612f4e818c5d5e9d0246e, type: 3}
     - target: {fileID: 7042842034925127218, guid: ecdd399754e7b1d41a836f94a0d42d48, type: 3}
       propertyPath: m_Name
       value: Dialogue System
@@ -20510,7 +20522,6 @@ MonoBehaviour:
   connectToSameRoomChance: 5
   toBossDoor: {fileID: 0}
   fromBossDoor: {fileID: 0}
-  elevator: {fileID: 0}
   elevatorCanvas: {fileID: 0}
   debug: 0
 --- !u!4 &1292671252

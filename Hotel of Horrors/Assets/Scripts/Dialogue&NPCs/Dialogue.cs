@@ -305,8 +305,8 @@ public class Dialogue
         "Samantha: And if there's something you don't want, just select it and press that <b>red trash button</b>.",
         "Samantha: The same logic applies across every tab, so now you know how to use your inventory!",
         "Samantha: Now, go into the next room, deary. I got more stuff set up there.",
-        "$TogglePlayerUI(False)",
-        "$ChronoStop(False)",
+        "$ToggleInventoryUI(False)",
+        //"$ChronoStop(False)",
         "$Move(SlimeLady_InventoryExplanation,4.6,-14.184)",
         "$Kill(SlimeLady_InventoryExplanation)"
     };

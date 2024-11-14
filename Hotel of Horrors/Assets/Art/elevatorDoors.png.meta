@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5b5181212bd70724eb13e210e11ee359
+guid: c09689ac61b92284d9d6ea200572656e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -81,6 +81,19 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -110,7 +123,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gatesTest_0
+      name: elevatorDoors_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2880
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5659862c67016bd46a3dba4718b4e772
+      internalID: -1700289176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elevatorDoors_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2520
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5acfe54397496f4f8931405e39a34e8
+      internalID: -177690830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elevatorDoors_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2160
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5be5078dadd2df4aa574854296863c3
+      internalID: 434079465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elevatorDoors_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b255576e735ff948983b1f8e83ef79b
+      internalID: -350168043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elevatorDoors_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1440
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b2e0ecbc717fcf47b538caffdbc8363
+      internalID: 1616693653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elevatorDoors_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1080
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 367fb76acee67ab41b3f8c92d4bba2b5
+      internalID: -747164021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elevatorDoors_6
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ee9a8b28d09c564c89b2da1072aa832
-      internalID: -1198637295
+      spriteID: 29bcff7bac9f7eb4592fb310b177f14b
+      internalID: -1785121366
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gatesTest_1
+      name: elevatorDoors_7
       rect:
         serializedVersion: 2
         x: 0
@@ -145,14 +284,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eeb9edd8ff04b084d900306f5cfa3890
-      internalID: -1052723987
+      spriteID: 47bd51a5765051047a26eafc51990251
+      internalID: -919727211
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gatesTest_2
+      name: elevatorDoors_8
       rect:
         serializedVersion: 2
         x: 0
@@ -166,8 +305,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbb01dbd05ef6f94884d514e12c04363
-      internalID: -667220658
+      spriteID: 44b7de571e88751458aca2d64a38ef53
+      internalID: 2110934304
       vertices: []
       indices: 
       edges: []
@@ -183,9 +322,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      gatesTest_0: -1198637295
-      gatesTest_1: -1052723987
-      gatesTest_2: -667220658
+      elevatorDoors_0: -1700289176
+      elevatorDoors_1: -177690830
+      elevatorDoors_2: 434079465
+      elevatorDoors_3: -350168043
+      elevatorDoors_4: 1616693653
+      elevatorDoors_5: -747164021
+      elevatorDoors_6: -1785121366
+      elevatorDoors_7: -919727211
+      elevatorDoors_8: 2110934304
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

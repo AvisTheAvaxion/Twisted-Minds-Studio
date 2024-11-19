@@ -48,6 +48,9 @@ public class EnemyAudioManager : MonoBehaviour
                 AttackSource.clip = AttackSounds[2];
                 break;
 
+            case "CoffinMimic":
+                AttackSource.clip = AttackSounds[3];
+                break;
             default:
                 Debug.Log(name + " No sound");
                 break;

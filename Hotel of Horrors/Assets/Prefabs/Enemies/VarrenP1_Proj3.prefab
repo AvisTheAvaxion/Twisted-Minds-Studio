@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1669033712058271884}
+  - component: {fileID: 335551843059135643}
   m_Layer: 0
   m_Name: VarrenP1_Proj3
   m_TagString: Untagged
@@ -47,6 +48,21 @@ Transform:
   - {fileID: 516543431948167825}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &335551843059135643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2405770447052831143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9486883c8f11f234a82bf069fff23c33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectiles: []
+  spinForceScalar: 2
+  launchMode: 2
 --- !u!1001 &360401159083063897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -114,6 +130,14 @@ PrefabInstance:
     - target: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
       propertyPath: m_Name
       value: Enemy Bullet (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -193,6 +217,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Bullet (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -270,6 +302,14 @@ PrefabInstance:
     - target: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
       propertyPath: m_Name
       value: Enemy Bullet (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -349,6 +389,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Bullet (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -426,6 +474,14 @@ PrefabInstance:
     - target: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
       propertyPath: m_Name
       value: Enemy Bullet (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -505,6 +561,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Bullet (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -582,6 +646,14 @@ PrefabInstance:
     - target: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
       propertyPath: m_Name
       value: Enemy Bullet (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -661,6 +733,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Bullet
       objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -738,6 +818,14 @@ PrefabInstance:
     - target: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
       propertyPath: m_Name
       value: Enemy Bullet (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -817,6 +905,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Bullet (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -894,6 +990,14 @@ PrefabInstance:
     - target: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
       propertyPath: m_Name
       value: Enemy Bullet (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -973,6 +1077,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Bullet (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1050,6 +1162,14 @@ PrefabInstance:
     - target: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
       propertyPath: m_Name
       value: Enemy Bullet (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1129,6 +1249,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Bullet (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1207,6 +1335,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Bullet (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1284,6 +1420,14 @@ PrefabInstance:
     - target: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
       propertyPath: m_Name
       value: Enemy Bullet (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861634292659414108, guid: 18d5b79283727f24daf348d150248180, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 860863201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

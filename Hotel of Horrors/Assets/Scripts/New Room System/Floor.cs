@@ -386,9 +386,12 @@ public class Floor : MonoBehaviour
 
     public void AddToGuaranteeRooms(string roomName)
     {
-        roomGuarantees.Enqueue(roomsByName[roomName]);
+        if (roomsByName.ContainsKey(roomName))
+        {
+            roomGuarantees.Enqueue(roomsByName[roomName]);
 
-        if (debug) print($"Added {roomName} to guaranteed rooms queue (Count {roomGuarantees.Count})");
+            if (debug) print($"Added {roomName} to guaranteed rooms queue (Count {roomGuarantees.Count})");
+        }
     }
     public void ClearGuaranteeRooms()
     {

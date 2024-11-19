@@ -6,9 +6,10 @@ public class MultiProjectile : MonoBehaviour
 {
     public enum LaunchMode
     {
-        Circle, Direction
+        Circle, Direction, CircleSpin
     }
     [SerializeField] Projectile[] projectiles;
+    [SerializeField] float spinForceScalar = 0.5f;
     [SerializeField] LaunchMode launchMode = LaunchMode.Direction;
 
     Rigidbody2D[] rigidBodies;
@@ -52,10 +53,16 @@ public class MultiProjectile : MonoBehaviour
             {
                 rigidBodies[i].AddForce(dir * launchForce, forceMode);
             }
-            else
+            else if (launchMode == LaunchMode.Circle)
             {
                 dir = (rigidBodies[i].transform.position - transform.position).normalized;
                 rigidBodies[i].AddForce(dir * launchForce, forceMode);
+            }
+            else if (launchMode == LaunchMode.CircleSpin)
+            {
+                dir = (rigidBodies[i].transform.position - transform.position).normalized;
+                rigidBodies[i].AddForce(dir * launchForce, forceMode);
+                rigidBodies[i].AddForce(Vector3.Cross(dir, Vector3.forward) * launchForce * spinForceScalar, forceMode);
             }
         }
     }

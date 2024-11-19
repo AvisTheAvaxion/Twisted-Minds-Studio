@@ -250,6 +250,62 @@ public class AI : MonoBehaviour
 
         Move();
     }
+    public void OrbitAroundTarget(Vector3 targetPos)
+    {
+        if (!canMove) return;
+
+        Vector2 vectorToTarget = targetPos - transform.position;
+        Vector2 dirToTarget = vectorToTarget.normalized;
+
+        float distToTarget = vectorToTarget.magnitude;
+
+        if (distToTarget > orbitRadius + orbitOffset + orbitRadiusThickness)
+            isOrbiting = false;
+        else if (distToTarget <= orbitRadius + orbitOffset)
+            isOrbiting = true;
+
+        //bool hasDirectPath = CheckForDirectPath(dirToTarget, distToTarget);
+
+        //if (!hasDirectPath)
+        //    dirToTarget = IndirectMoveTowardsTarget(dirToTarget, distToTarget);
+
+        float largestWeight = 0;
+        //Set baseline weight based off dot product to desire direction
+        for (int i = 0; i < numOfWeights; i++)
+        {
+            float w = Vector2.Dot(weights[i].dir, dirToTarget);
+
+            if (isOrbiting)
+            {
+                w = 1 - Mathf.Abs(w);
+            }
+
+            weights[i].weight = w;
+
+            float w2 = Vector2.Dot(weights[i].dir, currentDir);
+            weights[i].weight += w2 * desireKeepSameDir;
+        }
+
+        ObstacleDetection(isOrbiting);
+
+        //Find largest weight and head in that direction
+        largestWeight = weights[0].weight;
+        int largestWeightIndex = 0;
+        newDir = weights[0].dir;
+        for (int i = 1; i < numOfWeights; i++)
+        {
+            if (weights[i].weight > largestWeight)
+            {
+                newDir = weights[i].dir;
+                largestWeightIndex = i;
+                largestWeight = weights[i].weight;
+            }
+        }
+
+        //PathObstruction(largestWeight, largestWeightIndex);
+
+        Move();
+    }
 
     private void PathObstruction(float largestWeight, int largestWeightIndex)
     {

@@ -298,4 +298,14 @@ public abstract class BossStateMachine : MonoBehaviour
 
         onCooldown = false;
     }
+    protected IEnumerator Wait(float timer)
+    {
+        if (debug)
+            print("Started Timer");
+
+        yield return new WaitForSeconds(timer);
+
+        if (debug)
+            print("Served Timer");
+    }
 }

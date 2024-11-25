@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(AI))]
 public class KarenBoss : BossStateMachine
@@ -26,13 +27,10 @@ public class KarenBoss : BossStateMachine
         public float slamAngleOffsetDifference;
         public float slamCooldownMin;
         public float slamCooldownMax;
-    }
 
-    protected enum RoomPositions
-    {
-        TopLeft, Top, TopRight,
-        Left, Middle, Right,
-        BottomLeft, Bottom, BottomRight,
+        [Header("Summon Settings")]
+        public int patternNumber;
+        public float patternSpeed;
     }
 
     [Header("References")]
@@ -135,17 +133,17 @@ public class KarenBoss : BossStateMachine
         
         rb.velocity = Vector3.zero;
         isAttacking = true;
+        //Jump into the air for certain amount of time
     }
     void StandardSlam()
     {
-        //Spawn ring of projectiles
-        //Intending for the Bullet Angle Offset to change slightly between burst
+        //Slam down on the player
+        Vector2 lastPlayerPos = playerPos;
+        transform.position = (lastPlayerPos * (Vector2.up * 2));
+        Wait(3f);
+
 
         if (cameraShake != null) cameraShake.ShakeCamera(slamCameraShake);
-        
-        shooter.Attack();
-        shooter.ModifyBulletAngleOffset(35, false);
-        shooter.Attack();
             
     }
     public void StandardSlamEnd()
@@ -287,10 +285,5 @@ public class KarenBoss : BossStateMachine
     {
         yield return new WaitForSeconds(1f);
         OnDialogueEnd();
-    }
-
-    protected Transform GetRoomPosition(RoomPositions roomPosition)
-    {
-        return roomPositions[(int)roomPosition];
     }
 }

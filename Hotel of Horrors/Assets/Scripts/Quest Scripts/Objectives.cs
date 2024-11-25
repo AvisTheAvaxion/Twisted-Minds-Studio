@@ -11,6 +11,8 @@ public class Objectives
                 return Floor0[objectiveNum];
             case 1:
                 return Floor1[objectiveNum];
+            case 2:
+                return Floor2[objectiveNum];
         }
         return null;
     }
@@ -24,6 +26,8 @@ public class Objectives
                 return Floor0.Length;
             case 1:
                 return Floor1.Length;
+            case 2:
+                return Floor2.Length;
 
         }
         return 0;
@@ -88,6 +92,11 @@ public class Objectives
         "Talk|FrankJersey(Quest)|DrFrankOffice",
         "KillSpecific|1|FrankNSteinMonster",
         "ClearFloor"
+    };
+
+    string[] Floor2 = new string[]
+    {
+        "KillSpecific|1|KarenWerewolf",
     };
 
 }

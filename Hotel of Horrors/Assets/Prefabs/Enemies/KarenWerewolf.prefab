@@ -165,13 +165,13 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
   bulletSpawnPoint: {fileID: 4285218707541926157}
   startingDistance: 0.1
-  bulletForce: 20
-  bulletAngleOffset: 0
-  burstCount: 3
+  bulletForce: 5
+  bulletAngleOffset: -157
+  burstCount: 12
   projectilesPerBurst: 12
-  angleSpread: 73
-  timeBetweenBursts: 1
-  timeBetweenShots: 0.3
+  angleSpread: 359
+  timeBetweenBursts: 0.3
+  timeBetweenShots: 0.2
   stagger: 0
   oscillate: 0
   target: {fileID: 0}
@@ -264,50 +264,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 669ce43116d18364bb28b2a4f67705cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
+  debug: 1
   cameraShake: {fileID: 0}
   flipToRotate: 0
   transformToFlip: {fileID: 2231019916136021813}
   DialogueManager: {fileID: 0}
-  openCutscene: 8
-  stages: []
-  animator: {fileID: 0}
-  afterImage: {fileID: 0}
-  shooter: {fileID: 0}
-  ai: {fileID: 0}
-  raycastOrigin: {fileID: 0}
+  openCutscene: 0
+  stages:
+  - stage: 1
+    healthThresholdToNextStage: 200
+    attackSequence: 00000000
+    cutscene: 0
+    correctChoice: 0
+  - stage: 2
+    healthThresholdToNextStage: 120
+    attackSequence: 
+    cutscene: 0
+    correctChoice: 0
+  - stage: 3
+    healthThresholdToNextStage: 50
+    attackSequence: 
+    cutscene: 0
+    correctChoice: 0
+  enrageSprite: {fileID: 0}
+  animator: {fileID: 2975716810577125255}
+  afterImage: {fileID: 7894828233310304972}
+  shooter: {fileID: 763643128353482776}
+  ai: {fileID: 3713743189028351818}
+  raycastOrigin: {fileID: 4285218707541926157}
+  roomPositions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   normalAttackSettings:
-    walkSpeed: 0
-    normalKnockback: 0
-    normalContactDamage: 0
+    walkSpeed: 0.8
+    normalKnockback: 2.5
+    normalContactDamage: 0.5
     slashDamage: 0
     slashKnockback: 0
     slashStun: 0
     slashCooldownMin: 0
     slashCooldownMax: 0
     cancelStunLength: 0
-    slamMinAttackRange: 0
-    slamDamage: 0
-    slamRadius: 0
-    slamKnockback: 0
-    slamCooldownMin: 0
-    slamCooldownMax: 0
+    slamAngleOffsetDifference: 0
+    slamCooldownMin: 4
+    slamCooldownMax: 4.5
+    patternNumber: 0
+    patternSpeed: 0
   enragedAttackSettings:
-    walkSpeed: 0
-    normalKnockback: 0
-    normalContactDamage: 0
+    walkSpeed: 1.3
+    normalKnockback: 3
+    normalContactDamage: 1
     slashDamage: 0
     slashKnockback: 0
     slashStun: 0
     slashCooldownMin: 0
     slashCooldownMax: 0
     cancelStunLength: 0
-    slamMinAttackRange: 0
-    slamDamage: 0
-    slamRadius: 0
-    slamKnockback: 0
+    slamAngleOffsetDifference: 0
     slamCooldownMin: 0
     slamCooldownMax: 0
+    patternNumber: 0
+    patternSpeed: 0
   slamCameraShake: 0.9
   walkingCameraShake: 0.4
   slamHitStopLength: 0.1
@@ -329,7 +353,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -340,7 +364,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &4034212036531775764
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -373,7 +397,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0055673122, y: -0.059385}
+  m_Offset: {x: 0.019043446, y: -0.031093597}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -384,7 +408,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3801689, y: 0.88123}
+  m_Size: {x: 0.66658974, y: 1.1140394}
   m_EdgeRadius: 0
 --- !u!210 &147093004941525167
 SortingGroup:
@@ -451,15 +475,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.4818478
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.12490749
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.23331457
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -467,15 +491,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -496,7 +520,7 @@ PrefabInstance:
     - target: {fileID: 4997902425001084151, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: UVModule.sprites.Array.data[0].sprite
       value: 
-      objectReference: {fileID: 822421616, guid: bd2b5d8d22c3a3b47a75821d2891d665, type: 3}
+      objectReference: {fileID: -387775660, guid: 8d54709fffb114d45b56619a285120ee, type: 3}
     - target: {fileID: 4997902425001084151, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
       propertyPath: InitialModule.randomizeRotationDirection
       value: 0
@@ -547,3 +571,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 926928979642460304, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
   m_PrefabInstance: {fileID: 366501985720695545}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7894828233310304972 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7531711748189192245, guid: 5221bb3f01b20f54c837de88aee1b30b, type: 3}
+  m_PrefabInstance: {fileID: 366501985720695545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b404b1ba1dfb9b43be6a0eebb95e429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

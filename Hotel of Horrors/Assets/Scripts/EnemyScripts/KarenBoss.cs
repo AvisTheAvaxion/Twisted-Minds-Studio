@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(AI))]
 public class KarenBoss : BossStateMachine
@@ -24,7 +25,12 @@ public class KarenBoss : BossStateMachine
         public float cancelStunLength;
 
         [Header("Slam Settings")]
-        public float slamAngleOffsetDifference;
+        public float fallLength;
+        [Range(0, 1)] public float shadowChaseIntensity;
+        public float shadowSpeed;
+        public float slamRadius;
+        public float slamDamage;
+        public float slamKnockback;
         public float slamCooldownMin;
         public float slamCooldownMax;
 
@@ -39,7 +45,9 @@ public class KarenBoss : BossStateMachine
     [SerializeField] BasicShooter shooter;
     [SerializeField] AI ai;
     [SerializeField] Transform raycastOrigin;
-    [SerializeField] Transform[] roomPositions;
+    [SerializeField] Transform jumpPoint;
+    [SerializeField] GameObject karenShadow;
+    [SerializeField] GameObject shockwavePrefab;
 
     [Header("Attack Settings")]
     [SerializeField] AttackSettings normalAttackSettings;
@@ -105,7 +113,7 @@ public class KarenBoss : BossStateMachine
 
         if (stages[currentStageIndex].attackSequence[currentAttack] == 0)
         {
-            StandardSlamBegin();
+            SlamBegin();
             currentAttack++;
         }
         else if (stages[currentStageIndex].attackSequence[currentAttack] == 1)
@@ -126,28 +134,98 @@ public class KarenBoss : BossStateMachine
         if (bossFightStarted)
             currentState = States.Fighting;
     }
-    void StandardSlamBegin()
+
+    void SlamBegin()
     {
         animator.SetBool("isWalking", false);
-        animator.SetTrigger("Slam");
-        
+        animator.SetTrigger("Jump");
         rb.velocity = Vector3.zero;
         isAttacking = true;
-        //Jump into the air for certain amount of time
     }
-    void StandardSlam()
-    {
-        //Slam down on the player
-        Vector2 lastPlayerPos = playerPos;
-        transform.position = (lastPlayerPos * (Vector2.up * 2));
-        Wait(3f);
 
+    IEnumerator StandardSlam()
+    {
+        karenShadow.transform.position = transform.position;
+        //Jump Up
+
+        if (afterImage) afterImage.StartEffect();
+        if (collider) collider.enabled = false;
+        float interpol = 0;
+        while (transform.position.y != jumpPoint.position.y)
+        {
+            //Debug.Log($"{interpol} | Karen:{transform.position} | target: {jumpPoint.position}");
+            transform.position = Vector2.Lerp(transform.position, jumpPoint.position, interpol);
+
+            interpol += 0.05f;
+            yield return new WaitForSeconds(.2f);
+        }
+        transform.position = jumpPoint.position;
+        rb.velocity = Vector3.zero;
+        //Have shadow following player and shrink
+
+        karenShadow.SetActive(true);
+
+        float timer = 0f;
+        Vector2 shadowMoveDir = (player.transform.position - karenShadow.transform.position).normalized;
+        Rigidbody2D shadowRigidbody = karenShadow.GetComponent<Rigidbody2D>();
+        while (timer < currentSettings.fallLength)
+        {
+            //Debug.Log($"Timer {timer}/{currentSettings.fallLength}");
+            shadowMoveDir = Vector2.Lerp(shadowMoveDir, (player.transform.position - karenShadow.transform.position).normalized, currentSettings.shadowChaseIntensity * Time.deltaTime * 10);
+            shadowRigidbody.velocity = shadowMoveDir * currentSettings.shadowSpeed * Time.fixedDeltaTime * 10;
+
+            yield return null;
+
+            timer += Time.deltaTime;
+        }
+        shadowRigidbody.velocity = Vector2.zero;
+
+        //Have Karen slam down at where the shadow stopped
+        animator.SetTrigger("Slam");
+        interpol = 0;
+        while ((transform.position - karenShadow.transform.position).sqrMagnitude > 0.01f)
+        {
+            //Debug.Log($"{interpol} | Karen:{transform.position} | target: {karenShadow.transform.position}");
+            transform.position = Vector2.Lerp(transform.position, karenShadow.transform.position, interpol);
+
+            interpol += 0.05f;
+            yield return new WaitForSeconds(.2f);
+        }
+        transform.position = karenShadow.transform.position;
+        karenShadow.SetActive(false);
 
         if (cameraShake != null) cameraShake.ShakeCamera(slamCameraShake);
-            
+        if (afterImage) afterImage.StopEffect();
+        collider.enabled = true;
+
+        //Detect things around monster at given radius
+        //Deal damage and knockback
+        //Possibly spawn ring of projectiles
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, currentSettings.slamRadius);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].tag.Equals("Player"))
+            {
+                PlayerMovement playerMovement = colliders[i].gameObject.GetComponent<PlayerMovement>();
+                IHealth health = colliders[i].gameObject.GetComponent<IHealth>();
+                Vector2 dir = (colliders[i].transform.position - transform.position).normalized;
+
+                if (health.TakeDamage(currentSettings.slamDamage))
+                {
+                    health.Knockback(dir, currentSettings.slamKnockback);
+                    GameTime.AddHitStop(slamHitStopLength);
+                }
+
+                break;
+            }
+        }
+        Destroy(Instantiate(shockwavePrefab, raycastOrigin.transform.position, Quaternion.identity), 1.5f);
+        SlamEnd();
     }
-    public void StandardSlamEnd()
+    public void SlamEnd()
     {
+        animator.SetTrigger("SlamEnd");
         isAttacking = false;
         StartCoroutine(WaitBeforeAttack(currentSettings.slamCooldownMin, currentSettings.slamCooldownMax));
     }

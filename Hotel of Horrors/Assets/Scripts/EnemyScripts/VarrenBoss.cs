@@ -44,6 +44,8 @@ public class VarrenBoss : BossStateMachine
     [SerializeField] LayerMask p2AttackMask;
     [SerializeField] Transform p2AttackPoint;
 
+    BasicShooter shooter;
+
     AttackSettings currentSettings;
 
     bool isStunned;
@@ -122,6 +124,7 @@ public class VarrenBoss : BossStateMachine
             for (int i = 0; i < p1Projectiles.Length; i++)
             {
                 MultiProjectile projectile = Instantiate(p1Projectiles[stages[currentStageIndex].attackSequence[currentAttack]].gameObject, p1ProjectileSpawnPoint.position, p1ProjectileSpawnPoint.rotation).GetComponent<MultiProjectile>();
+                projectile.Initialize();
                 yield return new WaitForSeconds(0.5f);
                 projectile.Launch(currentSettings.p1LaunchForce, Vector2.up);
             }
@@ -180,8 +183,11 @@ public class VarrenBoss : BossStateMachine
     {
         if (!isStunned && phase2Attack == null)
         {
+            rb.constraints = RigidbodyConstraints2D.None;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             ai.SetSpeed(currentSettings.p2NormalSpeed);
             animator.SetBool("isFlying", true);
+            animator.SetFloat("x", Mathf.Clamp(rb.velocity.x, -1, 1));
             collider.enabled = false;
             //ai.SetSpeed(10);
             ai.OrbitAroundTarget(player.transform.position);
@@ -203,16 +209,19 @@ public class VarrenBoss : BossStateMachine
         while(!arrived)
         {
             arrived = !ai.MoveTowardsTarget(player.transform.position);
+            animator.SetFloat("x", Mathf.Clamp(rb.velocity.x, -1, 1));
             yield return null;
         }
         float timer = 0;
         while(timer < currentSettings.p2FollowPeriod)
         {
             ai.MoveTowardsTarget(player.transform.position);
+            animator.SetFloat("x", Mathf.Clamp(rb.velocity.x, -1, 1));
             yield return null;
             timer += Time.deltaTime;
         }
         rb.velocity = Vector3.zero;
+        animator.SetFloat("x", 0);
 
         yield return new WaitForSeconds(currentSettings.p2GracePeriod);
 
@@ -220,20 +229,22 @@ public class VarrenBoss : BossStateMachine
 
         yield return new WaitForSeconds(2f);
 
-
         if (p2HitAttack)
         {
             animator.SetBool("isFlying", true);
 
+            yield return new WaitForSeconds(1.5f);
+
             if (attackCoroutine != null) StopCoroutine(attackCoroutine);
             attackCoroutine = StartCoroutine(AttackCooldown(GetRandomBetween(currentSettings.p2AttackCooldown)));
+
+            phase2Attack = null;
         }
         else
         {
             StartCoroutine(StunP2(currentSettings.p2StunLength, currentSettings.p2AttackCooldown));
         }
 
-        phase2Attack = null;
     }
     //Animation Event
     public void SlamAttack()
@@ -253,6 +264,11 @@ public class VarrenBoss : BossStateMachine
                 }
             }
         }
+
+        //if(enraged)
+        //{
+        shooter.Attack();
+        //}
     }
     Coroutine stunP2Coroutine;
     IEnumerator StunP2(float stunTime, Vector2 attackCooldown)
@@ -262,9 +278,12 @@ public class VarrenBoss : BossStateMachine
         canAttack = false;
         yield return new WaitForSeconds(stunTime);
 
-        isStunned = false;
-
         animator.SetBool("isFlying", true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        isStunned = false;
+        phase2Attack = null;
 
         if (attackCoroutine != null) StopCoroutine(attackCoroutine);
         attackCoroutine = StartCoroutine(AttackCooldown(GetRandomBetween(attackCooldown)));
@@ -274,13 +293,14 @@ public class VarrenBoss : BossStateMachine
     protected override void Idle()
     {
         currentState = States.Fighting;
-        //currentStageIndex = 1;
+        currentStageIndex = 1;
     }
 
     protected override void Init()
     {
         ai = GetComponent<AI>();
         animator = GetComponent<Animator>();
+        shooter = GetComponent<BasicShooter>();
 
         currentSettings = normalSettings;
     }

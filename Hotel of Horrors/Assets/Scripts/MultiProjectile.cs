@@ -19,10 +19,22 @@ public class MultiProjectile : MonoBehaviour
         if (projectiles == null || projectiles.Length == 0)
             projectiles = GetComponentsInChildren<Projectile>();
 
+        if(launchMode == LaunchMode.Circle || launchMode == LaunchMode.CircleSpin)
+        {
+            transform.rotation = Quaternion.AngleAxis(60f * Random.Range(0, 6), Vector3.forward);
+        }
+
         rigidBodies = new Rigidbody2D[projectiles.Length];
         for (int i = 0; i < projectiles.Length; i++)
         {
             rigidBodies[i] = projectiles[i].GetComponent<Rigidbody2D>();
+
+            if (launchMode == LaunchMode.Circle || launchMode == LaunchMode.CircleSpin)
+            {
+                float angle = Vector3.Angle(Vector3.up, (projectiles[i].transform.position - transform.position).normalized);
+                //projectiles[i].transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);// * rigidBodies[i].transform.rotation;
+                projectiles[i].transform.rotation = Quaternion.FromToRotation(-projectiles[i].transform.up, (projectiles[i].transform.position - transform.position).normalized) * projectiles[i].transform.rotation;
+            }
         }
     }
 

@@ -43,6 +43,7 @@ public class EnemyStateMachine : MonoBehaviour
     public States CurrentState { get => currentState; }
 
     [Header("Settings")]
+    [SerializeField] bool bossFightSummon = false;
     [SerializeField] Attacks.AttackModes attackType = Attacks.AttackModes.Melee;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected int emotionalEnergyWorth = 50;
@@ -222,7 +223,12 @@ public class EnemyStateMachine : MonoBehaviour
     protected virtual void Idle()
     {
         //starts patrolling when the player is in the room
-        if(canMove)
+        if(bossFightSummon)
+        {
+            if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
+            currentState = States.Fighting;
+        }
+        else if(canMove)
         {
             currentState = States.Patrolling;
         }
@@ -381,7 +387,7 @@ public class EnemyStateMachine : MonoBehaviour
 
             lastTargetPos = target.transform.position;
 
-            if (distToTarget > maxDistanceToNavigate || RaycastPlayer(dirToPlayer, distToTarget).collider != null)
+            if (!bossFightSummon && distToTarget > maxDistanceToNavigate || RaycastPlayer(dirToPlayer, distToTarget).collider != null)
             {
                 currentState = States.Searching;
             }

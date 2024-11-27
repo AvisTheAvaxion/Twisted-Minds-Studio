@@ -43,6 +43,7 @@ public class VarrenBoss : BossStateMachine
     [Header("Phase 2")]
     [SerializeField] LayerMask p2AttackMask;
     [SerializeField] Transform p2AttackPoint;
+    [SerializeField] GameObject[] summonEnemies;
 
     BasicShooter shooter;
 
@@ -265,10 +266,10 @@ public class VarrenBoss : BossStateMachine
             }
         }
 
-        //if(enraged)
-        //{
-        shooter.Attack();
-        //}
+        if(enraged)
+        {
+            shooter.Attack();
+        }
     }
     Coroutine stunP2Coroutine;
     IEnumerator StunP2(float stunTime, Vector2 attackCooldown)

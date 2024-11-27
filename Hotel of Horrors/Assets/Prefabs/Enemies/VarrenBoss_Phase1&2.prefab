@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  iFrameTime: 0.5
+  iFrameTime: 0.3
   healOverTime: 0
   timeBtwHeals: 5
   flashColorLength: 0.2
@@ -338,8 +338,9 @@ MonoBehaviour:
     p2GracePeriod: 0.2
     p2FollowPeriod: 0.55
     p2AttackCooldown: {x: 6, y: 8}
-    p2StunLength: 9
+    p2StunLength: 5
     p2SummonCooldown: 10
+    p2SummonRadius: 2
     p2AttackRadius: 1
     p2Damage: 20
     p2Knockback: 3
@@ -352,8 +353,9 @@ MonoBehaviour:
     p2GracePeriod: 0.1
     p2FollowPeriod: 0.4
     p2AttackCooldown: {x: 6, y: 8}
-    p2StunLength: 9
+    p2StunLength: 5
     p2SummonCooldown: 10
+    p2SummonRadius: 2
     p2AttackRadius: 1
     p2Damage: 20
     p2Knockback: 3
@@ -374,6 +376,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8192
   p2AttackPoint: {fileID: 5189994426109896910}
+  p2SummonEnemies:
+  - {fileID: 1419208321014462429, guid: 6e392f3db53699c4f8384666fd2d12dc, type: 3}
+  p2SummonMask:
+    serializedVersion: 2
+    m_Bits: 10304
 --- !u!61 &3972179133230641290
 BoxCollider2D:
   m_ObjectHideFlags: 0

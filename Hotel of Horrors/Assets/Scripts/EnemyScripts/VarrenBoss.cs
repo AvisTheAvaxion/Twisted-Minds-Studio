@@ -23,6 +23,7 @@ public class VarrenBoss : BossStateMachine
         public Vector2 p2AttackCooldown;// = 7f;
         public float p2StunLength;// = 5f;
         public float p2SummonCooldown;// = 10f;
+        public float p2SummonRadius; // 2f;
         public float p2AttackRadius;
         public float p2Damage;
         public float p2Knockback;
@@ -43,7 +44,9 @@ public class VarrenBoss : BossStateMachine
     [Header("Phase 2")]
     [SerializeField] LayerMask p2AttackMask;
     [SerializeField] Transform p2AttackPoint;
-    [SerializeField] GameObject[] summonEnemies;
+    [SerializeField] GameObject[] p2SummonEnemies;
+    [SerializeField] LayerMask p2SummonMask;
+    float summonTimer;
 
     BasicShooter shooter;
 
@@ -198,6 +201,14 @@ public class VarrenBoss : BossStateMachine
         {
             phase2Attack = StartCoroutine(Phase2Attack());
         }
+
+        if(summonTimer >= currentSettings.p2SummonCooldown)
+        {
+            summonTimer = 0;
+            SummonP2();
+        }
+
+        summonTimer += Time.deltaTime;
     }
     Coroutine phase2Attack;
     IEnumerator Phase2Attack()
@@ -232,6 +243,7 @@ public class VarrenBoss : BossStateMachine
 
         if (p2HitAttack)
         {
+            collider.enabled = true;
             animator.SetBool("isFlying", true);
 
             yield return new WaitForSeconds(1.5f);
@@ -250,6 +262,7 @@ public class VarrenBoss : BossStateMachine
     //Animation Event
     public void SlamAttack()
     {
+        collider.enabled = true;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(p2AttackPoint.position, currentSettings.p2AttackRadius, p2AttackMask);
         foreach (Collider2D collider in colliders)
         {
@@ -280,6 +293,7 @@ public class VarrenBoss : BossStateMachine
         yield return new WaitForSeconds(stunTime);
 
         animator.SetBool("isFlying", true);
+        collider.enabled = false;
 
         yield return new WaitForSeconds(1.5f);
 
@@ -288,6 +302,21 @@ public class VarrenBoss : BossStateMachine
 
         if (attackCoroutine != null) StopCoroutine(attackCoroutine);
         attackCoroutine = StartCoroutine(AttackCooldown(GetRandomBetween(attackCooldown)));
+    }
+    public void SummonP2()
+    {
+        for (int i = 0; i < (enraged ? 4 : 2); i++)
+        {
+            Vector2 spawnPoint;
+            do
+            {
+                spawnPoint = (Vector2)transform.position + Random.insideUnitCircle * currentSettings.p2SummonRadius;
+            }
+            while (Physics2D.OverlapCircle(spawnPoint, 0.24f, p2SummonMask) != null);
+
+            GameObject enemyToSpawn = p2SummonEnemies[Random.Range(0, p2SummonEnemies.Length)];
+            Instantiate(enemyToSpawn, spawnPoint, enemyToSpawn.transform.rotation);
+        }
     }
     #endregion
 

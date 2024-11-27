@@ -341,7 +341,7 @@ public class Floor : MonoBehaviour
 
         if (enemiesToKill <= 0)
         {
-            if (roomsByName[currentRoom].enemySpawner.AreEnemiesRemaining())
+            if (currentRoom != null && roomsByName.ContainsKey(currentRoom) && roomsByName[currentRoom].enemySpawner.AreEnemiesRemaining())
             {
                 roomsByName[currentRoom].enemySpawner.waveActive = false;
             }

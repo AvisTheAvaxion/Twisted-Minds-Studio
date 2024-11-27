@@ -225,8 +225,9 @@ public class EnemyStateMachine : MonoBehaviour
         //starts patrolling when the player is in the room
         if(bossFightSummon)
         {
-            if (hasWalkCycle && animator != null) animator.SetBool("isWalking", true);
-            currentState = States.Fighting;
+            if (animator != null) animator.SetBool("isSummon", true);
+            stunTimer = 0;
+            currentState = States.Stun;
         }
         else if(canMove)
         {

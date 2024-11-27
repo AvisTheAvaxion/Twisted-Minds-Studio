@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 4648400687196285421}
   - component: {fileID: 2401507651235056387}
   m_Layer: 10
-  m_Name: NormalBat
+  m_Name: SummonNormalBat
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
   animator: {fileID: 2055812601302435940}
   hasWalkCycle: 1
   moveParticles: {fileID: 0}
-  bossFightSummon: 0
+  bossFightSummon: 1
   attackType: 1
   moveSpeed: 11
   emotionalEnergyWorth: 50

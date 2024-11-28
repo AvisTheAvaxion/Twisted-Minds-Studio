@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -33,10 +34,15 @@ public class KarenBoss : BossStateMachine
         public float slamKnockback;
         public float slamCooldownMin;
         public float slamCooldownMax;
+        public float slamMinAttackRange;
 
         [Header("Summon Settings")]
-        public int patternNumber;
+        [Range(0,2)]public int summonPattern;
         public float patternSpeed;
+        public float summonShootForce;
+        public float summonShootDelay;
+        public float summonCooldownMin;
+        public float summonCooldownMax;
     }
 
     [Header("References")]
@@ -48,6 +54,10 @@ public class KarenBoss : BossStateMachine
     [SerializeField] Transform jumpPoint;
     [SerializeField] GameObject karenShadow;
     [SerializeField] GameObject shockwavePrefab;
+    [SerializeField] Transform summonPlatform;
+    [SerializeField] Transform jawbreakerPlatform;
+    [SerializeField] GameObject summonProjectile;
+    [SerializeField] GameObject jawbreaker;
 
     [Header("Attack Settings")]
     [SerializeField] AttackSettings normalAttackSettings;
@@ -111,14 +121,19 @@ public class KarenBoss : BossStateMachine
 
         if (debug) print(distToPlayer);
 
-        if (stages[currentStageIndex].attackSequence[currentAttack] == 0)
+        if (stages[currentStageIndex].attackSequence[currentAttack] == 0 && distToPlayer >= currentSettings.slamMinAttackRange)
         {
             SlamBegin();
             currentAttack++;
         }
         else if (stages[currentStageIndex].attackSequence[currentAttack] == 1)
         {
-
+            SummonBegin();
+            currentAttack++;
+        }
+        else
+        {
+            currentAttack++;
         }
 
         currentAttack = currentAttack % stages[currentStageIndex].attackSequence.Length;
@@ -154,8 +169,7 @@ public class KarenBoss : BossStateMachine
         while (transform.position.y != jumpPoint.position.y)
         {
             //Debug.Log($"{interpol} | Karen:{transform.position} | target: {jumpPoint.position}");
-            transform.position = Vector2.Lerp(transform.position, jumpPoint.position, interpol);
-
+            transform.position = Vector2.Lerp(transform.position, jumpPoint.position, Mathf.SmoothStep(0, 1, interpol));
             interpol += 0.05f;
             yield return new WaitForSeconds(.2f);
         }
@@ -186,7 +200,7 @@ public class KarenBoss : BossStateMachine
         while ((transform.position - karenShadow.transform.position).sqrMagnitude > 0.01f)
         {
             //Debug.Log($"{interpol} | Karen:{transform.position} | target: {karenShadow.transform.position}");
-            transform.position = Vector2.Lerp(transform.position, karenShadow.transform.position, interpol);
+            transform.position = Vector2.Lerp(transform.position, karenShadow.transform.position, Mathf.SmoothStep(0, 1, interpol));
 
             interpol += 0.05f;
             yield return new WaitForSeconds(.2f);
@@ -228,6 +242,85 @@ public class KarenBoss : BossStateMachine
         animator.SetTrigger("SlamEnd");
         isAttacking = false;
         StartCoroutine(WaitBeforeAttack(currentSettings.slamCooldownMin, currentSettings.slamCooldownMax));
+    }
+
+    void SummonBegin()
+    {
+        rb.velocity = Vector3.zero;
+        isAttacking = true;
+        animator.SetBool("isWalking", false);
+        animator.SetBool("Summon", true);
+    }
+
+    IEnumerator Summon()
+    {
+        List<Transform> positionsToUse = new List<Transform>();
+        switch (currentSettings.summonPattern)
+        {
+            case 0:
+                //Horizontal Vertical Patttern
+                positionsToUse.Add(summonPlatform.GetChild(0));
+                positionsToUse.Add(summonPlatform.GetChild(2));
+
+                foreach (Transform t in positionsToUse)
+                {
+                    summonPlatform.position = player.transform.position;
+                    t.gameObject.SetActive(true);
+                    yield return new WaitForSeconds(currentSettings.summonShootDelay);
+                    GameObject summon = Instantiate(summonProjectile, t.position, t.rotation);
+                    summon.GetComponent<Rigidbody2D>().AddForce(summon.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    t.gameObject.SetActive(false);
+                }
+                break;
+            case 1:
+                //Cross Pattern
+                positionsToUse.Add(summonPlatform.GetChild(1));
+                positionsToUse.Add(summonPlatform.GetChild(3));
+
+                foreach (Transform t in positionsToUse)
+                {
+                    summonPlatform.position = player.transform.position;
+                    t.gameObject.SetActive(true);
+                    yield return new WaitForSeconds(currentSettings.summonShootDelay);
+                    GameObject summon = Instantiate(summonProjectile, t.position, t.rotation);
+                    summon.GetComponent<Rigidbody2D>().AddForce(summon.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    t.gameObject.SetActive(false);
+                }
+                break;
+            case 2:
+                //Circle Pattern
+                foreach (Transform t in summonPlatform)
+                {
+                    summonPlatform.position = player.transform.position;
+                    t.gameObject.SetActive(true);
+                    yield return new WaitForSeconds(currentSettings.summonShootDelay);
+                    GameObject summon = Instantiate(summonProjectile, t.position, t.rotation);
+                    summon.GetComponent<Rigidbody2D>().AddForce(summon.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    t.gameObject.SetActive(false);
+                }
+                break;
+            case 3:
+                //Jawbreaker Summon
+                foreach (Transform t in jawbreakerPlatform)
+                {
+                    jawbreakerPlatform.position = player.transform.position;
+                    t.gameObject.SetActive(true);
+                    yield return new WaitForSeconds(currentSettings.summonShootDelay);
+                    GameObject summon = Instantiate(jawbreaker, t.position, t.rotation);
+                    t.gameObject.SetActive(false);
+                }
+                break;
+        }
+        positionsToUse.Clear();
+        SummonEnd();
+    }
+
+    void SummonEnd()
+    {
+        animator.SetBool("Summon", false);
+        animator.SetBool("isWalking", true);
+        isAttacking = false;
+        StartCoroutine(WaitBeforeAttack(currentSettings.summonCooldownMin, currentSettings.summonCooldownMax));
     }
 
     void Move()

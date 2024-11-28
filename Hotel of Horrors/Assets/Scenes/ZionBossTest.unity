@@ -13136,6 +13136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd5c9922a54ed3e47bc1d09db074b6d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1437857575 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7498233101355432618, guid: 3d643b66efc9f0246812a7b40c8a5458, type: 3}
+  m_PrefabInstance: {fileID: 1682917580}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1537329593 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7727882135630069313, guid: 675b1a17752d2f940b03153cf8c14a3e, type: 3}
@@ -13744,6 +13749,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 763643128353482776, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1437857575}
+    - target: {fileID: 763643128353482776, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: angleSpread
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 763643128353482776, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: bulletForce
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 763643128353482776, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 6622512885369241516, guid: 4cfee376648f544499ac7d448ea4af8f, type: 3}
+    - target: {fileID: 763643128353482776, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: startingDistance
+      value: 0.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 763643128353482776, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: bulletAngleOffset
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
       propertyPath: jumpPoint
       value: 
@@ -13781,6 +13810,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 78054343731934890, guid: 9f2ea89369c76614fbf06352d1c76d5b, type: 3}
     - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: wallMask.m_Bits
+      value: 2112
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
       propertyPath: summonProjectile
       value: 
       objectReference: {fileID: 5755907145474051541, guid: 41bf465dc0bcbec4dbe28267b0c2a785, type: 3}
@@ -13815,6 +13848,22 @@ PrefabInstance:
     - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
       propertyPath: normalAttackSettings.summonPattern
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: normalAttackSettings.slamCooldownMax
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: normalAttackSettings.slamCooldownMin
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: normalAttackSettings.slashCooldownMax
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: normalAttackSettings.slashCooldownMin
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
       propertyPath: normalAttackSettings.summonShootDelay
@@ -13891,6 +13940,30 @@ PrefabInstance:
     - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713743189028351818, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: objectRadius
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713743189028351818, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: centerOffset.y
+      value: -0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713743189028351818, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: wallMask.m_Bits
+      value: 2112
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713743189028351818, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 28352
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713743189028351818, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: minDistanceThreshold
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713743189028351818, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: obstacleDistanceSensitivity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4163444773169181561, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
       propertyPath: m_Name

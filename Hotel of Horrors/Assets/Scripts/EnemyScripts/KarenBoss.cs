@@ -121,12 +121,17 @@ public class KarenBoss : BossStateMachine
 
         if (debug) print(distToPlayer);
 
-        if (stages[currentStageIndex].attackSequence[currentAttack] == 0 && distToPlayer >= currentSettings.slamMinAttackRange)
+        if (stages[currentStageIndex].attackSequence[currentAttack] == 0 && distToPlayer <= currentSettings.slamMinAttackRange)
+        {
+            SlashBegin();
+            currentAttack++;
+        }
+        else if (stages[currentStageIndex].attackSequence[currentAttack] == 1 && distToPlayer >= currentSettings.slamMinAttackRange)
         {
             SlamBegin();
             currentAttack++;
         }
-        else if (stages[currentStageIndex].attackSequence[currentAttack] == 1)
+        else if (stages[currentStageIndex].attackSequence[currentAttack] == 2)
         {
             SummonBegin();
             currentAttack++;
@@ -148,6 +153,27 @@ public class KarenBoss : BossStateMachine
 
         if (bossFightStarted)
             currentState = States.Fighting;
+    }
+
+    void SlashBegin()
+    {
+        animator.SetBool("isWalking", false);
+        animator.SetTrigger("Slash");
+        rb.velocity = Vector3.zero;
+        isAttacking = true;
+    }
+
+    void Slash()
+    {
+        shooter.Attack();
+        SlamEnd();
+    }
+
+    void SlashEnd()
+    {
+        animator.SetBool("isWalking", true);
+        isAttacking = false;
+        StartCoroutine(WaitBeforeAttack(currentSettings.slashCooldownMin, currentSettings.slashCooldownMax));
     }
 
     void SlamBegin()

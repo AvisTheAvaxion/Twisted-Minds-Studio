@@ -164,12 +164,12 @@ MonoBehaviour:
   debugTargetPos: {x: 0, y: -1}
   bulletPrefab: {fileID: 6622512885369241516, guid: 18d5b79283727f24daf348d150248180, type: 3}
   bulletSpawnPoint: {fileID: 4285218707541926157}
-  startingDistance: 0.1
+  startingDistance: 0.37
   bulletForce: 5
-  bulletAngleOffset: -157
-  burstCount: 12
-  projectilesPerBurst: 12
-  angleSpread: 359
+  bulletAngleOffset: -85
+  burstCount: 1
+  projectilesPerBurst: 3
+  angleSpread: 38
   timeBetweenBursts: 0.3
   timeBetweenShots: 0.2
   stagger: 0
@@ -292,16 +292,13 @@ MonoBehaviour:
   shooter: {fileID: 763643128353482776}
   ai: {fileID: 3713743189028351818}
   raycastOrigin: {fileID: 4285218707541926157}
-  roomPositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  jumpPoint: {fileID: 0}
+  karenShadow: {fileID: 0}
+  shockwavePrefab: {fileID: 0}
+  summonPlatform: {fileID: 0}
+  jawbreakerPlatform: {fileID: 0}
+  summonProjectile: {fileID: 0}
+  jawbreaker: {fileID: 0}
   normalAttackSettings:
     walkSpeed: 0.8
     normalKnockback: 2.5
@@ -312,11 +309,21 @@ MonoBehaviour:
     slashCooldownMin: 0
     slashCooldownMax: 0
     cancelStunLength: 0
-    slamAngleOffsetDifference: 0
+    fallLength: 0
+    shadowChaseIntensity: 0
+    shadowSpeed: 0
+    slamRadius: 0
+    slamDamage: 0
+    slamKnockback: 0
     slamCooldownMin: 4
     slamCooldownMax: 4.5
-    patternNumber: 0
+    slamMinAttackRange: 0
+    summonPattern: 0
     patternSpeed: 0
+    summonShootForce: 0
+    summonShootDelay: 0
+    summonCooldownMin: 0
+    summonCooldownMax: 0
   enragedAttackSettings:
     walkSpeed: 1.3
     normalKnockback: 3
@@ -327,11 +334,21 @@ MonoBehaviour:
     slashCooldownMin: 0
     slashCooldownMax: 0
     cancelStunLength: 0
-    slamAngleOffsetDifference: 0
+    fallLength: 0
+    shadowChaseIntensity: 0
+    shadowSpeed: 0
+    slamRadius: 0
+    slamDamage: 0
+    slamKnockback: 0
     slamCooldownMin: 0
     slamCooldownMax: 0
-    patternNumber: 0
+    slamMinAttackRange: 0
+    summonPattern: 0
     patternSpeed: 0
+    summonShootForce: 0
+    summonShootDelay: 0
+    summonCooldownMin: 0
+    summonCooldownMax: 0
   slamCameraShake: 0.9
   walkingCameraShake: 0.4
   slamHitStopLength: 0.1

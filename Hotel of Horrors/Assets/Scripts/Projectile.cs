@@ -14,6 +14,8 @@ public class Projectile : MonoBehaviour
     [SerializeField] int maxWallBounces = 1;
     [SerializeField] bool goThroughWalls = false;
     [SerializeField] GameObject impactEffect;
+    [SerializeField] bool invincible = false;
+    [SerializeField] bool specialDeflection = false;
 
     protected Animator animator;
 
@@ -153,7 +155,7 @@ public class Projectile : MonoBehaviour
                 DestroySelf(true);
             }
         }
-        else if(collision.tag.Equals("MeleeStrike"))
+        else if(collision.tag.Equals("MeleeStrike") && !invincible)
         {
             MeleeSlash meleeStrike = collision.GetComponent<MeleeSlash>();
             if(meleeStrike && meleeStrike.GetDeflectionStrength() > deflectionResistance)
@@ -167,6 +169,12 @@ public class Projectile : MonoBehaviour
 
                 if (tag.Equals("PlayerBullet")) tag = "EnemyBullet";
                 if (tag.Equals("EnemyBullet")) tag = "PlayerBullet";
+
+                if (specialDeflection)
+                {
+                    gameObject.layer = 19;
+                    tag = "SpecialBullet";
+                }
             } else
             {
                 DestroySelf();

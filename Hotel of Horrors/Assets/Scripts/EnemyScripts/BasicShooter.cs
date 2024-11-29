@@ -20,6 +20,9 @@ public class BasicShooter : MonoBehaviour
     [SerializeField] float timeBetweenShots = .3f;
     [SerializeField] bool stagger;
     [SerializeField] bool oscillate;
+    [SerializeField] bool randomBurstOffset;
+    [SerializeField] bool randomProjectileOffset;
+    [SerializeField] Vector2 randomOffsetRange = new Vector2(-15, 15);
     [Space(15f)]
     [SerializeField] Transform target;
 
@@ -55,6 +58,10 @@ public class BasicShooter : MonoBehaviour
     {
         this.target = target;
     }
+    public void SetLaunchForce(float force)
+    {
+        bulletForce = force;
+    }
 
     IEnumerator ShootRoutine()
     {
@@ -84,9 +91,19 @@ public class BasicShooter : MonoBehaviour
                     angleStep *= -1;
                 }
 
+                float randomOffsetValue = 0;
+                if (randomBurstOffset)
+                {
+                    randomOffsetValue = Random.Range(randomOffsetRange.x, randomOffsetRange.y);
+                }
                 for (int j = 0; j < projectilesPerBurst; j++)
                 {
-                    Vector2 pos = FindBulletSpawnPos(currentAngle);
+                    if (randomProjectileOffset)
+                    {
+                        randomOffsetValue = Random.Range(randomOffsetRange.x, randomOffsetRange.y);
+                    }
+
+                    Vector2 pos = FindBulletSpawnPos(randomOffsetValue + currentAngle);
                     GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
 
                     //newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);
@@ -146,9 +163,19 @@ public class BasicShooter : MonoBehaviour
                     angleStep *= -1;
                 }
 
+                float randomOffsetValue = 0;
+                if(randomBurstOffset)
+                {
+                    randomOffsetValue = Random.Range(randomOffsetRange.x, randomOffsetRange.y);
+                }
                 for (int j = 0; j < projectilesPerBurst; j++)
                 {
-                    Vector2 pos = FindBulletSpawnPos(currentAngle);
+                    if(randomProjectileOffset)
+                    {
+                        randomOffsetValue = Random.Range(randomOffsetRange.x, randomOffsetRange.y);
+                    }
+
+                    Vector2 pos = FindBulletSpawnPos(randomOffsetValue + currentAngle);
                     GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
 
                     //newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);

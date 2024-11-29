@@ -62,14 +62,17 @@ public class BossHelper : MonoBehaviour
 
     protected virtual void SpawnMemento()
     {
-        GameObject go = Instantiate(holderPrefab, transform.position, Quaternion.identity);
-        MementoData data = go.GetComponent<MementoData>();
-        if (data) data.SetItemData(mementoInfo, 1, emotionalEnergyWorth);
-        CustomRigidbody2D rb = go.GetComponent<CustomRigidbody2D>();
-        if (rb)
+        if (holderPrefab != null)
         {
-            rb.Initialize(startHeight, UnityEngine.Random.Range(0f, upwardsVelocity));
-            rb.AddForce(launchDir.normalized * dropRadius * 2, ForceMode2D.Impulse);
+            GameObject go = Instantiate(holderPrefab, transform.position, Quaternion.identity);
+            MementoData data = go.GetComponent<MementoData>();
+            if (data) data.SetItemData(mementoInfo, 1, emotionalEnergyWorth);
+            CustomRigidbody2D rb = go.GetComponent<CustomRigidbody2D>();
+            if (rb)
+            {
+                rb.Initialize(startHeight, UnityEngine.Random.Range(0f, upwardsVelocity));
+                rb.AddForce(launchDir.normalized * dropRadius * 2, ForceMode2D.Impulse);
+            }
         }
     }
 }

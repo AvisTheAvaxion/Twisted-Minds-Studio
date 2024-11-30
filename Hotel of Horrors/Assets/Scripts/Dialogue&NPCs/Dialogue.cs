@@ -480,7 +480,6 @@ public class Dialogue
         "My name is Varren, i'm just another person trapped here like you. $OptionB",
         "$Animate(Varren,Pose1,false)$OptionB",
         "$Emote(Blaze_Neutral)",
-        //Line above is a test line
         "$Animate(Varren,Talk,false)",
         "Blaze: Where are we?",
         "$Emote(Varren_MildlyAnnoyed)",
@@ -489,7 +488,6 @@ public class Dialogue
         "$Emote(Blaze_Neutral)",
         "$Animate(Varren,Talk,false)",
         "Blaze: What do you mean? Isn't this a barn?",
-        //Line above is a test line
         "$Emote(Varren_EvilSmile)",
         "$Animate(Varren,Talk,true)",
         "Varren: It's a hotel, and it's where you'll be trapped for eternity because of all of the terrible things you've done.|He must be joking|What things $Prompt",
@@ -1076,10 +1074,179 @@ public class Dialogue
     #endregion
     #endregion
     #region Floor 2 Dialog
+    #region Side Quest
+
+
+    string[] Floor2Intro = new string[]
+    {
+        "Varren: About time, I was just about to leave you.",
+        "Varren: Floor 2 is next, I hope you've prepared, the werewolf won't go down as easily as Stein did.",
+        "Blaze: Werewolf?",
+        "Varren: Yes.Keep up. You'll have to beat her if you want to proceed.",
+        "Blaze: Why can't we just go to the lobby?",
+        "Varren: We could but the doors are sealed.",
+        "Varren: You didn't think you just could walk out the front doors did you? |Yes|No $Prompt",
+        "Varren: Then you're dumber than I gave you credit for. $OptionA",
+        "Varren: Then why would you want to go to the lobby?. $OptionB",
+        "Blaze: Why do I need to defeat a werewolf?",
+        "Varren: For her memento.The one you got from Stein is stronger than any ability i've ever seen.",
+        "Varren: It's a long shot, but if you can get more of them, we might just be able to break the seal and leave this place.",
+        "Blaze: So there is a-",
+        "Varren: Don't get your hopes up.There's no guarantee that we'll even end up in the real world, and that's assuming the mementos are strong enough to break the seal.",
+        "Varren: Here we are, floor 2. Don't come back until you've got that memento."
+    };
+
+    string[] TwinEncounter1 = new string[]
+    {
+        "Katie: Ooh, a newcomer!",
+        "Kady: We haven't seen him here before, have we Katie?",
+        "Katie: No, we haven't.",
+        "Katie: Do you have candy?|No.|Who are you? $Prompt",
+        "Blaze: No, I don't. $OptionA",
+        "Katie: Awww. $OptionA",
+        "Kady: I want Candy $OptionA",
+        "Katie: I am Katie.",
+        "Kady: And I am Kady.",
+        "Kady: Who are you?|Blaze.|No one. $Prompt",
+        "Blaze: My name is Blaze. $OptionA",
+        "Blaze: No, I'm just passing by. $OptionB",
+        "Blaze: Do you know where I could find a werewolf?",
+        "Katie: A werewolf?",
+        "Kady: What's that? |A big scary monster.|A person covered in fur. $Prompt",
+        "Blaze: It's like a big scary monster with sharp teeth and lots of hair. $OptionA",
+        "Kady: That's scary. $OptionA",
+        "Katie: It sounds like a monster from one of the bedtime stories mom would read us $OptionA",
+        "Blaze: It's like a person covered in fur with dog ears. $OptionB",
+        "Katie: That sounds like mom. $OptionB",
+        "Blaze: Where is your mom?",
+        "Kady: She left to go take care of some things.",
+        "Katie: She said that someone was going to come hang out with us until she came back.",
+        "Kady: And that it wouldn't be dad.",
+        "Katie: No.Dad is bad.",
+        "Kady: Are you going to hang out with us?",
+        "Katie: Of course he is. Mom said he would.",
+        "Kady: Does this mean we can get candy? Will you get us some candy? |Yes.|No. $Prompt",
+        "Blaze: Yes. $OptionA",
+        "Twins: Yay! $OptionA",
+        " : The twins look at you intently, their big innocent eyes tearing up. $OptionB",
+
+        "Kady: Will you get us some candy? |Yes.|Yes. $Prompt $OptionB",     	//Hopefully this doesn't cause issues (if it does lmk - Avis)
+        "Blaze: Where is the candy?",
+        "Katie: The monsters have them, you have to get it from them.",
+        "Kady: We will wait here for you to come back. Please don't take too long.",
+        //Kills monsters for candy
+    };
+
+    //If you talk to the twins before you finish getting the candy
+    string[] NotEnoughCandy = new string[]
+    {
+        "Katie: The monsters have the candy, you have to get it from them.",
+        "Kady: Please hurry, we are getting hungry."
+    };
+
+    //When Blaze gets the first candy
+    string[] TryCandy = new string[]
+    {
+        "Blaze: This monster dropped a candy, is this edible?",
+        " : The candy is pink and blue in color, and has a sweet smell. A thin layer of emotional energy coats the surface.|Try it.|Don't try it. $Prompt.",
+        " : The candy is extremely sweet, and dissolves in your mouth with a fizzing sensation. $OptionA",
+        " : You put the candy into your inventory. $OptionB",
+    };
+
+    string[] EnoughCandy = new string[]
+    {
+        "Blaze: This should be enough candy for now.",
+        "Blaze: I should head back.",
+    };
+
+
+    string[] TwinEncounter2 = new string[]
+    {
+        "Twins: Blaze!",
+        "Kady: Did you bring candy |Yes |No $Prompt",
+        "Twins: Yay! $OptionA",
+        "Kady: He's much better than dad! $OptionA",
+        "Katie: I can smell it, mom said lying is bad! $OptionB",
+        "Kady: Yeah. Only meanies like dad lie. $OptionB",
+        "Blaze: What happened to your dad?",
+        "Kady: That meanie lied to us.",
+        "Kady: He said he'd get us candy.",
+        "Katie: And then he tried to take us away.",
+        "Blaze: Take you away?",
+        "Kady: Mhm, mom and him got into a big argument.",
+        "Katie: And he said he was gonna get us candy, but mom told us to go get in the car.",
+        "Kady: We left with mom and then dad and some other people caught up with us.",
+        "Katie: The red lights right?",
+        "Kady: I thought it was blue lights?",
+        "Blaze: What happened after that?",
+        "Katie: Dad was still mad at mom, some people took her away.",
+        "Kady: And dad never got us our candy.",
+        " : bzzt.",
+        " : Katie pulls out her phone.",
+        "Katie: It's mom, she says that she needs help.",
+        "Kady: Mom is good, how do we help her?",
+        "Katie: She left <color=##ff0000><b>some paperwork</b></color> around the barn.",
+        "Blaze: The barn? (I thought this was a hotel?)",
+        //The barn-city mention here is intentional
+        "Katie: Yes, the city. The first one is at her lawyer's office.",
+        "Kady: Please go get the evidence so we can be with our mom again.",
+        "Blaze: You've got it.",
+    };
+
+    string[] Evidence1 = new string[]
+    {
+        " : You come across a piece of paper sitting on a desk.",
+        "Blaze: This must be the first piece of evidence.",
+        " : The paper is a newspaper cutout depicting a photo of the twins, a young woman and a young man.",
+        " : The family is smiling while standing outside of a candy store, the man's eyes are blacked out with a marker. An article below the image reads \"Family wins millions following candy competition!",
+        " : After an extremely intense candy eating competition hosted by Dulce Candy Co. New York's very own twin sisters, Katie and Kady Smith would come out victorious, winning the grand prize of a lifetime's supply of candy and 10% of the company's stock, valued at 1.5 Million Dollars!\"",
+    };
+
+    string[] Evidence2 = new string[]
+    {
+        " : You come across several pieces of paper sitting on a desk.",
+        "Blaze: This looks like another piece of evidence.",
+        " : The papers appear to be a collage of images depicting the family outside various houses and tourist destinations. As you flip through the pages, the images appear to be more faded and the family's smiles become less genuine.",
+        " :The last image has been torn and taped back together, with the line separating Karren from the rest of her family.",
+    };
+
+    string[] Evidence3 = new string[]
+    {
+        " : You come across a piece of paper sitting on a desk",
+        "Blaze: The last piece of evidence.",
+        " : The paper appears to be a letter. It is unfinished, and the ink has bled in several spots where tears fell onto the paper. The recipients name is redacted, but the note appears to be apology from Karren to her husband and kids.",
+    };
+
+
+    //This probably won't be used.
+    string[] TwinEncounter3 = new string[]
+    {
+        "Kady: Blaze!",
+        "Katie: You're back!",
+        "Kady: Did you get the paperwork?|Yes|No $Prompt",
+        "Blaze: I did $OptionA",
+        "Blaze: I'm not sure if this is all of it. $OptionB",
+        "Katie: I think that's everything. $OptionB",
+        "Kady: I knew we could count on you!",
+        "Katie: Please hurry, our mom is just ahead."
+    };
+
+    #endregion Side Quest
+
 
     #region Boss Fight
     string[] KarenIntro =
     {
+        "Judge: And for the crime of being a terrible mother and wife. The jury finds the defendant.",
+        "Judge: ...",
+        "Judge: GUILTY!!!",
+        "Karren: No! I'm a good mother. I swear!",
+        "Karren: That rat of a husband is the bad one! The kids should be with me!",
+        "Karren: You can't do this!",
+        "Karren: YOU!",
+        "Blaze: Me?",
+        "Karren: Yes you! You should have been here hours ago with the evidence!",
+        "Karren: Where have you been?! This is all your fault!",
         "$Animate(Karen_Intro,Transform)",
         "$Timer(1)",
         "$CameraShake(2,1)",
@@ -1089,15 +1256,17 @@ public class Dialogue
         "$Tele(KarenWerewolf,100.6,-97.29)",
         "$FadeOut(255,255,255)",
     };
-
     string[] KarenInter1 =
     {
         "$Animate(KarenWerewolf,StartIntermediate)",
         "$Animate(KarenWerewolf,Intermediate,True)",
-        "Karen: Sup FOOOLLLSSSS!!?!",
-        "Karen: AVISSSSSSS, SAVEEE USSSSS |Gamer Time|Fuck You|$Prompt",
-        "Blaze: I am a gamer $OptionA",
-        "Blaze: I hate werewolves D;! $OptionB",
+        "Karren: If only you had gotten here earlier. Then I would still have my kids!|You wouldn't have lost them if you had treated them better|They are better off with their dad $Prompt",
+        "Blaze: They only left because of how you treated them. $OptionA",
+        "Karren: No! You're wrong! $OptionB",
+        "Blaze: They're better off with their dad than they are with you. $OptionB",
+        "Karren: Who are you to tell me what's best for my kids! $OptionB",
+        //Enrage OptionB
+
         "$Animate(KarenWerewolf,Intermediate,False)",
     };
 
@@ -1105,10 +1274,16 @@ public class Dialogue
     {
         "$Animate(KarenWerewolf,StartIntermediate)",
         "$Animate(KarenWerewolf,Intermediate,True)",
-        "Karen: Sup FOOOLLLSSSS!!?!",
-        "Karen: AVISSSSSSS, SAVEEE USSSSS |Gamer Time|Fuck You|$Prompt",
-        "Blaze: I am a gamer $OptionA",
-        "Blaze: I hate werewolves D;! $OptionB",
+        "Karren: This is all your fault! None of this would have happened if you got here earlier! |You're right, I'm sorry|You can only blame yourself for this $Prompt",
+        "Blaze: You're right $OptionA",
+        "Blaze: I should have gotten here sooner. $OptionA",
+        "Karren: So you understand. $OptionA",
+        "Karren: Now die for your insubordination! $OptionA",
+        //Enrage OptionA
+        "Blaze: You have no one to blame but yourself. $OptionB",
+        "Blaze: Blaming others won't help. $OptionB",
+        "Karren:... $OptionB",
+
         "$Animate(KarenWerewolf,Intermediate,False)",
     };
 
@@ -1121,8 +1296,9 @@ public class Dialogue
         "$Tele(Player,102.38,-95.84)",
         "$Kill(KarenWerewolf)",
         "$FadeOut(255,255,255)",
-        "Karen: I love yapping!",
-        "Blaze: Same!",
+        "Karren: No. This can't be the end!",
+        "Karren: I have to keep going. My kids!",
+        "Karren: Katie... Kady...",
         "$Animate(Karen_Final,Stage2)",
         "$MoveTwo(PinkTwin,BlueTwin,102.73,-95.79,102,-95.79)",
         "$Animate(Karen_Final,Stage3)",
@@ -1132,14 +1308,35 @@ public class Dialogue
         "$Animate(Karen_Final,Stage4)",
         "$Timer(0.5)",
         "$Animate(Karen_Final,Stage5)",
-        "Karen: Yapping Continues",
+        "Twins: We're here.",
+        "Karren: Don't ever leave me.",
+        "Twins: We won't.",
+        "Blaze: They aren't real.",
+        "Karren: They're as real as they need to be.",
+        "Karren: I have my family again.",
+        "Blaze: Maybe.",
+        "Blaze: But the rest of your family is out there waiting for you.",
+        "Karren: They all hate me.",
+        "Blaze: Perhaps.",
+        "Blaze: But you can show them that you've changed.",
+        "Blaze: You've grown. I saw the letter. You want to make things right.",
+        "Karren: And if they don't let me? |It beats sitting in this courtroom all day|You won't know unless you try $Prompt",
+        "Karren: What if I just stay here, like this. $OptionA",
+        "Katie: You know you can't. White hair will just reset the room. $OptionA",
+        "Kady: You have to move on, mom. $OptionA",
+        "Kady: Don't worry, we'll be cheering for you mom! $OptionB",
+        "Katie: Yeah! And make sure you bring us candy! $OptionB",
+        "Karren: I will. $OptionB",
+        "Karren: Thank you, Blaze",
         "$Animate(Karen_Final,Stage6)",
         "$Tele(PinkTwin,102.63,-94.50)",
         "$Tele(BlueTwin,102.23,-94.50)",
         "$BossPoof(Karen_Final)",
         "$MoveTwo(PinkTwin,BlueTwin,102.47,-95.4,102.2,-95.4)",
-        "Blaze: Y'all are yappers!",
-        "Twins: We know!!!",
+        "Katie: Thank you for helping us Blaze",
+        "Kady: It means alot to us",
+        "Katie: I hope we see you on the other side!",
+        "Kady: Please bring more candy.",
         "$BossPoof(PinkTwin)",
         "$BossPoof(BlueTwin)"
     };

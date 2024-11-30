@@ -46,6 +46,7 @@ public class KarenBoss : BossStateMachine
     }
 
     [Header("References")]
+    [SerializeField] GameObject sprite;
     [SerializeField] Animator animator;
     [SerializeField] AfterImage afterImage;
     [SerializeField] BasicShooter shooter;
@@ -126,12 +127,12 @@ public class KarenBoss : BossStateMachine
             SlashBegin();
             currentAttack++;
         }
-        else if (stages[currentStageIndex].attackSequence[currentAttack] == 1 && distToPlayer >= currentSettings.slamMinAttackRange)
+        else if (stages[currentStageIndex].attackSequence[currentAttack] == 0 && distToPlayer >= currentSettings.slamMinAttackRange)
         {
             SlamBegin();
             currentAttack++;
         }
-        else if (stages[currentStageIndex].attackSequence[currentAttack] == 2)
+        else if (stages[currentStageIndex].attackSequence[currentAttack] == 1)
         {
             SummonBegin();
             currentAttack++;
@@ -148,7 +149,7 @@ public class KarenBoss : BossStateMachine
         float distToPlayer = GetDistanceToPlayer();
         if (distToPlayer <= 3.5f)
         {
-            OnDialogueStart(openCutscene);
+            //OnDialogueStart(openCutscene);
         }
 
         if (bossFightStarted)
@@ -189,23 +190,21 @@ public class KarenBoss : BossStateMachine
         karenShadow.transform.position = transform.position;
         //Jump Up
 
-        if (afterImage) afterImage.StartEffect();
+        //if (afterImage) afterImage.StartEffect();
         if (collider) collider.enabled = false;
-        float interpol = 0;
-        while (transform.position.y != jumpPoint.position.y)
+        float timer = 0f;
+        while (timer < 1)
         {
-            //Debug.Log($"{interpol} | Karen:{transform.position} | target: {jumpPoint.position}");
-            transform.position = Vector2.Lerp(transform.position, jumpPoint.position, Mathf.SmoothStep(0, 1, interpol));
-            interpol += 0.05f;
-            yield return new WaitForSeconds(.2f);
+            Debug.Log($"Karen:{transform.position} | timer {timer}");
+            sprite.transform.position += (Vector3)Vector2.up;
+            timer += Time.deltaTime;
         }
-        transform.position = jumpPoint.position;
-        rb.velocity = Vector3.zero;
+        sprite.SetActive(false);
         //Have shadow following player and shrink
 
         karenShadow.SetActive(true);
 
-        float timer = 0f;
+        timer = 0f;
         Vector2 shadowMoveDir = (player.transform.position - karenShadow.transform.position).normalized;
         Rigidbody2D shadowRigidbody = karenShadow.GetComponent<Rigidbody2D>();
         while (timer < currentSettings.fallLength)
@@ -214,28 +213,24 @@ public class KarenBoss : BossStateMachine
             shadowMoveDir = Vector2.Lerp(shadowMoveDir, (player.transform.position - karenShadow.transform.position).normalized, currentSettings.shadowChaseIntensity * Time.deltaTime * 10);
             shadowRigidbody.velocity = shadowMoveDir * currentSettings.shadowSpeed * Time.fixedDeltaTime * 10;
 
-            yield return null;
-
             timer += Time.deltaTime;
         }
         shadowRigidbody.velocity = Vector2.zero;
 
         //Have Karen slam down at where the shadow stopped
-        animator.SetTrigger("Slam");
-        interpol = 0;
-        while ((transform.position - karenShadow.transform.position).sqrMagnitude > 0.01f)
+        sprite.SetActive(true);
+        while (sprite.transform.position.y != 0)
         {
             //Debug.Log($"{interpol} | Karen:{transform.position} | target: {karenShadow.transform.position}");
-            transform.position = Vector2.Lerp(transform.position, karenShadow.transform.position, Mathf.SmoothStep(0, 1, interpol));
-
-            interpol += 0.05f;
+            sprite.transform.position += (Vector3)Vector2.down;
             yield return new WaitForSeconds(.2f);
         }
-        transform.position = karenShadow.transform.position;
+        sprite.transform.position = karenShadow.transform.position;
         karenShadow.SetActive(false);
 
+
         if (cameraShake != null) cameraShake.ShakeCamera(slamCameraShake);
-        if (afterImage) afterImage.StopEffect();
+        //if (afterImage) afterImage.StopEffect();
         collider.enabled = true;
 
         //Detect things around monster at given radius
@@ -243,6 +238,7 @@ public class KarenBoss : BossStateMachine
         //Possibly spawn ring of projectiles
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, currentSettings.slamRadius);
+        animator.SetTrigger("Slam");
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].tag.Equals("Player"))
@@ -273,6 +269,7 @@ public class KarenBoss : BossStateMachine
     void SummonBegin()
     {
         rb.velocity = Vector3.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         isAttacking = true;
         animator.SetBool("isWalking", false);
         animator.SetBool("Summon", true);
@@ -346,6 +343,7 @@ public class KarenBoss : BossStateMachine
         animator.SetBool("Summon", false);
         animator.SetBool("isWalking", true);
         isAttacking = false;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         StartCoroutine(WaitBeforeAttack(currentSettings.summonCooldownMin, currentSettings.summonCooldownMax));
     }
 
@@ -436,10 +434,14 @@ public class KarenBoss : BossStateMachine
         currentState = States.Dialogue;
         yield return null;
 
-        yield return new WaitUntil(() => !dialogueSegmentStarted);
+        if (!dialogueSegmentStarted)
+        {
+            print(stages[stages.Length - 1].cutscene);
+            OnDialogueStart(stages[stages.Length - 1].cutscene);
+        }
+        //yield return new WaitUntil(() => !dialogueSegmentStarted);
 
         bossHealth.HideHealthBar();
-        SceneManager.LoadScene("EndDemo");
     }
 
     Coroutine stunCoroutine;

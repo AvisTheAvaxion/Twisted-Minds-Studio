@@ -20,6 +20,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Visual Plug-Ins")]
     [SerializeField] GameObject playerGUI;
     [SerializeField] DialogueGUI dialogueGUI;
+    CameraShake cameraShake;
 
     Dialogue dialogue = new Dialogue();
     QuestSystem questSystem;
@@ -37,10 +38,10 @@ public class DialogueManager : MonoBehaviour
 
     [Header("AI Variables")]
     #region AIVariables
-    AI characterAI;
-    Vector2 targetPosition;
-    Rigidbody2D characterRB2D;
-    Animator characterAnimator;
+    AI[] characterAI;
+    Vector2[] targetPosition;
+    Rigidbody2D[] characterRB2D;
+    Animator[] characterAnimator;
     #endregion
 
     public enum PlayerChoice
@@ -60,6 +61,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
+        cameraShake = FindObjectOfType<CameraShake>();
         questSystem = FindObjectOfType<QuestSystem>();
         if (dialogueGUI)
         {
@@ -263,6 +265,23 @@ public class DialogueManager : MonoBehaviour
                 target.z = objTransform.position.z;
                 StartCoroutine(MoveViaLerp(.05f, objTransform, target));
             }
+            else if (lines[currentLine].EndsWith("$MoveTwo") || lines[currentLine].StartsWith("$MoveTwo"))
+            {
+                currentState = CutsceneState.Moving;
+                int moveStartIndex = lines[currentLine].IndexOf('(');
+                int moveEndIndex = lines[currentLine].IndexOf(')');
+                string moveInfo = lines[currentLine].Substring(moveStartIndex + 1, moveEndIndex - moveStartIndex - 1);
+                string[] splitString = moveInfo.Split(',');
+
+                //print("Start character move for cutscene");
+                List<Vector2> target = new List<Vector2>();
+                target.Add(new Vector2(float.Parse(splitString[2]), float.Parse(splitString[3])));
+                target.Add(new Vector2(float.Parse(splitString[4]), float.Parse(splitString[5])));
+                List<string> names = new List<string>();
+                names.Add(splitString[0]);
+                names.Add(splitString[1]);
+                SetMoveCharactersInfo(names, 2, target);
+            }
             else if (lines[currentLine].EndsWith("$Move") || lines[currentLine].StartsWith("$Move"))
             {
                 currentState = CutsceneState.Moving;
@@ -272,8 +291,11 @@ public class DialogueManager : MonoBehaviour
                 string[] splitString = moveInfo.Split(',');
 
                 //print("Start character move for cutscene");
-                Vector2 target = new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2]));
-                SetMoveCharacterInfo(splitString[0], 2, target);
+                List<Vector2> target = new List<Vector2>();
+                target.Add(new Vector2(float.Parse(splitString[1]), float.Parse(splitString[2])));
+                List<string> names = new List<string>();
+                names.Add(splitString[0]);
+                SetMoveCharactersInfo(names, 2, target);
             }
             else if (lines[currentLine].EndsWith("$Tele") || lines[currentLine].StartsWith("$Tele"))
             {
@@ -419,6 +441,18 @@ public class DialogueManager : MonoBehaviour
                 {
                     GameTime.UnpauseTime();
                 }
+
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
+            }
+            else if (lines[currentLine].EndsWith("$CameraShake") || lines[currentLine].StartsWith("$CameraShake"))
+            {
+                int timeStartIndex = lines[currentLine].IndexOf('(');
+                int timeEndIndex = lines[currentLine].IndexOf(')');
+                string timeInfo = lines[currentLine].Substring(timeStartIndex + 1, timeEndIndex - timeStartIndex - 1);
+                string[] splitString = timeInfo.Split(',');
+                cameraShake.ShakeCamera(float.Parse(splitString[0]), float.Parse(splitString[1]));
 
                 //Auto move to the next line
                 currentLine++;
@@ -736,7 +770,7 @@ public class DialogueManager : MonoBehaviour
         GameObject.Find("Main Camera").transform.localPosition = new Vector3(0, 0, -7.5f);
     }
 
-    void SetMoveCharacterInfo(string name, float speed, Vector2 target)
+    /*void SetMoveCharacterInfo(string name, float speed, Vector2 target)
     {
         GameObject character = GameObject.Find(name);
         targetPosition = target;
@@ -750,30 +784,61 @@ public class DialogueManager : MonoBehaviour
             characterAI.enabled = true;
         }
         currentState = CutsceneState.Moving;
+    }*/
+    void SetMoveCharactersInfo(List<string> name, float speed, List<Vector2> target)
+    {
+        GameObject[] character = new GameObject[name.Count];
+        targetPosition = new Vector2[name.Count];
+        characterAI = new AI[name.Count];
+        characterRB2D = new Rigidbody2D[name.Count];
+        characterAnimator = new Animator[name.Count];
+        for (int i = 0; i < name.Count; i++)
+        {
+            character[i] = GameObject.Find(name[i]);
+            targetPosition[i] = target[i];
+            characterAI[i] = character[i].GetComponent<AI>();
+            characterRB2D[i] = character[i].GetComponent<Rigidbody2D>();
+            characterAnimator[i] = character[i].GetComponent<Animator>();
+            characterAI[i].SetSpeed(speed);
+            characterAI[i].SetCanMove(true);
+        }
+        /*if (character.name == "Player")
+        {
+            characterAI.enabled = true;
+        }*/
+        currentState = CutsceneState.Moving;
     }
 
     void MoveCharacter()
     {
-        if (!characterAI.MoveTowardsTarget(targetPosition))
+        bool allCharactersFinished = true;
+        for (int i = 0; i < characterAI.Length; i++)
         {
-            characterAI.SetCanMove(false);
-            characterAI.SetTarget(null);
-            characterAnimator.SetBool("isWalking", false);
-            if (characterAI.gameObject.name == "Player")
+            Debug.Log(targetPosition[i]);
+            if (characterAI[i].MoveTowardsTarget(targetPosition[i]))
             {
-                characterAI.enabled = false;
+                allCharactersFinished = false;
+                //print("Moving character for cutscene");
+                characterAnimator[i].SetBool("isWalking", true);
+                characterAnimator[i].SetFloat("x", characterRB2D[i].velocity.x);
+                characterAnimator[i].SetFloat("y", characterRB2D[i].velocity.y);
             }
-
+        }
+        if (allCharactersFinished)
+        {
+            for (int i = 0; i < characterAI.Length; i++)
+            {
+                characterAI[i].SetCanMove(false);
+                characterAI[i].SetTarget(null);
+                characterAnimator[i].SetBool("isWalking", false);
+                if (characterAI[i].gameObject.name == "Player")
+                {
+                    characterAI[i].enabled = false;
+                }
+            }
             //Auto move to the next line
             currentLine++;
             OnDialogueUpdate();
-        }
-        else if (characterAnimator != null)
-        {
-            //print("Moving character for cutscene");
-            characterAnimator.SetBool("isWalking", true);
-            characterAnimator.SetFloat("x", characterRB2D.velocity.x);
-            characterAnimator.SetFloat("y", characterRB2D.velocity.y);
         }
     }
     #endregion

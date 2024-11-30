@@ -72,6 +72,16 @@ public class Dialogue
             case "SteinEnd":
                 return SteinEnd;
             #endregion
+            #region Floor 2
+            case "KarenIntro":
+                return KarenIntro;
+            case "KarenInter1":
+                return KarenInter1;
+            case "KarenInter2":
+                return KarenInter2;
+            case "KarenEnd":
+                return KarenEnd;
+            #endregion
             case "Empty":
                 return Empty;
         }
@@ -115,6 +125,12 @@ public class Dialogue
         SteinIntro,
         SteinScene1,
         SteinEnd,
+        #endregion
+        #region Floor 2
+        KarenIntro,
+        KarenInter1,
+        KarenInter2,
+        KarenEnd,
         #endregion
     }
 
@@ -1056,6 +1072,76 @@ public class Dialogue
         "$Move(Varren,18.39,-52.89)",
         "$Kill(Varren)",
         "$MoveViaLerp(Main Camera,18.74,-50.49)",
+    };
+    #endregion
+    #endregion
+    #region Floor 2 Dialog
+
+    #region Boss Fight
+    string[] KarenIntro =
+    {
+        "$Animate(Karen_Intro,Transform)",
+        "$Timer(1)",
+        "$CameraShake(2,1)",
+        "$Timer(2.5)",
+        "$FadeIn(255,255,255)",
+        "$Kill(Karen_Intro)",
+        "$Tele(KarenWerewolf,100.6,-97.29)",
+        "$FadeOut(255,255,255)",
+    };
+
+    string[] KarenInter1 =
+    {
+        "$Animate(KarenWerewolf,StartIntermediate)",
+        "$Animate(KarenWerewolf,Intermediate,True)",
+        "Karen: Sup FOOOLLLSSSS!!?!",
+        "Karen: AVISSSSSSS, SAVEEE USSSSS |Gamer Time|Fuck You|$Prompt",
+        "Blaze: I am a gamer $OptionA",
+        "Blaze: I hate werewolves D;! $OptionB",
+        "$Animate(KarenWerewolf,Intermediate,False)",
+    };
+
+    string[] KarenInter2 =
+    {
+        "$Animate(KarenWerewolf,StartIntermediate)",
+        "$Animate(KarenWerewolf,Intermediate,True)",
+        "Karen: Sup FOOOLLLSSSS!!?!",
+        "Karen: AVISSSSSSS, SAVEEE USSSSS |Gamer Time|Fuck You|$Prompt",
+        "Blaze: I am a gamer $OptionA",
+        "Blaze: I hate werewolves D;! $OptionB",
+        "$Animate(KarenWerewolf,Intermediate,False)",
+    };
+
+    string[] KarenEnd =
+    {
+        "$FadeIn(255,255,255)",
+        "$Tele(Karen_Final,102.44,-94.44)",
+        "$Tele(PinkTwin,102.5,-99.758)",
+        "$Tele(BlueTwin,101.96,-99.798)",
+        "$Tele(Player,102.38,-95.84)",
+        "$Kill(KarenWerewolf)",
+        "$FadeOut(255,255,255)",
+        "Karen: I love yapping!",
+        "Blaze: Same!",
+        "$Animate(Karen_Final,Stage2)",
+        "$MoveTwo(PinkTwin,BlueTwin,102.73,-95.79,102,-95.79)",
+        "$Animate(Karen_Final,Stage3)",
+        "$MoveTwo(PinkTwin,BlueTwin,102.63,-94.50,102.23,-94.50)",
+        "$Tele(PinkTwin,112,-96)",
+        "$Tele(BlueTwin,112,-96)",
+        "$Animate(Karen_Final,Stage4)",
+        "$Timer(0.5)",
+        "$Animate(Karen_Final,Stage5)",
+        "Karen: Yapping Continues",
+        "$Animate(Karen_Final,Stage6)",
+        "$Tele(PinkTwin,102.63,-94.50)",
+        "$Tele(BlueTwin,102.23,-94.50)",
+        "$BossPoof(Karen_Final)",
+        "$MoveTwo(PinkTwin,BlueTwin,102.47,-95.4,102.2,-95.4)",
+        "Blaze: Y'all are yappers!",
+        "Twins: We know!!!",
+        "$BossPoof(PinkTwin)",
+        "$BossPoof(BlueTwin)"
     };
     #endregion
     #endregion

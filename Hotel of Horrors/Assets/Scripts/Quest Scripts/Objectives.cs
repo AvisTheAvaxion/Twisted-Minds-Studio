@@ -97,6 +97,7 @@ public class Objectives
     string[] Floor2 = new string[]
     {
         "KillSpecific|1|KarenWerewolf",
+        "ClearFloor"
     };
 
 }

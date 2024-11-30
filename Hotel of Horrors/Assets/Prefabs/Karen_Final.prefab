@@ -70,9 +70,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 860863201
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: -100945066, guid: c13b3764cbd61474f8908c69c786bbd8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4983,7 +4983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6390603084594428508}
-  particles: {fileID: 5289149750009898153, guid: 4895f5a854e063648b94bdf8af1bc7e3, type: 3}
+  particles: {fileID: 9144257293225510981}
   dissolveCurve:
     serializedVersion: 2
     m_Curve:
@@ -5022,7 +5022,7 @@ MonoBehaviour:
   mementoSpawnThreshold: 0.5
   mementoInfo: {fileID: 11400000, guid: 866273d950dfe9a4290791e45d363b3d, type: 2}
   emotionalEnergyWorth: 500
-  holderPrefab: {fileID: 860357181134211097, guid: d244afbe275b70742bf86acf65bf525d, type: 3}
+  holderPrefab: {fileID: 0}
   dropRadius: 0.2
   startHeight: 0.5
   upwardsVelocity: 0.05

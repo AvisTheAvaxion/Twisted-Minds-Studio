@@ -447,6 +447,7 @@ public class PlayerMovement : MonoBehaviour
     public void StartCutscene()
     {
         rb.velocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         animator.SetBool("isWalking", false);
         animator.SetBool("Dashing", false);
 
@@ -459,6 +460,7 @@ public class PlayerMovement : MonoBehaviour
     public void EndCutscene()
     {
         rb.velocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         TogglePlayerControls(true);
         inCutscene = false;

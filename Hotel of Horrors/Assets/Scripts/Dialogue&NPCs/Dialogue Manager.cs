@@ -384,6 +384,8 @@ public class DialogueManager : MonoBehaviour
                 int timerStartIndex = lines[currentLine].IndexOf('(');
                 int timerEndIndex = lines[currentLine].IndexOf(')');
                 string timerInfo = lines[currentLine].Substring(timerStartIndex + 1, timerEndIndex - timerStartIndex - 1);
+                print("Start timer for " + timerInfo);
+                dialogueGUI.ToggleGUI(false);
                 StartCoroutine(Timer(float.Parse(timerInfo)));
             }
             else if (lines[currentLine].EndsWith("$FadeIn") || lines[currentLine].StartsWith("$FadeIn"))

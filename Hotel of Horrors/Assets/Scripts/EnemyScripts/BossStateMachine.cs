@@ -123,7 +123,7 @@ public abstract class BossStateMachine : MonoBehaviour
     {
         if (bossHealth.stats.GetHealthValue() <= stages[currentStageIndex].healthThresholdToNextStage && currentStageIndex < stages.Length - 1 && !dialogueSegmentStarted)
         {
-            print(stages[currentStageIndex].cutscene);
+            //print(stages[currentStageIndex].cutscene);
             OnDialogueStart(stages[currentStageIndex].cutscene);
             Disenrage();
         }
@@ -133,7 +133,8 @@ public abstract class BossStateMachine : MonoBehaviour
     protected abstract void Idle();
     public void OnDialogueStart(Dialogue.Dialog cutscene)
     {
-        collider.enabled = false;
+        if(collider)
+            collider.enabled = false;
         currentState = States.DialogueStart;
         StartCoroutine(DialogueStart(cutscene));
     }
@@ -144,7 +145,8 @@ public abstract class BossStateMachine : MonoBehaviour
 
         if (DialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None) 
         {
-            collider.enabled = true;
+            if(collider)
+                collider.enabled = true;
             currentState = States.DialogueEnd;
             StartCoroutine(DialogueEnd());
         }
@@ -156,7 +158,8 @@ public abstract class BossStateMachine : MonoBehaviour
     protected abstract IEnumerator DeathSequence();
     public virtual void OnDeath()
     {
-        collider.enabled = false;
+        if(collider)
+            collider.enabled = false;
         if (Floor.maxFloorUnlocked <= Floor.currentFloor)
             Floor.maxFloorUnlocked = Floor.currentFloor + 1;
 

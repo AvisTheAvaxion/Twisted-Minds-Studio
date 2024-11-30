@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VarrenBoss : BossStateMachine
 {
@@ -80,8 +81,8 @@ public class VarrenBoss : BossStateMachine
     [SerializeField] BasicShooter shooter1P3;
     [SerializeField] Transform shooter1P3AttackPoint;
     [SerializeField] BasicShooter shooter2P3;
-    [SerializeField] Collider rightArmCollider;
-    [SerializeField] Collider leftArmCollider;
+    [SerializeField] Collider2D rightArmCollider;
+    [SerializeField] Collider2D leftArmCollider;
 
     [Header("Phase 4")]
     [SerializeField] GameObject[] p4SummonEnemies;
@@ -109,17 +110,49 @@ public class VarrenBoss : BossStateMachine
 
     protected override IEnumerator DeathSequence()
     {
-        throw new System.NotImplementedException();
+        currentState = States.Death;
+
+        yield return null;
+        rb.velocity = Vector2.zero;
+        //animator.SetTrigger("Death");
+        Disenrage();
+
+        if (currentStageIndex == 3)
+        {
+            SceneManager.LoadScene("EndDemo");
+        }
+        else
+        {
+            if (!dialogueSegmentStarted)
+            {
+                OnDialogueStart(stages[currentStageIndex].cutscene);
+            }
+            bossHealth.HideHealthBar();
+        }
     }
 
     protected override IEnumerator DialogueEnd()
     {
-        throw new System.NotImplementedException();
+        yield return new WaitForSeconds(0.1f);
+        OnDialogueEnd();
     }
 
     protected override IEnumerator DialogueStart(Dialogue.Dialog cutscene)
     {
-        throw new System.NotImplementedException();
+        dialogueSegmentStarted = true;
+
+        //Cancel anything happening already
+        yield return null;
+
+        isStunned = false;
+
+        rb.velocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        DestroySummonEnemies();
+
+        yield return new WaitForSeconds(0.1f);
+        DialogueManager.SetCutscene(cutscene);
+        currentState = States.Dialogue;
     }
 
     protected override void Disenrage()
@@ -154,7 +187,7 @@ public class VarrenBoss : BossStateMachine
     #region Phase 1
     protected void Phase1Fight()
     {
-        if(canAttack && teleportTimer > currentSettings.teleportCooldown)
+        if(canAttack && teleportTimer >= currentSettings.teleportCooldown)
         {
             teleportTimer = 0;
             StartCoroutine(TeleportSequence());
@@ -246,7 +279,7 @@ public class VarrenBoss : BossStateMachine
             ai.OrbitAroundTarget(player.transform.position);
         }
 
-        if(canAttack)
+        if(!isStunned && canAttack)
         {
             phase2Attack = StartCoroutine(Phase2Attack());
         }
@@ -425,6 +458,17 @@ public class VarrenBoss : BossStateMachine
 
         if (stages[currentStageIndex].attackSequence[currentAttack] == 3)
         {
+            rightArmCollider.enabled = true;
+            leftArmCollider.enabled = false;
+        }
+        else
+        {
+            leftArmCollider.enabled = true;
+            rightArmCollider.enabled = false;
+        }
+
+        if (stages[currentStageIndex].attackSequence[currentAttack] == 3)
+        {
             slamPoint = rightArmAttackPoint.position;
             colliders = Physics2D.OverlapBoxAll(slamPoint, armSizeBounds, 0f, p2AttackMask);
             foreach (Collider2D collider in colliders)
@@ -490,17 +534,6 @@ public class VarrenBoss : BossStateMachine
     {
         isStunned = true;
 
-
-        if (rightArm)
-        {
-            rightArmCollider.enabled = true;
-            leftArmCollider.enabled = false;
-        }
-        else
-        {
-            leftArmCollider.enabled = true;
-            rightArmCollider.enabled = false;
-        }
 
         canAttack = false;
         yield return new WaitForSeconds(stunTime);
@@ -607,8 +640,8 @@ public class VarrenBoss : BossStateMachine
             do
             {
                 spawnPoint = (Vector2)summonContainer.transform.position
-                    + Vector2.right * Random.Range(-summonContainer.bounds.size.x, summonContainer.bounds.size.x)
-                    + Vector2.up * Random.Range(-summonContainer.bounds.size.y, summonContainer.bounds.size.y);
+                    + Vector2.right * Random.Range(-summonContainer.bounds.size.x/2, summonContainer.bounds.size.x/2)
+                    + Vector2.up * Random.Range(-summonContainer.bounds.size.y/2, summonContainer.bounds.size.y/2);
             }
             while (Physics2D.OverlapCircle(spawnPoint, 0.24f, p4SummonMask) != null);
 
@@ -645,18 +678,27 @@ public class VarrenBoss : BossStateMachine
             hitWithDagger = true;
             stunP4Coroutine = StartCoroutine(StunP4(currentSettings.p4StunLength, currentSettings.p4DaggerCooldown));
         }
+        if(currentStageIndex == 2)
+        {
+
+        }
     }
 
     protected override void Idle()
     {
-        //currentState = States.Fighting;
         currentStageIndex = startPhase;
         if (currentStageIndex == 0) teleportTimer = currentSettings.teleportCooldown;
 
-        if (currentStageIndex == 0 && GetDistanceToPlayer() < 2f)
+        if (currentStageIndex == 0)
         {
-            OnDialogueStart(openCutscene);
+            if(GetDistanceToPlayer() < 2f)
+                OnDialogueStart(openCutscene);
         } 
+        else if (currentStageIndex == 2)
+        {
+            if (GetDistanceToPlayer() < 20f)
+                OnDialogueStart(openCutscene);
+        }
         else
         {
             currentState = States.Fighting;
@@ -670,6 +712,19 @@ public class VarrenBoss : BossStateMachine
         shooterP2 = GetComponent<BasicShooter>();
 
         currentSettings = normalSettings;
+    }
+
+    void DestroySummonEnemies()
+    {
+        EnemyStateMachine[] enemies = FindObjectsOfType<EnemyStateMachine>();
+        foreach (EnemyStateMachine enemy in enemies)
+        {
+            IHealth enemyHealth = enemy.GetComponent<IHealth>();
+            if(enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(100000);
+            }
+        }
     }
 
     protected override void OnDialogueEnd()
@@ -691,8 +746,19 @@ public class VarrenBoss : BossStateMachine
                 {
                     animator.runtimeAnimatorController = p2AnimatorController;
                 }
+                else if (currentStageIndex == 2 || currentStageIndex == 3)
+                {
+                    rightArmCollider.enabled = false;
+                    leftArmCollider.enabled = false;
+                }
 
                 isAttacking = false;
+                canAttack = true;
+
+                if (currentStageIndex != 2 && currentStageIndex != 3)
+                    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                else
+                    rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
                 currentState = States.Fighting;
             }
@@ -705,14 +771,29 @@ public class VarrenBoss : BossStateMachine
         }
         else
         {
-            Stun(0.5f, true);
+            currentState = States.Fighting;
             bossFightStarted = true;
 
             isAttacking = false;
+            canAttack = true;
 
+            currentAttack = 0;
+
+            bossHealth.UpdateHealth();
             bossHealth.ShowHealthBar();
 
             dialogueSegmentStarted = false;
+
+            if (currentStageIndex != 2 && currentStageIndex != 3)
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            else
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
+
+            if (currentStageIndex == 2 || currentStageIndex == 3)
+            {
+                rightArmCollider.enabled = false;
+                leftArmCollider.enabled = false;
+            }
         }
     }
 

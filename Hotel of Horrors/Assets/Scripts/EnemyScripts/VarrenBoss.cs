@@ -157,12 +157,12 @@ public class VarrenBoss : BossStateMachine
 
     protected override void Disenrage()
     {
-        
+        enraged = false;
     }
 
     protected override void Enrage()
     {
-        
+        enraged = true;
     }
 
     protected override void Fight()
@@ -395,7 +395,7 @@ public class VarrenBoss : BossStateMachine
             }
             while (Physics2D.OverlapCircle(spawnPoint, 0.24f, p2SummonMask) != null);
 
-            GameObject enemyToSpawn = p2SummonEnemies[Random.Range(0, p2SummonEnemies.Length)];
+            GameObject enemyToSpawn = p2SummonEnemies[enraged ? 0 : 1];
             Instantiate(enemyToSpawn, spawnPoint, enemyToSpawn.transform.rotation);
         }
     }

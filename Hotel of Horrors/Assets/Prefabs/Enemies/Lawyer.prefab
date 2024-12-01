@@ -4977,7 +4977,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: dbc7667414dd66548a0334ea972e71c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4998,7 +4998,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1835774041, guid: f17f52cde157ae2438635f49b141f590, type: 3}
+  m_Sprite: {fileID: -1475188986, guid: f17f52cde157ae2438635f49b141f590, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5250,6 +5250,7 @@ MonoBehaviour:
   animator: {fileID: 4746316179325894358}
   hasWalkCycle: 1
   moveParticles: {fileID: 2185601975258978410}
+  bossFightSummon: 0
   attackType: 1
   moveSpeed: 10
   emotionalEnergyWorth: 50
@@ -5283,6 +5284,12 @@ MonoBehaviour:
   dropRadius: 0.5
   upwardsVelocity: 0.2
   startHeight: 0.2
+  dropCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   minDropAmount: 1
   maxDropAmount: 3
   itemHolderPrefab: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
@@ -5329,6 +5336,9 @@ MonoBehaviour:
   timeBetweenShots: 0.3
   stagger: 0
   oscillate: 0
+  randomBurstOffset: 0
+  randomProjectileOffset: 0
+  randomOffsetRange: {x: -15, y: 15}
   target: {fileID: 0}
 --- !u!114 &2777965129347493526
 MonoBehaviour:
@@ -5491,7 +5501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4640464672883739378, guid: 73d9eab6937b5464181db21d54ee8ede, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.118
+      value: -0.158
       objectReference: {fileID: 0}
     - target: {fileID: 4640464672883739378, guid: 73d9eab6937b5464181db21d54ee8ede, type: 3}
       propertyPath: m_LocalPosition.z

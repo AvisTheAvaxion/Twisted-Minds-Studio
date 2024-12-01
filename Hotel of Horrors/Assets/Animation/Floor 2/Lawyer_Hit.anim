@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SmallWerewolf_Walk
+  m_Name: Lawyer_Hit
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,17 +21,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 1958168506, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
-    - time: 0.16666667
-      value: {fileID: 1024385557, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
+      value: {fileID: 183025128, guid: f17f52cde157ae2438635f49b141f590, type: 3}
     - time: 0.33333334
-      value: {fileID: -771815599, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
-    - time: 0.5
-      value: {fileID: 1024385557, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
-    - time: 0.6666667
-      value: {fileID: 1958168506, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
+      value: {fileID: 183025128, guid: f17f52cde157ae2438635f49b141f590, type: 3}
     attribute: m_Sprite
-    path: HoH_Werewolf_1
+    path: HoH_Lawyer_Spritesheet_1
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -43,7 +37,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1898231967
+      path: 945888070
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -52,17 +46,14 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 1958168506, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
-    - {fileID: 1024385557, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
-    - {fileID: -771815599, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
-    - {fileID: 1024385557, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
-    - {fileID: 1958168506, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
+    - {fileID: 183025128, guid: f17f52cde157ae2438635f49b141f590, type: 3}
+    - {fileID: 183025128, guid: f17f52cde157ae2438635f49b141f590, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.68333334
+    m_StopTime: 0.35000002
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -81,18 +72,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0.33333334
-    functionName: EmitMoveParticles
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.6666667
-    functionName: EmitMoveParticles
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

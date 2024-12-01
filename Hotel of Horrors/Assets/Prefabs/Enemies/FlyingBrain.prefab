@@ -301,6 +301,7 @@ MonoBehaviour:
   animator: {fileID: 6773491364635308731}
   hasWalkCycle: 0
   moveParticles: {fileID: 0}
+  bossFightSummon: 0
   attackType: 1
   moveSpeed: 12
   emotionalEnergyWorth: 40
@@ -434,6 +435,9 @@ MonoBehaviour:
   timeBetweenShots: 0.3
   stagger: 0
   oscillate: 0
+  randomBurstOffset: 0
+  randomProjectileOffset: 0
+  randomOffsetRange: {x: -15, y: 15}
   target: {fileID: 0}
 --- !u!114 &-4455104578077453517
 MonoBehaviour:

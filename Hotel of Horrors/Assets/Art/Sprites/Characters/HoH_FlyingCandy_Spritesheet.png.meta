@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -127,6 +127,90 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 96
+        width: 64
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5feaf9905a47684d87da45ee188900a
+      internalID: -1326967748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_FlyingCandy_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 64
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7876179950c6fa49b4492b5b6210d21
+      internalID: 631725365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_FlyingCandy_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 96
+        width: 64
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e45527828f957d41b5e517c07a60706
+      internalID: 1829025378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_FlyingCandy_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 64
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c80f7329b727fee479cb08dee60124c4
+      internalID: -329601454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_FlyingCandy_Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 48
         width: 64
         height: 48
@@ -137,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7654ee1eb97825d408bed29a09aa0a86
-      internalID: 1435821616
+      spriteID: 9df1a085c3ae29b4fb5924d8e7f543ff
+      internalID: -1552054548
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HoH_FlyingCandy_Spritesheet_1
+      name: HoH_FlyingCandy_Spritesheet_5
       rect:
         serializedVersion: 2
         x: 64
@@ -158,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bd621822adb9a645b75502cbb155eb3
-      internalID: 2043869992
+      spriteID: c8de88347ae574844af7d67134e38172
+      internalID: -588019364
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HoH_FlyingCandy_Spritesheet_2
+      name: HoH_FlyingCandy_Spritesheet_6
       rect:
         serializedVersion: 2
         x: 128
@@ -179,35 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7274be268f0224948bfa2b43c075ce01
-      internalID: -1316664161
+      spriteID: fbde9422021de4a4db3b71ff670da990
+      internalID: 988086068
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HoH_FlyingCandy_Spritesheet_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 48
-        width: 64
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a43896178860d9a4da446790a7d3e42d
-      internalID: 526206041
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HoH_FlyingCandy_Spritesheet_4
+      name: HoH_FlyingCandy_Spritesheet_7
       rect:
         serializedVersion: 2
         x: 0
@@ -221,50 +284,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ccab35dbfe2fde3438a5e72453c51a16
-      internalID: 1496785457
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HoH_FlyingCandy_Spritesheet_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ff5c43dc076772741aa76a5b6f8c84ba
-      internalID: -1483985480
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HoH_FlyingCandy_Spritesheet_6
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a0fde4477ecbb04ea5f2345975fe527
-      internalID: -467902147
+      spriteID: b2bb2ea7394bb774f9d70a0f11049048
+      internalID: 1358150374
       vertices: []
       indices: 
       edges: []
@@ -280,13 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      HoH_FlyingCandy_Spritesheet_0: 1435821616
-      HoH_FlyingCandy_Spritesheet_1: 2043869992
-      HoH_FlyingCandy_Spritesheet_2: -1316664161
-      HoH_FlyingCandy_Spritesheet_3: 526206041
-      HoH_FlyingCandy_Spritesheet_4: 1496785457
-      HoH_FlyingCandy_Spritesheet_5: -1483985480
-      HoH_FlyingCandy_Spritesheet_6: -467902147
+      HoH_FlyingCandy_Spritesheet_0: -1326967748
+      HoH_FlyingCandy_Spritesheet_1: 631725365
+      HoH_FlyingCandy_Spritesheet_2: 1829025378
+      HoH_FlyingCandy_Spritesheet_3: -329601454
+      HoH_FlyingCandy_Spritesheet_4: -1552054548
+      HoH_FlyingCandy_Spritesheet_5: -588019364
+      HoH_FlyingCandy_Spritesheet_6: 988086068
+      HoH_FlyingCandy_Spritesheet_7: 1358150374
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

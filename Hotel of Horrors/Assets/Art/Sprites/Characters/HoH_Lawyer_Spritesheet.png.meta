@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -127,6 +127,69 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 395219766b81b3942a814153e9d30546
+      internalID: 498084285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_Lawyer_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3025b248d32d96449bea46839eecf31f
+      internalID: -1475188986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_Lawyer_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bef270b9e6983748951b591e9db3951
+      internalID: 1136137741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_Lawyer_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 48
         width: 48
         height: 48
@@ -137,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2d5a1b2a76fbf749b8666abfbdd0033
-      internalID: 580070910
+      spriteID: 600f1eeed7330fd458320804c361d257
+      internalID: 483998294
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HoH_Lawyer_Spritesheet_1
+      name: HoH_Lawyer_Spritesheet_4
       rect:
         serializedVersion: 2
         x: 48
@@ -158,35 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77a7b3a6c9f1bb04190a89ce5523e0d2
-      internalID: -1835774041
+      spriteID: fac959c84a391e34884b8f9c177700ab
+      internalID: 1137324550
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HoH_Lawyer_Spritesheet_2
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aed9ed1822ca2be46bd14d89c25e067b
-      internalID: -1262561582
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HoH_Lawyer_Spritesheet_3
+      name: HoH_Lawyer_Spritesheet_5
       rect:
         serializedVersion: 2
         x: 0
@@ -200,29 +242,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1eccbc5715881534da02e100b8684612
-      internalID: 2088979622
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HoH_Lawyer_Spritesheet_4
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2a0e4e397823abf48b4b29f4f841a7ee
-      internalID: 738130722
+      spriteID: 81e93c08bb594114089a49f031746890
+      internalID: 183025128
       vertices: []
       indices: 
       edges: []
@@ -238,11 +259,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      HoH_Lawyer_Spritesheet_0: 580070910
-      HoH_Lawyer_Spritesheet_1: -1835774041
-      HoH_Lawyer_Spritesheet_2: -1262561582
-      HoH_Lawyer_Spritesheet_3: 2088979622
-      HoH_Lawyer_Spritesheet_4: 738130722
+      HoH_Lawyer_Spritesheet_0: 498084285
+      HoH_Lawyer_Spritesheet_1: -1475188986
+      HoH_Lawyer_Spritesheet_2: 1136137741
+      HoH_Lawyer_Spritesheet_3: 483998294
+      HoH_Lawyer_Spritesheet_4: 1137324550
+      HoH_Lawyer_Spritesheet_5: 183025128
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

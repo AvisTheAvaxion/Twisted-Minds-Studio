@@ -148,6 +148,7 @@ MonoBehaviour:
   animator: {fileID: 6165101908562562931}
   hasWalkCycle: 1
   moveParticles: {fileID: 4900746279993709993}
+  bossFightSummon: 0
   attackType: 0
   moveSpeed: 12
   emotionalEnergyWorth: 80
@@ -182,6 +183,12 @@ MonoBehaviour:
   dropRadius: 0.5
   upwardsVelocity: 0.2
   startHeight: 0.2
+  dropCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   minDropAmount: 0
   maxDropAmount: 1
   itemHolderPrefab: {fileID: 98322870789914543, guid: 4cadcb027839195449579823ebf9842a, type: 3}
@@ -5299,7 +5306,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 82a8efe3016166d4985e5058a9eae725, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5320,7 +5327,7 @@ SpriteRenderer:
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1084307218, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
+  m_Sprite: {fileID: 1024385557, guid: fae2ac1ddbb1ed940a6ed00449ac8fbc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5396,7 +5403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4640464672883739378, guid: 73d9eab6937b5464181db21d54ee8ede, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.118
+      value: -0.157
       objectReference: {fileID: 0}
     - target: {fileID: 4640464672883739378, guid: 73d9eab6937b5464181db21d54ee8ede, type: 3}
       propertyPath: m_LocalPosition.z

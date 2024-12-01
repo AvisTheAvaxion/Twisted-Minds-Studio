@@ -56,12 +56,15 @@ Material:
     m_Floats:
     - _Dissolve: 0
     - _Dissolve_Scale: 20.5
-    - _Dissolve_ScaleMax: 36
-    - _Dissolve_ScaleMin: 28
-    - _FallSpeed: 0.7
-    - _GlowOutlineLength: 0.05
+    - _Dissolve_ScaleMax: 69.6
+    - _Dissolve_ScaleMin: 12
+    - _FallSpeed: 0.2
+    - _GlowOutlineLength: 0.2
+    - _SpriteRes: 48
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Dissolve_Offset: {r: 0, g: 1, b: 0, a: 0}
+    - _FallDir: {r: 0, g: 1, b: 0, a: 0}
     - _GlowColor: {r: 0, g: 1.3235805, b: 10.432952, a: 1}
+    - _Resolution: {r: 48, g: 48, b: 0, a: 0}
   m_BuildTextureStacks: []

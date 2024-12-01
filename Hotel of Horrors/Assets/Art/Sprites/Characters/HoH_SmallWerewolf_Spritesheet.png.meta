@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -127,6 +127,69 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3541c2d0d07ce5499351cf918c9c6a2
+      internalID: 1958168506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_SmallWerewolf_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b57af5ffac18b541bd09e7ce5d3d54e
+      internalID: 1024385557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_SmallWerewolf_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7572a023635740047aff39447d8a3559
+      internalID: -771815599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_SmallWerewolf_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 48
         width: 48
         height: 48
@@ -137,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68f41b4d56556914aaa7e7dd0e190194
-      internalID: -1948760671
+      spriteID: b90a8b326ae5a164f9a218d0957e5a13
+      internalID: -1618105045
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HoH_SmallWerewolf_Spritesheet_1
+      name: HoH_SmallWerewolf_Spritesheet_4
       rect:
         serializedVersion: 2
         x: 48
@@ -158,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7da348a2ead0e2d45b64dffd6be97fb9
-      internalID: 1084307218
+      spriteID: e079cdaff8867c34e8891a5b0cf74801
+      internalID: 1672510383
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HoH_SmallWerewolf_Spritesheet_2
+      name: HoH_SmallWerewolf_Spritesheet_5
       rect:
         serializedVersion: 2
         x: 96
@@ -179,14 +242,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96e755a45170e3f4ca03661cb1dc82a4
-      internalID: -1399546265
+      spriteID: f5543354aae2f67489035a5d95e4ed78
+      internalID: 162158400
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HoH_SmallWerewolf_Spritesheet_3
+      name: HoH_SmallWerewolf_Spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc05d3f148dfb264f972b5c4a705d84f
+      internalID: 225042148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HoH_SmallWerewolf_Spritesheet_7
       rect:
         serializedVersion: 2
         x: 0
@@ -200,71 +284,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9cd94f02942d344cac8fb3c9fcdbab0
-      internalID: 900347294
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HoH_SmallWerewolf_Spritesheet_4
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c36ad5203a453eb4f8de862d9c83473d
-      internalID: 1963706421
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HoH_SmallWerewolf_Spritesheet_5
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 26a88748aaef0c54eb0930f3eaa56999
-      internalID: -1469885832
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HoH_SmallWerewolf_Spritesheet_6
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fbe2e966e58245d4d96267ffcb2967c1
-      internalID: -948142024
+      spriteID: 5bb241ae7c1cad946af58b530d034b95
+      internalID: 1807259560
       vertices: []
       indices: 
       edges: []
@@ -280,13 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      HoH_SmallWerewolf_Spritesheet_0: -1948760671
-      HoH_SmallWerewolf_Spritesheet_1: 1084307218
-      HoH_SmallWerewolf_Spritesheet_2: -1399546265
-      HoH_SmallWerewolf_Spritesheet_3: 900347294
-      HoH_SmallWerewolf_Spritesheet_4: 1963706421
-      HoH_SmallWerewolf_Spritesheet_5: -1469885832
-      HoH_SmallWerewolf_Spritesheet_6: -948142024
+      HoH_SmallWerewolf_Spritesheet_0: 1958168506
+      HoH_SmallWerewolf_Spritesheet_1: 1024385557
+      HoH_SmallWerewolf_Spritesheet_2: -771815599
+      HoH_SmallWerewolf_Spritesheet_3: -1618105045
+      HoH_SmallWerewolf_Spritesheet_4: 1672510383
+      HoH_SmallWerewolf_Spritesheet_5: 162158400
+      HoH_SmallWerewolf_Spritesheet_6: 225042148
+      HoH_SmallWerewolf_Spritesheet_7: 1807259560
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

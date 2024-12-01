@@ -13755,6 +13755,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 654427689}
     - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: openCutscene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
       propertyPath: summonPlatform
       value: 
       objectReference: {fileID: 594884777}
@@ -13766,13 +13770,25 @@ PrefabInstance:
       propertyPath: jawbreakerPlatform
       value: 
       objectReference: {fileID: 2138062969}
+    - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: stages.Array.data[0].attackSequence.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: stages.Array.data[0].attackSequence.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947676886819912926, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
+      propertyPath: stages.Array.data[0].attackSequence.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.41
       objectReference: {fileID: 0}
     - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.33
+      value: 4.2
       objectReference: {fileID: 0}
     - target: {fileID: 2569317119459986939, guid: 5e6806e88c0450d499942db1388ee03b, type: 3}
       propertyPath: m_LocalPosition.z

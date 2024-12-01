@@ -10361,6 +10361,9 @@ MonoBehaviour:
   timeBetweenShots: 0.01
   stagger: 0
   oscillate: 0
+  randomBurstOffset: 0
+  randomProjectileOffset: 0
+  randomOffsetRange: {x: -15, y: 15}
   target: {fileID: 0}
 --- !u!114 &3258707720381061101
 MonoBehaviour:
@@ -10379,17 +10382,17 @@ MonoBehaviour:
   flipToRotate: 1
   transformToFlip: {fileID: 2881490729553979416}
   DialogueManager: {fileID: 0}
-  openCutscene: 11
+  openCutscene: 29
   stages:
   - stage: 1
     healthThresholdToNextStage: 250
     attackSequence: 000000000000000001000000
-    cutscene: 27
+    cutscene: 30
     correctChoice: 1
   - stage: 2
     healthThresholdToNextStage: 0
     attackSequence: 00000000010000000000000001000000
-    cutscene: 28
+    cutscene: 31
     correctChoice: 0
   enrageSprite: {fileID: 306181513639209938}
   animator: {fileID: 3622643437465758043}
@@ -10522,7 +10525,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0017800331, y: -0.21421601}
+  m_Offset: {x: 0.049674034, y: -0.3007946}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -10533,7 +10536,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5621443, y: 0.571568}
+  m_Size: {x: 0.3926754, y: 0.3394661}
   m_EdgeRadius: 0
 --- !u!50 &838116091748070659
 Rigidbody2D:
@@ -10687,7 +10690,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -512539178, guid: bd2b5d8d22c3a3b47a75821d2891d665, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

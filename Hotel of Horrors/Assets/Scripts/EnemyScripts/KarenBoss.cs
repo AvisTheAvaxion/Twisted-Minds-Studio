@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(AI))]
 public class KarenBoss : BossStateMachine
@@ -18,9 +20,10 @@ public class KarenBoss : BossStateMachine
         public float normalContactDamage;
 
         [Header("Slash Settings")]
-        public float slashDamage;
+        public int slashDamage;
         public float slashKnockback;
         public float slashStun;
+        public float projectileLifetime;
         public float slashCooldownMin;
         public float slashCooldownMax;
         public float cancelStunLength;
@@ -31,6 +34,7 @@ public class KarenBoss : BossStateMachine
         public float shadowSpeed;
         public float slamRadius;
         public float slamDamage;
+        public int projectileDamage;
         public float slamKnockback;
         public float slamCooldownMin;
         public float slamCooldownMax;
@@ -55,6 +59,8 @@ public class KarenBoss : BossStateMachine
     [SerializeField] Transform jumpPoint;
     [SerializeField] GameObject karenShadow;
     [SerializeField] GameObject shockwavePrefab;
+    [SerializeField] GameObject defaultProjectile;
+    [SerializeField] GameObject gavelProjectile;
     [SerializeField] Transform summonPlatform;
     [SerializeField] Transform jawbreakerPlatform;
     [SerializeField] GameObject summonProjectile;
@@ -80,6 +86,9 @@ public class KarenBoss : BossStateMachine
 
         ai = GetComponent<AI>();
 
+        defaultProjectile.GetComponent<Projectile>().ModifyDamage(currentSettings.slashDamage);
+        gavelProjectile.GetComponent<Projectile>().ModifyDamage(currentSettings.projectileDamage);
+
         currentStageIndex = 0;
     }
 
@@ -98,11 +107,13 @@ public class KarenBoss : BossStateMachine
         switch (stages[currentStageIndex].stage)
         {
             case 1:
-                FightStageOne();
+                FightStage1();
                 break;
             case 2:
+                FightStage2();
                 break;
             case 3:
+                FightStage3();
                 break;
         }
 
@@ -113,7 +124,7 @@ public class KarenBoss : BossStateMachine
         }
     }
 
-    void FightStageOne()
+    void FightStage1()
     {
         if (isAttacking || onCooldown || !canAttack)
             return;
@@ -122,23 +133,105 @@ public class KarenBoss : BossStateMachine
 
         if (debug) print(distToPlayer);
 
-        if (stages[currentStageIndex].attackSequence[currentAttack] == 0 && distToPlayer <= currentSettings.slamMinAttackRange)
+        if (stages[currentStageIndex].attackSequence[currentAttack] == 0)
         {
             SlashBegin();
             currentAttack++;
         }
-        else if (stages[currentStageIndex].attackSequence[currentAttack] == 0 && distToPlayer >= currentSettings.slamMinAttackRange)
+        else if (stages[currentStageIndex].attackSequence[currentAttack] == 1)
         {
             SlamBegin();
             currentAttack++;
         }
+
+        currentAttack = currentAttack % stages[currentStageIndex].attackSequence.Length;
+    }
+    void FightStage2()
+    {
+        if (isAttacking || onCooldown || !canAttack)
+            return;
+
+        float distToPlayer = GetDistanceToPlayer();
+
+        if (debug) print(distToPlayer);
+
+        if (stages[currentStageIndex].attackSequence[currentAttack] == 0)
+        {
+            SlashBegin();
+            currentAttack++;
+        }
         else if (stages[currentStageIndex].attackSequence[currentAttack] == 1)
         {
+            SlamBegin();
+            SlamBegin();
+            currentAttack++;
+        }
+        else if (stages[currentStageIndex].attackSequence[currentAttack] == 2)
+        {
+            if(enraged)
+            {
+                currentSettings.summonPattern = 0;
+                SummonBegin();
+                currentSettings.summonPattern = 1;
+                SummonBegin();
+            }
+            currentSettings.summonPattern = Random.Range(0, 1);
             SummonBegin();
             currentAttack++;
         }
-        else
+
+        currentAttack = currentAttack % stages[currentStageIndex].attackSequence.Length;
+    }
+    void FightStage3()
+    {
+        if (isAttacking || onCooldown || !canAttack)
+            return;
+
+        float distToPlayer = GetDistanceToPlayer();
+
+        if (debug) print(distToPlayer);
+
+        if (stages[currentStageIndex].attackSequence[currentAttack] == 0 && !enraged)
         {
+            
+            SlashBegin();
+            currentAttack++;
+        }
+        else if (stages[currentStageIndex].attackSequence[currentAttack] == 1)
+        {
+            SlamBegin();
+            currentAttack++;
+        }
+        else if (stages[currentStageIndex].attackSequence[currentAttack] == 2)
+        {
+            if (enraged)
+            {
+                currentSettings.summonPattern = 2;
+                SummonBegin();
+            }
+            else
+            {
+                currentSettings.summonPattern = 0;
+                SummonBegin();
+                currentSettings.summonPattern = 1;
+                SummonBegin();
+            }
+            currentAttack++;
+        }
+        else if (stages[currentStageIndex].attackSequence[currentAttack] == 3)
+        {
+            if (enraged)
+            {
+                jawbreakerPlatform.transform.localScale = new Vector3(2, 2, 2);
+                currentSettings.summonPattern = 3;
+                SummonBegin();
+            }
+            else
+            {
+                jawbreakerPlatform.transform.localScale = new Vector3(1, 1, 1);
+                currentSettings.summonPattern = 3;
+                SummonBegin();
+            }
             currentAttack++;
         }
 
@@ -162,10 +255,27 @@ public class KarenBoss : BossStateMachine
         animator.SetTrigger("Slash");
         rb.velocity = Vector3.zero;
         isAttacking = true;
+        if (stages[currentStageIndex].stage == 3)
+        {
+            shooter.ModifyAngleSpread(41);
+        }
+        shooter.SetBulletPrefab(defaultProjectile);
     }
 
     void Slash()
     {
+        if (stages[currentStageIndex].stage == 1)
+        {
+            shooter.GetBulletPrefab().GetComponent<Projectile>().destroyTimer = currentSettings.projectileLifetime;
+        }
+        else if (stages[currentStageIndex].stage == 2)
+        {
+            shooter.GetBulletPrefab().GetComponent<Projectile>().destroyTimer = currentSettings.projectileLifetime * 1.5f;
+        }
+        else if (stages[currentStageIndex].stage == 3)
+        {
+            shooter.GetBulletPrefab().GetComponent<Projectile>().destroyTimer = currentSettings.projectileLifetime * 2f;
+        }
         shooter.Attack();
         SlamEnd();
     }
@@ -180,65 +290,60 @@ public class KarenBoss : BossStateMachine
     void SlamBegin()
     {
         animator.SetBool("isWalking", false);
+        if(afterImage) afterImage.StartEffect();
         animator.SetTrigger("Jump");
         rb.velocity = Vector3.zero;
         isAttacking = true;
+        if (stages[currentStageIndex].stage == 3)
+        {
+            shooter.ModifyAngleSpread(341);
+        }
+        shooter.SetBulletPrefab(gavelProjectile);
     }
 
-    IEnumerator StandardSlam()
+    void StandardSlam()
     {
         karenShadow.transform.position = transform.position;
         //Jump Up
 
-        //if (afterImage) afterImage.StartEffect();
         if (collider) collider.enabled = false;
-        float timer = 0f;
-        while (timer < 1)
-        {
-            Debug.Log($"Karen:{transform.position} | timer {timer}");
-            sprite.transform.position += (Vector3)Vector2.up;
-            timer += Time.deltaTime;
-        }
         sprite.SetActive(false);
+        if (afterImage) afterImage.StopEffect();
         //Have shadow following player and shrink
-
         karenShadow.SetActive(true);
 
-        timer = 0f;
+        float timer = 0;
         Vector2 shadowMoveDir = (player.transform.position - karenShadow.transform.position).normalized;
         Rigidbody2D shadowRigidbody = karenShadow.GetComponent<Rigidbody2D>();
         while (timer < currentSettings.fallLength)
         {
-            //Debug.Log($"Timer {timer}/{currentSettings.fallLength}");
+            Debug.Log($"Timer {timer}/{currentSettings.fallLength} | DeltaTime {Time.deltaTime}");
             shadowMoveDir = Vector2.Lerp(shadowMoveDir, (player.transform.position - karenShadow.transform.position).normalized, currentSettings.shadowChaseIntensity * Time.deltaTime * 10);
             shadowRigidbody.velocity = shadowMoveDir * currentSettings.shadowSpeed * Time.fixedDeltaTime * 10;
 
-            timer += Time.deltaTime;
+            timer += Time.fixedDeltaTime;
         }
         shadowRigidbody.velocity = Vector2.zero;
-
+        transform.position = karenShadow.transform.position;
         //Have Karen slam down at where the shadow stopped
         sprite.SetActive(true);
-        while (sprite.transform.position.y != 0)
-        {
-            //Debug.Log($"{interpol} | Karen:{transform.position} | target: {karenShadow.transform.position}");
-            sprite.transform.position += (Vector3)Vector2.down;
-            yield return new WaitForSeconds(.2f);
-        }
-        sprite.transform.position = karenShadow.transform.position;
-        karenShadow.SetActive(false);
 
+        if (afterImage) afterImage.StartEffect();
+        animator.SetTrigger("Slam");
+    }
 
+    void StandardSlamPartTwo()
+    {
+        if (afterImage) afterImage.StopEffect();
         if (cameraShake != null) cameraShake.ShakeCamera(slamCameraShake);
-        //if (afterImage) afterImage.StopEffect();
+        karenShadow.SetActive(false);
         collider.enabled = true;
 
         //Detect things around monster at given radius
         //Deal damage and knockback
         //Possibly spawn ring of projectiles
-
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, currentSettings.slamRadius);
-        animator.SetTrigger("Slam");
+
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].tag.Equals("Player"))
@@ -257,9 +362,22 @@ public class KarenBoss : BossStateMachine
             }
         }
         Destroy(Instantiate(shockwavePrefab, raycastOrigin.transform.position, Quaternion.identity), 1.5f);
+        if (stages[currentStageIndex].stage == 3)
+        {
+            if (enraged)
+            {
+                shooter.ModiftProjectilesPerBurst(22);
+            }
+            else
+            {
+                shooter.ModiftProjectilesPerBurst(11);
+            }
+            shooter.Attack();
+        }
+
         SlamEnd();
     }
-    public void SlamEnd()
+    void SlamEnd()
     {
         animator.SetTrigger("SlamEnd");
         isAttacking = false;
@@ -284,30 +402,83 @@ public class KarenBoss : BossStateMachine
                 //Horizontal Vertical Patttern
                 positionsToUse.Add(summonPlatform.GetChild(0));
                 positionsToUse.Add(summonPlatform.GetChild(2));
+                positionsToUse.Add(summonPlatform.GetChild(4));
+                positionsToUse.Add(summonPlatform.GetChild(6));
 
-                foreach (Transform t in positionsToUse)
+                if (stages[currentStageIndex].stage == 2)
+                {
+                    foreach (Transform t in positionsToUse)
+                    {
+                        summonPlatform.position = player.transform.position;
+                        t.gameObject.SetActive(true);
+                        yield return new WaitForSeconds(currentSettings.summonShootDelay);
+                        GameObject summon = Instantiate(summonProjectile, t.position, t.rotation);
+                        summon.GetComponent<Rigidbody2D>().AddForce(summon.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                        t.gameObject.SetActive(false);
+                    }
+                }
+                else if(stages[currentStageIndex].stage == 3)
                 {
                     summonPlatform.position = player.transform.position;
-                    t.gameObject.SetActive(true);
-                    yield return new WaitForSeconds(currentSettings.summonShootDelay);
-                    GameObject summon = Instantiate(summonProjectile, t.position, t.rotation);
-                    summon.GetComponent<Rigidbody2D>().AddForce(summon.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
-                    t.gameObject.SetActive(false);
+                    positionsToUse[0].gameObject.SetActive(true);
+                    positionsToUse[1].gameObject.SetActive(true);
+                    positionsToUse[2].gameObject.SetActive(true);
+                    positionsToUse[3].gameObject.SetActive(true);
+                    yield return new WaitForSeconds(currentSettings.summonShootDelay * .5f);
+                    GameObject summon1 = Instantiate(summonProjectile, positionsToUse[0].position, positionsToUse[0].rotation);
+                    GameObject summon2 = Instantiate(summonProjectile, positionsToUse[1].position, positionsToUse[1].rotation);
+                    GameObject summon3 = Instantiate(summonProjectile, positionsToUse[2].position, positionsToUse[2].rotation);
+                    GameObject summon4 = Instantiate(summonProjectile, positionsToUse[3].position, positionsToUse[3].rotation);
+                    summon1.GetComponent<Rigidbody2D>().AddForce(summon1.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    summon2.GetComponent<Rigidbody2D>().AddForce(summon2.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    summon3.GetComponent<Rigidbody2D>().AddForce(summon3.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    summon4.GetComponent<Rigidbody2D>().AddForce(summon4.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    positionsToUse[0].gameObject.SetActive(false);
+                    positionsToUse[1].gameObject.SetActive(false);
+                    positionsToUse[2].gameObject.SetActive(false);
+                    positionsToUse[3].gameObject.SetActive(false);
                 }
                 break;
             case 1:
                 //Cross Pattern
                 positionsToUse.Add(summonPlatform.GetChild(1));
                 positionsToUse.Add(summonPlatform.GetChild(3));
+                positionsToUse.Add(summonPlatform.GetChild(5));
+                positionsToUse.Add(summonPlatform.GetChild(7));
 
-                foreach (Transform t in positionsToUse)
+                if (stages[currentStageIndex].stage == 2)
+                {
+                    foreach (Transform t in positionsToUse)
+                    {
+
+                        summonPlatform.position = player.transform.position;
+                        t.gameObject.SetActive(true);
+                        yield return new WaitForSeconds(currentSettings.summonShootDelay);
+                        GameObject summon = Instantiate(summonProjectile, t.position, t.rotation);
+                        summon.GetComponent<Rigidbody2D>().AddForce(summon.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                        t.gameObject.SetActive(false);
+                    }
+                }
+                else if (stages[currentStageIndex].stage == 3)
                 {
                     summonPlatform.position = player.transform.position;
-                    t.gameObject.SetActive(true);
-                    yield return new WaitForSeconds(currentSettings.summonShootDelay);
-                    GameObject summon = Instantiate(summonProjectile, t.position, t.rotation);
-                    summon.GetComponent<Rigidbody2D>().AddForce(summon.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
-                    t.gameObject.SetActive(false);
+                    positionsToUse[0].gameObject.SetActive(true);
+                    positionsToUse[1].gameObject.SetActive(true);
+                    positionsToUse[2].gameObject.SetActive(true);
+                    positionsToUse[3].gameObject.SetActive(true);
+                    yield return new WaitForSeconds(currentSettings.summonShootDelay * .5f);
+                    GameObject summon1 = Instantiate(summonProjectile, positionsToUse[0].position, positionsToUse[0].rotation);
+                    GameObject summon2 = Instantiate(summonProjectile, positionsToUse[1].position, positionsToUse[1].rotation);
+                    GameObject summon3 = Instantiate(summonProjectile, positionsToUse[2].position, positionsToUse[2].rotation);
+                    GameObject summon4 = Instantiate(summonProjectile, positionsToUse[3].position, positionsToUse[3].rotation);
+                    summon1.GetComponent<Rigidbody2D>().AddForce(summon1.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    summon2.GetComponent<Rigidbody2D>().AddForce(summon2.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    summon3.GetComponent<Rigidbody2D>().AddForce(summon3.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    summon4.GetComponent<Rigidbody2D>().AddForce(summon4.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                    positionsToUse[0].gameObject.SetActive(false);
+                    positionsToUse[1].gameObject.SetActive(false);
+                    positionsToUse[2].gameObject.SetActive(false);
+                    positionsToUse[3].gameObject.SetActive(false);
                 }
                 break;
             case 2:
@@ -327,9 +498,15 @@ public class KarenBoss : BossStateMachine
                 foreach (Transform t in jawbreakerPlatform)
                 {
                     jawbreakerPlatform.position = player.transform.position;
+                    
+                    if(Physics2D.OverlapCircle(t.position, .3f, 6))
+                    {
+                        continue;
+                    }
+
                     t.gameObject.SetActive(true);
                     yield return new WaitForSeconds(currentSettings.summonShootDelay);
-                    GameObject summon = Instantiate(jawbreaker, t.position, t.rotation);
+                    GameObject summon = Instantiate(jawbreaker, t.position, quaternion.identity);
                     t.gameObject.SetActive(false);
                 }
                 break;
@@ -381,12 +558,16 @@ public class KarenBoss : BossStateMachine
     {
         enraged = true;
         currentSettings = enragedAttackSettings;
+
+        if (enrageSprite) enrageSprite.SetActive(true);
     }
 
     protected override void Disenrage()
     {
         enraged = false;
         currentSettings = normalAttackSettings;
+
+        if (enrageSprite) enrageSprite.SetActive(false);
     }
 
     protected override void OnDialogueEnd()
@@ -397,14 +578,17 @@ public class KarenBoss : BossStateMachine
 
             if (!isDying)
             {
-                if (stages[currentStageIndex].correctChoice == choiceMade)
+                if (stages[currentStageIndex].correctChoice != choiceMade)
                 {
                     Enrage();
                 }
                 currentAttack = 0;
                 currentStageIndex++;
 
-                Stun(1f, true);
+                Stun(0.5f, true);
+
+                isAttacking = false;
+
                 //currentState = States.Fighting;
             }
             else
@@ -417,12 +601,14 @@ public class KarenBoss : BossStateMachine
         }
         else
         {
-            Stun(1f, true);
+            Stun(0.5f, true);
             bossFightStarted = true;
+
+            isAttacking = false;
 
             bossHealth.ShowHealthBar();
 
-            //dialogueSegmentStarted = false;
+            dialogueSegmentStarted = false;
         }
     }
 

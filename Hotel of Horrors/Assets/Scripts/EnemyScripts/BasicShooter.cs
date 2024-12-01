@@ -297,6 +297,10 @@ public class BasicShooter : MonoBehaviour
     {
         burstCount = burstNumber;
     }
+    public void ModiftProjectilesPerBurst(int projectileNumber)
+    {
+        projectilesPerBurst = projectileNumber;
+    }
     private void OnDrawGizmosSelected()
     {
         if (!debug) return;
@@ -333,5 +337,14 @@ public class BasicShooter : MonoBehaviour
             currentAngleDebug += angleStepDebug;
 
         }
+    }
+
+    public GameObject GetBulletPrefab()
+    {
+        return bulletPrefab;
+    }
+    public void SetBulletPrefab(GameObject newBulletPrefab)
+    {
+        bulletPrefab = newBulletPrefab;
     }
 }

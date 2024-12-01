@@ -16,6 +16,8 @@ public class Projectile : MonoBehaviour
     [SerializeField] GameObject impactEffect;
     [SerializeField] bool invincible = false;
     [SerializeField] bool specialDeflection = false;
+    [SerializeField] bool useDestroyTimer = false;
+    [SerializeField] public float destroyTimer = 0f;
 
     protected Animator animator;
 
@@ -37,6 +39,10 @@ public class Projectile : MonoBehaviour
         animator = GetComponent<Animator>();
 
         collider = GetComponent<Collider2D>();
+        if (useDestroyTimer)
+        {
+            Destroy(this.gameObject, destroyTimer);
+        }
     }
 
     public virtual void Initialize(Ability ability)
@@ -125,6 +131,11 @@ public class Projectile : MonoBehaviour
     protected bool CheckWallCollision(Collider2D collision)
     {
         return collision.tag.Equals("Wall") || collision.tag.Equals("WestDoor") || collision.tag.Equals("EastDoor") || collision.tag.Equals("NorthDoor") || collision.tag.Equals("SouthDoor");
+    }
+
+    public void ModifyDamage(int newDamage)
+    {
+        damage = newDamage;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

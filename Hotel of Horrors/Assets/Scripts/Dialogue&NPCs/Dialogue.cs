@@ -73,6 +73,26 @@ public class Dialogue
                 return SteinEnd;
             #endregion
             #region Floor 2
+            case "Floor2Intro":
+                return Floor2Intro;
+            case "TwinEncounter1":
+                return TwinEncounter1;
+            case "NotEnoughCandy":
+                return NotEnoughCandy;
+            case "TryCandy":
+                return TryCandy;
+            case "EnoughCandy":
+                return EnoughCandy;
+            case "TwinEncounter2":
+                return TwinEncounter2;
+            case "Evidence1":
+                return Evidence1;
+            case "Evidence2":
+                return Evidence2;
+            case "Evidence3":
+                return Evidence3;
+            case "TwinEncounter3":
+                return TwinEncounter3;
             case "KarenIntro":
                 return KarenIntro;
             case "KarenInter1":
@@ -147,6 +167,16 @@ public class Dialogue
         SteinEnd,
         #endregion
         #region Floor 2
+        Floor2Intro,
+        TwinEncounter1,
+        NotEnoughCandy,
+        TryCandy,
+        EnoughCandy,
+        TwinEncounter2,
+        Evidence1,
+        Evidence2,
+        Evidence3,
+        TwinEncounter3,
         KarenIntro,
         KarenInter1,
         KarenInter2,
@@ -1106,8 +1136,6 @@ public class Dialogue
     #endregion
     #region Floor 2 Dialog
     #region Side Quest
-
-
     string[] Floor2Intro = new string[]
     {
         "Varren: About time, I was just about to leave you.",
@@ -1263,8 +1291,6 @@ public class Dialogue
     };
 
     #endregion Side Quest
-
-
     #region Boss Fight
     string[] KarenIntro =
     {

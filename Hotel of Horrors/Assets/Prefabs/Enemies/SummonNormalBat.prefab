@@ -352,6 +352,10 @@ MonoBehaviour:
   timeBetweenShots: 0
   stagger: 0
   oscillate: 0
+  rotateProjectiles: 1
+  randomBurstOffset: 0
+  randomProjectileOffset: 0
+  randomOffsetRange: {x: -15, y: 15}
   target: {fileID: 0}
 --- !u!114 &4489290277918278132
 MonoBehaviour:
@@ -5630,11 +5634,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7425929110926314875, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
+      propertyPath: AttackSources.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7425929110926314875, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
+      propertyPath: AttackSources.Array.data[0]
+      value: 
+      objectReference: {fileID: 1354650832315933808}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
+--- !u!82 &1354650832315933808 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8042249235792274989, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
+  m_PrefabInstance: {fileID: 9031794027546985053}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1898641069769232166 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7425929110926314875, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}

@@ -15,6 +15,8 @@ public class BossHealth : MonoBehaviour, IHealth
     [SerializeField] FlashColor flashColor;
     [SerializeField] BossGUI bossGUI;
 
+    EnemyAudioManager audio;
+
     BossStateMachine boss;
 
     bool canTakeDamage;
@@ -24,6 +26,7 @@ public class BossHealth : MonoBehaviour, IHealth
     {
         stats = GetComponent<StatsController>();
         boss = GetComponent<BossStateMachine>();
+        audio = GetComponentInChildren<EnemyAudioManager>();
 
         if (bossGUI == null) bossGUI = FindObjectOfType<BossGUI>();
 
@@ -54,6 +57,7 @@ public class BossHealth : MonoBehaviour, IHealth
     {
         if (!canTakeDamage) return false;
 
+        audio.Damage();
         stats.TakeDamage(amount, effect);
 
         bossGUI.HealthBar.value = stats.GetHealthValue01();

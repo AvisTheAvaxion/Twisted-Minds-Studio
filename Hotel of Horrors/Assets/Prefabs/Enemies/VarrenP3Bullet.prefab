@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4426ee28b9d4da14a9958b1b61a4e0f6, type: 2}
+  - {fileID: 2100000, guid: e108d88415957ec47bdd4736350c7e14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -77,8 +77,8 @@ SpriteRenderer:
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 1176616890, guid: 4de7da9b624e45d4ba3db42f9a6d943c, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 896494249, guid: 5db7122ebfa710541ad176053520267b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -149,7 +149,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.10399099
+  m_Radius: 0.14439279
 --- !u!114 &-2338807076699898595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +171,10 @@ MonoBehaviour:
   maxWallBounces: 0
   goThroughWalls: 0
   impactEffect: {fileID: 9071062035390458290, guid: 8817c3f378e9eb643884dd6d5e5feec9, type: 3}
+  invincible: 0
+  specialDeflection: 0
+  useDestroyTimer: 0
+  destroyTimer: 0
 --- !u!95 &7133738695097281668
 Animator:
   serializedVersion: 5
@@ -181,7 +185,7 @@ Animator:
   m_GameObject: {fileID: 6622512885369241516}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d34729fd594b7064f89fece7c51f85fe, type: 2}
+  m_Controller: {fileID: 9100000, guid: 20169a0590126214db00638518067615, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

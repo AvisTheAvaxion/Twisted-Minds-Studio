@@ -7,6 +7,7 @@ public class VarrenBoss : BossStateMachine
 {
     AI ai;
     Animator animator;
+    EnemyAudioManager audio;
 
     [System.Serializable]
     public struct AttackSettings
@@ -71,6 +72,7 @@ public class VarrenBoss : BossStateMachine
 
     [Header("Phase 3")]
     [SerializeField] bool debugPhase3;
+    [SerializeField] RuntimeAnimatorController p3AnimatorController;
     [SerializeField] GameObject[] p3SummonEnemies;
     [SerializeField] Transform leftArmAttackPoint;
     [SerializeField] Transform leftArmSlamStart;
@@ -83,8 +85,10 @@ public class VarrenBoss : BossStateMachine
     [SerializeField] BasicShooter shooter2P3;
     [SerializeField] Collider2D rightArmCollider;
     [SerializeField] Collider2D leftArmCollider;
+    [SerializeField] ParticleSystem p3BloodPS;
 
     [Header("Phase 4")]
+    [SerializeField] RuntimeAnimatorController p4AnimatorController;
     [SerializeField] GameObject[] p4SummonEnemies;
     [SerializeField] GameObject[] p4AttackPatterns;
     [SerializeField] Transform p4launchPoint;
@@ -93,6 +97,7 @@ public class VarrenBoss : BossStateMachine
     [SerializeField] Collider2D headCollider;
     [SerializeField] Collider2D summonContainer;
     [SerializeField] LayerMask p4SummonMask;
+    [SerializeField] ParticleSystem p4BloodPS;
 
     AttackSettings currentSettings;
 
@@ -143,6 +148,11 @@ public class VarrenBoss : BossStateMachine
 
         //Cancel anything happening already
         yield return null;
+
+        if (stunP2Coroutine != null) StopCoroutine(stunP2Coroutine);
+        if (stunP3Coroutine != null) StopCoroutine(stunP3Coroutine);
+        if (stunP4Coroutine != null) StopCoroutine(stunP4Coroutine);
+        if (attackCoroutine != null) StopCoroutine(attackCoroutine);
 
         isStunned = false;
 
@@ -203,6 +213,7 @@ public class VarrenBoss : BossStateMachine
     IEnumerator ShootP1Projectile()
     {
         animator.SetTrigger("Shoot");
+        audio.PlaySound("SmallVarrenLaunchAttack");
 
         canAttack = false;
         if (stages[currentStageIndex].attackSequence[currentAttack] <= p1Projectiles.Length - 1)
@@ -343,6 +354,8 @@ public class VarrenBoss : BossStateMachine
     //Animation Event
     public void SlamAttack()
     {
+        audio.PlaySound("SmallVarrenSlam");
+
         collider.enabled = true;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(p2AttackPoint.position, currentSettings.p2AttackRadius, p2AttackMask);
         foreach (Collider2D collider in colliders)
@@ -399,6 +412,10 @@ public class VarrenBoss : BossStateMachine
             Instantiate(enemyToSpawn, spawnPoint, enemyToSpawn.transform.rotation);
         }
     }
+    public void PlayP2WingSwoosh()
+    {
+        audio.PlaySound("SmallVarrenWingWoosh");
+    }
     #endregion
 
     #region Phase 3
@@ -424,37 +441,86 @@ public class VarrenBoss : BossStateMachine
             }
         }
     }
+    public void Phase3AttackEvent()
+    {
+        doAttackP3 = true;
+    }
+    public void PlaySmallBloodAttackSound()
+    {
+        print("Play Small Blood Attack");
+        switch (stages[currentStageIndex].attackSequence[currentAttack])
+        {
+            case 1:
+                audio.PlaySound("BVBloodAttack1");
+                break;
+            case 2:
+                audio.PlaySound("BVBloodAttack2");
+                break;
+        }
+    }
+    bool doAttackP3;
     IEnumerator Phase3Attack()
     {
+        doAttackP3 = false;
         canAttack = false;
-        switch(stages[currentStageIndex].attackSequence[currentAttack])
+        switch (stages[currentStageIndex].attackSequence[currentAttack])
+        {
+            case 1:
+                animator.SetBool("BloodAttack1", true);
+                break;
+            case 2:
+                animator.SetBool("BloodAttack2", true);
+                break;
+        }
+
+        yield return new WaitUntil(() => doAttackP3);
+        p3BloodPS.Play();
+
+        switch (stages[currentStageIndex].attackSequence[currentAttack])
         {
             case 1:
                 shooter1P3.SetTarget(shooter1P3AttackPoint);
                 shooter1P3.SetLaunchForce(currentSettings.p3LaunchForce);
                 shooter1P3.Attack();
+                yield return new WaitForSeconds(4.5f);
                 break;
             case 2:
                 shooter2P3.SetLaunchForce(currentSettings.p3LaunchForce);
                 shooter2P3.Attack();
+                yield return new WaitForSeconds(0.9f);
                 break;
         }
 
-        yield return new WaitForSeconds(3f);
+        animator.SetBool("BloodAttack1", false);
+        animator.SetBool("BloodAttack2", false);
+        p3BloodPS.Stop();
 
         if (attackCoroutine != null) StopCoroutine(attackCoroutine);
         attackCoroutine = StartCoroutine(AttackCooldown(GetRandomBetween(currentSettings.p3LaunchCooldown)));
 
         phase3Attack = null;
     }
+    public void Phase3SlamEvent()
+    {
+        doP3SlamAttack = true;
+    }
+    public void PlayBigSlamSound()
+    {
+        audio.PlaySound("BigVarrenSlam");
+    }
+    bool doP3SlamAttack;
     IEnumerator Phase3Slam()
     {
         bool hitPlayer = false;
 
         canAttack = false;
+        doP3SlamAttack = false;
 
         Collider2D[] colliders = null;
         Vector2 slamPoint = Vector2.zero;
+
+        animator.SetBool("Slam", true);
+        //yield return new WaitUntil(() => doP3SlamAttack);
 
         if (stages[currentStageIndex].attackSequence[currentAttack] == 3)
         {
@@ -515,15 +581,18 @@ public class VarrenBoss : BossStateMachine
         }
 
         yield return new WaitForSeconds(2f);
+        animator.SetBool("Slam", false);
 
         if (hitPlayer)
         {
+            animator.SetBool("SlamStuck", false);
             if (attackCoroutine != null) StopCoroutine(attackCoroutine);
             attackCoroutine = StartCoroutine(AttackCooldown(GetRandomBetween(currentSettings.p3SlamCooldown)));
             phase3Attack = null;
         }
         else
         {
+            animator.SetBool("SlamStuck", true);
             stunP3Coroutine = StartCoroutine(StunP3(currentSettings.p3StunLength, 
                 stages[currentStageIndex].attackSequence[currentAttack] == 3, currentSettings.p3SlamCooldown));
         }
@@ -534,12 +603,13 @@ public class VarrenBoss : BossStateMachine
     {
         isStunned = true;
 
-
         canAttack = false;
         yield return new WaitForSeconds(stunTime);
 
         rightArmCollider.enabled = false;
         leftArmCollider.enabled = false;
+
+        animator.SetBool("SlamStuck", false);
 
         yield return new WaitForSeconds(1.5f);
 
@@ -575,10 +645,23 @@ public class VarrenBoss : BossStateMachine
 
         summonTimer += Time.deltaTime;
     }
+    public void Phase4AttackEvent()
+    {
+        doAttackP4 = true;
+    }
+    public void PlayBigBloodAttack()
+    {
+        audio.PlaySound("BigVarrenBloodAttack");
+    }
+    bool doAttackP4;
     Coroutine phase4Attack;
     IEnumerator Phase4Launch()
     {
+        doAttackP4 = false;
         canAttack = false;
+        animator.SetBool("BloodAttack", true);
+        yield return new WaitUntil(() => doAttackP4);
+        p4BloodPS.Play();
 
         //GameObject pattern = p4AttackPatterns[stages[currentStageIndex].attackSequence[currentAttack] % p4AttackPatterns.Length];
         GameObject pattern = p4AttackPatterns[Random.Range(0, p4AttackPatterns.Length)];
@@ -592,8 +675,10 @@ public class VarrenBoss : BossStateMachine
                 multi.Launch(currentSettings.p4LaunchForce, Vector2.down);
                 Destroy(obj, 10f);
             }
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.25f);
         }
+        p4BloodPS.Stop();
+        animator.SetBool("BloodAttack", false);
 
         if (attackCoroutine != null) StopCoroutine(attackCoroutine);
         attackCoroutine = StartCoroutine(AttackCooldown(GetRandomBetween(currentSettings.p4LaunchCooldown)));
@@ -621,6 +706,7 @@ public class VarrenBoss : BossStateMachine
             yield return new WaitForSeconds(1f);
             if (hitWithDagger) break;
         }
+
 
         yield return new WaitForSeconds(3f);
 
@@ -652,6 +738,7 @@ public class VarrenBoss : BossStateMachine
     Coroutine stunP4Coroutine;
     IEnumerator StunP4(float stunTime, Vector2 attackCooldown)
     {
+        animator.SetBool("Stun", true);
         isStunned = true;
 
         headCollider.enabled = true;
@@ -661,6 +748,7 @@ public class VarrenBoss : BossStateMachine
 
         headCollider.enabled = false;
 
+        animator.SetBool("Stun", false);
         yield return new WaitForSeconds(1.5f);
 
         isStunned = false;
@@ -670,6 +758,10 @@ public class VarrenBoss : BossStateMachine
         attackCoroutine = StartCoroutine(AttackCooldown(GetRandomBetween(attackCooldown)));
     }
     #endregion
+    public void PlayBigWingSwoosh()
+    {
+        audio.PlaySound("BigVarrenWingWoosh");
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -710,6 +802,8 @@ public class VarrenBoss : BossStateMachine
         ai = GetComponent<AI>();
         animator = GetComponent<Animator>();
         shooterP2 = GetComponent<BasicShooter>();
+        audio = GetComponentInChildren<EnemyAudioManager>();
+        audio.MuteAudio();
 
         currentSettings = normalSettings;
     }
@@ -746,13 +840,28 @@ public class VarrenBoss : BossStateMachine
                 {
                     animator.runtimeAnimatorController = p2AnimatorController;
                 }
-                else if (currentStageIndex == 2 || currentStageIndex == 3)
+                else if(currentStageIndex == 2)
+                {
+                    animator.runtimeAnimatorController = p3AnimatorController;
+                }
+                else if (currentStageIndex == 3)
+                {
+                    animator.runtimeAnimatorController = p4AnimatorController;
+                }
+                
+                if (currentStageIndex == 2 || currentStageIndex == 3)
                 {
                     rightArmCollider.enabled = false;
                     leftArmCollider.enabled = false;
                 }
 
+                if (stunP2Coroutine != null) StopCoroutine(stunP2Coroutine);
+                if (stunP3Coroutine != null) StopCoroutine(stunP3Coroutine);
+                if (stunP4Coroutine != null) StopCoroutine(stunP4Coroutine);
+                if (attackCoroutine != null) StopCoroutine(attackCoroutine);
+
                 isAttacking = false;
+                isStunned = false;
                 canAttack = true;
 
                 if (currentStageIndex != 2 && currentStageIndex != 3)
@@ -778,6 +887,8 @@ public class VarrenBoss : BossStateMachine
             canAttack = true;
 
             currentAttack = 0;
+
+            audio.UnMuteAudio();
 
             bossHealth.UpdateHealth();
             bossHealth.ShowHealthBar();

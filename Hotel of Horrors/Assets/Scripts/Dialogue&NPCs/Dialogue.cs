@@ -1367,11 +1367,12 @@ public class Dialogue
     #region Final Boss Fight
     string[] VarrenBossIntro = new string[]
     {
+        "$MoveViaLerp(Main Camera,0,15.9)",
         "$Animate(VarrenBoss_Phase1&2,Intro,true)",
         "$Emote(Null)",
         "Varren: Hello there....",
         "Blaze: General Kenobi",
-        "$Animate(VarrenBoss_Phase1&2,Intro,false)"
+        "$Animate(VarrenBoss_Phase1&2,Intro,false)",
     };
     string[] VarrenBossIntermediate1 = new string[]
     {
@@ -1383,12 +1384,14 @@ public class Dialogue
     };
     string[] VarrenBossFalseEnd = new string[]
     {
+
         "$Emote(Null)",
         "$FadeIn(255,255,255)",
         "$Kill(VarrenBoss_Phase1&2)",
         "$Tele(Varren_FalseEnd,0,15.34)",
         "$Tele(Player,0,13.66)",
         "$FadeOut(255,255,255)",
+        "$MoveViaLerp(Main Camera,0,14.328)",
         "Varren: You got me, lol",
         "Blaze: yeah, I did",
         "$Animate(Varren_FalseEnd,Stage3)",
@@ -1406,11 +1409,15 @@ public class Dialogue
         //"$Kill(Varren_Falling)",
         "$CameraShake(2.25,2)",
         "$Timer(2)",
-        "$Tele(VarrenBoss_Phase3&4,0,14.7)"
+        "$Tele(VarrenBigBoss_Appear,0,14.44)",
+        "$Animate(VarrenBigBoss_Appear,Appear)",
+        "$Timer(2)",
+        "$Tele(VarrenBoss_Phase3&4,0,14.44)",
+        "$Kill(VarrenBigBoss_Appear)",
+        "$MoveViaLerp(Main Camera,0,13.66)",
     };
     string[] VarrenBigBossIntro = new string[]
     {
-        "$Tele(VarrenBoss_Phase3&4,0,14.7)",
         "Varren: I will never die",
         "Varren: Now you die!"
     };

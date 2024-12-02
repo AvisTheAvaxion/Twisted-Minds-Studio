@@ -20,6 +20,7 @@ public class BasicShooter : MonoBehaviour
     [SerializeField] float timeBetweenShots = .3f;
     [SerializeField] bool stagger;
     [SerializeField] bool oscillate;
+    [SerializeField] bool rotateProjectiles = true;
     [SerializeField] bool randomBurstOffset;
     [SerializeField] bool randomProjectileOffset;
     [SerializeField] Vector2 randomOffsetRange = new Vector2(-15, 15);
@@ -106,12 +107,20 @@ public class BasicShooter : MonoBehaviour
                     Vector2 pos = FindBulletSpawnPos(randomOffsetValue + currentAngle);
                     GameObject newBullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
 
+
                     //newBullet.transform.rotation = Quaternion.AngleAxis(currentAngle, -Vector3.forward);
                     Vector2 dir = (pos - (Vector2)bulletSpawnPoint.position).normalized;
                     Vector2 rotatedDir = Quaternion.AngleAxis(bulletAngleOffset, Vector3.forward) * dir;
-                    newBullet.transform.rotation = Quaternion.FromToRotation(newBullet.transform.up, rotatedDir) * newBullet.transform.rotation;
 
-                    newBullet.GetComponent<Rigidbody2D>().AddForce(newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
+                    if (rotateProjectiles) 
+                    {
+                        newBullet.transform.rotation = Quaternion.FromToRotation(newBullet.transform.up, rotatedDir) * newBullet.transform.rotation;
+                        newBullet.GetComponent<Rigidbody2D>().AddForce(newBullet.transform.up * bulletForce, ForceMode2D.Impulse);
+                    }
+                    else
+                    {
+                        newBullet.GetComponent<Rigidbody2D>().AddForce(rotatedDir * bulletForce, ForceMode2D.Impulse);
+                    }
 
                     Projectile proj = newBullet.GetComponent<Projectile>();
                     if(proj != null && proj is ProjectileBoomerang)

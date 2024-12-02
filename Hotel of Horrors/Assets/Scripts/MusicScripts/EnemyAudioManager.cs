@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAudioManager : MonoBehaviour
 {
-    [SerializeField] AudioSource AttackSource;
+    [SerializeField] AudioSource[] AttackSources;
     [SerializeField] AudioSource DamageSource;
 
     [SerializeField] AudioClip[] AttackSounds;
@@ -13,11 +13,16 @@ public class EnemyAudioManager : MonoBehaviour
 
     string EnemyType { get; set; }
 
+    bool audioMuted = false;
+
     // Start is called before the first frame update
     void Start()
     {
         float volume = PlayerPrefs.GetFloat("SFXVolume");
-        AttackSource.volume = volume;
+        foreach(AudioSource source in AttackSources)
+        {
+            source.volume = volume;
+        }
         DamageSource.volume = volume;
     }
 
@@ -37,29 +42,79 @@ public class EnemyAudioManager : MonoBehaviour
         switch (name)
         {
             case "FlyingBrain":
-                AttackSource.clip = AttackSounds[0];
+                AttackSources[0].clip = AttackSounds[0];
                 break;
 
             case "ScalpelPatient":
-                AttackSource.clip = AttackSounds[1];
+                AttackSources[0].clip = AttackSounds[1];
                 break;
 
             case "TorsoMonster":
-                AttackSource.clip = AttackSounds[2];
+                AttackSources[0].clip = AttackSounds[2];
                 break;
 
             case "CoffinMimic":
-                AttackSource.clip = AttackSounds[3];
+                AttackSources[0].clip = AttackSounds[3];
                 break;
             default:
                 Debug.Log(name + " No sound");
                 break;
         }
 
-        AttackSource.enabled = true;
-        AttackSource.Play();
+        AttackSources[0].enabled = true;
+        AttackSources[0].Play();
     }
 
-    public void Damage() { DamageSource.Play(); }
+    public void Damage() 
+    {
+        float volume = PlayerPrefs.GetFloat("SFXVolume");
+        DamageSource.volume = volume;
+        DamageSource.Play(); 
+    }
     public void Die() { Instantiate(EnemyDeath); }
+
+    public void PlaySound(string audioName)
+    {
+        if (!audioMuted)
+        {
+            AudioSource AttackSource = GetOpenAttackSource();
+            AttackSource.Stop();
+            float volume = PlayerPrefs.GetFloat("SFXVolume");
+            AttackSource.volume = volume;
+            foreach (AudioClip clip in AttackSounds)
+            {
+                if (clip.name == audioName)
+                {
+                    AttackSource.clip = clip;
+                    break;
+                }
+            }
+            AttackSource.enabled = true;
+            AttackSource.Play();
+        }
+    }
+
+    AudioSource GetOpenAttackSource()
+    {
+        for (int i = 0; i < AttackSources.Length; i++)
+        {
+            if (!AttackSources[i].isPlaying) return AttackSources[i];
+        }
+        return AttackSources[0];
+    }
+
+    public void MuteAudio()
+    {
+        foreach (AudioSource source in AttackSources)
+        {
+            source.volume = 0;
+        }
+        DamageSource.volume = 0;
+
+        audioMuted = true;
+    }
+    public void UnMuteAudio()
+    {
+        audioMuted = false;
+    }
 }

@@ -58,6 +58,7 @@ public class KarenBoss : BossStateMachine
     [SerializeField] Transform raycastOrigin;
     [SerializeField] Transform jumpPoint;
     [SerializeField] GameObject karenShadow;
+    [SerializeField] Rigidbody2D shadowRigidbody;
     [SerializeField] GameObject shockwavePrefab;
     [SerializeField] GameObject defaultProjectile;
     [SerializeField] GameObject gavelProjectile;
@@ -193,7 +194,6 @@ public class KarenBoss : BossStateMachine
 
         if (stages[currentStageIndex].attackSequence[currentAttack] == 0 && !enraged)
         {
-            
             SlashBegin();
             currentAttack++;
         }
@@ -220,18 +220,13 @@ public class KarenBoss : BossStateMachine
         }
         else if (stages[currentStageIndex].attackSequence[currentAttack] == 3)
         {
-            if (enraged)
-            {
-                jawbreakerPlatform.transform.localScale = new Vector3(2, 2, 2);
-                currentSettings.summonPattern = 3;
-                SummonBegin();
-            }
-            else
-            {
-                jawbreakerPlatform.transform.localScale = new Vector3(1, 1, 1);
-                currentSettings.summonPattern = 3;
-                SummonBegin();
-            }
+            currentSettings.summonPattern = 3;
+            SummonBegin();
+
+            currentAttack++;
+        }
+        else
+        {
             currentAttack++;
         }
 
@@ -301,7 +296,7 @@ public class KarenBoss : BossStateMachine
         shooter.SetBulletPrefab(gavelProjectile);
     }
 
-    void StandardSlam()
+    IEnumerator StandardSlam()
     {
         karenShadow.transform.position = transform.position;
         //Jump Up
@@ -314,7 +309,6 @@ public class KarenBoss : BossStateMachine
 
         float timer = 0;
         Vector2 shadowMoveDir = (player.transform.position - karenShadow.transform.position).normalized;
-        Rigidbody2D shadowRigidbody = karenShadow.GetComponent<Rigidbody2D>();
         while (timer < currentSettings.fallLength)
         {
             Debug.Log($"Timer {timer}/{currentSettings.fallLength} | DeltaTime {Time.deltaTime}");
@@ -322,6 +316,7 @@ public class KarenBoss : BossStateMachine
             shadowRigidbody.velocity = shadowMoveDir * currentSettings.shadowSpeed * Time.fixedDeltaTime * 10;
 
             timer += Time.fixedDeltaTime;
+            yield return null;
         }
         shadowRigidbody.velocity = Vector2.zero;
         transform.position = karenShadow.transform.position;
@@ -420,23 +415,14 @@ public class KarenBoss : BossStateMachine
                 else if(stages[currentStageIndex].stage == 3)
                 {
                     summonPlatform.position = player.transform.position;
-                    positionsToUse[0].gameObject.SetActive(true);
-                    positionsToUse[1].gameObject.SetActive(true);
-                    positionsToUse[2].gameObject.SetActive(true);
-                    positionsToUse[3].gameObject.SetActive(true);
-                    yield return new WaitForSeconds(currentSettings.summonShootDelay * .5f);
-                    GameObject summon1 = Instantiate(summonProjectile, positionsToUse[0].position, positionsToUse[0].rotation);
-                    GameObject summon2 = Instantiate(summonProjectile, positionsToUse[1].position, positionsToUse[1].rotation);
-                    GameObject summon3 = Instantiate(summonProjectile, positionsToUse[2].position, positionsToUse[2].rotation);
-                    GameObject summon4 = Instantiate(summonProjectile, positionsToUse[3].position, positionsToUse[3].rotation);
-                    summon1.GetComponent<Rigidbody2D>().AddForce(summon1.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
-                    summon2.GetComponent<Rigidbody2D>().AddForce(summon2.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
-                    summon3.GetComponent<Rigidbody2D>().AddForce(summon3.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
-                    summon4.GetComponent<Rigidbody2D>().AddForce(summon4.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
-                    positionsToUse[0].gameObject.SetActive(false);
-                    positionsToUse[1].gameObject.SetActive(false);
-                    positionsToUse[2].gameObject.SetActive(false);
-                    positionsToUse[3].gameObject.SetActive(false);
+                    foreach (Transform t in positionsToUse)
+                    {
+                        summonPlatform.position = player.transform.position;
+                        t.gameObject.SetActive(true);
+                        GameObject summon = Instantiate(summonProjectile, t.position, t.rotation);
+                        summon.GetComponent<Rigidbody2D>().AddForce(summon.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                        t.gameObject.SetActive(false);
+                    }
                 }
                 break;
             case 1:
@@ -462,23 +448,13 @@ public class KarenBoss : BossStateMachine
                 else if (stages[currentStageIndex].stage == 3)
                 {
                     summonPlatform.position = player.transform.position;
-                    positionsToUse[0].gameObject.SetActive(true);
-                    positionsToUse[1].gameObject.SetActive(true);
-                    positionsToUse[2].gameObject.SetActive(true);
-                    positionsToUse[3].gameObject.SetActive(true);
-                    yield return new WaitForSeconds(currentSettings.summonShootDelay * .5f);
-                    GameObject summon1 = Instantiate(summonProjectile, positionsToUse[0].position, positionsToUse[0].rotation);
-                    GameObject summon2 = Instantiate(summonProjectile, positionsToUse[1].position, positionsToUse[1].rotation);
-                    GameObject summon3 = Instantiate(summonProjectile, positionsToUse[2].position, positionsToUse[2].rotation);
-                    GameObject summon4 = Instantiate(summonProjectile, positionsToUse[3].position, positionsToUse[3].rotation);
-                    summon1.GetComponent<Rigidbody2D>().AddForce(summon1.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
-                    summon2.GetComponent<Rigidbody2D>().AddForce(summon2.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
-                    summon3.GetComponent<Rigidbody2D>().AddForce(summon3.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
-                    summon4.GetComponent<Rigidbody2D>().AddForce(summon4.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
-                    positionsToUse[0].gameObject.SetActive(false);
-                    positionsToUse[1].gameObject.SetActive(false);
-                    positionsToUse[2].gameObject.SetActive(false);
-                    positionsToUse[3].gameObject.SetActive(false);
+                    foreach (Transform t in positionsToUse)
+                    {
+                        t.gameObject.SetActive(true);
+                        GameObject summon = Instantiate(summonProjectile, t.position, t.rotation);
+                        summon.GetComponent<Rigidbody2D>().AddForce(summon.transform.up * currentSettings.summonShootForce, ForceMode2D.Impulse);
+                        t.gameObject.SetActive(false);
+                    }
                 }
                 break;
             case 2:
@@ -495,19 +471,36 @@ public class KarenBoss : BossStateMachine
                 break;
             case 3:
                 //Jawbreaker Summon
-                foreach (Transform t in jawbreakerPlatform)
+                if (enraged)
                 {
                     jawbreakerPlatform.position = player.transform.position;
-                    
-                    if(Physics2D.OverlapCircle(t.position, .3f, 6))
+                    foreach (Transform t in jawbreakerPlatform)
                     {
-                        continue;
+                        t.gameObject.SetActive(true);
+                        if (Physics2D.OverlapCircle(t.position, .25f, wallMask) != null)
+                        {
+                            t.gameObject.SetActive(false);
+                            continue;
+                        }
+                        GameObject sum = Instantiate(jawbreaker, t.position, quaternion.identity);
+                        t.gameObject.SetActive(false);
                     }
-
-                    t.gameObject.SetActive(true);
-                    yield return new WaitForSeconds(currentSettings.summonShootDelay);
-                    GameObject summon = Instantiate(jawbreaker, t.position, quaternion.identity);
-                    t.gameObject.SetActive(false);
+                }
+                else
+                {
+                    jawbreakerPlatform.position = player.transform.position;
+                    foreach(Transform t in jawbreakerPlatform)
+                    {
+                        t.gameObject.SetActive(true);
+                        if (Physics2D.OverlapCircle(t.position, .25f, wallMask) != null)
+                        {
+                            t.gameObject.SetActive(false);
+                            continue;
+                        }
+                        yield return new WaitForSeconds(currentSettings.summonShootDelay * .5f);
+                        GameObject sum = Instantiate(jawbreaker, t.position, quaternion.identity);
+                        t.gameObject.SetActive(false);
+                    }
                 }
                 break;
         }

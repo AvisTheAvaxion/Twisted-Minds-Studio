@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: -1675492453, guid: d2b6fcae5d8700f4aab0b171a9e2d0b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 23345cf3a6dc72c47ad4679181d9f230, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -263,12 +263,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3615003465665448944}
   - component: {fileID: 5642356806237123879}
-  - component: {fileID: 9154346378245572108}
-  - component: {fileID: 95716591073876382}
+  - component: {fileID: 1852743110756887632}
   - component: {fileID: 3142970097905334207}
-  - component: {fileID: 4668693477106350933}
-  - component: {fileID: 1714564494737680795}
-  - component: {fileID: 8194193511048909605}
   m_Layer: 0
   m_Name: JawbreakerObstacle
   m_TagString: Untagged
@@ -314,7 +310,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9154346378245572108
+--- !u!114 &1852743110756887632
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -323,37 +319,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 4177635347515677836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bcfb6e1af672684289bef98b131a616, type: 3}
+  m_Script: {fileID: 11500000, guid: effede4d0a017534dbe8146e2eaf7a62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
-  playerGUI: {fileID: 0}
-  isPlayer: 0
-  health:
-    type: 0
-    defaultValue: 25
-    hasMax: 1
-    maxValue: 1
-  stats: []
---- !u!114 &95716591073876382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4177635347515677836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 252b3b42aadea444081d9be1df084471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  iFrameTime: 0.5
-  healOverTime: 0
-  timeBtwHeals: 5
-  flashColorLength: 0.2
-  flashColor: {fileID: 0}
-  enemyMovement: {fileID: 0}
+  dropRadius: 0.5
+  destroyedLaunchForce: 10
+  startHeight: 0.2
+  upwardsVelocity: 0.2
+  minDropAmount: 0
+  maxDropAmount: 0
+  dropAmountChance:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  itemHolder: {fileID: 0}
+  itemDrops: []
+  health: 5
+  destroyedPieces: []
+  currentHealth: 0
+  DeathSound: {fileID: 0}
+  slamEffect: {fileID: 7074809881919030737}
+  shadow: {fileID: 1045351704832727008}
+  collider: {fileID: 3142970097905334207}
+  animator: {fileID: 5642356806237123879}
+  renderer: {fileID: 4481177990694675035}
+  breakingSprites:
+  - {fileID: 1750697376, guid: d2b6fcae5d8700f4aab0b171a9e2d0b2, type: 3}
+  - {fileID: -581943437, guid: d2b6fcae5d8700f4aab0b171a9e2d0b2, type: 3}
+  - {fileID: -1553194059, guid: d2b6fcae5d8700f4aab0b171a9e2d0b2, type: 3}
+  - {fileID: -153779679, guid: d2b6fcae5d8700f4aab0b171a9e2d0b2, type: 3}
+  - {fileID: 86833960, guid: d2b6fcae5d8700f4aab0b171a9e2d0b2, type: 3}
 --- !u!61 &3142970097905334207
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -389,148 +386,16 @@ BoxCollider2D:
   m_Offset: {x: 0.0010604858, y: -0.004108429}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.96, y: 0.96}
+    newSize: {x: 0.96, y: 0.96}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.6528473, y: 0.6303177}
   m_EdgeRadius: 0
---- !u!50 &4668693477106350933
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4177635347515677836}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
---- !u!114 &1714564494737680795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4177635347515677836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: effede4d0a017534dbe8146e2eaf7a62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  gizmos: 0
-  flipToRotate: 0
-  transformToFlip: {fileID: 0}
-  rayCastOrigin: {fileID: 3615003465665448944}
-  animator: {fileID: 0}
-  hasWalkCycle: 1
-  moveParticles: {fileID: 0}
-  bossFightSummon: 0
-  attackType: 0
-  moveSpeed: 0
-  emotionalEnergyWorth: 50
-  stunLength: 0.5
-  movesOnPatrol: 1
-  patrolRadius: 0
-  patrolTime: 3
-  pauseMin: 0
-  pauseMax: 0
-  aggroRadius: 9
-  contactDamage: 0
-  contactKnockback: 0
-  attackCooldownMin: 0
-  attackCooldownMax: 0
-  hitStopLength: 0.05
-  maxDistanceToNavigate: 3
-  contWalkRightAfterAttack: 0
-  meleeAttackPoint: {fileID: 0}
-  meleeRange: 0.5
-  meleeRadius: 0
-  meleeDamage: 0
-  knockback: 0
-  chanceToInflictEffect: 0
-  effectsToInflict: []
-  shooter: {fileID: 0}
-  range: 2
-  canMoveAndShoot: 1
-  wallsLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  dropRadius: 0.5
-  upwardsVelocity: 0.2
-  startHeight: 0.2
-  dropCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  minDropAmount: 0
-  maxDropAmount: 0
-  itemHolderPrefab: {fileID: 0}
-  itemDrops: []
-  emotionalEnergyPrefab: {fileID: 0}
-  deathLayer: 16
-  enemyVisuals: {fileID: 0}
-  enemyAudioManager: {fileID: 0}
-  slamEffect: {fileID: 7074809881919030737}
---- !u!114 &8194193511048909605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4177635347515677836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b04822df9f773d3459508bb93808d18d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  currentDirSmoothing: 0.5
-  objectRadius: 0.2
-  centerOffset: {x: 0, y: 0}
-  speed: 2
-  orbitRadius: 1
-  orbitRadiusThickness: 0.2
-  minDistanceThreshold: 0.05
-  biasThreshold: 1.1
-  numOfWeights: 16
-  visualizeWeights: 1
-  obstacleDistanceSensitivity: 0.48
-  desireKeepSameDir: 0.1
-  noObstacleDesire: 0.3
-  comradeTag: Enemy
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  wallMask:
-    serializedVersion: 2
-    m_Bits: 0
-  obstructionDetectionThreshold: 0.1
-  maxObstructionChangeDir: 0
-  minObstructionChangeDir: -0.8
 --- !u!1 &5472279742110228454
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,5 +546,5 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 860863201
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_SortAtRoot: 0

@@ -20,15 +20,15 @@ public class Lootable : MonoBehaviour
     [Header("Other Settings")]
     [SerializeField] float health = 10;
     [SerializeField] GameObject[] destroyedPieces;
-    QuestSystem questSystem;
+    protected QuestSystem questSystem;
 
     CustomRigidbody2D[] rigidBodies;
 
-    float currentHealth;
+    [SerializeField] protected float currentHealth;
 
     [SerializeField] GameObject DeathSound;
 
-    private void Start()
+    protected void Start()
     {
         currentHealth = health;
 
@@ -80,7 +80,7 @@ public class Lootable : MonoBehaviour
         return Random.insideUnitCircle; //Get a random position around a unit circle.
     }
 
-    public void TakeDamage(float amount)
+    public virtual void TakeDamage(float amount)
     {
         currentHealth -= amount;
 

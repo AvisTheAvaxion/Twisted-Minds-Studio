@@ -24,10 +24,29 @@ public class NPCInteraction : MonoBehaviour
         questSys = FindObjectOfType<QuestSystem>();
     }
 
+    private void Update()
+    {
+        if(activeBehavior != null)
+        {
+            float sqrDistance = (transform.position - activeBehavior.transform.position).sqrMagnitude;
+            if(sqrDistance < 0.48f * 0.48f)
+            {
+                npcInRange = true;
+                activeBehavior.ToggleButtonPrompt(true);
+            }
+            else
+            {
+                npcInRange = false;
+                activeBehavior.ToggleButtonPrompt(false);
+            }
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("NPC") && collision.GetComponent<NPCBehavior>() != null)
         {
+            npcInRange = true;
             activeBehavior = collision.GetComponent<NPCBehavior>();
             if (activeBehavior.CheckForMultipleDialogs())
             {
@@ -44,7 +63,7 @@ public class NPCInteraction : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("NPC") && collision.GetComponent<NPCBehavior>() != null)
+        /*if (collision.gameObject.CompareTag("NPC") && collision.GetComponent<NPCBehavior>() != null)
         {
             NPCBehavior behavior = collision.GetComponent<NPCBehavior>();
             if (behavior.CheckForMultipleDialogs())
@@ -59,30 +78,33 @@ public class NPCInteraction : MonoBehaviour
                 activeBehavior.ToggleButtonPrompt(false);
             npcName = null;
             activeBehavior = null;
-        }
+        }*/
     }
 
     void OnInteract()
     {
-        if (npcDialog != Dialogue.Dialog.None)
+        if (npcInRange)
         {
-            FindObjectOfType<DialogueManager>().SetCutscene(npcDialog);
-            questSys.QuestEvent(QuestSystem.QuestEventType.NpcInteraction, npcName);
-
-            activeBehavior.IncrementInteractionCount();
-            activeBehavior.ToggleButtonPrompt(false);
-        }
-        else if(npcDialogList != null)
-        {
-            int randomInt = UnityEngine.Random.Range(0, npcDialogList.Count);
-            while (randomInt == lastRandomInt)
+            if (npcDialog != Dialogue.Dialog.None)
             {
-                randomInt = UnityEngine.Random.Range(0, npcDialogList.Count);
+                FindObjectOfType<DialogueManager>().SetCutscene(npcDialog);
+                questSys.QuestEvent(QuestSystem.QuestEventType.NpcInteraction, npcName);
+
+                activeBehavior.IncrementInteractionCount();
+                activeBehavior.ToggleButtonPrompt(false);
             }
-            lastRandomInt = randomInt;
-            Dialogue.Dialog randomDialog = npcDialogList[randomInt];
-            FindObjectOfType<DialogueManager>().SetCutscene(randomDialog);
-            questSys.QuestEvent(QuestSystem.QuestEventType.NpcInteraction, npcName);
+            else if (npcDialogList != null)
+            {
+                int randomInt = UnityEngine.Random.Range(0, npcDialogList.Count);
+                while (randomInt == lastRandomInt)
+                {
+                    randomInt = UnityEngine.Random.Range(0, npcDialogList.Count);
+                }
+                lastRandomInt = randomInt;
+                Dialogue.Dialog randomDialog = npcDialogList[randomInt];
+                FindObjectOfType<DialogueManager>().SetCutscene(randomDialog);
+                questSys.QuestEvent(QuestSystem.QuestEventType.NpcInteraction, npcName);
+            }
         }
     }
 }

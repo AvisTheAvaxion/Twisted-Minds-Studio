@@ -95,6 +95,12 @@ public class Dialogue
                 return VarrenBigBossIntermediate1;
             case "VarrenBossEnd":
                 return VarrenBigBossEnd;
+            case "VarrenEncounterLast":
+                return VarrenEncounterLast;
+            case "SlimeLadyEncounterLast":
+                return SlimeLadyEncounterLast;
+            case "SlimeLadyEncounterLastReplacement":
+                return SlimeLadyEncounterLastReplacement;
             #endregion
             case "Empty":
                 return Empty;
@@ -152,7 +158,10 @@ public class Dialogue
         VarrenBossFalseEnd,
         VarrenBigBossIntro,
         VarrenBigBossInter1,
-        VarrenBossEnd
+        VarrenBossEnd,
+        VarrenEncounterLast,
+        SlimeLadyEncounterLast,
+        SlimeLadyEncounterLastReplacement
         #endregion
     }
 
@@ -1368,9 +1377,10 @@ public class Dialogue
     string[] VarrenBossIntro = new string[]
     {
         "$Animate(FinalBossDoor,Locked,true)",
+        "$Kill(SlimeLady)",
         "$MoveViaLerp(Main Camera,0,15.9)",
         "$Animate(VarrenBoss_Phase1&2,Intro,true)",
-        "$Emote(Null)",
+        "$Emote(Varren_Angry)",
         "Varren: Hello there....",
         "Blaze: General Kenobi",
         "$Animate(VarrenBoss_Phase1&2,Intro,false)",
@@ -1378,6 +1388,7 @@ public class Dialogue
     string[] VarrenBossIntermediate1 = new string[]
     {
         "$Animate(VarrenBoss_Phase1&2,Intermediate)",
+        "$Emote(Varren_Angry)",
         "Varren: How could you",
         "Blaze: General Kenobi",
         "$Animate(VarrenBoss_Phase1&2,Transform)",
@@ -1385,7 +1396,6 @@ public class Dialogue
     };
     string[] VarrenBossFalseEnd = new string[]
     {
-
         "$Emote(Null)",
         "$FadeIn(255,255,255)",
         "$Kill(VarrenBoss_Phase1&2)",
@@ -1393,11 +1403,13 @@ public class Dialogue
         "$Tele(Player,0,13.66)",
         "$FadeOut(255,255,255)",
         "$MoveViaLerp(Main Camera,0,14.328)",
+        "$Emote(Varren_Angry)",
         "Varren: You got me, lol",
         "Blaze: yeah, I did",
         "$Animate(Varren_FalseEnd,Stage3)",
         "Varren: You never knew when to give up, did you?",
         "$Animate(Varren_FalseEnd,Stage4)",
+        "$Emote(Varren_EvilSmile)",
         "Varren: But I will never die!",
         "$Animate(Varren_FalseEnd,Stage5)",
         //"$Tele(Varren_Falling,0,15.34)",
@@ -1419,12 +1431,13 @@ public class Dialogue
     };
     string[] VarrenBigBossIntro = new string[]
     {
+        "$Emote(Varren_EvilSmile)",
         "Varren: I will never die",
         "Varren: Now you die!"
     };
     string[] VarrenBigBossIntermediate1 = new string[]
     {
-        "$Emote(Null)",
+        "$Emote(Varren_Angry)",
         "Varren: Hello there....",
         "Blaze: General Kenobi",
         "Varren: Nice to see you havent changed",
@@ -1432,6 +1445,24 @@ public class Dialogue
     string[] VarrenBigBossEnd = new string[]
     {
         "Varren: XD",
+    };
+    string[] VarrenEncounterLast = new string[]
+    {
+        "$Emote(Varren_EvilSmile)",
+        "Varren: Welcome to the lobby",
+        "Varren: Follow me",
+        "$Move(Varren,-2.86, 8.9)",
+        "$Kill(Varren)"
+    };
+    string[] SlimeLadyEncounterLast = new string[]
+    {
+        "$Emote(SlimeLady)",
+        "Samantha: Do not give Varren your mementos",
+    };
+    string[] SlimeLadyEncounterLastReplacement = new string[]
+    {
+        "$Emote(SlimeLady)",
+        "Samantha: Be careful deary",
     };
     #endregion
 }

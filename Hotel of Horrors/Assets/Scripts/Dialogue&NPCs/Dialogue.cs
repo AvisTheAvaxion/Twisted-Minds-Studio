@@ -1367,6 +1367,7 @@ public class Dialogue
     #region Final Boss Fight
     string[] VarrenBossIntro = new string[]
     {
+        "$Animate(FinalBossDoor,Locked,true)",
         "$MoveViaLerp(Main Camera,0,15.9)",
         "$Animate(VarrenBoss_Phase1&2,Intro,true)",
         "$Emote(Null)",

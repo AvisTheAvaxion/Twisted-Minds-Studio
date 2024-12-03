@@ -1522,7 +1522,7 @@ public class Dialogue
     string[] VarrenBossIntro = new string[]
     {
         "$Animate(FinalBossDoor,Locked,true)",
-        "$Kill(SlimeLady)",
+        "$Kill(SlimeLadyLastEncounter)",
         "$MoveViaLerp(Main Camera,0,15.9)",
         "$Animate(VarrenBoss_Phase1&2,Intro,true)",
         "$Emote(Varren_Angry)",
@@ -1614,8 +1614,8 @@ public class Dialogue
         "$Emote(Varren_EvilSmile)",
         "Varren: Welcome to the lobby",
         "Varren: Follow me",
-        "$Move(Varren,-2.86, 8.9)",
-        "$Kill(Varren)"
+        "$Move(VarrenLastEncounter,-2.86, 8.9)",
+        "$Kill(VarrenLastEncounter)"
     };
     string[] SlimeLadyEncounterLast = new string[]
     {

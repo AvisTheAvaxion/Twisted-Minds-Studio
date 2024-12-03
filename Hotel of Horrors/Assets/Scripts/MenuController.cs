@@ -95,8 +95,8 @@ public class MenuController : MonoBehaviour
         SerializedClass saveData = serialization.SoftLoadData(saveFile);
         if (saveData != null)
         {
-            SceneManager.LoadScene(1);
-            //SceneManager.LoadScene($"Floor {saveData.level}");
+            //SceneManager.LoadScene(1);
+            SceneManager.LoadScene($"Floor {saveData.level}");
         }
         else
         {

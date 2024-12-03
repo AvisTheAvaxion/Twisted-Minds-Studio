@@ -15768,11 +15768,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9207237119951498933, guid: 4a1f51a803540c5488f31eb3cde7f069, type: 3}
       propertyPath: npcDialog
-      value: 54
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 9207237119951498933, guid: 4a1f51a803540c5488f31eb3cde7f069, type: 3}
       propertyPath: replacementDialog
-      value: 54
+      value: 56
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22449,7 +22449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13c4197bd749824d869a22f170aa86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutscene: 53
+  cutscene: 55
   DialogueManager: {fileID: 68912185}
 --- !u!4 &1260051642
 Transform:
@@ -26474,7 +26474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13c4197bd749824d869a22f170aa86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutscene: 52
+  cutscene: 54
   DialogueManager: {fileID: 68912185}
 --- !u!4 &1317512606
 Transform:
@@ -66810,12 +66810,12 @@ MonoBehaviour:
   flipToRotate: 0
   transformToFlip: {fileID: 0}
   DialogueManager: {fileID: 68912185}
-  openCutscene: 49
+  openCutscene: 51
   stages:
   - stage: 0
     healthThresholdToNextStage: 0
     attackSequence: 
-    cutscene: 0
+    cutscene: 52
     correctChoice: 0
   - stage: 0
     healthThresholdToNextStage: 0
@@ -66825,12 +66825,12 @@ MonoBehaviour:
   - stage: 3
     healthThresholdToNextStage: 200
     attackSequence: 01000000020000000100000003000000010000000200000004000000
-    cutscene: 50
+    cutscene: 52
     correctChoice: 0
   - stage: 3
     healthThresholdToNextStage: 0
     attackSequence: 000000000100000001000000
-    cutscene: 51
+    cutscene: 53
     correctChoice: 0
   enrageSprite: {fileID: 0}
   normalSettings:
@@ -67748,7 +67748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: openCutscene
-      value: 46
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: travelHeight
@@ -67784,11 +67784,11 @@ PrefabInstance:
       objectReference: {fileID: 1419208321014462429, guid: c3b4a6152e610c147a71cc3f1a98b2c2, type: 3}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: stages.Array.data[0].cutscene
-      value: 47
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: stages.Array.data[1].cutscene
-      value: 48
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: enrageSettings.teleportCooldown

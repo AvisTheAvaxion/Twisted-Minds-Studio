@@ -492,6 +492,16 @@ public class QuestSystem : MonoBehaviour
                     break;
             }
         }
+        else if(floor == 3)
+        {
+            switch(objective)
+            {
+                case 0:
+                    SetQuestTitle("Confront Varren");
+                    SetQuestDesc("");
+                    break;
+            }
+        }
     }
 
     void TeleportGameobject(string desiredObjectName, Vector2 position, bool globalCords)

@@ -111,6 +111,11 @@ public class Objectives
         "ClearFloor"
     };
 
+    string[] Floor3 = new string[]
+    {
+        "ClearFloor"
+    };
+
 
 
 

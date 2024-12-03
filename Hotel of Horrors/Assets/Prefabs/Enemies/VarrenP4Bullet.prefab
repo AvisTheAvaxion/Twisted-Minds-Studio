@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb77d061a93ea124996c17aefe14edfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 10
   hitStopLength: 0.05
   deflectionResistance: 0
   chanceToInflictEffect: 0
@@ -172,6 +172,9 @@ MonoBehaviour:
   goThroughWalls: 0
   impactEffect: {fileID: 9071062035390458290, guid: 8817c3f378e9eb643884dd6d5e5feec9, type: 3}
   invincible: 1
+  specialDeflection: 0
+  useDestroyTimer: 0
+  destroyTimer: 0
 --- !u!95 &7133738695097281668
 Animator:
   serializedVersion: 5

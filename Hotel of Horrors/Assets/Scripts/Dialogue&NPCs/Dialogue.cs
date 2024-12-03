@@ -1407,16 +1407,29 @@ public class Dialogue
         "$MoveViaLerp(Main Camera,0,15.9)",
         "$Animate(VarrenBoss_Phase1&2,Intro,true)",
         "$Emote(Varren_Angry)",
-        "Varren: Hello there....",
-        "Blaze: General Kenobi",
+        "Varren: You’re here. Hand over the mementos",
+        "$Emote(Blaze_Angry)",
+        "Blaze: No.",
+        "$Emote(Varren_Angry)",
+        "Varren: Excuse me?",
+        "$Emote(Blaze_Angry)",
+        "Blaze: I won’t let you leave.",
+        "$Emote(Varren_Angry)",
+        "Varren: I’m not joking, hand them over.",
+        "Varren: We wouldn’t want things to get messy now.",
+        "$Emote(Blaze_Angry)",
+        "Blaze: No.",
+        "$Emote(Varren_Angry)",
+        "Varren: Fine. Have it your way!",
         "$Animate(VarrenBoss_Phase1&2,Intro,false)",
     };
     string[] VarrenBossIntermediate1 = new string[]
     {
         "$Animate(VarrenBoss_Phase1&2,Intermediate)",
         "$Emote(Varren_Angry)",
-        "Varren: How could you",
-        "Blaze: General Kenobi",
+         "Varren: If you stop now, your death will be quick.|Fine.|No. I won’t give up! $Prompt",
+        "Varren: You fool! $OptionA",
+        "Varren: Why won’t you give up! $OptionB",
         "$Animate(VarrenBoss_Phase1&2,Transform)",
         "$Timer(2.2)"
     };
@@ -1430,9 +1443,11 @@ public class Dialogue
         "$FadeOut(255,255,255)",
         "$MoveViaLerp(Main Camera,0,14.328)",
         "$Emote(Varren_Angry)",
-        "Varren: You got me, lol",
-        "Blaze: yeah, I did",
+        "Varren: You really got me, didn't ya",
+        "$Emote(Blaze_Angry)",
+        "Blaze: Yeah, I did",
         "$Animate(Varren_FalseEnd,Stage3)",
+        "$Emote(Varren_Angry)",
         "Varren: You never knew when to give up, did you?",
         "$Animate(Varren_FalseEnd,Stage4)",
         "$Emote(Varren_EvilSmile)",
@@ -1464,9 +1479,12 @@ public class Dialogue
     string[] VarrenBigBossIntermediate1 = new string[]
     {
         "$Emote(Varren_Angry)",
-        "Varren: Hello there....",
-        "Blaze: General Kenobi",
-        "Varren: Nice to see you havent changed",
+        "Varren: You have no chance of winning. Fighting is pointless.|Your wounds say otherwise. |You don’t have to do this. $Prompt",
+        "Varren: This? This is nothing! $OptionA",
+        "Varren: You’re right. $OptionB",
+        "Varren: We can be friends. $OptionB",
+        "Varren: When you’re just a corpse! $OptionB",
+        "$Emote(Null)",
     };
     string[] VarrenBigBossEnd = new string[]
     {

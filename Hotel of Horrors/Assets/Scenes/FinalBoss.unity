@@ -15599,11 +15599,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9207237119951498933, guid: 4a1f51a803540c5488f31eb3cde7f069, type: 3}
       propertyPath: npcDialog
-      value: 44
+      value: 54
       objectReference: {fileID: 0}
     - target: {fileID: 9207237119951498933, guid: 4a1f51a803540c5488f31eb3cde7f069, type: 3}
       propertyPath: replacementDialog
-      value: 44
+      value: 54
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22280,7 +22280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13c4197bd749824d869a22f170aa86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutscene: 43
+  cutscene: 53
   DialogueManager: {fileID: 68912185}
 --- !u!4 &1260051642
 Transform:
@@ -26305,7 +26305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13c4197bd749824d869a22f170aa86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutscene: 42
+  cutscene: 52
   DialogueManager: {fileID: 68912185}
 --- !u!4 &1317512606
 Transform:
@@ -66632,7 +66632,7 @@ MonoBehaviour:
   flipToRotate: 0
   transformToFlip: {fileID: 0}
   DialogueManager: {fileID: 68912185}
-  openCutscene: 39
+  openCutscene: 49
   stages:
   - stage: 0
     healthThresholdToNextStage: 0
@@ -66647,12 +66647,12 @@ MonoBehaviour:
   - stage: 3
     healthThresholdToNextStage: 25
     attackSequence: 01000000020000000100000003000000010000000200000004000000
-    cutscene: 40
+    cutscene: 50
     correctChoice: 0
   - stage: 3
     healthThresholdToNextStage: 0
     attackSequence: 000000000100000001000000
-    cutscene: 41
+    cutscene: 51
     correctChoice: 0
   enrageSprite: {fileID: 0}
   normalSettings:
@@ -67570,7 +67570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: openCutscene
-      value: 36
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: travelHeight
@@ -67598,11 +67598,11 @@ PrefabInstance:
       objectReference: {fileID: 1419208321014462429, guid: c3b4a6152e610c147a71cc3f1a98b2c2, type: 3}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: stages.Array.data[0].cutscene
-      value: 37
+      value: 47
       objectReference: {fileID: 0}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: stages.Array.data[1].cutscene
-      value: 38
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: teleportLocations.Array.data[0]

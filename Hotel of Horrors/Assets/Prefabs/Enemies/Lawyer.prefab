@@ -5286,7 +5286,25 @@ MonoBehaviour:
   startHeight: 0.2
   dropCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -5303,6 +5321,10 @@ MonoBehaviour:
     maxCount: 1
     weight: 0.1
   - item: {fileID: 11400000, guid: 478c776851dc9004ab6ab5cddae20f28, type: 2}
+    minCount: 1
+    maxCount: 1
+    weight: 1
+  - item: {fileID: 11400000, guid: d4531f433bf0dba448bdf8f98e207229, type: 2}
     minCount: 1
     maxCount: 1
     weight: 1

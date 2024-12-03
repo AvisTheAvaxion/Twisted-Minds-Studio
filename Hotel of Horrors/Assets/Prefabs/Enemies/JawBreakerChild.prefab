@@ -161,10 +161,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb77d061a93ea124996c17aefe14edfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 4
+  hitStopLength: 0.05
   deflectionResistance: 1
   chanceToInflictEffect: 0
   effectsToInflict: []
   maxTargets: 1
   maxWallBounces: 0
   goThroughWalls: 0
+  impactEffect: {fileID: 568501527068774560, guid: 0404b2579f163954dbc4299aa2918bcb, type: 3}
+  invincible: 0
+  specialDeflection: 0
+  useDestroyTimer: 0
+  destroyTimer: 0

@@ -15724,7 +15724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2188482933751342887, guid: 4a1f51a803540c5488f31eb3cde7f069, type: 3}
       propertyPath: m_Name
-      value: SlimeLady
+      value: SlimeLadyLastEncounter
       objectReference: {fileID: 0}
     - target: {fileID: 3334672848193127390, guid: 4a1f51a803540c5488f31eb3cde7f069, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30704,7 +30704,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7248958975124192273, guid: 8bb591024060a684baba5fd74298f4ff, type: 3}
       propertyPath: m_Name
-      value: Varren
+      value: VarrenLastEncounter
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -66291,6 +66291,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3082451978738667836, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
+      propertyPath: m_text
+      value: Lobby
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082451978738667836, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
+      propertyPath: m_fontSize
+      value: 42.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3158179746593971146, guid: 264f7677c99059144b96bcaf71aa65e3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -66842,16 +66850,16 @@ MonoBehaviour:
     p2Knockback: 0
     p3LaunchForce: 2
     p3LaunchCooldown: {x: 4, y: 5}
-    p3SlamCooldown: {x: 7, y: 9}
+    p3SlamCooldown: {x: 4, y: 5}
     p3SlamDamage: 20
     p3StunLength: 7
     p3Knockback: 4
     p4LaunchForce: 1.5
     p4LaunchCooldown: {x: 7, y: 9}
-    p4DaggerCooldown: {x: 0, y: 0}
+    p4DaggerCooldown: {x: 3, y: 4}
     daggerGracePeriod: 1
     daggerLaunchForce: 6
-    p4SummonCooldown: 10
+    p4SummonCooldown: 12
     p4StunLength: 10
   enrageSettings:
     p1LaunchForce: 0
@@ -66870,16 +66878,16 @@ MonoBehaviour:
     p2Knockback: 0
     p3LaunchForce: 2
     p3LaunchCooldown: {x: 4, y: 5}
-    p3SlamCooldown: {x: 7, y: 9}
+    p3SlamCooldown: {x: 4, y: 5}
     p3SlamDamage: 20
     p3StunLength: 7
     p3Knockback: 4
     p4LaunchForce: 1.5
     p4LaunchCooldown: {x: 7, y: 9}
-    p4DaggerCooldown: {x: 0, y: 0}
+    p4DaggerCooldown: {x: 3, y: 4}
     daggerGracePeriod: 1
     daggerLaunchForce: 6
-    p4SummonCooldown: 10
+    p4SummonCooldown: 12
     p4StunLength: 10
   startPhase: 2
   p1AnimatorController: {fileID: 0}
@@ -67763,6 +67771,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
+      propertyPath: enrageSettings.p2StunLength
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
+      propertyPath: normalSettings.p2StunLength
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: p2SummonEnemies.Array.data[1]
       value: 
       objectReference: {fileID: 1419208321014462429, guid: c3b4a6152e610c147a71cc3f1a98b2c2, type: 3}
@@ -67773,6 +67789,14 @@ PrefabInstance:
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: stages.Array.data[1].cutscene
       value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
+      propertyPath: enrageSettings.teleportCooldown
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
+      propertyPath: normalSettings.teleportCooldown
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8392817156524976760, guid: 41ba398e674e3a740b5dc91de7af10a0, type: 3}
       propertyPath: teleportLocations.Array.data[0]

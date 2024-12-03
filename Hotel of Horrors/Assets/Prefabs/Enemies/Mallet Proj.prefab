@@ -163,13 +163,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e5ee2acb1c72d84dbf648863c689485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 5
+  hitStopLength: 0.05
   deflectionResistance: 0
   chanceToInflictEffect: 0
   effectsToInflict: []
   maxTargets: 1
   maxWallBounces: 0
   goThroughWalls: 0
+  impactEffect: {fileID: 9071062035390458290, guid: 8817c3f378e9eb643884dd6d5e5feec9, type: 3}
+  invincible: 0
+  specialDeflection: 0
+  useDestroyTimer: 0
+  destroyTimer: 0
   trackingForce: 60
   trackTime: 1.5
   rotateTarget: {fileID: 8574054984991005117}

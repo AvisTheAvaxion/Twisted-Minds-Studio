@@ -5397,7 +5397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  iFrameTime: 0.5
+  iFrameTime: 0.3
   healOverTime: 0
   timeBtwHeals: 5
   flashColorLength: 0.2
@@ -5419,7 +5419,7 @@ MonoBehaviour:
   - {fileID: 5783388361533370396}
   dissolveRate: 0.5
   frameRate: 24
-  portalAnim: {fileID: 0}
+  portalAnim: {fileID: 4333033761310624956}
   portalPSs: []
 --- !u!210 &6909572552079432178
 SortingGroup:
@@ -5587,5 +5587,10 @@ PrefabInstance:
 --- !u!4 &3036308679191209291 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4640464672883739378, guid: 73d9eab6937b5464181db21d54ee8ede, type: 3}
+  m_PrefabInstance: {fileID: 7657558218026823609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4333033761310624956 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6225975380229841669, guid: 73d9eab6937b5464181db21d54ee8ede, type: 3}
   m_PrefabInstance: {fileID: 7657558218026823609}
   m_PrefabAsset: {fileID: 0}

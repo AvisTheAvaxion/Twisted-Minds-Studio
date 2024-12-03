@@ -624,6 +624,9 @@ public class VarrenBoss : BossStateMachine
 
         if (hitPlayer)
         {
+            rightArmCollider.enabled = false;
+            leftArmCollider.enabled = false;
+
             animator.SetBool("SlamStuck", false);
             if (attackCoroutine != null) StopCoroutine(attackCoroutine);
             attackCoroutine = StartCoroutine(AttackCooldown(GetRandomBetween(currentSettings.p3SlamCooldown)));

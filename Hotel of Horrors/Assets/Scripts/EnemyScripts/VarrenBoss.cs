@@ -520,9 +520,9 @@ public class VarrenBoss : BossStateMachine
         Vector2 slamPoint = Vector2.zero;
 
         animator.SetBool("Slam", true);
-        //yield return new WaitUntil(() => doP3SlamAttack);
+        yield return new WaitUntil(() => doP3SlamAttack);
 
-        if (stages[currentStageIndex].attackSequence[currentAttack] == 3)
+        /*if (stages[currentStageIndex].attackSequence[currentAttack] == 3)
         {
             rightArmCollider.enabled = true;
             leftArmCollider.enabled = false;
@@ -531,9 +531,48 @@ public class VarrenBoss : BossStateMachine
         {
             leftArmCollider.enabled = true;
             rightArmCollider.enabled = false;
+        }*/
+        leftArmCollider.enabled = true;
+        rightArmCollider.enabled = true;
+
+        slamPoint = rightArmAttackPoint.position;
+        colliders = Physics2D.OverlapBoxAll(slamPoint, armSizeBounds, 0f, p2AttackMask);
+        foreach (Collider2D collider in colliders)
+        {
+            IHealth health = collider.GetComponent<IHealth>();
+            if (health != null)
+            {
+                Vector2 dir = ((collider.transform.position - new Vector3(0, 0.12f)) - (Vector3)slamPoint).normalized;
+                if (health.TakeDamage(currentSettings.p3SlamDamage))
+                {
+                    health.Knockback(new Vector2(dir.x, 0).normalized, currentSettings.p3Knockback);
+                    hitPlayer = true;
+                }
+            }
+        }
+        slamPoint = leftArmAttackPoint.position;
+        colliders = Physics2D.OverlapBoxAll(slamPoint, armSizeBounds, 0f, p2AttackMask);
+        foreach (Collider2D collider in colliders)
+        {
+            IHealth health = collider.GetComponent<IHealth>();
+            if (health != null)
+            {
+                Vector2 dir = ((collider.transform.position - new Vector3(0, 0.12f)) - (Vector3)slamPoint).normalized;
+                if (health.TakeDamage(currentSettings.p3SlamDamage))
+                {
+                    health.Knockback(new Vector2(dir.x, 0).normalized, currentSettings.p3Knockback);
+                    hitPlayer = true;
+                }
+            }
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            Destroy(Instantiate(slamEffectPrefab, (Vector2)rightArmSlamStart.position + Vector2.down * i * 0.24f, slamEffectPrefab.transform.rotation), 1.5f);
+            Destroy(Instantiate(slamEffectPrefab, (Vector2)leftArmSlamStart.position + Vector2.down * i * 0.24f, slamEffectPrefab.transform.rotation), 1.5f);
+            yield return new WaitForSeconds(0.05f);
         }
 
-        if (stages[currentStageIndex].attackSequence[currentAttack] == 3)
+        /*if (stages[currentStageIndex].attackSequence[currentAttack] == 3)
         {
             slamPoint = rightArmAttackPoint.position;
             colliders = Physics2D.OverlapBoxAll(slamPoint, armSizeBounds, 0f, p2AttackMask);
@@ -578,9 +617,9 @@ public class VarrenBoss : BossStateMachine
                 Destroy(Instantiate(slamEffectPrefab, (Vector2)leftArmSlamStart.position + Vector2.down * i * 0.24f, slamEffectPrefab.transform.rotation), 1.5f);
                 yield return new WaitForSeconds(0.05f);
             }
-        }
+        }*/
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(.7f);
         animator.SetBool("Slam", false);
 
         if (hitPlayer)

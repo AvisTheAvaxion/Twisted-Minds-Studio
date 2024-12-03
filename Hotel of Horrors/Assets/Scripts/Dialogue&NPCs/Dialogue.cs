@@ -85,6 +85,8 @@ public class Dialogue
                 return EnoughCandy;
             case "TwinEncounter2":
                 return TwinEncounter2;
+            case "GoGetEvidence":
+                return GoGetEvidence;
             case "Evidence1":
                 return Evidence1;
             case "Evidence2":
@@ -93,6 +95,8 @@ public class Dialogue
                 return Evidence3;
             case "TwinEncounter3":
                 return TwinEncounter3;
+            case "PleaseHurry":
+                return PleaseHurry;
             case "KarenIntro":
                 return KarenIntro;
             case "KarenInter1":
@@ -173,10 +177,12 @@ public class Dialogue
         TryCandy,
         EnoughCandy,
         TwinEncounter2,
+        GoGetEvidence,
         Evidence1,
         Evidence2,
         Evidence3,
         TwinEncounter3,
+        PleaseHurry,
         KarenIntro,
         KarenInter1,
         KarenInter2,
@@ -1177,6 +1183,7 @@ public class Dialogue
         "Katie: Do you have candy?|No.|Who are you? $Prompt",
         "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: No, I don't. $OptionA",
+        "$Emote(Null) $OptionA",
         "Katie: Awww. $OptionA",
         "Kady: I want Candy $OptionA",
         "Katie: I am Katie.",
@@ -1188,17 +1195,21 @@ public class Dialogue
         "Blaze: No, I'm just passing by. $OptionB",
         "$Emote(Blaze_Neutral)",
         "Blaze: Do you know where I could find a werewolf?",
+        "$Emote(Null)",
         "Katie: A werewolf?",
         "Kady: What's that? |A big scary monster.|A person covered in fur. $Prompt",
         "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: It's like a big scary monster with sharp teeth and lots of hair. $OptionA",
+        "$Emote(Null) $OptionA",
         "Kady: That's scary. $OptionA",
         "Katie: It sounds like a monster from one of the bedtime stories mom would read us $OptionA",
         "$Emote(Blaze_Neutral) $OptionB",
         "Blaze: It's like a person covered in fur with dog ears. $OptionB",
+        "$Emote(Null) $OptionB",
         "Katie: That sounds like mom. $OptionB",
         "$Emote(Blaze_Neutral)",
         "Blaze: Where is your mom?",
+        "$Emote(Null)",
         "Kady: She left to go take care of some things.",
         "Katie: She said that someone was going to come hang out with us until she came back.",
         "Kady: And that it wouldn't be dad.",
@@ -1206,13 +1217,16 @@ public class Dialogue
         "Kady: Are you going to hang out with us?",
         "Katie: Of course he is. Mom said he would.",
         "Kady: Does this mean we can get candy? Will you get us some candy? |Yes.|No. $Prompt",
+        "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: Yes. $OptionA",
+        "$Emote(Null) $OptionA",
         "Twins: Yay! $OptionA",
         " : The twins look at you intently, their big innocent eyes tearing up. $OptionB",
 
         "Kady: Will you get us some candy? |Yes.|Yes. $Prompt $OptionB",     	//Hopefully this doesn't cause issues (if it does lmk - Avis)
         "$Emote(Blaze_Neutral)",
         "Blaze: Where is the candy?",
+        "$Emote(Null) $OptionB",
         "Katie: The monsters have them, you have to get it from them.",
         "Kady: We will wait here for you to come back. Please don't take too long.",
         //Kills monsters for candy
@@ -1221,6 +1235,7 @@ public class Dialogue
     //If you talk to the twins before you finish getting the candy
     string[] NotEnoughCandy = new string[]
     {
+        "$Emote(Null)",
         "Katie: The monsters have the candy, you have to get it from them.",
         "Kady: Please hurry, we are getting hungry."
     };
@@ -1228,7 +1243,9 @@ public class Dialogue
     //When Blaze gets the first candy
     string[] TryCandy = new string[]
     {
+        "$Emote(Blaze_Neutral)",
         "Blaze: This monster dropped a candy, is this edible?",
+        "$Emote(Null)",
         " : The candy is pink and blue in color, and has a sweet smell. A thin layer of emotional energy coats the surface.|Try it.|Don't try it. $Prompt.",
         " : The candy is extremely sweet, and dissolves in your mouth with a fizzing sensation. $OptionA",
         " : You put the candy into your inventory. $OptionB",
@@ -1236,6 +1253,7 @@ public class Dialogue
 
     string[] EnoughCandy = new string[]
     {
+        "$Emote(Blaze_Neutral)",
         "Blaze: This should be enough candy for now.",
         "Blaze: I should head back.",
     };
@@ -1243,23 +1261,30 @@ public class Dialogue
 
     string[] TwinEncounter2 = new string[]
     {
+        "$Emote(Null)",
         "Twins: Blaze!",
         "Kady: Did you bring candy |Yes |No $Prompt",
         "Twins: Yay! $OptionA",
         "Kady: He's much better than dad! $OptionA",
         "Katie: I can smell it, mom said lying is bad! $OptionB",
         "Kady: Yeah. Only meanies like dad lie. $OptionB",
+        "$Emote(Blaze_Neutral)",
         "Blaze: What happened to your dad?",
+        "$Emote(Null)",
         "Kady: That meanie lied to us.",
         "Kady: He said he'd get us candy.",
         "Katie: And then he tried to take us away.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Take you away?",
+        "$Emote(Null)",
         "Kady: Mhm, mom and him got into a big argument.",
         "Katie: And he said he was gonna get us candy, but mom told us to go get in the car.",
         "Kady: We left with mom and then dad and some other people caught up with us.",
         "Katie: The red lights right?",
         "Kady: I thought it was blue lights?",
+        "$Emote(Blaze_Neutral)",
         "Blaze: What happened after that?",
+        "$Emote(Null)",
         "Katie: Dad was still mad at mom, some people took her away.",
         "Kady: And dad never got us our candy.",
         " : bzzt.",
@@ -1267,59 +1292,85 @@ public class Dialogue
         "Katie: It's mom, she says that she needs help.",
         "Kady: Mom is good, how do we help her?",
         "Katie: She left <color=##ff0000><b>some paperwork</b></color> around the barn.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: The barn? (I thought this was a hotel?)",
         //The barn-city mention here is intentional
+        "$Emote(Null)",
         "Katie: Yes, the city. The first one is at her lawyer's office.",
         "Kady: Please go get the evidence so we can be with our mom again.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: You've got it.",
     };
 
     string[] GoGetEvidence = new string[]
     {
+        "$Emote(Null)",
         "Kady: Please go get the evidence so we can be with our mom again.",
         "Katie: Mom is counting you!",
     };
 
     string[] Evidence1 = new string[]
     {
+        "$Emote(Null)",
         " : You come across a piece of paper sitting on a desk.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: This must be the first piece of evidence.",
+        "$Emote(Null)",
         " : The paper is a newspaper cutout depicting a photo of the twins, a young woman and a young man.",
-        " : The family is smiling while standing outside of a candy store, the man's eyes are blacked out with a marker. An article below the image reads \"Family wins millions following candy competition!",
+        " : The family is smiling while standing outside of a candy store, the man's eyes are blacked out with a marker.",
+        " : An article below the image reads \"Family wins millions following candy competition!",
         " : After an extremely intense candy eating competition hosted by Dulce Candy Co. New York's very own twin sisters, Katie and Kady Smith would come out victorious, winning the grand prize of a lifetime's supply of candy and 10% of the company's stock, valued at 1.5 Million Dollars!\"",
+        "$Kill(Evidence1)",
     };
 
     string[] Evidence2 = new string[]
     {
+        "$Emote(Null)",
         " : You come across several pieces of paper sitting on a desk.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: This looks like another piece of evidence.",
-        " : The papers appear to be a collage of images depicting the family outside various houses and tourist destinations. As you flip through the pages, the images appear to be more faded and the family's smiles become less genuine.",
-        " :The last image has been torn and taped back together, with the line separating Karren from the rest of her family.",
+        "$Emote(Null)",
+        " : The papers appear to be a collage of images depicting the family outside various houses and tourist destinations.",
+        " : As you flip through the pages, the images appear to be more faded and the family's smiles become less genuine.",
+        " : The last image has been torn and taped back together, with the line separating Karren from the rest of her family.",
+        "$Kill(Evidence2)",
     };
 
     string[] Evidence3 = new string[]
     {
+        "$Emote(Null)",
         " : You come across a piece of paper sitting on a desk",
+        "$Emote(Blaze_Neutral)",
         "Blaze: The last piece of evidence.",
-        " : The paper appears to be a letter. It is unfinished, and the ink has bled in several spots where tears fell onto the paper. The recipients name is redacted, but the note appears to be apology from Karren to her husband and kids.",
+        "$Emote(Null)",
+        " : The paper appears to be a letter.",
+        " : It is unfinished, and the ink has bled in several spots where tears fell onto the paper.",
+        " : The recipients name is redacted, but the note appears to be apology from Karren to her husband and kids.",
+        "$Kill(Evidence3)",
     };
 
 
     //This probably won't be used.
     string[] TwinEncounter3 = new string[]
     {
+        "$Emote(Null)",
         "Kady: Blaze!",
         "Katie: You're back!",
         "Kady: Did you get the paperwork?|Yes|No $Prompt",
+        "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: I did $OptionA",
+        "$Emote(Blaze_Neutral) $OptionB",
         "Blaze: I'm not sure if this is all of it. $OptionB",
+        "$Emote(Null) $OptionB",
         "Katie: I think that's everything. $OptionB",
+        "$Emote(Null)",
         "Kady: I knew we could count on you!",
         "Katie: Please hurry, our mom is just ahead."
     };
 
     string[] PleaseHurry = new string[]
     {
+        "$Emote(Null)",
         "Katie: Please hurry, our mom is just ahead.",
     };
 
@@ -1327,6 +1378,7 @@ public class Dialogue
     #region Boss Fight
     string[] KarenIntro =
     {
+        "$Emote(Null)",
         "Judge: And for the crime of being a terrible mother and wife. The jury finds the defendant.",
         "Judge: ...",
         "Judge: GUILTY!!!",
@@ -1334,7 +1386,9 @@ public class Dialogue
         "Karren: That rat of a husband is the bad one! The kids should be with me!",
         "Karren: You can't do this!",
         "Karren: YOU!",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Me?",
+        "$Emote(Null)",
         "Karren: Yes you! You should have been here hours ago with the evidence!",
         "Karren: Where have you been?! This is all your fault!",
         "$Animate(Karen_Intro,Transform)",
@@ -1350,10 +1404,15 @@ public class Dialogue
     {
         "$Animate(KarenWerewolf,StartIntermediate)",
         "$Animate(KarenWerewolf,Intermediate,True)",
+        "$Emote(Null)",
         "Karren: If only you had gotten here earlier. Then I would still have my kids!|You wouldn't have lost them if you had treated them better|They are better off with their dad $Prompt",
+        "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: They only left because of how you treated them. $OptionA",
-        "Karren: No! You're wrong! $OptionB",
+        "$Emote(Null) $OptionA",
+        "Karren: No! You're wrong! $OptionA",
+        "$Emote(Blaze_Neutral) $OptionB",
         "Blaze: They're better off with their dad than they are with you. $OptionB",
+        "$Emote(Null) $OptionB",
         "Karren: Who are you to tell me what's best for my kids! $OptionB",
         //Enrage OptionB
 
@@ -1364,14 +1423,19 @@ public class Dialogue
     {
         "$Animate(KarenWerewolf,StartIntermediate)",
         "$Animate(KarenWerewolf,Intermediate,True)",
+        "$Emote(Null)",
         "Karren: This is all your fault! None of this would have happened if you got here earlier! |You're right, I'm sorry|You can only blame yourself for this $Prompt",
+        "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: You're right $OptionA",
         "Blaze: I should have gotten here sooner. $OptionA",
+        "$Emote(Null) $OptionA",
         "Karren: So you understand. $OptionA",
         "Karren: Now die for your insubordination! $OptionA",
         //Enrage OptionA
+        "$Emote(Blaze_Neutral) $OptionB",
         "Blaze: You have no one to blame but yourself. $OptionB",
         "Blaze: Blaming others won't help. $OptionB",
+        "$Emote(Null) $OptionB",
         "Karren:... $OptionB",
 
         "$Animate(KarenWerewolf,Intermediate,False)",
@@ -1386,6 +1450,7 @@ public class Dialogue
         "$Tele(Player,102.38,-95.84)",
         "$Kill(KarenWerewolf)",
         "$FadeOut(255,255,255)",
+        "$Emote(Null)",
         "Karren: No. This can't be the end!",
         "Karren: I have to keep going. My kids!",
         "Karren: Katie... Kady...",
@@ -1401,15 +1466,21 @@ public class Dialogue
         "Twins: We're here.",
         "Karren: Don't ever leave me.",
         "Twins: We won't.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: They aren't real.",
+        "$Emote(Null)",
         "Karren: They're as real as they need to be.",
         "Karren: I have my family again.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Maybe.",
         "Blaze: But the rest of your family is out there waiting for you.",
+        "$Emote(Null)",
         "Karren: They all hate me.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Perhaps.",
         "Blaze: But you can show them that you've changed.",
         "Blaze: You've grown. I saw the letter. You want to make things right.",
+        "$Emote(Null)",
         "Karren: And if they don't let me? |It beats sitting in this courtroom all day|You won't know unless you try $Prompt",
         "Karren: What if I just stay here, like this. $OptionA",
         "Katie: You know you can't. White hair will just reset the room. $OptionA",
@@ -1429,13 +1500,18 @@ public class Dialogue
         "Kady: Please bring more candy.",
         "$BossPoof(PinkTwin)",
         "$BossPoof(BlueTwin)",
-
+        "$Tele(Varren_End,102.28,-100.3)",
+        "$Emote(Varen_EvilSmile)",
         "Varren: Finally.",
+        "$Move(Varren_End,102.27,-97.71)",
+        "$Move(Varren_End,103.23,-96.3)",
         "Varren: I thought that would never end.",
         "Varren: And there's the memento. I-",
         "Varren: We, are so close to leaving this place.",
         "Varren: I'll begin the preparations.",
         "Varren: Come find me when you're ready.",
+        "$Move(Varren_End,103.23,-96.3)",
+        "$Move(Varren_End,102.27,-97.71)",
     };
 
 

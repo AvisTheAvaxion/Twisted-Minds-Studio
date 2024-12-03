@@ -453,7 +453,43 @@ public class QuestSystem : MonoBehaviour
         }
         else if(floor == 2)
         {
-            
+            switch(objective)
+            {
+                case 1:
+                    SetQuestTitle("Explore");
+                    SetQuestDesc("Look for a werewolf");
+                    break;
+                case 2:
+                    SetQuestTitle("Candy?");
+                    SetQuestDesc("Find some candy");
+                    break;
+                case 4:
+                    SetQuestTitle("Candy!!");
+                    SetQuestDesc("Find more candy");
+                    break;
+                case 5:
+                    TeleportGameobject("TwinsEnocunter2", new Vector2(0.132f, -21.134f), true);
+                    TeleportGameobject("TwinsEnocunter1", new Vector2(-8.26f, -21.97f), true);
+                    break;
+                case 6:
+                    SetQuestTitle("Evidence");
+                    SetQuestDesc("Look for evidence");
+                    break;
+                case 10:
+                    TeleportGameobject("TwinsEnocunter3", new Vector2(0.132f, -21.134f), true);
+                    TeleportGameobject("TwinsEnocunter2", new Vector2(-8.26f, -21.97f), true);
+                    SetQuestTitle("The Twins");
+                    SetQuestDesc("Seek out the twins");
+                    break;
+                case 11:
+                    SetQuestTitle("Confrontation");
+                    SetQuestDesc("");
+                    break;
+                case 12:
+                    SetQuestTitle("The Lobby");
+                    SetQuestDesc("Go to the elevator");
+                    break;
+            }
         }
     }
 

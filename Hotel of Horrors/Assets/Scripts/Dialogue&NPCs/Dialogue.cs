@@ -261,7 +261,7 @@ public class Dialogue
     ///     ONLY IN OWN LINE   
     ///
     ///                                        UI FUNCTIONS
-    ///  $Emote       |   $Emote|character|emotion                  |         This command sets the current portrait.
+    ///  $Emote       |   $Emote(Spritename)                        |         This command sets the current portrait.
     ///     ONLY IN OWN LINE                                                  Avaliable emotes are determined by the Dialogue Manager's Character Pics Array.
     ///     
     ///  $ToggleUI    |   $ToggleUI(bool)                           |         This command sets the visibility of the Dialog GUI.
@@ -1138,45 +1138,66 @@ public class Dialogue
     #region Side Quest
     string[] Floor2Intro = new string[]
     {
+        "$Move(Varren_Intro,0.509,-50.84)",
+        "$Emote(Varren_EvilSmile)",
         "Varren: About time, I was just about to leave you.",
         "Varren: Floor 2 is next, I hope you've prepared, the werewolf won't go down as easily as Stein did.",
+        "$Emote(Blaze_Surprised)",
         "Blaze: Werewolf?",
-        "Varren: Yes.Keep up. You'll have to beat her if you want to proceed.",
+        "$Emote(Varren_SoftSmiles)",
+        "Varren: Yes. Keep up. You'll have to beat her if you want to proceed.",
+        "$Emote(Blaze_Angry)",
         "Blaze: Why can't we just go to the lobby?",
+        "$Emote(Varren_Neutral)",
         "Varren: We could but the doors are sealed.",
+        "$Emote(Varren_EvilSmile)",
         "Varren: You didn't think you just could walk out the front doors did you? |Yes|No $Prompt",
         "Varren: Then you're dumber than I gave you credit for. $OptionA",
         "Varren: Then why would you want to go to the lobby?. $OptionB",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Why do I need to defeat a werewolf?",
+        "$Emote(Varren_Neutral)",
         "Varren: For her memento.The one you got from Stein is stronger than any ability i've ever seen.",
         "Varren: It's a long shot, but if you can get more of them, we might just be able to break the seal and leave this place.",
+        "$Emote(Blaze_Neutral)",
         "Blaze: So there is a-",
+        "$Emote(Varren_Neutral)",
         "Varren: Don't get your hopes up.There's no guarantee that we'll even end up in the real world, and that's assuming the mementos are strong enough to break the seal.",
-        "Varren: Here we are, floor 2. Don't come back until you've got that memento."
+        "Varren: Here we are, floor 2. Don't come back until you've got that memento.",
+        "$Move(Varren_Intro,0.509,-48.81)",
+        "$Kill(Varren_Intro)",
     };
 
     string[] TwinEncounter1 = new string[]
     {
+        "$Emote(Null)",
         "Katie: Ooh, a newcomer!",
         "Kady: We haven't seen him here before, have we Katie?",
         "Katie: No, we haven't.",
         "Katie: Do you have candy?|No.|Who are you? $Prompt",
+        "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: No, I don't. $OptionA",
         "Katie: Awww. $OptionA",
         "Kady: I want Candy $OptionA",
         "Katie: I am Katie.",
         "Kady: And I am Kady.",
         "Kady: Who are you?|Blaze.|No one. $Prompt",
+        "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: My name is Blaze. $OptionA",
+        "$Emote(Blaze_Neutral) $OptionB",
         "Blaze: No, I'm just passing by. $OptionB",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Do you know where I could find a werewolf?",
         "Katie: A werewolf?",
         "Kady: What's that? |A big scary monster.|A person covered in fur. $Prompt",
+        "$Emote(Blaze_Neutral) $OptionA",
         "Blaze: It's like a big scary monster with sharp teeth and lots of hair. $OptionA",
         "Kady: That's scary. $OptionA",
         "Katie: It sounds like a monster from one of the bedtime stories mom would read us $OptionA",
+        "$Emote(Blaze_Neutral) $OptionB",
         "Blaze: It's like a person covered in fur with dog ears. $OptionB",
         "Katie: That sounds like mom. $OptionB",
+        "$Emote(Blaze_Neutral)",
         "Blaze: Where is your mom?",
         "Kady: She left to go take care of some things.",
         "Katie: She said that someone was going to come hang out with us until she came back.",
@@ -1190,6 +1211,7 @@ public class Dialogue
         " : The twins look at you intently, their big innocent eyes tearing up. $OptionB",
 
         "Kady: Will you get us some candy? |Yes.|Yes. $Prompt $OptionB",     	//Hopefully this doesn't cause issues (if it does lmk - Avis)
+        "$Emote(Blaze_Neutral)",
         "Blaze: Where is the candy?",
         "Katie: The monsters have them, you have to get it from them.",
         "Kady: We will wait here for you to come back. Please don't take too long.",

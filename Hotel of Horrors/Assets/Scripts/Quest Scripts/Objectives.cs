@@ -96,7 +96,7 @@ public class Objectives
 
     string[] Floor2 = new string[]
     {
-        "Talk|Varren_Floor2Intro|Hallway",
+        "SetCutscene|Floor2Intro",
         "Talk|TwinEncounter1|TwinsBedroom",
         "FindMultiple|Candy|Candy|Candy|",
         "Talk|TwinEncounter2|TwinsBedroom",

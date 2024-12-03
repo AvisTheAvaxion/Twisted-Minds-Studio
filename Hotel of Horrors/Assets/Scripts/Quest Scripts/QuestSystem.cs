@@ -451,6 +451,10 @@ public class QuestSystem : MonoBehaviour
                     break;
             }
         }
+        else if(floor == 2)
+        {
+            
+        }
     }
 
     void TeleportGameobject(string desiredObjectName, Vector2 position, bool globalCords)

@@ -482,6 +482,7 @@ public class QuestSystem : MonoBehaviour
                     SetQuestDesc("Seek out the twins");
                     break;
                 case 11:
+                    currentFloor.UnlockToBossDoor();
                     SetQuestTitle("Confrontation");
                     SetQuestDesc("");
                     break;

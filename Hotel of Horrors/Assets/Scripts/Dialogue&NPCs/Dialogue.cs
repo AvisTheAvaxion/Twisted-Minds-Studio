@@ -1494,6 +1494,7 @@ public class Dialogue
         "$Tele(PinkTwin,102.63,-94.50)",
         "$Tele(BlueTwin,102.23,-94.50)",
         "$BossPoof(Karen_Final)",
+        "$UnlockFromBoss",
         "$MoveTwo(PinkTwin,BlueTwin,102.47,-95.4,102.2,-95.4)",
         "Katie: Thank you for helping us Blaze",
         "Kady: It means alot to us",

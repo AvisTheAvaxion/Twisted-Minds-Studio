@@ -96,8 +96,58 @@ public class Objectives
 
     string[] Floor2 = new string[]
     {
+        "Talk|Varren_Floor2Intro|Hallway",
+        "Talk|TwinEncounter1|TwinsBedroom",
+        "FindMultiple|Candy|Candy|Candy|",
+        "Talk|TwinEncounter2|TwinsBedroom",
+        "FindObject|Evidence1",
+        "Talk|Evidence1|LawyersOffice",
+        "Talk|Evidence2|LawyersOffice(1)",
+        "Talk|Evidence3|LawyersOffice(2)",
+        "Talk|TwinEncounter3|TwinsBedroom",
         "KillSpecific|1|KarenWerewolf",
         "ClearFloor"
+    };
+
+
+
+
+
+
+
+
+
+    string[] VarrenIntro = new string[]
+    {
+        "Varren: You’re here. Hand over the mementos",
+        "Blaze: No.",
+        "Varren: Excuse me?",
+        "Blaze: I won’t let you leave.",
+        "Varren: I’m not joking, hand them over.",
+        "Varren: We wouldn’t want things to get messy now.",
+        "Blaze: No.",
+        "Varren: Fine. Have it your way!",
+    };
+
+
+
+    string[] Varren1 = new string[]
+    {
+
+
+        "Varren: If you stop now, your death will be quick.|Fine.|No. I won’t give up! $Prompt",
+        "Varren: You fool!",
+        "Varren: Why won’t you give up!",
+    };
+
+    string[] Varren2 = new string[]
+    {
+
+        "Varren: You have no chance of winning. Fighting is pointless.|Your wounds say otherwise. |You don’t have to do this. $Prompt",
+        "Varren: This? This is nothing!",
+        "Varen: You’re right.",
+        "Varren: We can be friends.",
+        "Varren:When you’re just a corpse!",
     };
 
 }

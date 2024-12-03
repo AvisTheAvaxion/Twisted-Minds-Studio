@@ -1395,8 +1395,17 @@ public class Dialogue
         "Katie: I hope we see you on the other side!",
         "Kady: Please bring more candy.",
         "$BossPoof(PinkTwin)",
-        "$BossPoof(BlueTwin)"
+        "$BossPoof(BlueTwin)",
+
+        "Varren: Finally.",
+        "Varren: I thought that would never end.",
+        "Varren: And there's the memento. I-",
+        "Varren: We, are so close to leaving this place.",
+        "Varren: I'll begin the preparations.",
+        "Varren: Come find me when you're ready.",
     };
+
+
     #endregion
     #endregion
     #region Final Boss Fight
@@ -1500,12 +1509,39 @@ public class Dialogue
     };
     string[] SlimeLadyEncounterLast = new string[]
     {
+        "$Emote(Blaze_Neutral)",
+        "Blaze: Samantha?",
         "$Emote(SlimeLady)",
-        "Samantha: Do not give Varren your mementos",
+        "Samantha: Hi Blaze",
+        "$Emote(Blaze_Neutral)",
+        "Blaze: How are you here? Shouldn't you be on floor one?",
+        "$Emote(SlimeLady)",
+        "Samantha: I have my ways to get around.",
+        "Samantha: I wanted to talk to you about Varren.",
+        "$Emote(Blaze_Neutral)",
+        "Blaze: I know he's a bit rough around the edges, but we may have figured out a way to escape this place!",
+        "Blaze: Do you want to come with us?",
+        "$Emote(SlimeLady)",
+        "Samantha: About that. You can't let Varren leave.|Ok.|Why Not? $Prompt",
+        "Samantha: Oh. I thought that would take a bit more convincing. $OptionA",
+        "$Emote(Blaze_Neutral)",
+        "Blaze: He's kind of a jerk. I wouldn't feel that bad leaving him here. $OptionA",
+        "Blaze: But how do I get out?",
+        "$Emote(SlimeLady)",
+        "Samantha: Keep going, once you get to the lobby, you should be able to use the mementos to escape. $OptionA",
+        "Samantha: He's not a good person. $OptionB",
+        "Samantha: This place was originally made to contain him. There's a reason for that. $OptionB",
+        "Samantha: So please. Don't let him leave. $OptionB",
+        "$Emote(Blaze_Neutral)",
+        "Blaze: Ok. I won't. $OptionB",
+        "Blaze: What about you?",
+        "$Emote(SlimeLady)",
+        "Samantha: I think i'd like to stay a bit longer. Others may end up here, and they will need help."
     };
     string[] SlimeLadyEncounterLastReplacement = new string[]
     {
         "$Emote(SlimeLady)",
+        "Samantha: Varren is just up ahead.",
         "Samantha: Be careful deary",
     };
     #endregion

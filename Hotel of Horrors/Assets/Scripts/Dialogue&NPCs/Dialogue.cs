@@ -1274,6 +1274,12 @@ public class Dialogue
         "Blaze: You've got it.",
     };
 
+    string[] GoGetEvidence = new string[]
+    {
+        "Kady: Please go get the evidence so we can be with our mom again.",
+        "Katie: Mom is counting you!",
+    };
+
     string[] Evidence1 = new string[]
     {
         " : You come across a piece of paper sitting on a desk.",
@@ -1310,6 +1316,11 @@ public class Dialogue
         "Katie: I think that's everything. $OptionB",
         "Kady: I knew we could count on you!",
         "Katie: Please hurry, our mom is just ahead."
+    };
+
+    string[] PleaseHurry = new string[]
+    {
+        "Katie: Please hurry, our mom is just ahead.",
     };
 
     #endregion Side Quest

@@ -197,7 +197,7 @@ public class PlayerInventory : MonoBehaviour
     #region Adding to Inventory
     public bool AddItem(Item item)
     {
-        //print("adding item: " + item.GetInfo().GetName());
+        print("adding item: " + item.GetInfo().GetName());
         for (int i = 0; i < itemsInventory.Length; i++)
         {
             if (item != null && itemsInventory[i] != null && itemsInventory[i].GetInfo().GetName() == item.GetInfo().GetName())

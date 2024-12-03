@@ -1397,6 +1397,7 @@ public class Dialogue
         "$Timer(2.5)",
         "$FadeIn(255,255,255)",
         "$Kill(Karen_Intro)",
+        "$SetActive(KarenWerewolf,True)",
         "$Tele(KarenWerewolf,100.6,-97.29)",
         "$FadeOut(255,255,255)",
     };

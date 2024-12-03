@@ -460,6 +460,19 @@ public class DialogueManager : MonoBehaviour
                 currentLine++;
                 OnDialogueUpdate();
             }
+            else if (lines[currentLine].EndsWith("$SetActive") || lines[currentLine].StartsWith("$SetActive"))
+            {
+                int timeStartIndex = lines[currentLine].IndexOf('(');
+                int timeEndIndex = lines[currentLine].IndexOf(')');
+                string timeInfo = lines[currentLine].Substring(timeStartIndex + 1, timeEndIndex - timeStartIndex - 1);
+                string[] splitString = timeInfo.Split(',');
+                GameObject gameObject = GameObject.Find(splitString[0]);
+                bool activeState = bool.Parse(splitString[1]);
+                gameObject.SetActive(activeState);
+                //Auto move to the next line
+                currentLine++;
+                OnDialogueUpdate();
+            }
             #endregion
             #region Inventory Functions
             else if (lines[currentLine].EndsWith("$GiveWeapon") || lines[currentLine].StartsWith("$GiveWeapon"))

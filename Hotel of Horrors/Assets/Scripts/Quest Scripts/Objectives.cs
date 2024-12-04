@@ -97,16 +97,16 @@ public class Objectives
     string[] Floor2 = new string[]
     {
         "SetCutscene|Floor2Intro",
-        "Talk|TwinEncounter1|Twins Bedroom",
+        "Talk|TwinsEncounter1|Twins Bedroom",
         "FindObject|Candy",
         "SetCutscene|TryCandy",
         "FindMultiple|Candy|Candy|Candy",
         "SetCutscene|EnoughCandy",
-        "Talk|TwinEncounter2|Twins Bedroom",
+        "Talk|TwinsEncounter2|Twins Bedroom",
         "Talk|Evidence1|Lawyers Office 1",
         "Talk|Evidence2|Lawyers Office 2",
         "Talk|Evidence3|Lawyers Office 3",
-        "Talk|TwinEncounter3|Twins Bedroom",
+        "Talk|TwinsEncounter3|Twins Bedroom",
         "KillSpecific|1|KarenWerewolf",
         "ClearFloor"
     };

@@ -16,16 +16,21 @@ public class NewAudioManager : MonoBehaviour
 
     void Awake()
     {
+        SetVolumes();
+
+        //volumes = new float[3] { 0.5f, 0.5f, 0.5f };
+        //PlayerPrefs.DeleteAll();
+        //Save();
+    }
+
+    private void SetVolumes()
+    {
         if (PlayerPrefs.HasKey("SFXVolume")) { volumes = Load(); }
         else { volumes = new float[3] { 0.5f, 0.3f, 1f }; }
 
         bgmSource.volume = volumes[0];
         effectSource.volume = volumes[1];
-        ambientSource.volume = volumes[2];
-
-        //volumes = new float[3] { 0.5f, 0.5f, 0.5f };
-        //PlayerPrefs.DeleteAll();
-        //Save();
+        ambientSource.volume = 0.1f;
     }
 
 
@@ -44,16 +49,19 @@ public class NewAudioManager : MonoBehaviour
 
     public void PlaySong(string songName)
     {
+        SetVolumes();
         bgmSource.clip = sounds.getSong(songName);
         bgmSource.Play();
     }
     public void PlayEffect(string effectName)
     {
+        SetVolumes();
         effectSource.clip = sounds.getEffect(effectName);
         effectSource.Play();
     }
     public void PlayAmbience(string ambienceName)
     {
+        SetVolumes();
         ambientSource.clip = sounds.getAmbience(ambienceName);
         ambientSource.Play();
     }
@@ -109,7 +117,7 @@ public class NewAudioManager : MonoBehaviour
 
     private float[] Load()
     {
-        Debug.Log($"Load{PlayerPrefs.GetFloat("BGMVolume")},{PlayerPrefs.GetFloat("SFXVolume")},{PlayerPrefs.GetFloat("AmbientVolume")}");
+        //Debug.Log($"Load{PlayerPrefs.GetFloat("BGMVolume")},{PlayerPrefs.GetFloat("SFXVolume")},{PlayerPrefs.GetFloat("AmbientVolume")}");
 
         return new float[3]
         {

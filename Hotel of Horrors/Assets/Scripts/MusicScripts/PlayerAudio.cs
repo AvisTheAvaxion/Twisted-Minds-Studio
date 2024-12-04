@@ -48,16 +48,19 @@ public class PlayerAudio : MonoBehaviour
 
     public void Dash()
     {
+        UpdateVolume();
         DashSource.Play();
     }
 
     public void Damage()
     {
+        UpdateVolume();
         DamageSource.Play();
     }
 
     public void NextLine(int currentLine)
     {
+        UpdateVolume();
         if (currentLine == 0) { return; }
         NextLineSource.Play();
     }
@@ -69,6 +72,7 @@ public class PlayerAudio : MonoBehaviour
 
     void Movement()
     {
+        UpdateVolume();
         //Sounds for when the player walks
         if (animator.GetBool("isWalking"))
         {

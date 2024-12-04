@@ -35,13 +35,13 @@ public class QuestSystem : MonoBehaviour
         floorCleared = false;
     }
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
         if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None && objectiveSet == false && floorCleared == false)
         {
             LoadObjective();
         }
-    }
+    }*/
 
     //This method should be called whenever a relevant game event occurs and see if quest conditions have been fulfilled
     public void QuestEvent(QuestEventType EventType, string objectName)
@@ -158,31 +158,10 @@ public class QuestSystem : MonoBehaviour
                 else if (currentObjective.GetType() == typeof(FindMultiple))
                 {
                     FindMultiple findMultiple = (FindMultiple)currentObjective;
-                    bool allItemsObtained = false;
-                    
-                    int index = 0;
-                    foreach(string item in findMultiple.GetObjectNames())
-                    {
-                        if (item.Equals(objectName))
-                        {
-                            findMultiple.CheckItems(index);
-                        }
-                        index++;
-                    }
-                    foreach(bool itemCheck in findMultiple.CheckItems(-1))
-                    {
-                        if(itemCheck == false)
-                        {
-                            allItemsObtained = false;
-                            break;
-                        }
-                        else
-                        {
-                            allItemsObtained = true;
-                        }
-                    }
 
-                    if(allItemsObtained == true)
+                    findMultiple.IncrementAmountCollected(objectName);
+
+                    if (findMultiple.GetAmountCollected() == findMultiple.GetTotal())
                     {
                         NextQuest();
                     }
@@ -235,19 +214,7 @@ public class QuestSystem : MonoBehaviour
                 questType = new FindObject(parts[1]);
                 return questType;
             case "FindMultiple":
-                List<string> objs = new List<string>();
-                int index = 0;
-                foreach(var part in parts)
-                {
-                    if (index == 0)
-                    {
-                        continue;
-                    }
-                    objs.Add(part);
-                    index++;
-                }
-                string[] objsArray = objs.ToArray();
-                questType = new FindMultiple(objsArray);
+                questType = new FindMultiple(int.Parse(parts[1]), parts[2]);
                 return questType;
             case "Talk":
                 GameObject npc = GameObject.Find(parts[1]);
@@ -464,8 +431,9 @@ public class QuestSystem : MonoBehaviour
                     SetQuestDesc("Find some candy");
                     break;
                 case 4:
+                    FindMultiple multiple = (FindMultiple)currentObjective;
                     SetQuestTitle("Candy!!");
-                    SetQuestDesc("Find more candy");
+                    SetQuestDesc($"Find more candy: {multiple.GetAmountCollected()}/{multiple.GetTotal()}");
                     break;
                 case 5:
                     TeleportGameobject("TwinsEnocunter2", new Vector2(0.132f, -21.134f), true);

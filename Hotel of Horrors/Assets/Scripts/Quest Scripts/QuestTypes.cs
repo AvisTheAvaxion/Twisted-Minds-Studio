@@ -27,7 +27,7 @@ public class FindObject : QuestType
     #endregion
 }
 
-public class FindMultiple : QuestType
+/*public class FindMultiple : QuestType
 {
     public FindMultiple(string[] objs)
     {
@@ -64,6 +64,45 @@ public class FindMultiple : QuestType
         }
 
         return $"FindMultiple|{s}";
+    }
+    #endregion
+}*/
+public class FindMultiple : QuestType
+{
+    public FindMultiple (int total, string itemName)
+    {
+        this.total = total;
+        this.itemName = itemName;
+    }
+    int amountGained;
+    int total;
+    string itemName;
+
+    #region Kill Specific Methods
+    public void IncrementAmountCollected(string itemCollected)
+    {
+        if (itemCollected == itemName)
+        {
+            amountGained++;
+        }
+    }
+    public int GetAmountCollected()
+    {
+        return amountGained;
+    }
+    public int GetTotal()
+    {
+        return total;
+    }
+
+    public string GetItemName()
+    {
+        return itemName;
+    }
+
+    public override string ToSaveString()
+    {
+        return $"FindMultiple|{amountGained}|{total}|{itemName}";
     }
     #endregion
 }

@@ -1235,20 +1235,24 @@ public class Dialogue
     //If you talk to the twins before you finish getting the candy
     string[] NotEnoughCandy = new string[]
     {
+        "$ChronoStop(True)",
         "$Emote(Null)",
         "Katie: The monsters have the candy, you have to get it from them.",
-        "Kady: Please hurry, we are getting hungry."
+        "Kady: Please hurry, we are getting hungry.",
+        "$ChronoStop(False)",
     };
 
     //When Blaze gets the first candy
     string[] TryCandy = new string[]
     {
+        "$ChronoStop(True)",
         "$Emote(Blaze_Neutral)",
         "Blaze: This monster dropped a candy, is this edible?",
         "$Emote(Null)",
         " : The candy is pink and blue in color, and has a sweet smell. A thin layer of emotional energy coats the surface.|Try it.|Don't try it. $Prompt.",
         " : The candy is extremely sweet, and dissolves in your mouth with a fizzing sensation. $OptionA",
         " : You put the candy into your inventory. $OptionB",
+        "$ChronoStop(False)",
     };
 
     string[] EnoughCandy = new string[]

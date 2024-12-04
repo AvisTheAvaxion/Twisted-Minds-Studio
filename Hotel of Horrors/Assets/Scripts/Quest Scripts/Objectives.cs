@@ -100,13 +100,13 @@ public class Objectives
         "Talk|TwinsEncounter1|Twins Bedroom",
         "FindObject|Candy",
         "SetCutscene|TryCandy",
-        "FindMultiple|Candy|Candy|Candy",
+        "FindMultiple|10|Candy",
         "SetCutscene|EnoughCandy",
         "Talk|TwinsEncounter2|Twins Bedroom",
         "Talk|Evidence1|Lawyers Office 1",
         "Talk|Evidence2|Lawyers Office 2",
         "Talk|Evidence3|Lawyers Office 3",
-        "Talk|TwinsEncounter3|Twins Bedroom",
+        "Talk|TwinEncounter3|Twins Bedroom",
         "KillSpecific|1|KarenWerewolf",
         "ClearFloor"
     };

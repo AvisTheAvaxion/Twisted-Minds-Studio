@@ -106,7 +106,7 @@ public class Objectives
         "Talk|Evidence1|Lawyers Office 1",
         "Talk|Evidence2|Lawyers Office 2",
         "Talk|Evidence3|Lawyers Office 3",
-        "Talk|TwinEncounter3|Twins Bedroom",
+        "Talk|TwinsEncounter3|Twins Bedroom",
         "KillSpecific|1|KarenWerewolf",
         "ClearFloor"
     };

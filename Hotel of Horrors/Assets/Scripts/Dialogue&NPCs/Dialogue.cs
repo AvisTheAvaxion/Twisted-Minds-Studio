@@ -1144,6 +1144,7 @@ public class Dialogue
     #region Side Quest
     string[] Floor2Intro = new string[]
     {
+        "$Tele(Varren_Intro,0.509,-48.81)",
         "$Move(Varren_Intro,0.509,-50.84)",
         "$Emote(Varren_EvilSmile)",
         "Varren: About time, I was just about to leave you.",

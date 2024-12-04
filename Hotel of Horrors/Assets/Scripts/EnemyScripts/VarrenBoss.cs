@@ -153,6 +153,7 @@ public class VarrenBoss : BossStateMachine
         if (stunP3Coroutine != null) StopCoroutine(stunP3Coroutine);
         if (stunP4Coroutine != null) StopCoroutine(stunP4Coroutine);
         if (attackCoroutine != null) StopCoroutine(attackCoroutine);
+        if (teleportCoroutine != null) StopCoroutine(teleportCoroutine);
 
         isStunned = false;
 
@@ -200,7 +201,7 @@ public class VarrenBoss : BossStateMachine
         if(canAttack && teleportTimer >= currentSettings.teleportCooldown)
         {
             teleportTimer = 0;
-            StartCoroutine(TeleportSequence());
+            teleportCoroutine = StartCoroutine(TeleportSequence());
         }
         else if(canAttack)
         {
@@ -240,6 +241,7 @@ public class VarrenBoss : BossStateMachine
         attackCoroutine = StartCoroutine(AttackCooldown(GetRandomBetween(currentSettings.p1AttackCooldown)));
     }
     bool teleported;
+    Coroutine teleportCoroutine;
     IEnumerator TeleportSequence()
     {
         teleported = false;
@@ -265,6 +267,8 @@ public class VarrenBoss : BossStateMachine
 
         if(attackCoroutine == null)
             canAttack = true;
+
+        teleportCoroutine = null;
 
         teleportTimer = 0;
     }

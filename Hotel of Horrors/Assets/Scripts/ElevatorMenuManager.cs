@@ -98,7 +98,15 @@ public class ElevatorMenuManager : MonoBehaviour
         serializationManager.SaveData();
 
         GameState.CurrentState = GameState.State.None;
-        SceneManager.LoadScene($"Floor {Floor.currentFloor + 1}");
+
+        if (Floor.currentFloor == 2)
+        {
+            SceneManager.LoadScene("FinalBoss");
+        }
+        else
+        {
+            SceneManager.LoadScene($"Floor {Floor.currentFloor + 1}");
+        }
     }
     public void GoToBossFloor()
     {

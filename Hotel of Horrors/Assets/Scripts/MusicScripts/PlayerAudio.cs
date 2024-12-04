@@ -44,6 +44,7 @@ public class PlayerAudio : MonoBehaviour
         DashSource.volume = volume;
         AbilitySource.volume = volume;
         DamageSource.volume = volume;
+        NextLineSource.volume = volume;
     }
 
     public void Dash()

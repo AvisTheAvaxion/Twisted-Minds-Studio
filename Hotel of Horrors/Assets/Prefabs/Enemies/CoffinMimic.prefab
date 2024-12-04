@@ -5127,6 +5127,7 @@ MonoBehaviour:
   animator: {fileID: 1443703379484178107}
   hasWalkCycle: 1
   moveParticles: {fileID: 5792315088171816174}
+  bossFightSummon: 0
   attackType: 0
   moveSpeed: 9
   emotionalEnergyWorth: 30
@@ -5627,9 +5628,17 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7425929110926314875, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
+      propertyPath: AttackSources.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7425929110926314875, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
       propertyPath: AttackSounds.Array.data[3]
       value: 
       objectReference: {fileID: 8300000, guid: 097858b836513ec4fa373ac4254ba20c, type: 3}
+    - target: {fileID: 7425929110926314875, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
+      propertyPath: AttackSources.Array.data[0]
+      value: 
+      objectReference: {fileID: 634420493361696960}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5646,6 +5655,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084d8268e5a021c4e8219329cf778cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &634420493361696960 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8042249235792274989, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}
+  m_PrefabInstance: {fileID: 7446179725221000941}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4773901031276943719 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2672438551020400522, guid: 24028a07d0820b6458aaa094a2288f19, type: 3}

@@ -98,7 +98,7 @@ public class ElevatorMenuManager : MonoBehaviour
         serializationManager.SaveData();
 
         GameState.CurrentState = GameState.State.None;
-        SceneManager.LoadScene("EndDemo");
+        SceneManager.LoadScene($"Floor {Floor.currentFloor + 1}");
     }
     public void GoToBossFloor()
     {

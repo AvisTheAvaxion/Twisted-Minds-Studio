@@ -589,6 +589,7 @@ public class QuestSystem : MonoBehaviour
 
     public void LoadQuest(SerializedClass saveData)
     {
+        objectiveNum = 0;
         if (saveData.questSaves != null)
         {
             QuestSave currentSave = saveData.questSaves[floor - 1];
@@ -596,10 +597,10 @@ public class QuestSystem : MonoBehaviour
             {
                 objectiveNum = currentSave.objectiveNum;
             }
-            currentFloor.ClearGuaranteeRooms();
-            LoadObjective();
-            SetRequiredGameState(floor, ObjectiveNum);
         }
+        currentFloor.ClearGuaranteeRooms();
+        LoadObjective();
+        SetRequiredGameState(floor, ObjectiveNum);
     }
 }
 

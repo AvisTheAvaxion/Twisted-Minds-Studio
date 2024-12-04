@@ -99,6 +99,12 @@ public class ElevatorMenuManager : MonoBehaviour
 
         SceneManager.LoadScene("EndDemo");
     }
+    public void GoToBossFloor()
+    {
+        serializationManager.SaveData();
+
+        SceneManager.LoadScene("FinalBoss");
+    }
 
     public void SaveGame()
     {

@@ -35,7 +35,7 @@ public class QuestSystem : MonoBehaviour
         floorCleared = false;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None && objectiveSet == false && floorCleared == false)
         {

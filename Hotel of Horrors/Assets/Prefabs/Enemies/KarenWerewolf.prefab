@@ -1044,6 +1044,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2231019916136021813}
   - component: {fileID: 3501205401208500334}
+  - component: {fileID: 6123624061819477587}
   m_Layer: 10
   m_Name: HoH_KarenWerewolf_Spritesheet_0
   m_TagString: Untagged
@@ -1120,6 +1121,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6123624061819477587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833165155613483502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19514a7b63bef574dacbbaf16bda2cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 447d690840723f1478fe148e4a36576d, type: 2}
+  defaultMaterial: {fileID: 0}
+  spriteRenderers:
+  - {fileID: 3501205401208500334}
 --- !u!1 &4003498403237512378
 GameObject:
   m_ObjectHideFlags: 0

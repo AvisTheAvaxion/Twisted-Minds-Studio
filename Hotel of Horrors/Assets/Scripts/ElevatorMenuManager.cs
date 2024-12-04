@@ -97,12 +97,14 @@ public class ElevatorMenuManager : MonoBehaviour
     {
         serializationManager.SaveData();
 
+        GameState.CurrentState = GameState.State.None;
         SceneManager.LoadScene("EndDemo");
     }
     public void GoToBossFloor()
     {
         serializationManager.SaveData();
 
+        GameState.CurrentState = GameState.State.None;
         SceneManager.LoadScene("FinalBoss");
     }
 

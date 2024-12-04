@@ -423,6 +423,7 @@ public class QuestSystem : MonoBehaviour
             switch(objective)
             {
                 case 1:
+                    TeleportGameobject("TwinsEncounter1", new Vector2(1.833f, -21.1f), true);
                     SetQuestTitle("Explore");
                     SetQuestDesc("Look for a werewolf");
                     break;
@@ -435,17 +436,19 @@ public class QuestSystem : MonoBehaviour
                     SetQuestTitle("Candy!!");
                     SetQuestDesc($"Find more candy: {multiple.GetAmountCollected()}/{multiple.GetTotal()}");
                     break;
-                case 5:
-                    TeleportGameobject("TwinsEnocunter2", new Vector2(0.132f, -21.134f), true);
-                    TeleportGameobject("TwinsEnocunter1", new Vector2(-8.26f, -21.97f), true);
-                    break;
                 case 6:
+                    SetQuestTitle("Delivery");
+                    SetQuestDesc($"Give the twins candy");
+                    TeleportGameobject("TwinsEncounter2", new Vector2(1.833f, -21.1f), true);
+                    TeleportGameobject("TwinsEncounter1", new Vector2(-8.26f, -21.97f), true);
+                    break;
+                case 7:
                     SetQuestTitle("Evidence");
                     SetQuestDesc("Look for evidence");
                     break;
                 case 10:
-                    TeleportGameobject("TwinsEnocunter3", new Vector2(0.132f, -21.134f), true);
-                    TeleportGameobject("TwinsEnocunter2", new Vector2(-8.26f, -21.97f), true);
+                    TeleportGameobject("TwinsEncounter3", new Vector2(1.833f, -21.1f), true);
+                    TeleportGameobject("TwinsEncounter2", new Vector2(-8.26f, -21.97f), true);
                     SetQuestTitle("The Twins");
                     SetQuestDesc("Seek out the twins");
                     break;

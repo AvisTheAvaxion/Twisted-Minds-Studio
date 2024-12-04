@@ -1236,11 +1236,9 @@ public class Dialogue
     //If you talk to the twins before you finish getting the candy
     string[] NotEnoughCandy = new string[]
     {
-        "$ChronoStop(True)",
         "$Emote(Null)",
         "Katie: The monsters have the candy, you have to get it from them.",
         "Kady: Please hurry, we are getting hungry.",
-        "$ChronoStop(False)",
     };
 
     //When Blaze gets the first candy
@@ -1250,7 +1248,7 @@ public class Dialogue
         "$Emote(Blaze_Neutral)",
         "Blaze: This monster dropped a candy, is this edible?",
         "$Emote(Null)",
-        " : The candy is pink and blue in color, and has a sweet smell. A thin layer of emotional energy coats the surface.|Try it.|Don't try it. $Prompt.",
+        " : The candy is pink and blue in color, and has a sweet smell. A thin layer of emotional energy coats the surface. |Try it.|Don't try it.| $Prompt",
         " : The candy is extremely sweet, and dissolves in your mouth with a fizzing sensation. $OptionA",
         " : You put the candy into your inventory. $OptionB",
         "$ChronoStop(False)",
@@ -1258,9 +1256,11 @@ public class Dialogue
 
     string[] EnoughCandy = new string[]
     {
+        "$ChronoStop(True)",
         "$Emote(Blaze_Neutral)",
         "Blaze: This should be enough candy for now.",
         "Blaze: I should head back.",
+        "$ChronoStop(False)",
     };
 
 
@@ -1324,7 +1324,8 @@ public class Dialogue
         " : The paper is a newspaper cutout depicting a photo of the twins, a young woman and a young man.",
         " : The family is smiling while standing outside of a candy store, the man's eyes are blacked out with a marker.",
         " : An article below the image reads \"Family wins millions following candy competition!",
-        " : After an extremely intense candy eating competition hosted by Dulce Candy Co. New York's very own twin sisters, Katie and Kady Smith would come out victorious, winning the grand prize of a lifetime's supply of candy and 10% of the company's stock, valued at 1.5 Million Dollars!\"",
+        " : After an extremely intense candy eating competition hosted by Dulce Candy Co. New York's very own twin sisters...",
+        " : Katie and Kady Smith would come out victorious, winning the grand prize of a lifetime's supply of candy and 10% of the company's stock, valued at 1.5 Million Dollars!\"",
         "$Kill(Evidence1)",
     };
 

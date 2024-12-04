@@ -654,14 +654,16 @@ public class KarenBoss : BossStateMachine
 
     protected override IEnumerator DialogueStart(Dialogue.Dialog cutscene)
     {
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         DialogueManager.SetCutscene(cutscene);
         currentState = States.Dialogue;
+        yield return null;
     }
 
     protected override IEnumerator DialogueEnd()
     {
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         OnDialogueEnd();
+        yield return null;
     }
 }

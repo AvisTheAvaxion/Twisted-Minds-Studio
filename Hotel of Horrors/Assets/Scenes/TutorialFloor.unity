@@ -7204,7 +7204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9207237119951498933, guid: 4a1f51a803540c5488f31eb3cde7f069, type: 3}
       propertyPath: npcDialog
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9207237119951498933, guid: 4a1f51a803540c5488f31eb3cde7f069, type: 3}
       propertyPath: buttonPrompt
@@ -7212,7 +7212,7 @@ PrefabInstance:
       objectReference: {fileID: 39129600}
     - target: {fileID: 9207237119951498933, guid: 4a1f51a803540c5488f31eb3cde7f069, type: 3}
       propertyPath: replacementDialog
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -36070,12 +36070,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1320463092}
     m_Modifications:
     - target: {fileID: 6058700127638836907, guid: aca0f33783f03ef4bb8d8257f2c670e7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6058700127638836907, guid: aca0f33783f03ef4bb8d8257f2c670e7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2375
+      objectReference: {fileID: 0}
+    - target: {fileID: 6058700127638836907, guid: aca0f33783f03ef4bb8d8257f2c670e7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.86
       objectReference: {fileID: 0}
     - target: {fileID: 6058700127638836907, guid: aca0f33783f03ef4bb8d8257f2c670e7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.796
+      value: -1.945
       objectReference: {fileID: 0}
     - target: {fileID: 6058700127638836907, guid: aca0f33783f03ef4bb8d8257f2c670e7, type: 3}
       propertyPath: m_LocalPosition.z

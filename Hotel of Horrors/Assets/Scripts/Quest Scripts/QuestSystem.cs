@@ -35,13 +35,13 @@ public class QuestSystem : MonoBehaviour
         floorCleared = false;
     }
 
-    /*private void FixedUpdate()
+    private void Start()
     {
-        if (dialogueManager.getCutsceneState() == DialogueManager.CutsceneState.None && objectiveSet == false && floorCleared == false)
+        if(floor == 0)
         {
             LoadObjective();
         }
-    }*/
+    }
 
     //This method should be called whenever a relevant game event occurs and see if quest conditions have been fulfilled
     public void QuestEvent(QuestEventType EventType, string objectName)

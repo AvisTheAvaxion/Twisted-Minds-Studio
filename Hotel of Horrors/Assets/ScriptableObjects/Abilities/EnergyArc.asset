@@ -20,7 +20,7 @@ MonoBehaviour:
   baseLevel: 1
   maxLevel: 5
   unlockEECost: 200
-  unlockFloor: 1
+  unlockFloor: 2
   playerAbility: {fileID: 5262229291953371984, guid: 458b049490e25704aad7a2686f48762e, type: 3}
   upgradeInfos:
   - percentageIncrease: 25
@@ -32,6 +32,8 @@ MonoBehaviour:
   - percentageIncrease: 5
     eeCost: 250
   animatorOverride: {fileID: 22100000, guid: 81caf8b12d609ca4c90fa11128a2aa9a, type: 2}
+  canMove: 1
+  canAttackToo: 0
   cooldown: 10
   duration: 0.5
   damage: 12

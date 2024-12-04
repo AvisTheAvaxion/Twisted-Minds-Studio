@@ -410,8 +410,8 @@ public class Floor : MonoBehaviour
     public void LoadData(SerializedClass save)
     {
         currentFloor = floorNumber;
-        maxFloorUnlocked = save.maxLevelAchieved;
-        maxFloorTraveledTo = save.maxLevelTravelledTo;
+        maxFloorUnlocked = Mathf.Max(currentFloor, save.maxLevelAchieved);
+        maxFloorTraveledTo = Mathf.Max(currentFloor, save.maxLevelTravelledTo);
         mediumChance = save.mediumRoomChance;
         hardChance = save.hardRoomChance;
     }

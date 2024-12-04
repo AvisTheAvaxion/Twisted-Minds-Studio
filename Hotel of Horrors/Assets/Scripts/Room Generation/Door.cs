@@ -9,6 +9,7 @@ public class Door : MonoBehaviour
     Floor floor;
     public bool locked = false;
     public bool elevatorDoor = false;
+    public bool permenantElevatorDoor = false;
     public Room associatedRoom;
     public Transform spawnLocation;
     [HideInInspector] public Door linkedDoor;
@@ -73,7 +74,7 @@ public class Door : MonoBehaviour
             GameObject player = collision.gameObject;
             if (!locked)
             {
-                if (elevatorDoor)
+                if (elevatorDoor || permenantElevatorDoor)
                 {
                     //take player to elevator room menu without moving them
                     StartCoroutine(GoToElevator(player));

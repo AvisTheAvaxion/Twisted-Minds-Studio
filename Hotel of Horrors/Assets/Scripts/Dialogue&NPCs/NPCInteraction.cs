@@ -40,6 +40,10 @@ public class NPCInteraction : MonoBehaviour
                 activeBehavior.ToggleButtonPrompt(false);
             }
         }
+        else
+        {
+            npcInRange = false;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)

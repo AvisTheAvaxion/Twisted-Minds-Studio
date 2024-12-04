@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e5ee2acb1c72d84dbf648863c689485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 8
   hitStopLength: 0.05
   deflectionResistance: 0
   chanceToInflictEffect: 0
@@ -176,10 +176,10 @@ MonoBehaviour:
   specialDeflection: 0
   useDestroyTimer: 0
   destroyTimer: 0
-  trackingForce: 60
-  trackTime: 1.5
+  trackingForce: 40
+  trackTime: 0.75
   rotateTarget: {fileID: 8574054984991005117}
-  rotateSpeed: 500
+  rotateSpeed: 300
 --- !u!210 &7158216229486209280
 SortingGroup:
   m_ObjectHideFlags: 0

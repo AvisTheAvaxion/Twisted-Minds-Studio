@@ -1406,6 +1406,7 @@ public class Dialogue
         "$SetActive(KarenWerewolf,True)",
         "$Tele(KarenWerewolf,100.6,-97.29)",
         "$FadeOut(255,255,255)",
+        "$PlaySong|KarrenBossTheme",
     };
     string[] KarenInter1 =
     {
@@ -1599,6 +1600,7 @@ public class Dialogue
     string[] VarrenBigBossIntro = new string[]
     {
         "$Emote(Varren_EvilSmile)",
+        "You can't stop me!",
         "Varren: I will never die",
         "Varren: Now you die!"
     };
